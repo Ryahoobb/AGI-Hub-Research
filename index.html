@@ -132,6 +132,106 @@
       outline: none;
     }
 
+    .translate-slot {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      line-height: 1;
+    }
+
+    .translate-slot #google_translate_element {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+    }
+
+    .translate-slot .goog-te-gadget {
+      color: transparent !important;
+      font-size: 0 !important;
+      line-height: 1 !important;
+    }
+
+    .translate-slot .goog-te-gadget > span {
+      display: none !important;
+    }
+
+    .translate-slot select,
+    .translate-slot .goog-te-combo {
+      appearance: none;
+      -webkit-appearance: none;
+      width: auto;
+      max-width: 104px;
+      height: 22px;
+      margin: 0 !important;
+      padding: 0 16px 0 0;
+      border: 0;
+      border-radius: 0;
+      background-color: transparent;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='4' viewBox='0 0 6 4'%3E%3Cpath d='M0 0h6L3 4z' fill='%2306131f'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right center;
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 780;
+      letter-spacing: 0.06em;
+      line-height: 22px;
+      text-transform: uppercase;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .translate-slot a {
+      display: inline-flex !important;
+      align-items: center;
+      max-width: 104px;
+      height: 22px;
+      overflow: hidden;
+      color: var(--ink) !important;
+      font-family: var(--font-mono);
+      font-size: 10px !important;
+      font-weight: 780;
+      letter-spacing: 0.06em;
+      line-height: 22px !important;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .translate-slot a span {
+      font-size: 10px !important;
+      line-height: 22px !important;
+    }
+
+    .translate-slot img {
+      display: none !important;
+    }
+
+    .translate-slot select:hover,
+    .translate-slot select:focus-visible,
+    .translate-slot .goog-te-combo:hover,
+    .translate-slot .goog-te-combo:focus-visible,
+    .translate-slot a:hover,
+    .translate-slot a:focus-visible {
+      color: var(--signal);
+    }
+
+    .translate-slot option {
+      color: var(--ink);
+      background: var(--paper);
+      font-size: 12px;
+      text-transform: none;
+    }
+
+    body > .skiptranslate,
+    .goog-te-banner-frame,
+    #goog-gt-tt {
+      display: none !important;
+    }
+
+    body {
+      top: 0 !important;
+    }
+
     .issue {
       display: none;
     }
@@ -781,8 +881,13 @@
       .nav {
         width: 100%;
         justify-content: flex-start;
-        gap: 16px;
+        gap: 12px 16px;
         font-size: 11px;
+      }
+      .translate-slot select,
+      .translate-slot .goog-te-combo {
+        max-width: 96px;
+        font-size: 10px;
       }
       .hero {
         min-height: 720px;
@@ -848,6 +953,9 @@
       <a href="#program">事業内容</a>
       <a href="#about">会社情報</a>
       <a href="#join">問合せ</a>
+      <div class="translate-slot" aria-label="Google Translate">
+        <div id="google_translate_element"></div>
+      </div>
     </nav>
   </header>
 
@@ -1038,6 +1146,17 @@
       </div>
     </div>
   </footer>
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: "ja",
+        includedLanguages: "en,zh-CN,ko,fr,de,es",
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, "google_translate_element");
+    }
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script>
     const form = document.querySelector("#contact-form");
     const status = document.querySelector("#form-status");
