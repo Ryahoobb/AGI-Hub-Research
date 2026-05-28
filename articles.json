@@ -1,5 +1,16 @@
 [
   {
+    "no": 34,
+    "slug": "34-alignment-success-route",
+    "category": "alignment",
+    "date": "2026.05.28",
+    "slides": "10 Sections",
+    "thumb": "images/thumb-alignment-research-landscape.jpg",
+    "title": "アラインメントはどう成功しうるか — 人間価値保存型ASIと良いシングルトンへの設計図",
+    "excerpt": "現行LLMの安全調整だけではASI Alignmentは担保できない。必要なのは、人間価値を固定せず、不確実性・訂正可能性・監督・解釈可能性・価値継承・統治を重ねる9層の安全OSである。HVP-ASIから良いシングルトン、伴走存続へ至る成功ルートを、部品と未解決問題を分けて描く。",
+    "featured": true
+  },
+  {
     "no": 33,
     "slug": "33-alignment-schools-map",
     "category": "alignment",
@@ -8,7 +19,7 @@
     "thumb": "images/thumb-alignment-schools-map.jpg",
     "title": "アラインメントは五つの学派に分裂している — Hernández-Espinosa 論文が接続する系譜",
     "excerpt": "PNAS Nexus 2026-04-14掲載のHernández-Espinosa, Abrahão, Witkowski, Zenil論文を数学的射程と運用提案の両面で検証する。Rice定理の応用としての不可能性の限界、MIRI・Anthropic・DeepMind・CHAI・CAISの五学派マップ、三本の断層線。managed misalignmentをRussell–Drexler–Critch のEcosystem派の系譜に接続し、アラインメント研究の地政学を描き直す。",
-    "featured": true
+    "featured": false
   },
   {
     "no": 32,

@@ -2,6 +2,10 @@
   "generated": "2026-04-22",
   "note": "編集者が選定した関連記事ペア。無向。ペアを1行追加すると header.js の関連記事セクションと article-graph.html の実線エッジに自動反映される。slug は articles.json と同じく .html 拡張子なし。",
   "relations": [
+    {"a": "01-ai-alignment", "b": "34-alignment-success-route", "rationale": "アラインメントの射程を成功ルートとして再構成"},
+    {"a": "10-alignment-research-landscape", "b": "34-alignment-success-route", "rationale": "研究布陣図を9層安全OSへ統合"},
+    {"a": "33-alignment-schools-map", "b": "34-alignment-success-route", "rationale": "五学派マップの次に置くAlignment柱記事"},
+    {"a": "07-ai-governance-response", "b": "34-alignment-success-route", "rationale": "良いシングルトンと危険ASI封鎖の統治層"},
     {"a": "10-alignment-research-landscape", "b": "33-alignment-schools-map", "rationale": "5学派マップはalignment布陣図の具体化"},
     {"a": "17-alignment-as-western-problem", "b": "33-alignment-schools-map", "rationale": "5学派の分断は西洋制御概念の派生"},
     {"a": "04-takeoff-speed-debate", "b": "31-agi-timelines-institutions-map", "rationale": "9機関タイムラインは代替の弾力性のp(AGI)軸投影"},

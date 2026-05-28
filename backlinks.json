@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-22T15:42:11+09:00",
+  "generated_at": "2026-05-28T22:53:19+09:00",
   "edges": [
     {
       "from": "01-ai-alignment.html",
@@ -204,6 +204,26 @@
     {
       "from": "29-deep-utopia-solved-world.html",
       "to": "03-agi-explosion.html"
+    },
+    {
+      "from": "34-alignment-success-route.html",
+      "to": "01-ai-alignment.html"
+    },
+    {
+      "from": "34-alignment-success-route.html",
+      "to": "07-ai-governance-response.html"
+    },
+    {
+      "from": "34-alignment-success-route.html",
+      "to": "10-alignment-research-landscape.html"
+    },
+    {
+      "from": "34-alignment-success-route.html",
+      "to": "16-requisite-variety-alignment-ceiling.html"
+    },
+    {
+      "from": "34-alignment-success-route.html",
+      "to": "33-alignment-schools-map.html"
     }
   ]
 }
