@@ -4,10 +4,10 @@
     "slug": "34-alignment-success-route",
     "category": "alignment",
     "date": "2026.05.28",
-    "slides": "10 Sections",
+    "slides": "11 Sections",
     "thumb": "images/thumb-alignment-research-landscape.jpg",
     "title": "アラインメントはどう成功しうるか — 人間価値保存型ASIと良いシングルトンへの設計図",
-    "excerpt": "現行LLMの安全調整だけではASI Alignmentは担保できない。必要なのは、人間価値を固定せず、不確実性・訂正可能性・監督・解釈可能性・価値継承・統治を重ねる9層の安全OSである。HVP-ASIから良いシングルトン、伴走存続へ至る成功ルートを、部品と未解決問題を分けて描く。",
+    "excerpt": "現行LLMの安全調整だけではASI Alignmentは担保できない。必要なのは、人間価値を固定効用関数として直書きせず、価値不確実性、訂正可能性、価値形成過程の保護、AI補助監督、解釈可能性、自己改善後の価値継承、統治を重ねる9層の安全OSである。HVP-ASIから良いシングルトン、伴走存続へ至る細い成功ルートを、部品と未解決問題を分けて描く。",
     "featured": true
   },
   {

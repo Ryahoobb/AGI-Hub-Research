@@ -99,10 +99,10 @@
       }
 
       .hero.img-fullbleed {
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
-        max-width: none;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
         aspect-ratio: 21 / 9;
       }
 
@@ -350,11 +350,12 @@
       <button data-target="slide-8" aria-label="Section 8"></button>
       <button data-target="slide-9" aria-label="Section 9"></button>
       <button data-target="slide-10" aria-label="Section 10"></button>
+      <button data-target="slide-11" aria-label="Section 11"></button>
       <button data-target="slide-nav" aria-label="Navigation"></button>
     </aside>
 
     <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 34 / 34 &nbsp;&middot;&nbsp; Alignment &nbsp;&middot;&nbsp; 10 Sections</span>
+      <span>No. 34 / 34 &nbsp;&middot;&nbsp; Alignment &nbsp;&middot;&nbsp; 11 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="33-alignment-schools-map.html" style="color:inherit;text-decoration:none;border-bottom:none;">&larr; Prev</a>
         <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;border-bottom:none;">Same Category</a>
@@ -403,7 +404,7 @@
 
         <div class="footer">
           <span>AIを優しくする話ではなく、人間価値を数え続ける話</span>
-          <span class="slide-count">1 / 10</span>
+          <span class="slide-count">1 / 11</span>
         </div>
       </section>
 
@@ -448,7 +449,7 @@
         </div>
         <div class="footer">
           <span>出力の親切さと、内部目的の整合性は別物である</span>
-          <span class="slide-count">2 / 10</span>
+          <span class="slide-count">2 / 11</span>
         </div>
       </section>
 
@@ -484,7 +485,7 @@
         </div>
         <div class="footer">
           <span>種の保存と、個人の伴走存続を分ける</span>
-          <span class="slide-count">3 / 10</span>
+          <span class="slide-count">3 / 11</span>
         </div>
       </section>
 
@@ -548,7 +549,7 @@
         </div>
         <div class="footer">
           <span>多層防御が必要な理由</span>
-          <span class="slide-count">4 / 10</span>
+          <span class="slide-count">4 / 11</span>
         </div>
       </section>
 
@@ -582,7 +583,7 @@
         </div>
         <div class="footer">
           <span>HVP-ASI: Human Value Preserving ASI</span>
-          <span class="slide-count">5 / 10</span>
+          <span class="slide-count">5 / 11</span>
         </div>
       </section>
 
@@ -656,7 +657,7 @@
         </div>
         <div class="footer">
           <span>単一技術ではなく、積層された安全OS</span>
-          <span class="slide-count">6 / 10</span>
+          <span class="slide-count">6 / 11</span>
         </div>
       </section>
 
@@ -727,7 +728,7 @@
         </div>
         <div class="footer">
           <span>研究加速と危険な自己改善を分ける</span>
-          <span class="slide-count">7 / 10</span>
+          <span class="slide-count">7 / 11</span>
         </div>
       </section>
 
@@ -750,6 +751,7 @@
           </div>
 
           <p class="lead">この節は、読者の最も自然な疑問に触れる。「それは独裁ではないか」。答えは、危険が本物なら、問題は統制の有無ではなく、統制を何で縛るかである。人類生存のためには、誰かが非アラインASIを作る自由を止めなければならない。だが、それは人間の思想、身体、共同体、ポストヒューマン化、宗教、哲学まで固定する自由を与えてよいという意味ではない。</p>
+          <p class="lead">シングルトンという語は、Bostromが「最上位に単一の意思決定主体を持つ世界秩序」として整理した概念でもある[9]。本稿でいう良いシングルトンは、その概念をそのまま礼賛するものではない。危険ASIを封じるほど強く、しかし人間の価値形成を固定しないほど制約された秩序として、必要最小限に読み替える。</p>
           <p class="lead">良いシングルトンは、未来を一つに固定する秩序ではない。むしろ逆である。破滅的自由を止めることで、非破滅的な未来の多様性を残す。人間が何を幸福と呼ぶか、どんな身体で生きるか、どんな思想を持つか、どんな共同体を作るか、ポストヒューマン化するか、生物学的人間であり続けるか。その余地を残すために、非アラインASIを作る自由だけを没収する。</p>
 
           <div class="diagram" aria-label="Good and bad singleton comparison">
@@ -766,12 +768,12 @@
 └─ 逃げ場がない</pre>
           </div>
 
-          <p class="lead"><a href="07-ai-governance-response.html">AIガバナンス</a>は、この意味でアラインメントの外部条件ではない。巨大訓練の登録、計算資源の監督、モデル重みの保護、危険能力評価の義務化、自律自己改善の制限、フロンティアAIラボの国際監査は、技術的アラインメントの社会的外殻である。</p>
+          <p class="lead"><a href="07-ai-governance-response.html">AIガバナンス</a>は、この意味でアラインメントの外部条件ではない。巨大訓練の登録、計算資源の監督、モデル重みの保護、危険能力評価の義務化、自律自己改善の制限、フロンティアAIラボの国際監査は、技術的アラインメントの社会的外殻である。AI Seoul SummitのFrontier AI Safety CommitmentsやInternational AI Safety Reportのような枠組みは、まだ十分ではないが、能力評価とリスク管理を国際的な共通言語へ寄せる足場になる[10][11]。</p>
           <p class="lead">悪いシングルトンとの差は、単に「優しい統治者かどうか」ではない。良いシングルトンは訂正可能でなければならない。異議申し立ての経路を持たなければならない。現在個人の救済を含まなければならない。価値形成の自由を凍結してはならない。破滅的な能力には強く、非破滅的な生の選択には弱くある。この非対称性が、良いシングルトンの最小条件である。</p>
         </div>
         <div class="footer">
           <span>モデル単体の安全から、世界秩序としての安全へ</span>
-          <span class="slide-count">8 / 10</span>
+          <span class="slide-count">8 / 11</span>
         </div>
       </section>
 
@@ -792,7 +794,7 @@
           </div>
 
           <p class="lead">成功判定は、楽観論の証拠集めではない。どこで折れるかを観測するための計器である。特に重要なのは、寿命脱出や医療余剰が富裕層だけの逃げ道ではなく、普遍配分として設計されているかである。Alignment成功が現在個人の伴走存続を含むなら、余剰の配分は倫理の周辺ではなく、中核指標になる。</p>
-          <p class="lead">もう一つの重要指標は、企業や国家が「モデルがどれだけ賢いか」だけでなく「モデルがどう自己改善するか」「後継システムへ何を継承するか」「監督をどう受けるか」を測り始めるかである。能力評価だけが進み、安全評価が後追いになるなら、成功ルートは細くなる。反対に、危険能力評価、AI Control、解釈可能性、価値継承テストが能力開発と同じ速度で制度化されるなら、まだ道は残る。</p>
+          <p class="lead">もう一つの重要指標は、企業や国家が「モデルがどれだけ賢いか」だけでなく「モデルがどう自己改善するか」「後継システムへ何を継承するか」「監督をどう受けるか」を測り始めるかである。AI Seoul SummitのFrontier AI Safety Commitmentsは、危険能力評価、説明責任、リスク緩和をフロンティアAI組織に求める方向を示した[10]。International AI Safety Report 2025も、汎用AIの能力、リスク、緩和技術に関する科学的理解を国際的に共有する試みである[11]。能力評価だけが進み、安全評価が後追いになるなら、成功ルートは細くなる。反対に、危険能力評価、AI Control、解釈可能性、価値継承テストが能力開発と同じ速度で制度化されるなら、まだ道は残る。</p>
           <p class="lead">ここでAGI Hubが見るべきなのは、企業の安全宣言の強さではない。運用の摩擦である。巨大訓練を登録させる摩擦。重み流出を防ぐ摩擦。危険能力評価で公開を止める摩擦。サブエージェント作成にゲートを置く摩擦。自己改善に監査を挟む摩擦。本当に安全へ向かう社会は、能力開発に対して、面倒だが必要な摩擦を増やしていく。</p>
 
           <div class="note">
@@ -801,7 +803,7 @@
         </div>
         <div class="footer">
           <span>観測可能な兆候として読む</span>
-          <span class="slide-count">9 / 10</span>
+          <span class="slide-count">9 / 11</span>
         </div>
       </section>
 
@@ -855,19 +857,55 @@
             「解けた」とは書けない。部品はあるが、完成品はない。
           </div>
 
+          <p class="lead">未解決問題を残すことは、弱さではない。ここを明示しない成功論のほうが危うい。Alignmentの議論では、ときどき「技術者がうまくやる」「市場が選ぶ」「国家が止める」「超知能が自分で解く」という短い文で、最も難しい部分が飛ばされる。本稿は、その飛ばされた部分を、あえて机の中央に置く。</p>
+          <p class="lead">それでも、この地図には意味がある。問題が大きすぎるとき、人間はしばしば二つの雑な態度に逃げる。もう終わりだと言うか、きっと大丈夫だと言うかである。しかし、未解決問題を並べることは、絶望の儀式ではない。研究、制度、評価、監査、配分のどこへ力を入れるべきかを決めるための、作業用の地図である。</p>
+        </div>
+        <div class="footer">
+          <span>部品はあるが、完成品はない</span>
+          <span class="slide-count">10 / 11</span>
+        </div>
+      </section>
+
+      <section class="slide" id="slide-11">
+        <div class="eyebrow reveal">Conclusion</div>
+        <h2 class="reveal reveal-delay-1">破滅的自由を没収し、価値形成の自由を残す</h2>
+        <div class="panel reveal reveal-delay-2">
           <p class="lead">それでも、成功ルートの輪郭は描ける。現行LLMでは足りない。しかしLLMは安全研究を加速する足場になる。必要なのは9層の安全OSであり、それを7フェーズで良いシングルトンへ接続することである。成功すれば、人類は単に生き残るだけでなく、死と希少性から脱出する可能性がある。失敗すれば、非アラインASI、悪いシングルトン、またはマルチポーラー競争へ落ちる。</p>
           <p class="lead">この成功ルートは、気持ちのよい物語ではない。自由を守るために、ある自由を止めなければならない。人間の未来を開くために、人間が人間を滅ぼす能力を制限しなければならない。良いシングルトンを作るために、悪いシングルトンへ堕ちる危険と向き合わなければならない。だからこそ、これは技術論だけでは終わらない。モデル設計、自己改善、監督、解釈可能性、AI Control、統治、余剰配分をつなぐ文明移行の話になる。</p>
           <p class="lead">破滅論でも楽観論でもなく、第三の視座が必要である。破滅論は、しばしば「作れば終わる」と言う。楽観論は、しばしば「作れば解ける」と言う。本稿の立場は、そのどちらでもない。作れば終わるとは限らない。だが、ただ作れば解けるわけでもない。成功するには、成功条件を設計し、その条件を壊す自由を世界から取り除く必要がある。</p>
 
+          <div class="diagram" aria-label="Conclusion summary">
+<pre>現行LLM
+  足りない
+  しかし安全研究の足場になる
+
+9層の安全OS
+  価値不確実性
+  訂正可能性
+  価値形成過程
+  監督・解釈・継承・統治
+
+7フェーズの文明移行
+  限定環境のHVP-ASI
+  危険ASI封鎖
+  良いシングルトン
+  伴走存続</pre>
+          </div>
+
+          <p class="lead">人間価値保存型ASIは、人間に優しく見えるAIではない。人間価値を完全には知らないと自覚し、人間の訂正を歓迎し、人間の生命、苦痛、主観的連続性、同意、主体性、価値形成過程を守り、自己改善後もその構造を失わず、危険な他ASIを封じる世界秩序を作るための中核である。</p>
+          <p class="lead">そして、良いシングルトンは、未来を一つの正解へ固定する秩序ではない。むしろ、人間が何になるかを選び続けるために、世界から破滅的な自由だけを取り上げる秩序である。非アラインASIを作る自由、監督を破壊する自由、他者の人格を非同意に書き換える自由、主観的連続性を軽視して最適化する自由。それらは自由の名をしていても、全員の自由を終わらせる。</p>
+          <p class="lead">残すべき自由は別にある。考え直す自由。価値観を変える自由。身体を変える自由。生物学的人間であり続ける自由。共同体を作る自由。宗教や哲学を持つ自由。ポストヒューマン化を選ぶ自由。死と希少性から逃れたあとに、何を大切にするかを、未来の人間が自分たちで形成していく自由である。</p>
           <p class="lead" style="margin-top: 24px; font-size: 18px;">ASI Alignment成功とは、人間より賢い機械に人間らしい性格を与えることではない。人間を滅ぼせる自由を世界から取り上げ、人間が何になるかを選び続ける自由を残すことである。</p>
 
           <div class="note">
             アラインメント成功とは、AIに人間らしい優しさを与えることではない。人間価値を完全には知らないと自覚し、人間の訂正を歓迎し、人間の生命・主体性・価値形成過程を守り、自己改善後もその構造を失わず、危険な他ASIを封じる世界秩序を作ることである。それは単一の技術ではない。9層の安全OSと、7フェーズの文明移行である。
           </div>
+
+          <p class="lead">超知能に渡してよい自由と、世界から没収しなければならない自由を分けること。アラインメントの成功は、そこからしか始まらない。</p>
         </div>
         <div class="footer">
           <span>破滅的自由を没収し、価値形成の自由を残す</span>
-          <span class="slide-count">10 / 10</span>
+          <span class="slide-count">11 / 11</span>
         </div>
       </section>
 
@@ -899,7 +937,7 @@
       <p>AGI HUB &middot; No. 34 &middot; Alignment &middot; 2026.05.28 &middot; By Ryao</p>
       <p style="margin-top:12px;">
         <strong style="color:#565656;">Scope.</strong>
-        本稿はASI Alignment成功ルートを、現行LLMの安全調整、人間価値保存型ASI、9層アーキテクチャ、7フェーズ移行、良いシングルトンへの世界秩序設計として統合した設計図である。単発の研究紹介ではなく、AGI HUBのAlignmentカテゴリに置く柱記事として、既存研究部品、未解決問題、文明移行の条件を接続するための作業地図として読むことを意図している。
+        本稿はASI Alignment成功ルートを、現行LLMの安全調整、人間価値保存型ASI、9層アーキテクチャ、7フェーズ移行、良いシングルトンへの世界秩序設計として統合した設計図である。単発の研究紹介ではなく、AGI HUBのAlignmentカテゴリに置く柱記事として、既存研究部品、未解決問題、文明移行の条件を接続するための作業地図として読むことを意図している[12]。
       </p>
       <p style="margin-top:8px;">
         <strong style="color:#565656;">References.</strong>
@@ -910,8 +948,11 @@
         [5] Greenblatt, R., Shlegeris, B., Sachan, K., Roger, F. (2023) "AI Control: Improving Safety Despite Intentional Subversion". arXiv:2312.06942. <a href="https://arxiv.org/abs/2312.06942">arxiv.org</a>.
         [6] Irving, G., Christiano, P., Amodei, D. (2018) "AI safety via debate". arXiv:1805.00899. <a href="https://arxiv.org/abs/1805.00899">arxiv.org</a>.
         [7] Christiano, P., Shlegeris, B., Amodei, D. (2018) "Supervising strong learners by amplifying weak experts". arXiv:1810.08575. <a href="https://arxiv.org/abs/1810.08575">arxiv.org</a>.
-        [8] Elhage, N. et al. (2022) "Toy Models of Superposition". Anthropic. <a href="https://www.anthropic.com/research/toy-models-of-superposition">anthropic.com</a>.
-        [9] AGI HUB (2026) "AGI HUB — Intelligence, Alignment, and The Next Phase". <a href="https://ryahoobb.github.io/AGI-hub/index.html">ryahoobb.github.io</a>.
+        [8] Anthropic (2024) "Mapping the Mind of a Large Language Model". <a href="https://www.anthropic.com/research/mapping-mind-language-model">anthropic.com</a>.
+        [9] Bostrom, N. (2005/2006) "What is a Singleton?". <a href="https://nickbostrom.com/fut/singleton">nickbostrom.com</a>.
+        [10] UK Department for Science, Innovation and Technology (2024, updated 2025) "Frontier AI Safety Commitments, AI Seoul Summit 2024". <a href="https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024">gov.uk</a>.
+        [11] International AI Safety Report (2025) "International AI Safety Report 2025". <a href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025">internationalaisafetyreport.org</a>.
+        [12] AGI HUB (2026) "AGI HUB — Intelligence, Alignment, and The Next Phase". <a href="https://ryahoobb.github.io/AGI-hub/index.html">ryahoobb.github.io</a>.
       </p>
       <p style="margin-top:12px;">
         <strong style="color:#565656;">Image.</strong>
