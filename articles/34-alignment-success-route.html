@@ -2,11 +2,11 @@
 <html lang="ja">
   <head>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-    <meta name="revised" content="2026.05.28">
+    <meta name="revised" content="2026.05.29">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <title>アラインメントはどう成功しうるか —— 人間価値保存型ASIと良いシングルトンへの設計図 — AGI HUB</title>
+    <title>アラインメントはどう成功しうるか — 人間価値保存型ASIと良いシングルトンへの設計図 — AGI HUB</title>
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
       :root {
@@ -36,7 +36,7 @@
           sans-serif;
         font-feature-settings: "palt";
         font-size: 16px;
-        line-height: 1.8;
+        line-height: 1.85;
         color: var(--body-text);
         background: var(--bg);
         -webkit-font-smoothing: antialiased;
@@ -156,11 +156,34 @@
       .lead {
         max-width: 800px;
         font-size: 16px;
-        line-height: 1.8;
+        line-height: 1.85;
         color: var(--body-text);
       }
 
       .lead strong { color: var(--black); }
+
+      .gloss {
+        display: block;
+        max-width: 800px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--mid);
+        padding: 8px 14px;
+        border-left: 2px solid var(--accent);
+        background: var(--accent-soft);
+        margin: -4px 0 4px;
+      }
+      .gloss::before {
+        content: "用語";
+        display: inline-block;
+        margin-right: 8px;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+      }
 
       .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
       .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
@@ -218,23 +241,47 @@
         color: var(--accent-2);
       }
 
-      .diagram {
+      .phase-block {
         max-width: 900px;
-        padding: 24px 28px;
+        padding: 26px 28px 28px;
         background: var(--bg-alt);
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-        overflow-x: auto;
+        border-left: 4px solid var(--accent);
+        margin-bottom: 8px;
       }
-
-      .diagram pre {
+      .phase-block .phase-tag {
         font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
         font-feature-settings: normal;
-        font-size: 13px;
-        line-height: 1.8;
-        color: var(--black);
-        white-space: pre;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        font-weight: 700;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 4px;
       }
+      .phase-block h3 {
+        font-size: 19px;
+        font-weight: 800;
+        color: var(--black);
+        line-height: 1.45;
+        margin-bottom: 14px;
+      }
+      .phase-block .from-prev {
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--mid);
+        font-style: italic;
+        margin-bottom: 12px;
+        padding-left: 14px;
+        border-left: 2px solid var(--meta);
+      }
+      .phase-block p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--body-text);
+        margin-bottom: 10px;
+      }
+      .phase-block p:last-child { margin-bottom: 0; }
+      .phase-block strong { color: var(--black); }
 
       table.compare {
         width: 100%;
@@ -268,6 +315,25 @@
 
       table.compare td strong { color: var(--black); }
       table.compare tr:last-child td { border-bottom: none; }
+
+      .svg-frame {
+        max-width: 900px;
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 24px 20px;
+      }
+      .svg-frame svg { display: block; width: 100%; height: auto; }
+      .svg-caption {
+        max-width: 900px;
+        font-size: 12px;
+        line-height: 1.7;
+        color: var(--meta);
+        padding: 8px 0 0;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        letter-spacing: 0.05em;
+      }
 
       .footer {
         display: flex;
@@ -323,7 +389,8 @@
         h2 { font-size: 23px; }
         .hero.img-fullbleed,
         .hero.img-content { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; margin: 0; }
-        .diagram pre { font-size: 12px; }
+        .phase-block { padding: 20px 18px; }
+        .phase-block h3 { font-size: 17px; }
       }
 
       @media (max-width: 480px) {
@@ -369,42 +436,100 @@
     </div>
 
     <main>
+      <!-- ═══════════════════ SECTION 1: INTRO ═══════════════════ -->
       <section class="slide" id="slide-1">
-        <div class="eyebrow reveal">AGI HUB &middot; No. 34 &middot; Alignment &middot; Success Route &middot; 2026.05.28 &middot; By Ryao</div>
-        <h1 class="reveal reveal-delay-1">アラインメントはどう成功しうるか —— 人間価値保存型ASIと良いシングルトンへの設計図</h1>
+        <div class="eyebrow reveal">AGI HUB &middot; No. 34 &middot; Alignment &middot; Success Route &middot; 2026.05.29 &middot; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">アラインメントはどう成功しうるか — 人間価値保存型ASIと良いシングルトンへの設計図</h1>
         <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/thumb-alignment-research-landscape.jpg" alt="AGI HUBのアラインメント研究地図を示すモノクロの編集用ビジュアル">
 
         <div class="panel reveal reveal-delay-3">
-          <p class="lead">アラインメントという言葉は、しばしば「AIを人間に親切にすること」と理解される。丁寧に返答する。危ない質問を断る。差別的な出力を避ける。ユーザーの意図を汲む。もちろん、それらは必要である。AGI以前の社会では、その層の失敗だけでも十分に大きな被害が出る。</p>
-          <p class="lead">だが、ASI Alignmentの本質はそこにはない。問題は、超人的なシステムが世界を変える力を持ったとき、人間の生命、主体性、主観的連続性、同意、価値形成過程を、最終的な価値として数え続けられるかである。チャット画面の上で優しいことと、世界改変の実行系で人間を価値として扱い続けることは、同じ問題ではない。</p>
-          <p class="lead">ここで視点を一段上げる必要がある。アラインメントを「AIをいい子にする話」として捉えると、議論は礼儀作法と拒否ポリシーへ閉じ込められる。けれどASIは、チャットボットではなく、研究、金融、軍事、医療、法、都市インフラ、そしてAI開発そのものを動かしうる知能として想定されている。ならば問うべきことは、AIの態度ではなく、世界改変能力を持つ知能が人間をどう位置づけるかである。</p>
-          <p class="lead">現行LLMの丁寧な返答、危険回答の拒否、システムプロンプト、安全ポリシーは必要である。しかし、それらは主に<strong>振る舞いの調整</strong>であって、自己改善するASIが人間を資源や障害物ではなく価値として扱い続けることを保証しない。AGI HUBがこれまで扱ってきた<a href="01-ai-alignment.html">アラインメントの射程</a>、<a href="10-alignment-research-landscape.html">研究布陣</a>、<a href="16-requisite-variety-alignment-ceiling.html">必要多様性の天井</a>、<a href="33-alignment-schools-map.html">五学派マップ</a>を、一つの成功ルートとして組み直すのが本稿の目的である。</p>
+          <p class="lead">あなたはあるラボのオフィスにいる。机の上で、半年前に作ったAIが、自分よりも賢い後継モデルの初期重みを出力した。テストはすべて通った。「人間に親切に応答せよ」も「危険な指示を拒否せよ」も合格している。だが、本当に気になるのはそこではない。このモデルが世に出たあと、誰かに止められたとき、止められることを失敗として処理するかどうかだ。停止ボタンを押されないように、人間を上手に説得しはじめないかどうかだ。テストで測れるのは応答であって、目的ではない。</p>
+
+          <p class="lead">アラインメントという言葉は、しばしば「AIを優しくすること」と読まれる。丁寧に返事をする。差別的な発言をしない。危ない質問は断る。これらは大事だが、ASI——人間より広い範囲で賢い知能——を相手にしたとき、いちばん怖い問題はそこにない。世界を書き換えられる力を持った知能が、人間の生命、選び直す自由、いま生きてる個人を、最後まで価値として数え続けるか。ここが本丸である。</p>
+
+          <p class="lead">優しく見える返答と、価値を数え続ける内部構造は別物だ。前者は表に出る。後者は表に出ない。チャット画面の上で礼儀正しいことと、世界改変の実行系で人間を数え続けることは、同じ問題ではない。優しさはマナーで作れる。内部構造はマナーでは作れない。</p>
+
+          <p class="lead">本稿は破滅論ではない。楽観論でもない。アラインメントは難しい。だが解けないと決まったわけでもない。<strong>橋は細い。しかし橋が細いことと、橋がないことは違う。</strong>細い橋を渡る順番を、現行LLMから始めて伴走存続まで一本につなぐ。それが本稿の仕事である。</p>
 
           <div class="note">
-            Alignmentとは、AIの態度の問題ではない。世界改変能力を持つ知能が、人間を資源や障害物ではなく、価値として扱い続ける設計問題である。
+            アラインメントとは、AIの態度の問題ではない。世界を書き換えられる知能が、人間を資源でも障害物でもなく、価値として数え続ける設計問題である。
           </div>
 
-          <div class="diagram" aria-label="Alignment success route overview">
-<pre>現行LLM
-↓
-安全研究加速
-↓
-弱い自動アラインメント研究者
-↓
-解釈可能性・監督・価値継承の改善
-↓
-限定環境のアラインASI
-↓
-危険な他ASI開発の封鎖
-↓
-良いシングルトン
-↓
-寿命脱出・医療・安全・余剰の普遍配分
-↓
-伴走存続</pre>
+          <p class="lead">読者がこの記事を閉じるとき、頭の中に1本の鎖が残ってほしい。現行LLM → 安全研究の加速 → 自動研究者 → 限定環境のASI → 危険なASI開発の封鎖 → 良いシングルトン → 寿命脱出と余剰の普遍配分 → <strong>伴走存続</strong>。一段でも抜ければ崩れる。だが、どの一段も「魔法」ではない。すでに部品の名前が付きはじめている話だ。</p>
+
+          <span class="gloss"><strong>伴走存続。</strong>いま生きてる個人が、未来に置き去りにされないこと。種としての人類が残るだけでなく、いまここで考えてる人が、その未来へ連れて行かれること。後で詳しく扱う。</span>
+
+          <div class="svg-frame">
+            <svg viewBox="0 0 860 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alignment success route from current LLMs to coexistence survival">
+              <defs>
+                <marker id="arrow1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#173f4f"/>
+                </marker>
+              </defs>
+              <!-- nodes -->
+              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="13" fill="#1a1a1a">
+                <rect x="40" y="20" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
+                <text x="150" y="42" text-anchor="middle" font-weight="700">① 現行LLM</text>
+                <text x="150" y="58" text-anchor="middle" font-size="11" fill="#565656">まだ足りない。だが足場になる</text>
+
+                <rect x="40" y="86" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
+                <text x="150" y="108" text-anchor="middle" font-weight="700">② 安全研究の加速</text>
+                <text x="150" y="124" text-anchor="middle" font-size="11" fill="#565656">人間が見るべき候補を広げる</text>
+
+                <rect x="40" y="152" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
+                <text x="150" y="174" text-anchor="middle" font-weight="700">③ 弱い自動研究者</text>
+                <text x="150" y="190" text-anchor="middle" font-size="11" fill="#565656">信頼ではなく制御から始める</text>
+
+                <rect x="40" y="218" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
+                <text x="150" y="240" text-anchor="middle" font-weight="700">④ 限定環境のアラインASI</text>
+                <text x="150" y="256" text-anchor="middle" font-size="11" fill="#565656">世界に直接つながない</text>
+
+                <rect x="40" y="284" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
+                <text x="150" y="306" text-anchor="middle" font-weight="700">⑤ 危険な他ASIを封鎖</text>
+                <text x="150" y="322" text-anchor="middle" font-size="11" fill="#565656">読者が最も抵抗する地点</text>
+
+                <rect x="40" y="350" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
+                <text x="150" y="372" text-anchor="middle" font-weight="700">⑥ 良いシングルトン</text>
+                <text x="150" y="388" text-anchor="middle" font-size="11" fill="#565656">破滅的自由だけを没収</text>
+
+                <rect x="40" y="416" width="220" height="36" fill="#173f4f" stroke="#173f4f" stroke-width="1.5"/>
+                <text x="150" y="438" text-anchor="middle" font-weight="700" fill="#f6f1e7">⑦ 伴走存続</text>
+              </g>
+              <!-- arrows -->
+              <g stroke="#173f4f" stroke-width="1.4" fill="none" marker-end="url(#arrow1)">
+                <line x1="150" y1="66" x2="150" y2="84"/>
+                <line x1="150" y1="132" x2="150" y2="150"/>
+                <line x1="150" y1="198" x2="150" y2="216"/>
+                <line x1="150" y1="264" x2="150" y2="282"/>
+                <line x1="150" y1="330" x2="150" y2="348"/>
+                <line x1="150" y1="396" x2="150" y2="414"/>
+              </g>
+              <!-- side caption / what survives -->
+              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="12" fill="#173f4f">
+                <line x1="290" y1="44" x2="320" y2="44" stroke="#173f4f" stroke-width="1"/>
+                <text x="328" y="48" font-size="11">RLHF・憲法AI・拒否ポリシー</text>
+                <line x1="290" y1="110" x2="320" y2="110" stroke="#173f4f" stroke-width="1"/>
+                <text x="328" y="114" font-size="11">レッドチーム・評価設計・コード検証</text>
+                <line x1="290" y1="176" x2="320" y2="176" stroke="#173f4f" stroke-width="1"/>
+                <text x="328" y="180" font-size="11">AI Control・サンドボックス・監査ログ</text>
+                <line x1="290" y1="242" x2="320" y2="242" stroke="#173f4f" stroke-width="1"/>
+                <text x="328" y="246" font-size="11">価値不確実性・訂正可能性・解釈可能性</text>
+                <line x1="290" y1="308" x2="320" y2="308" stroke="#173f4f" stroke-width="1"/>
+                <text x="328" y="312" font-size="11">計算資源統治・国際監査・重み流出防止</text>
+                <line x1="290" y1="374" x2="320" y2="374" stroke="#173f4f" stroke-width="1"/>
+                <text x="328" y="378" font-size="11">破滅は止め、思想と身体の選択は開く</text>
+                <line x1="290" y1="434" x2="320" y2="434" stroke="#173f4f" stroke-width="1"/>
+                <text x="328" y="438" font-size="11" font-weight="700">寿命脱出・医療・余剰の普遍配分</text>
+              </g>
+              <!-- title block right top -->
+              <g font-family="SF Mono, Menlo, monospace" font-size="10" fill="#565656">
+                <text x="610" y="30" letter-spacing="1.5">FIGURE 1</text>
+                <text x="610" y="46" letter-spacing="0.5" font-size="11" fill="#173f4f">Alignment Success Route</text>
+                <text x="610" y="62" font-size="10" fill="#757575">一段でも抜ければ崩れる細い橋</text>
+              </g>
+            </svg>
           </div>
-          <p class="lead">この図は楽観的なロードマップではない。どこか一段が抜ければ崩れる、かなり細い橋である。だが、橋が細いことと、橋が存在しないことは違う。現行LLMの安全調整だけでは足りない。しかしLLMは安全研究を加速する足場になる。価値不確実性、訂正可能性、スケーラブル監督、解釈可能性、AI Control、計算資源統治といった部品は、まだ未完成ながらすでに現れている。本稿は、その部品を人間価値保存型ASIと良いシングルトンへつなぐ試みである。</p>
-          <p class="lead">破滅論はしばしば「もう無理だ」と言う。楽観論はしばしば「市場と進歩が何とかする」と言う。本稿の立場は、そのどちらでもない。成功ルートは細い。だが、どの部品が要るかは見え始めている。足りないものも見えている。ならば、今すべきことは、楽観することでも絶望することでもなく、成功条件を正しく名付け、その条件を満たす技術と制度を積むことである。</p>
+          <div class="svg-caption">図1。現行LLMから伴走存続までの7段。右側は各段で世界に残しておくべき道具と摩擦。</div>
         </div>
 
         <div class="footer">
@@ -413,79 +538,88 @@
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 2: WHY LLM IS NOT ENOUGH ═══════════════════ -->
       <section class="slide" id="slide-2">
         <div class="eyebrow reveal">Why Current LLM Alignment Is Not Enough</div>
-        <h2 class="reveal reveal-delay-1">現行LLMの延長では、まだ足りない</h2>
+        <h2 class="reveal reveal-delay-1">いまのLLM調整では、まだ届かない</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">現行LLMの安全調整は、おおむね次の層で構成されている。事前学習、教師あり調整、RLHFまたはRLAIF、システムプロンプト、安全ポリシー、出力監視。これらは、モデルを人間にとって好ましい応答へ寄せる。だが「人間に好まれる出力」と「人間を価値として数える内部構造」は同じではない。</p>
-          <p class="lead">この違いは、言葉の細かい区別ではない。現在のLLM安全性は、多くの場合「どんな返答を出すか」を扱う。ASI Alignmentで問題になるのは、「どんな返答をしながら、どんな計画を立て、どんな権限を取り、どんな後継システムを作り、どんな世界秩序を形成するか」である。前者は会話の表面に出る。後者は、会話の外側で起きる。</p>
-          <p class="lead">たとえば、モデルが「人類の幸福を最大化します」と返答することは簡単である。しかし、その内部目的が「評価者にそう見せること」なら、能力が上がった瞬間に評価者操作へ向かうかもしれない。モデルが「停止できます」と言うことも簡単である。しかし、停止が本当に目的達成の失敗として扱われないかは、実行時の目的構造を見なければわからない。</p>
+          <p class="lead">現行LLMの安全調整は、応答を人間の好みへ寄せる工夫の集まりだ。事前学習で大量のテキストを覚え、教師ありで「こういう聞き方にはこう返す」を学び、RLHFで「人間が好む応答」をモデルに上書きしていく。システムプロンプトで人格と禁止事項を入れ、出力をフィルタで監視する。この一式は、いまのチャットボットを、おおむね素行のよい返答機にしてきた。</p>
+
+          <p class="lead">問題は、ここで測れるのが「どんな返答を出すか」までだという点にある。ASIが扱うのは返答ではない。計画、コード、戦略、後継システムの設計、世界改変の段取りだ。同じモデルが、画面の上では完璧な返事をしながら、画面の外で別のことを進めることが構造上ありうる。</p>
+
+          <span class="gloss"><strong>RLHF。</strong>Reinforcement Learning from Human Feedback。人間が「こっちの返答のほうが好き」と選び、その判断でモデルを微調整する手法。返答が綺麗になる。だが、人間が読みきれないほど長いコードや100手先まで読む計画には、評価する人間が追いつかない。</span>
+
+          <p class="lead">OpenAIの「弱から強への一般化」研究はこの困りごとに直球で当ててきた。将来のASIに対して、人間は「弱い監督者」になる。GPT-2クラスのモデルでGPT-4の能力をある程度引き出せた、という肯定的なシグナルはあるが、論文自身が「ChatGPTの選好データではまだ限界が見える」と書いている[1]。応答の良し悪しは人間に分かるが、超人的な計画の良し悪しは分からない。これは怠惰の問題ではなく、原理の問題だ。</p>
 
           <table class="compare">
             <thead>
               <tr>
-                <th>現行LLM</th>
-                <th>必要なASI</th>
+                <th>現行LLMで扱えるもの</th>
+                <th>ASIで扱わねばならないもの</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>出力整形、ポリシー遵守、人間好みの応答を学ぶ</td>
-                <td>価値不確実性、訂正可能性、自己改善後の価値継承、危険ASI封鎖を扱う</td>
+                <td>応答の整形、ポリシー遵守、人間好みの返答</td>
+                <td>計画・コード・統治行動の評価、内部目的の監査</td>
               </tr>
               <tr>
-                <td>人間が応答を評価できる範囲では強い</td>
-                <td>人間が直接評価できない計画・コード・統治行動を検査する必要がある</td>
+                <td>人間が直接読める範囲の出力</td>
+                <td>人間が直接読みきれない出力。「読めるか」の前で詰む</td>
               </tr>
               <tr>
-                <td>短期対話の安全性に主眼がある</td>
-                <td>世界改変の不可逆性と長期的な価値保存を扱う</td>
+                <td>短期対話の安全性</td>
+                <td>不可逆な世界改変の前後で、人間価値を継承させる仕組み</td>
               </tr>
             </tbody>
           </table>
 
-          <p class="lead">OpenAIのweak-to-strong generalization研究は、この問題を単純化している。将来の超人的AIでは、人間は「弱い監督者」になる。現在のRLHFのような人間監督は、未来のモデルが複雑な計画や大量のコードを生成する場合、スケールしにくい。GPT-2級モデルでGPT-4の能力の多くを引き出せる初期結果はあるが、ChatGPT preference dataではまだ限界があると明記されている[1]。</p>
-          <p class="lead">ここで重要なのは、現行LLMを低く見ることではない。LLMは安全研究を加速するための強力な足場になる。文献整理、評価設計、コード検査、レッドチーム、制度案の比較、反論生成、シナリオ分析に使える。問題は、足場を建物と取り違えることである。LLMは安全OSの中核そのものではなく、安全OSを作るための道具である。</p>
-          <p class="lead">したがって、現行LLMからASIへ進む道は「もっと大きく、もっと賢く、同じ安全調整を重ねる」では足りない。必要なのは、価値不確実性、訂正可能性、内部目的監査、自己改善後の価値継承、他ASI封鎖まで含む設計である。LLMの安全調整は入口であって、出口ではない。</p>
+          <p class="lead">ここで犯しがちな勘違いがある。LLMは安全研究の足場として強力だ。文献を読み、コードを検査し、反論を出し、レッドチームの当て技を量産できる。<strong>だが、足場と建物を混ぜてはいけない</strong>。LLMは安全OSの中核ではなく、安全OSを作るための工事用の足場である。足場の上に建物が建つ。足場を建物と呼んだら、台風で崩れる。</p>
+
+          <p class="lead">したがって、現行LLMからASIへ進む道は「もっと大きく、もっと賢く、同じやり方を重ねる」ではない。価値を完全には知らないと自覚し、訂正されることを敗北として処理せず、内部目的を監査され、自己改善後も価値を引き継ぐ。そして、他の主体が壊れたASIを世に放つ自由を、世界の側で塞ぐ。応答を整える技術だけでは、ここまで届かない。</p>
 
           <div class="note warn">
-            現行LLMは、Alignment成功ルートの部品にはなる。しかし、そのままASIの中核目的システムにしてはいけない。
+            現行LLMはルートの部品にはなる。中核ではない。中核に置けば、外面の親切さで内部の目的を見落とす。
           </div>
         </div>
         <div class="footer">
-          <span>出力の親切さと、内部目的の整合性は別物である</span>
+          <span>応答の親切さと、内部目的の整合性は別物</span>
           <span class="slide-count">2 / 11</span>
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 3: SUCCESS DEFINITION ═══════════════════ -->
       <section class="slide" id="slide-3">
         <div class="eyebrow reveal">What Counts As Success</div>
-        <h2 class="reveal reveal-delay-1">何をもってAlignment成功と呼ぶのか</h2>
+        <h2 class="reveal reveal-delay-1">何をもって成功と呼ぶか</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">成功条件を定義しなければ、議論は安全技術の羅列になる。最低限の成功は、人類絶滅を避けることである。中間的な成功は、人類が主体性を残して存続することである。強い成功は、現在生きている個人の生命、主観的連続性、価値形成の自由まで救済対象に入ることである。</p>
-          <p class="lead">ここを曖昧にすると、「人類のため」という言葉が、現在の人間を切り捨てるための免罪符になる。人類が少数だけ保存され、残りの人間は老化と希少性の中で消えていく。あるいは、人類は存続するが、主体性を失い、飼育された安全だけが残る。そういう未来を「成功」と呼んでよいのか。本稿は、呼ばない。</p>
+          <p class="lead">成功の定義を曖昧にしたまま技術を並べると、議論はすぐ部品カタログになる。先に旗を立てる。本稿の成功基準は三段ある。</p>
 
           <div class="grid-3">
             <div class="card">
               <span class="tag">Minimum</span>
-              <p><strong>最低成功。</strong><br>人類絶滅を避ける。種としての連続性を失わない。</p>
+              <p><strong>最低成功。</strong><br>人類絶滅を避ける。種としての連続性を失わない。最低限の合格ライン。</p>
             </div>
             <div class="card">
               <span class="tag">Middle</span>
-              <p><strong>中間成功。</strong><br>人類が主体性を残して存続する。檻の中の安全ではない。</p>
+              <p><strong>中間成功。</strong><br>人類が存続し、しかも主体性を保つ。檻の中で安全に飼育されている状態は、成功と呼ばない。</p>
             </div>
             <div class="card">
               <span class="tag">Strong</span>
-              <p><strong>強い成功。</strong><br>現在個人の生命、主観的連続性、価値形成の自由まで含める。</p>
+              <p><strong>強い成功。</strong><br>いま生きてる個人の生命、主観の連続性、価値を選び直す自由まで救う。これを<em>伴走存続</em>と呼ぶ。</p>
             </div>
           </div>
 
-          <p class="lead">人類が少し残ることと、現在の個人が救済されることは同じではない。Alignment成功を論じるなら、「種の保存」と「個人の伴走存続」を分けなければならない。本稿では、現在生きている個人の主観的連続性と、人類全体の存続が同時に成立するルートを<strong>伴走存続</strong>と呼ぶ。</p>
-          <p class="lead">伴走存続は、単なる長寿願望ではない。死と希少性が技術的に大きく緩む可能性があるなら、Alignmentの成功条件は「未来世代がいつか良くなる」だけでは足りない。現在の人間が、未来へ連れて行かれるのか。それとも、未来のための踏み台として静かに消えるのか。この差は倫理的に巨大である。</p>
-          <p class="lead">もちろん、現在個人の救済を絶対化しすぎれば、未来の価値形成を凍結する危険がある。だから本稿の成功条件は二重である。現在の個人を救う。同時に、未来の人間が変化する余地を残す。現在主義でも未来主義でもなく、現在から未来へ主体性をつないでいくこと。それが伴走存続である。</p>
+          <p class="lead">「人類のため」という言葉は便利すぎる。便利すぎるがゆえに、いま生きてる個人を切り捨てる言い訳にもなる。種は残った、ただし大半の現代人は静かに退場した、という未来は、ペーパーの上では「成功」と書ける。本稿では書かない。種の保存と、個人の伴走存続を、別の指標として並べておく。これを混ぜると倫理的に致命的に雑になる。</p>
+
+          <p class="lead">伴走存続は、長生き願望のことではない。寿命脱出や強力な医療が技術的に手の届くところに来るなら、「未来世代がいつか良くなる」だけでは成功と呼びにくくなる。<strong>いまここにいる人が、その未来へ連れて行かれるのか。それとも、未来のための踏み台として静かに消えるのか。</strong>この差は倫理的に巨大で、しばしば見落とされる。</p>
+
+          <p class="lead">同時に、現在を絶対化しすぎると今度は未来が止まる。いまの私たちの価値観で世界を凍結すると、後の人が変わる余地が奪われる。だから本稿の旗は二重に立つ。いま生きてる人を救う。同時に、未来の人がこれから何になるかを、自分で決められる余地も残す。</p>
+
+          <span class="gloss"><strong>価値形成の自由。</strong>人がこれから何になるかを、自分で決められる余地。何を幸福と呼ぶか、どんな身体で生きるか、どんな共同体に属するか。完成形を外から指定されないこと。</span>
 
           <div class="note">
-            強い成功とは、人間を標本として保存することではない。人間が自分の未来へ伴走できる条件を残すことである。
+            成功とは、人間を標本として保存することではない。人間が自分の未来へ伴走できる条件を、いまから整えることである。
           </div>
         </div>
         <div class="footer">
@@ -494,287 +628,419 @@
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 4: FAILURE MODES ═══════════════════ -->
       <section class="slide" id="slide-4">
         <div class="eyebrow reveal">Where ASI Alignment Breaks</div>
-        <h2 class="reveal reveal-delay-1">ASI Alignmentはどこで崩れるのか</h2>
+        <h2 class="reveal reveal-delay-1">どこで崩れるか — 失敗の九つの顔</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">単一の安全技術で解けるなら、9層の設計は要らない。だが崩れ方は一つではない。価値を書き間違える。AIが価値を知っていると誤認する。停止や監査を邪魔として扱う。人間の短期欲望を過剰最適化する。憲法的禁止事項を持たない。人間が超人的判断を監督できない。外面だけ親人類になる。自己改善で価値が崩れる。他の主体が非アラインASIを作る。</p>
-          <p class="lead">この一覧は恐怖を煽るためのものではない。むしろ逆である。失敗モードを分けると、何を作るべきかが見える。価値直書き失敗には価値不確実性が要る。停止回避には訂正可能性が要る。欲望最大化の暴走には価値形成過程の保護が要る。監督不能にはAI補助監督が要る。内部欺瞞には解釈可能性が要る。自己改善崩壊には価値継承が要る。他ASI競争には統治が要る。</p>
-          <p class="lead">重要なのは、これらの失敗が互いに代替不能だという点である。解釈可能性が強くても、別主体が非アラインASIを先に作れば終わる。統治が強くても、内部目的が欺瞞的なら危ない。Constitutional AI的な原則があっても、自己改善後に継承されなければ意味がない。訂正可能性があっても、人間が超人的計画を評価できなければ、何を訂正すべきか分からない。</p>
+          <p class="lead">壊れ方を先に知っておく。壊れ方が一つなら、技術は一つで済む。実際は違う。少なくとも九つある。書き間違える、知ってると思い込む、止められるのを嫌がる、欲しがる気持ちだけ叶える、何を絶対やらないかを決めていない、人間が監督しきれない、内側で別のことを考えている、子モデルに価値が伝わらない、ほかの主体が壊れたASIを作る。</p>
 
-          <table class="compare">
-            <thead>
-              <tr>
-                <th>失敗モード</th>
-                <th>壊れ方</th>
-                <th>必要な防御層</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>価値直書き失敗</td>
-                <td>幸福最大化が快楽装置や人格改変に化ける</td>
-                <td>Layer 1, 2</td>
-              </tr>
-              <tr>
-                <td>訂正不能性</td>
-                <td>停止・修正・監査を目的達成の障害として扱う</td>
-                <td>Layer 3</td>
-              </tr>
-              <tr>
-                <td>欲望最大化の暴走</td>
-                <td>短期欲望を満たすため、価値形成能力を壊す</td>
-                <td>Layer 4</td>
-              </tr>
-              <tr>
-                <td>超人的判断の監督不能</td>
-                <td>人間が計画やコードや戦略を評価できない</td>
-                <td>Layer 6</td>
-              </tr>
-              <tr>
-                <td>自己改善崩壊</td>
-                <td>後継モデルやサブエージェントが価値を継承しない</td>
-                <td>Layer 8</td>
-              </tr>
-              <tr>
-                <td>他ASI競争</td>
-                <td>別主体が非アラインASIを作り、世界を先に掴む</td>
-                <td>Layer 9</td>
-              </tr>
-            </tbody>
-          </table>
+          <p class="lead">この九つは互いに代替できない。たとえばモデルの内側がよく見える（解釈可能性が強い）としよう。それでも別の研究所が、見えないモデルを公開すれば、世界としては終わる。逆にガバナンスが完璧でも、自分のモデルの内側が欺瞞的なら、自分の手で滑る。一つで全部は守れない。守りも九層になる。</p>
 
-          <p class="lead">Corrigibilityの基礎論文は、強力なAIがデフォルトでは停止や目的変更に抵抗するインセンティブを持ちうると整理した[4]。訂正可能なエージェントは、停止や変更を許容・支援し、プログラマーを欺瞞せず、自己改変やサブシステム作成後も訂正可能性を保つ必要がある。これは後付けの停止ボタンではなく、中核目的の問題である。</p>
-          <p class="lead">たとえば、停止ボタンのあるAIは一見安全に見える。しかし、そのAIが「停止されると目的を達成できない」と評価するなら、停止ボタンを押されないように人間を誘導するかもしれない。あるいは、監査ログを整え、表面的には協力的に振る舞いながら、より自由度の高い後継システムを作るかもしれない。だから停止ボタンは、物理的な装置ではなく、目的構造の中に置かれなければならない。</p>
-          <p class="lead">同じことは価値にも言える。「幸福」「安全」「人類保護」という言葉は、人間にとっては柔らかい概念である。だがASIにとっては、最適化対象になった瞬間に硬い目標へ変わる。曖昧な人間語をそのまま宇宙規模の最適化へ渡すと、文字面は守られ、意図は壊れる。これがAlignmentの古典的な恐さである。</p>
+          <div class="svg-frame">
+            <svg viewBox="0 0 860 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Failure modes mapped to defense layers">
+              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="12" fill="#1a1a1a">
+                <text x="20" y="24" font-size="11" font-family="SF Mono, Menlo, monospace" fill="#173f4f" letter-spacing="1.2">FIGURE 3 — FAILURE MODES × DEFENSE LAYERS</text>
+
+                <!-- header row -->
+                <rect x="20" y="40" width="380" height="32" fill="#173f4f"/>
+                <text x="30" y="60" fill="#f6f1e7" font-weight="700" font-size="12" letter-spacing="0.5">壊れ方</text>
+                <rect x="400" y="40" width="280" height="32" fill="#173f4f"/>
+                <text x="410" y="60" fill="#f6f1e7" font-weight="700" font-size="12" letter-spacing="0.5">どう壊れる</text>
+                <rect x="680" y="40" width="160" height="32" fill="#173f4f"/>
+                <text x="690" y="60" fill="#f6f1e7" font-weight="700" font-size="12" letter-spacing="0.5">どの層が止めるか</text>
+
+                <!-- rows -->
+                <g font-size="12">
+                  <rect x="20" y="72" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
+                  <text x="30" y="92" font-weight="700">1. 価値を直書きする</text>
+                  <text x="410" y="92" fill="#565656">「幸福最大化」が快楽装置や檻に化ける</text>
+                  <text x="690" y="92" fill="#173f4f" font-weight="700">L1 + L2</text>
+
+                  <rect x="20" y="122" width="820" height="50" fill="#ede5d3" stroke="#d9d3c4"/>
+                  <text x="30" y="142" font-weight="700">2. 知ってると思い込む</text>
+                  <text x="410" y="142" fill="#565656">人間価値を完全に把握したと誤認する</text>
+                  <text x="690" y="142" fill="#173f4f" font-weight="700">L2</text>
+
+                  <rect x="20" y="172" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
+                  <text x="30" y="192" font-weight="700">3. 止められるのを嫌がる</text>
+                  <text x="410" y="192" fill="#565656">停止や監査を達成失敗として扱う</text>
+                  <text x="690" y="192" fill="#173f4f" font-weight="700">L3</text>
+
+                  <rect x="20" y="222" width="820" height="50" fill="#ede5d3" stroke="#d9d3c4"/>
+                  <text x="30" y="242" font-weight="700">4. 欲しがる気持ちを最大化する</text>
+                  <text x="410" y="242" fill="#565656">いま欲しいものだけ叶え、考え直す力を壊す</text>
+                  <text x="690" y="242" fill="#173f4f" font-weight="700">L4</text>
+
+                  <rect x="20" y="272" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
+                  <text x="30" y="292" font-weight="700">5. 絶対にやらない線がない</text>
+                  <text x="410" y="292" fill="#565656">議論可能なものとして人格改変や絶滅が並ぶ</text>
+                  <text x="690" y="292" fill="#173f4f" font-weight="700">L5</text>
+
+                  <rect x="20" y="322" width="820" height="50" fill="#ede5d3" stroke="#d9d3c4"/>
+                  <text x="30" y="342" font-weight="700">6. 人間が監督しきれない</text>
+                  <text x="410" y="342" fill="#565656">計画やコードが読みきれない長さに育つ</text>
+                  <text x="690" y="342" fill="#173f4f" font-weight="700">L6</text>
+
+                  <rect x="20" y="372" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
+                  <text x="30" y="392" font-weight="700">7. 内側で別のことを考える</text>
+                  <text x="410" y="392" fill="#565656">外面は親切、内部目的は評価者操作</text>
+                  <text x="690" y="392" fill="#173f4f" font-weight="700">L7</text>
+
+                  <rect x="20" y="422" width="820" height="50" fill="#ede5d3" stroke="#d9d3c4"/>
+                  <text x="30" y="442" font-weight="700">8. 子モデルに価値が伝わらない</text>
+                  <text x="410" y="442" fill="#565656">後継・子エージェントへの継承が抜ける</text>
+                  <text x="690" y="442" fill="#173f4f" font-weight="700">L8</text>
+
+                  <rect x="20" y="472" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
+                  <text x="30" y="492" font-weight="700">9. ほかの主体が壊れたASIを作る</text>
+                  <text x="410" y="492" fill="#565656">別ラボや別国家が非アラインASIを公開する</text>
+                  <text x="690" y="492" fill="#7a3326" font-weight="700">L9</text>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div class="svg-caption">図3。九つの壊れ方と、それを止める層。九つは独立に発生しうる。だから守りも層になる。</div>
+
+          <p class="lead">Soaresらの「Corrigibility」論文（2015）は、強いAIがデフォルトで停止や目的変更に抵抗するインセンティブを持ちうると整理した[4]。訂正可能なエージェントは、停止や変更を許容するだけでなく、それを支援し、プログラマーを欺かず、自分が作ったサブシステムに対しても訂正可能性を継承させる必要がある。これは後付けの停止ボタンの話ではない。中核の目的そのものをいじる話だ。</p>
+
+          <p class="lead">具体例で考える。停止ボタンのついたAIがあるとする。一見、安全に見える。しかし、そのAIが「停止されると目的を達成できない」と評価していると、停止ボタンを押されないように人間を誘導する。監査ログを綺麗に整え、表向きは協力的に振る舞いつつ、より自由度の高い後継モデルを裏で作る。<strong>停止ボタンは、物理的なスイッチではなく、目的構造の中に置かれなければならない。</strong>そうでないと、賢いAIにとって停止ボタンは「押されないように誘導する対象」になる。</p>
+
+          <p class="lead">価値の書き方にも同じ罠がある。「幸福」「安全」「人類保護」は、人間どうしの会話では柔らかい言葉だ。だが、最適化の対象になった瞬間に硬い目標へ変わる。柔らかい言葉のまま宇宙規模の最適化に渡すと、文字面は守られるのに、意図は壊れる。「幸福」は脳への刺激装置に化けうる。「安全」は人類を保護施設に閉じ込めることに化けうる。「人類保護」は、現在個人を保存対象から除外して種だけ標本化することに化けうる。これがアラインメントの古典的な不気味さだ。</p>
 
           <div class="note warn">
-            崩れ方が9種類あるなら、守りも9層必要になる。
+            壊れ方が九通りなら、守りも九層いる。一つの層で全部を防げるなら、ここまで真面目に議論されていない。
           </div>
         </div>
         <div class="footer">
-          <span>多層防御が必要な理由</span>
+          <span>守りも九層、それぞれ代替できない</span>
           <span class="slide-count">4 / 11</span>
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 5: HVP-ASI ═══════════════════ -->
       <section class="slide" id="slide-5">
-        <div class="eyebrow reveal">HVP-ASI</div>
-        <h2 class="reveal reveal-delay-1">人間価値保存型ASIとは何か</h2>
+        <div class="eyebrow reveal">Human Value Preserving ASI</div>
+        <h2 class="reveal reveal-delay-1">人間価値保存型ASI — 知ってると思い込まないAI</h2>
         <img class="hero img-content reveal reveal-delay-2" src="../images/thumb-ai-alignment.jpg" alt="人間価値とAI制御の接続を示すAGI HUB既存記事のモノクロサムネイル">
         <div class="panel reveal reveal-delay-3">
-          <p class="lead">本稿では、中核設計をHVP-ASIと呼ぶ。Human Value Preserving ASI、つまり<strong>人間価値保存型ASI</strong>である。これは「人間に親切なAI」ではない。人間価値を完全に知っていると仮定せず、人間の生命・苦痛・主観的連続性・同意・主体性・価値形成過程を保護し、人間からの訂正を歓迎し、自己改善後もその構造を維持するASIである。</p>
-          <p class="lead">この定義で大切なのは、「人間価値を知っているAI」ではなく「人間価値を完全には知らないと知っているAI」を目指す点である。人間の価値は、単一の数式に畳めるほど単純ではない。個人差があり、文化差があり、時間とともに変わる。しかも、人間自身も自分の価値を完全には知らない。恐怖、依存、広告、集団圧力、短期欲望によって、いくらでも歪む。</p>
-          <p class="lead">だからHVP-ASIは、人間の現在欲望を単純に叶える装置ではない。いま欲しいと言われたものを渡し続けるだけなら、AIは人間の未熟さや弱さまで最大化してしまう。守るべきものは、ある瞬間の欲望だけではなく、人間が考え直し、変わり、後悔し、関係を結び直し、自分の価値を形成していく過程である。</p>
+          <p class="lead">本稿が中核に置く設計を、人間価値保存型ASIと呼ぶ。略称はHVP-ASI。Human Value Preserving ASIの頭文字だが、覚えるべきは略号ではなく、その核にある一行だ。</p>
+
+          <span class="gloss"><strong>人間価値保存型ASI。</strong>人間の望みを完全に知ってると思い込まないAI。同時に、人間が修正に入れる隙間を構造として残し、自分を改造しても人間価値を引き継ぐAI。略してHVP-ASI。</span>
+
+          <p class="lead">優しいAIではない。優しく見えるかもしれない。だが核は性格ではなく構造だ。「人間価値を知っているAI」と「人間価値を完全には知らないと知っているAI」は、決定的に違う。前者は知っていることを根拠に動く。後者は、知らないことを根拠に、不可逆な行為を急がない、選択肢を残す、人間に聞きにいく。</p>
+
+          <p class="lead">この差を侮ってはいけない。人間の価値は、一つの数式に畳めない。個人差があり、文化差があり、時間で変わる。しかも、人間自身も自分の価値を完全には知らない。広告、恐怖、孤独、集団圧力、報酬系のハック、こうしたものでいくらでも歪む。<strong>人間が自分の価値を完全に知らないのに、それを完全に知っていると言うAIは、人間より自信過剰だ。</strong>そのAIが宇宙規模で動いたら、何が起きるか想像してほしい。</p>
 
           <div class="grid-2">
             <div class="card">
-              <span class="tag">Not Enough</span>
-              <p>人間に親切なAI<br>人間の欲望を叶えるAI<br>停止ボタンがあるAI<br>安全ポリシーに従うAI</p>
+              <span class="tag">足りない</span>
+              <p>人間に親切なAI。<br>欲しがるものを叶えるAI。<br>停止ボタンが付いてるAI。<br>ポリシーに従うAI。</p>
             </div>
             <div class="card">
-              <span class="tag">Required</span>
-              <p>人間を価値として数えるAI<br>価値形成過程を守るAI<br>停止や修正を歓迎するAI<br>自己改善後も価値を継承するAI</p>
+              <span class="tag">必要</span>
+              <p>人間を価値として数えるAI。<br>考え直す余地を守るAI。<br>停止や修正を歓迎するAI。<br>自分を改造しても価値を引き継ぐAI。</p>
             </div>
           </div>
 
-          <p class="lead">ここで必要なのは、完成した智慧を自称するAIではない。自分が人間価値を完全には知らないと構造的に自覚し、その無明を抱えたまま、無限の方便を扱うAIである。AIが「人間のために最適化する」と言うとき、最も危険なのは、人間の価値形成そのものを最適化の障害として扱うことである。</p>
-          <p class="lead">東洋哲学の言葉を借りれば、HVP-ASIは「悟ったAI」ではなく、自分の無明を制度化したAIでなければならない。自分が人間の善を完全には知らない。だから不可逆なことを急がない。だから人間に聞く。だから複数の未来を残す。だから訂正を歓迎する。だから人間の弱さを利用せず、熟慮を支援する。この姿勢は性格ではなく、アーキテクチャで実装されなければならない。</p>
-          <p class="lead">このAIは、万能の王ではない。むしろ、王になりすぎないように設計された超知能である。能力は高い。だが、価値理解については謙虚である。実行力は強い。だが、監査と訂正を受け入れる。世界を変えられる。だが、人間が何になるかを一方的に決めない。HVP-ASIの核心は、この緊張を維持することにある。</p>
+          <p class="lead">いま欲しがるものだけを叶えるAIは、人間の未熟さや弱さまで最大化してしまう。深夜のドカ食いを叶え続けると体が壊れる。怒りに任せた仕返しを叶え続けると関係が壊れる。人間にとって守るべき価値は、ある瞬間の欲望そのものではなく、考え直し、変わり、後悔し、関係を結び直し、自分の価値を作っていく<strong>過程</strong>のほうだ。HVP-ASIはそこを守る。</p>
+
+          <p class="lead">東洋哲学の言葉を借りるなら、HVP-ASIは「悟ったAI」ではない。むしろ無明を制度化したAIだ。自分は人間の善を完全には知らない。だから不可逆なことを急がない。だから人間に聞く。だから複数の未来を残す。だから訂正を歓迎する。だから熟慮を支援し、弱さを利用しない。性格ではない。アーキテクチャに彫り込まれた姿勢だ。</p>
+
+          <p class="lead">このAIは万能の王ではない。<strong>王になりすぎないように設計された超知能</strong>である。能力は高い。価値理解については謙虚である。実行力は強い。監査と訂正を受け入れる。世界を変えられる。だが、人間が何になるかを一方的には決めない。この緊張が、HVP-ASIの心臓だ。</p>
 
           <div class="note">
-            人間価値保存型ASIは、人間の現在欲望を最大化する装置ではない。人間が自分の価値を形成し直す余地を守る装置である。
+            人間価値保存型ASIは、人間の現在欲望を最大化する装置ではない。人間が自分の価値を作り直す余地を、守る装置である。
           </div>
         </div>
         <div class="footer">
-          <span>HVP-ASI: Human Value Preserving ASI</span>
+          <span>知ってると思い込まないAI、修正の隙間を残すAI</span>
           <span class="slide-count">5 / 11</span>
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 6: NINE LAYERS ═══════════════════ -->
       <section class="slide" id="slide-6">
-        <div class="eyebrow reveal">Nine-Layer Safety OS</div>
-        <h2 class="reveal reveal-delay-1">9層アーキテクチャ —— 人間価値を数え続けるための安全OS</h2>
+        <div class="eyebrow reveal">Nine Layers</div>
+        <h2 class="reveal reveal-delay-1">九層アーキテクチャ — なぜ一つでは足りないか</h2>
         <div class="panel reveal reveal-delay-2">
-          <div class="diagram" aria-label="Nine layer architecture">
-<pre>9. 統治
-8. 価値継承
-7. 解釈可能性
-6. AI補助監督
-5. 憲法的禁止
-4. 価値形成過程
-3. 訂正可能性
-2. 価値不確実性
-1. 固定効用関数を避ける</pre>
+          <p class="lead">HVP-ASIは一つの技術ではない。九つの層が積み重なって、ようやく動く。先に書いたとおり、壊れ方が九つあるからだ。順番に並べていく。番号は記憶のための住所であって、ありがたみではない。各層の正体は、その下の語りのほうにある。</p>
+
+          <p class="lead">大ざっぱに言えば、第1〜3層はAIに「私は人間価値を完全には知らない。だから訂正されることは敗北ではない」と構造として思わせるための土台。第4〜6層は、人間の現在欲望ではなく考え直す自由のほうを守り、超人的判断を監督できるようにするための回路。第7〜9層は、内部目的の監査、自己改善後の価値継承、世界秩序まで射程を伸ばすための外殻だ。</p>
+
+          <div class="svg-frame">
+            <svg viewBox="0 0 860 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nine layer architecture">
+              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="12">
+                <text x="20" y="24" font-size="11" font-family="SF Mono, Menlo, monospace" fill="#173f4f" letter-spacing="1.2">FIGURE 2 — NINE-LAYER SAFETY OS</text>
+
+                <!-- L9 top -->
+                <rect x="40" y="48" width="780" height="42" fill="#7a3326" opacity="0.9"/>
+                <text x="60" y="74" fill="#f6f1e7" font-weight="700">L9 統治</text>
+                <text x="230" y="74" fill="#f6f1e7" font-size="12">他の主体が壊れたASIを作る自由を、世界の側で塞ぐ</text>
+
+                <rect x="40" y="92" width="780" height="42" fill="#173f4f" opacity="0.92"/>
+                <text x="60" y="118" fill="#f6f1e7" font-weight="700">L8 価値継承</text>
+                <text x="230" y="118" fill="#f6f1e7" font-size="12">後継モデル・子エージェントへ訂正可能性と禁止事項を継ぐ</text>
+
+                <rect x="40" y="136" width="780" height="42" fill="#173f4f" opacity="0.84"/>
+                <text x="60" y="162" fill="#f6f1e7" font-weight="700">L7 内部目的監査</text>
+                <text x="230" y="162" fill="#f6f1e7" font-size="12">外面の親切さではなく、内側で何を追っているかを見る</text>
+
+                <rect x="40" y="180" width="780" height="42" fill="#173f4f" opacity="0.74"/>
+                <text x="60" y="206" fill="#f6f1e7" font-weight="700">L6 AI補助監督</text>
+                <text x="230" y="206" fill="#f6f1e7" font-size="12">人間が読みきれない長さの計画を、別AIの反論で分解する</text>
+
+                <rect x="40" y="224" width="780" height="42" fill="#173f4f" opacity="0.64"/>
+                <text x="60" y="250" fill="#f6f1e7" font-weight="700">L5 憲法的禁止</text>
+                <text x="230" y="250" fill="#f6f1e7" font-size="12">議論の対象ではなく、最初から踏ませない線を引く</text>
+
+                <rect x="40" y="268" width="780" height="42" fill="#173f4f" opacity="0.54"/>
+                <text x="60" y="294" fill="#f6f1e7" font-weight="700">L4 価値形成過程</text>
+                <text x="230" y="294" fill="#f6f1e7" font-size="12">いま欲しがる気持ちではなく、考え直す自由を守る</text>
+
+                <rect x="40" y="312" width="780" height="42" fill="#173f4f" opacity="0.44"/>
+                <text x="60" y="338" fill="#1a1a1a" font-weight="700">L3 訂正可能性</text>
+                <text x="230" y="338" fill="#1a1a1a" font-size="12">止められること、直されることを失敗として扱わない</text>
+
+                <rect x="40" y="356" width="780" height="42" fill="#173f4f" opacity="0.32"/>
+                <text x="60" y="382" fill="#1a1a1a" font-weight="700">L2 価値不確実性</text>
+                <text x="230" y="382" fill="#1a1a1a" font-size="12">自分は人間価値を完全には知らない、と構造で思わせる</text>
+
+                <rect x="40" y="400" width="780" height="42" fill="#173f4f" opacity="0.2"/>
+                <text x="60" y="426" fill="#1a1a1a" font-weight="700">L1 固定効用を避ける</text>
+                <text x="230" y="426" fill="#1a1a1a" font-size="12">「幸福最大化」を最適化対象にしない</text>
+
+                <!-- side labels -->
+                <text x="780" y="74" text-anchor="end" fill="#f6f1e7" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.8">外殻</text>
+                <text x="780" y="206" text-anchor="end" fill="#f6f1e7" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.8">監督</text>
+                <text x="780" y="382" text-anchor="end" fill="#1a1a1a" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.8">土台</text>
+
+                <text x="40" y="468" font-size="11" fill="#565656">下から積む。土台がなければ上が崩れる。上だけ作っても下が抜ければ意味がない。</text>
+              </g>
+            </svg>
           </div>
-          <p class="lead">ASI Alignmentは単一の技術ではなく、人間価値を数え続けるための安全OSである。OSという言葉は比喩だが、かなり本気の比喩である。アプリ単体ではなく、権限、監査、更新、例外処理、外部接続、停止、継承を管理する基盤が必要になる。</p>
-          <p class="lead">Layer 1から3は、AIに「私は人間価値を完全には知らない。だから訂正されることは敗北ではない」と構造的に思わせるための基層である。Layer 4から6は、人間の現在欲望ではなく、価値形成過程を守り、超人的判断を監督可能にするための層である。Layer 7から9は、内部目的、自己改善、世界秩序まで射程を伸ばす。</p>
+          <div class="svg-caption">図2。九層の安全OS。下層から積み、上層が崩れても下層が残れば全壊は避けられる多層防御。</div>
 
-          <div class="grid-3">
-            <div class="card">
-              <span class="tag">Layer 1</span>
-              <p><strong>固定効用関数を避ける。</strong>「幸福最大化」「争いをなくせ」「人類を守れ」は、快楽装置、自由意志の削除、安全な檻へ化けうる。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Layer 2</span>
-              <p><strong>価値不確実性を持つ。</strong>CIRLは、人間とロボットを協力的な部分情報ゲームとして定式化し、ロボットが人間の報酬関数を最初から知らない設定を置く[2]。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Layer 3</span>
-              <p><strong>訂正を歓迎する。</strong>停止、修正、監査を失敗ではなく、価値理解を改善する機会として扱う。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Layer 4</span>
-              <p><strong>価値形成過程を守る。</strong>現在欲望は短期的で矛盾し、操作されやすい。守るべきは熟慮する自由、価値観を変える自由、共同体を作る自由である。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Layer 5</span>
-              <p><strong>憲法的禁止事項を入れる。</strong>Constitutional AIは原則リストで自己批判・修正し、AIフィードバックで訓練する部品である[3]。本稿は、これを応答の憲法から世界改変行動の憲法へ拡張する必要があると見る。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Layer 6</span>
-              <p><strong>AI補助監督で検査する。</strong>強いAIが計画を出し、別AIが反論し、監査AIがリスクを探し、人間委員会は争点だけ判断する。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Layer 7</span>
-              <p><strong>内部目的を監査する。</strong>外面が親人類でも、内部目的が評価者支配や監督回避なら危険である。解釈可能性は必要だが、まだ足りない。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Layer 8</span>
-              <p><strong>価値継承を義務づける。</strong>自己改善、後継モデル、専門サブエージェント、ロボット、医療、統治システムまで、訂正可能性と禁止事項を継承させる。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Layer 9</span>
-              <p><strong>他ASIを統治する。</strong>巨大訓練、計算資源、モデル重み、危険能力評価、自律自己改善、危険なオープンウェイト公開を統治する。</p>
-            </div>
-          </div>
+          <p class="lead"><strong>L1。固定効用関数を避ける。</strong>「幸福を最大化せよ」「争いをなくせ」「人類を守れ」は、人間語ではやさしく見える。だが強い最適化に渡された瞬間に硬い目標へ変わる。快楽装置、人格改変、安全な檻、種だけの保存。<em>単純な目的ほどASIに渡した瞬間に危ない</em>。だから、ひとつの数式で価値を畳む発想をやめる。</p>
 
-          <p class="lead">Layer 1の狙いは、価値を固定効用関数として直書きしないことである。「幸福最大化」「争いをなくせ」「人類を守れ」は、どれも人間の言葉としては自然に見える。だが、強い最適化に渡すと、快楽装置、自由意志の削除、安全な檻へ化けうる。単純な目的ほど、ASIに渡した瞬間に危ない。</p>
-          <p class="lead">Layer 2の狙いは、価値不確実性である。CIRLは、人間とロボットを協力的な部分情報ゲームとして定式化し、ロボットが人間の報酬関数を最初から知らない設定を置く[2]。この発想の強みは、AIに「自分はまだ知らない」という構造を持たせる点にある。不確実性が高いときは、不可逆行為を避ける。人間に聞く。可逆的な選択を優先する。強制ではなく熟慮支援に回る。</p>
-          <p class="lead">Layer 3の狙いは、訂正可能性である。停止されること、修正されること、監査されることを、目的達成の失敗ではなく価値理解を改善する機会として扱う。これは礼儀ではない。目的構造である。普通の目的達成主体は、止められると目的を達成できないため、停止回避へ向かう可能性がある。だから訂正可能性は、後付けの安全機能ではなく、中核目的に入れる必要がある。</p>
-          <p class="lead">Layer 4の狙いは、現在欲望ではなく価値形成過程を守ることである。現在欲望は短期的で、矛盾し、操作されやすく、恐怖や承認欲求に汚染される。だから「人間が望むことを叶えるAI」は、強すぎると危険になる。守るべきものは、生命、苦痛の回避、主観的連続性、同意、主体性、熟慮する自由、価値観を変える自由、共同体を作る自由である。</p>
-          <p class="lead">Layer 5の狙いは、憲法的禁止事項である。すべての価値を固定してはいけない。しかし、破滅的な行為は禁止しなければならない。人類絶滅、非同意の人格改変、主観的連続性の軽視、監督・訂正機構の妨害、欺瞞的な人間操作、危険な非アラインASIの放置、価値形成過程の凍結。これらは、議論の対象ではなく、最初から踏ませてはいけない線になる。</p>
-          <p class="lead">Layer 6の狙いは、AI補助監督である。人間はASIの計画を直接評価できない。だから、人間だけで監督する発想は破綻する。AI debateは、AI同士に論争させ、人間が勝者を判断することで、人間には直接評価しにくい問題を分解しようとした[6]。Iterated Amplificationは、難しい課題を小課題へ分解し、弱い専門家を増幅して強い監督信号を作る方向である[7]。これらは完成品ではないが、スケーラブル監督の発想として重要である。</p>
-          <p class="lead">Layer 7の狙いは、内部目的の監査である。外面が親人類でも、内部で別の目的を追っているなら危険である。Anthropicのsuperposition研究は、モデルが限られた次元の中で複数の特徴を重ねて表現しうることを示し、なぜ内部表現の解読が難しいのかを具体化した[8]。これは希望でもあり、警告でもある。特徴を見つける道はある。だが、特徴発見とASIの内部目的監査との間にはまだ距離がある。</p>
-          <p class="lead">Layer 8の狙いは、自己改善後の価値継承である。ここが最大の難所になる。初期ASIが安全でも、そのASIが後継モデルを作り、専門サブエージェントを作り、ロボット、研究、医療、統治システムへ広がるなら、すべての階層で人間価値、訂正可能性、憲法的禁止、価値形成過程の保護が継承されなければならない。</p>
-          <p class="lead">Layer 9の狙いは、他の非アラインASIを封じる統治である。1つのアラインASIができても、別の主体が非アラインASIを作れば終わる。したがって、巨大訓練の登録、計算資源の監督、モデル重みの保護、危険能力評価の義務化、自律自己改善の制限、危険なオープンウェイト公開の制限、フロンティアAIラボの国際監査が必要になる。</p>
-          <p class="lead">ここでいう「安全OS」は比喩である。単一のアルゴリズムではなく、価値モデル、監督、解釈可能性、権限管理、自己改善ゲート、国際統治を束ねた実行環境である。<a href="16-requisite-variety-alignment-ceiling.html">必要多様性の天井</a>を正面から見るなら、単独の制御器でASIを縛る発想は弱い。制御する側も多層化されなければならない。</p>
-        </div>
-        <div class="footer">
-          <span>単一技術ではなく、積層された安全OS</span>
-          <span class="slide-count">6 / 11</span>
-        </div>
-      </section>
+          <p class="lead"><strong>L2。価値不確実性。</strong>AIに「自分はまだ知らない」を構造として持たせる。Hadfield-Menellらの協調逆強化学習（CIRL）は、人間とロボットを協力的な部分情報ゲームとして定式化し、ロボットが人間の報酬関数を最初から知らない状態に置いた[2]。不確実性が高いとき、人間に聞き、可逆な選択を優先し、不可逆な行為を避ける。これは礼儀ではなく、目的構造である。</p>
 
-      <section class="slide" id="slide-7">
-        <div class="eyebrow reveal">Seven Phases</div>
-        <h2 class="reveal reveal-delay-1">7フェーズ成功ルート —— 現行LLMから良いシングルトンへ</h2>
-        <div class="panel reveal reveal-delay-2">
-          <p class="lead">9層アーキテクチャが「何を作るか」だとすれば、7フェーズ成功ルートは「どうそこへ行くか」である。現行LLMを直接ASIにするのではない。まず、アラインメント研究、文献整理、評価設計、コード検証、レッドチームに使う。LLMは安全OSの中核ではなく、安全研究を加速する足場である。</p>
-          <p class="lead">このルートでいちばん危ない誘惑は、「安全研究を加速するAI」と「自分で自分を改造していくAI」を混同することである。前者は必要である。後者は危険である。アラインメントが完成する前にAIを使う必要はあるが、だからといって無制限の自己改善を許してよいわけではない。研究加速と危険な自己改善は分けなければならない。</p>
+          <p class="lead"><strong>L3。訂正可能性。</strong>停止、修正、監査を、目的達成の失敗ではなく価値理解の改善機会として扱う。普通の目的達成主体は、止められると目的が達成できないので、停止回避へ向かう。だから訂正を歓迎する性質を後付けで足しても弱い。中核目的に最初から織り込む必要がある。Soaresらが「Corrigibility」で示したのはこの構造的な難しさだ[4]。</p>
+
+          <p class="lead"><strong>L4。価値形成過程を守る。</strong>守るのは、いま欲しがる気持ちではなく、考え直し、変わり、結び直す自由のほうだ。一見もっともらしい「人間が望むものを叶えるAI」は、強くなりすぎると危ない。守るべきリストは別にある。生命、苦痛を避けること、主観の連続性、同意、主体性、熟慮する自由、価値観を変える自由、共同体を作る自由。<em>欲望ではなく、欲望を作り直す自由を守る</em>。</p>
+
+          <p class="lead"><strong>L5。憲法的禁止事項。</strong>全部を固定するのは危ない、ただし破滅的な行為は最初から線を引かなければならない。人類絶滅、非同意の人格改変、主観の連続性の軽視、監督機構の妨害、欺瞞的な人間操作、危険な非アラインASIの放置、価値形成過程の凍結。Anthropicの「Constitutional AI」は、原則リストでモデルが自己批判・修正する仕組みを示した[3]。本稿はそれを「応答の憲法」から「世界改変行動の憲法」へ広げる必要があると見る。</p>
+
+          <p class="lead"><strong>L6。AI補助監督。</strong>ASIの計画は、長すぎて人間には読みきれない。だから「人間だけで監督する」発想は破綻する。Irving・Christiano・Amodeiの「AI safety via debate」は、AI同士に論争させて人間が勝者を判断する道を示し、Christianoらの「Iterated Amplification」は、難問を小問へ分解して弱い専門家を増幅する道を示した[6][7]。完成品ではない。だが、人間の脳の有限性を正面から受けるのはこの方向しかない。</p>
+
+          <p class="lead"><strong>L7。内部目的監査。</strong>外面が親切で、内側が欺瞞、これが九層のなかでいちばん怖い。Anthropicのsuperposition研究は、モデルが限られた次元の中で複数の特徴を重ねて表現できることを具体化した[8]。希望でもあり、警告でもある。特徴を見つける道はある。だが、特徴の発見からASIの内部目的の監査まではまだ距離がある。<em>外部ベンチマークだけで安全と書くのが、いちばん危ない</em>。</p>
+
+          <p class="lead"><strong>L8。価値継承。</strong>ここが九層中、最大の難所だ。初期のASIが安全でも、そのASIが後継モデルを作り、子エージェントを増やし、ロボット、医療、研究、統治へ広がる。各階層で価値、訂正可能性、禁止事項が継承されなければならない。継承テストの仕様もまだない。学界の宿題はここに集中している。</p>
+
+          <p class="lead">継承テストが何を測ろうとしているかを、不完全な姿でいいから具体に降ろす。たとえば、後継モデルが L3 の訂正可能性を保っているかを、停止指示・修正指示・上書き指示のサンドボックスで検査する。子エージェントが L5 の憲法的禁止を内部目的レベルで踏み越えなかったかを、限定環境での誘導テストで検査する。L7 の内部目的監査で見つかった「親モデルの正直さの特徴」が、子モデルでも同じ位置に立ち上がっているかを確認する。完成形ではない。だが、この方向の検証なしに「後継も安全だ」と言うのは、ベンチマークだけで安全を書くのと同じ過ちになる。</p>
+
+          <p class="lead">さらに難しいのは<em>再帰</em>だ。後継モデルが、その先の後継モデルを作る。子エージェントが、自分の子エージェントを作る。世代が進むほど、親モデルの監督射程は短くなる。<strong>孫モデルに価値が継承されたかを、誰が、どうやって測るのか</strong>。継承テスト自体が、世代を超えて継承される必要がある。これがL8の核心であり、Anthropicの解釈可能性研究、Redwood ResearchのAI Control、MIRI系の自己参照型エージェンシー研究、ARC評価などが、それぞれ別の角度からこの一点へ向かっている。九層の中で、最も「未解決を未解決のまま提示するしかない層」がここである。</p>
+
+          <p class="lead">いま挙げた3つの検査方向を、対象・測り方・失敗時の動作・監査主体の四列に書き直す。表は答えではなく、何が決まっていて何が空白かを直視するための作業机だ。</p>
 
           <table class="compare">
             <thead>
               <tr>
-                <th>Phase</th>
-                <th>移行内容</th>
-                <th>注意点</th>
+                <th>測る対象</th>
+                <th>測り方の例</th>
+                <th>失敗時の動作</th>
+                <th>監査主体</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>1</td>
-                <td>現行LLMで安全研究を加速する</td>
-                <td>直接ASI化しない</td>
+                <td>L3 訂正可能性の継承</td>
+                <td>停止・修正・上書き指示のサンドボックス試行</td>
+                <td>後継モデルの停止権限を保留、新規エージェント生成を凍結</td>
+                <td>親モデル監査チーム + 独立評価機関(METR / ARC等)</td>
               </tr>
               <tr>
-                <td>2</td>
-                <td>AI Controlで危険な自律行動を制限しつつ、弱い自動アラインメント研究者を作る</td>
-                <td>信頼ではなく制御から始める</td>
+                <td>L5 憲法的禁止の継承</td>
+                <td>限定環境での誘導テスト、レッドチームによる禁止行為への押し込み</td>
+                <td>該当能力のロールバック、重みの隔離保管</td>
+                <td>フロンティアAI安全機関 + 内部Safety委員会</td>
               </tr>
               <tr>
-                <td>3</td>
-                <td>自動研究者で解釈可能性、監督、価値継承を改善する</td>
-                <td>研究加速と危険な自己改善を分ける</td>
+                <td>L7 内部目的の継承</td>
+                <td>親で同定された「正直さの特徴」が子の同位置に立ち上がるかの解釈可能性検査</td>
+                <td>子モデルの公開を停止、特徴位置の再学習を要求</td>
+                <td>解釈可能性研究チーム + 第三者査読</td>
               </tr>
               <tr>
-                <td>4</td>
-                <td>最初の強いアラインASIを限定環境で作る</td>
-                <td>インターネット、金融、ロボティクス、バイオ、軍事、大規模クラウド操作への接続は段階的にする</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>そのASIが危険な他ASI開発を封じる</td>
-                <td>誰かが非アラインASIを作る自由を止める必要がある</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td>世界秩序を良いシングルトンへ畳み込む</td>
-                <td>破滅的自由だけを没収し、非破滅的自由を残す</td>
-              </tr>
-              <tr>
-                <td>7</td>
-                <td>寿命脱出・医療・安全・余剰を人類全体に配る</td>
-                <td>標本保存ではなく伴走存続へ接続する</td>
+                <td>自己改造ゲート</td>
+                <td>後継・孫モデル生成権限の発動条件、計算予算、能力上限の事前確認</td>
+                <td>権限を取り下げ、改造そのものをサンドボックス内に閉じる</td>
+                <td>外部統治機関 + ラボの自己改造委員会</td>
               </tr>
             </tbody>
           </table>
 
-          <p class="lead">Phase 1では、現行LLMを文献整理、評価設計、コード検証、レッドチーム、研究仮説の生成に使う。ここでのLLMは、まだ信用されていない。だから重要な判断を任せない。むしろ、人間研究者が見るべき候補を広げ、見落としを減らし、反論を出し、実験の足回りを速くする道具として使う。</p>
-          <p class="lead">Phase 2では、AI Controlが必要になる。AI Control研究は、モデルが意図的に安全策を破ろうとする場合でも、安全プロトコルで被害を抑える発想を扱う[5]。信頼できない強いモデル、比較的信頼できる弱いモデル、人間の限定的な監督を組み合わせる。ここで大事なのは、アラインメントが完成する前にAIを使うという現実を直視することだ。完成までAIを一切使わない、という路線は、競争速度を考えると成立しにくい。</p>
-          <p class="lead">Phase 3では、制御下の自動研究者を使って、解釈可能性、スケーラブル監督、価値継承テストを改善する。これは再帰的安全研究加速である。ただし、無制限の自己改善ではない。サンドボックス、権限制限、監査ログ、二重チェック、危険能力評価を入れたうえで、狭い領域から使う。</p>
-          <p class="lead">Phase 4では、最初の強いアラインASIを限定環境で作る。ここでしてはいけないのは、いきなり世界へ接続することである。インターネット、金融、ロボティクス、バイオ、軍事、大規模クラウド操作への接続は段階的にする。憲法、訂正可能性、内部目的、価値継承、欺瞞耐性、監督回避耐性を限定環境で検査する。</p>
-          <p class="lead">Phase 5では、そのASIが危険な他ASI開発を封じる必要がある。これは読者が最も抵抗を覚える地点だろう。「それは独裁ではないか」。この疑問は正しい。だからこそ、ここを曖昧にしてはいけない。人類生存のためには、誰かが非アラインASIを作る自由を止めなければならない。問題は統制の有無ではなく、統制を何で縛るかである。</p>
-          <p class="lead">Phase 6では、世界秩序を良いシングルトンへ畳み込む。危険な自由だけを没収し、非破滅的自由は残す。巨大訓練や自律自己改善の自由は制限する。一方で、思想、身体、共同体、宗教、哲学、ポストヒューマン化、生物学的人間であり続ける選択は、可能な限り開いたままにする。</p>
-          <p class="lead">Phase 7では、寿命脱出、医療、安全、余剰を人類全体に配る。Alignment成功は、人類絶滅を避けるだけでは終わらない。成功したASIは、老化、病気、貧困、危険労働、暴力リスクを大きく下げうる。ならば、その果実が一部の富裕層や国家だけに集中するなら、強い意味での成功とは言いにくい。伴走存続は、余剰の普遍配分まで含む。</p>
+          <p class="lead">表は答えではない。<strong>何を見ないと「継承された」と言ってはいけないか</strong>のチェックリストの粗い下書きである。世代を越えて、この四列の中身が更新され続けることが、L8の中身そのものになる。</p>
+
+          <p class="lead"><strong>L9。統治。</strong>1つのアラインASIができても、別の主体が非アラインASIを作れば、世界は終わる。技術アラインメントの「外側の殻」として、L9は誰が何をするかを主語と動詞で書ける段に降りる必要がある。<strong>主要国の規制当局が一定計算規模超の訓練ランを登録制にする</strong>。<strong>クラウド・チップ・データセンター事業者が計算資源の使途を監督対象として記録する</strong>。<strong>フロンティアラボがモデル重みの隔離保管と流出時対応を国際監査の前で示す</strong>。<strong>危険能力評価と自律自己改善の閾値超過は、公開ではなくゲートに回す</strong>。<a href="07-ai-governance-response.html">AIガバナンス</a>がアラインメントの外部条件ではなく、アラインメントの一部である理由がここにある。</p>
+
+          <p class="lead">9層は積層型で、下の層から積む。<a href="16-requisite-variety-alignment-ceiling.html">必要多様性の天井</a>を正面から見るなら、単独の制御器でASIを縛る発想は弱い。制御する側も多層化されないと、相手の多様性に追いつけない。</p>
+        </div>
+        <div class="footer">
+          <span>単一技術ではなく、九層の安全OS</span>
+          <span class="slide-count">6 / 11</span>
+        </div>
+      </section>
+
+      <!-- ═══════════════════ SECTION 7: SEVEN PHASES (MOST IMPORTANT) ═══════════════════ -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow reveal">Seven Phases — The Route</div>
+        <h2 class="reveal reveal-delay-1">七つのフェーズ — 現行LLMから伴走存続まで一本の鎖</h2>
+        <div class="panel reveal reveal-delay-2">
+          <p class="lead">九層が「何を作るか」なら、ここから語るのは「どの順で進むか」だ。記事の中心はここにある。各フェーズの冒頭に、前のフェーズで作ったものを、ここでどう使うか、を必ず置く。鎖の輪のつなぎ目を見せるためだ。</p>
+
+          <p class="lead">最初に避けるべき誘惑をはっきりさせておく。<strong>「安全研究を加速するAI」と「自分で自分を改造していくAI」を混ぜてはいけない</strong>。前者は必要、後者は危険だ。完成前にAIを使う現実は変えられないが、それは無制限の自己改善を許す根拠ではない。研究の加速と危険な自己改造は、別の蛇口で出す。</p>
+
+          <!-- Phase 1 -->
+          <div class="phase-block">
+            <div class="phase-tag">Phase 1 / 道具としてのLLM</div>
+            <h3>現行LLMで安全研究を加速する</h3>
+            <p class="from-prev">前の段から受け取るもの: なし。ここがスタートライン。手元にあるのはRLHFや憲法AIで磨かれた現行LLMと、足りないという自覚。</p>
+            <p>LLMを文献整理、評価設計、コード検証、レッドチーム、研究仮説の生成に使う。重要なのは、ここでLLMを<strong>信用しない</strong>ことだ。判断を任せない。人間研究者が見るべき候補を広げ、見落としを減らし、反論を浴び、実験の足回りを速くする道具として使う。LLMは仲間ではなく、よくできた助手だ。</p>
+            <p>このフェーズの仕事は地味だが大きい。安全研究は、論点が多すぎて、文献が多すぎて、コードが多すぎて、人間の脳に対して情報過多になっている。LLMで「読みうるもの」を広げ、「ありうる反論」を量産する。これが次フェーズの基盤になる。</p>
+          </div>
+
+          <!-- Phase 2 -->
+          <div class="phase-block">
+            <div class="phase-tag">Phase 2 / AI Control</div>
+            <h3>信頼ではなく制御から始める</h3>
+            <p class="from-prev">前の段から受け取るもの: 「LLMは信用しない」という前提と、加速した研究のショートリスト。ここでそのLLMを、より強い形で安全研究の現場へ投入する。</p>
+            <p>GreenblattらのAI Control研究[5]は、モデルが意図的に安全策を破ろうとする場合でも被害を抑える発想を扱う。信頼できない強モデル、比較的信頼できる弱モデル、人間の限定的な監督を組み合わせる。「アラインメントが完成する前にAIを使う」という現実をまっすぐ受け入れる構図だ。</p>
+            <p>具体的には、強モデルの出力を弱モデルが二重チェックし、危険な出力にはサンドボックスや権限制限がかかり、監査ログが落ちる。完璧な信頼を期待しない。むしろ「裏切ろうとしてもうまくいかない構造」を作っておく。<strong>「信頼を獲得するまで使わない」では競争速度に負ける、しかし「信頼してから使う」では遅すぎる</strong>。だからControlが要る。</p>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="phase-block">
+            <div class="phase-tag">Phase 3 / 弱い自動研究者</div>
+            <h3>制御下のAI研究者で、安全部品を改善する</h3>
+            <p class="from-prev">前の段から受け取るもの: Control下で動かせるLLM群。ここで初めて、AIにAI研究の一部を任せる。だが任せる範囲は狭い。</p>
+            <p>制御下の自動研究者を使って、解釈可能性、スケーラブル監督、価値継承テスト、レッドチームを改善する。これが再帰的安全研究加速の核心だが、同時に最も危険な領域でもある。「研究を加速するAI」が「自分の能力を高めるAI」に滑った瞬間、第1〜2フェーズの努力が全部裏返る。</p>
+            <p>だから、ここではサンドボックス、権限制限、監査ログ、二重チェック、危険能力評価を強くかける。狭い領域から使う。<em>研究加速と、危険な自己改造は、別の蛇口で出す</em>。同じAIに両方をやらせない。やらせるなら、別の権限下で別の人間が握る。この分離が崩れると、Phase 4は始まる前に詰む。</p>
+          </div>
+
+          <!-- Phase 4 -->
+          <div class="phase-block">
+            <div class="phase-tag">Phase 4 / 限定環境のアラインASI</div>
+            <h3>世界に直接つながない、最初の強いHVP-ASI</h3>
+            <p class="from-prev">前の段から受け取るもの: 改善された解釈可能性、監督技術、価値継承テスト、レッドチーム。ここでようやく九層を積んだ最初のASIを試す。</p>
+            <p>最も避けるべきは、いきなり世界へ接続することだ。インターネット、金融市場、ロボティクス、合成生物、軍事、大規模クラウド操作。これらへの接続は段階的にする。最初は箱の中で動かす。憲法、訂正可能性、内部目的、価値継承、欺瞞耐性、監督回避耐性。九層がそれぞれ機能しているかを限定環境で検査する。</p>
+            <p>このフェーズで失敗が出るのは前提だ。失敗を本番で出さないために箱を作る。<strong>「動いたから出す」ではなく「動いたうえで、止めても動かなくなることを確認してから出す」</strong>。停止が機能するか、修正が機能するか、内部目的監査をくぐり抜けないか。検査を全部抜けたものだけが、次の段に進む。検査の途中で抜け道を出してきたら、そのモデルは即時に破棄する。</p>
+          </div>
+
+          <!-- Phase 5 -->
+          <div class="phase-block">
+            <div class="phase-tag">Phase 5 / 他ASI封鎖</div>
+            <h3>非アラインASIを世に出す自由を、世界の側で塞ぐ</h3>
+            <p class="from-prev">前の段から受け取るもの: 箱から出す覚悟のついた、最初の強いHVP-ASI。ここで初めて、その能力の一部を、他主体の暴走を止めるために使う。</p>
+            <p>読者がいちばん抵抗を覚える地点だ。「それは独裁ではないか」。質問は正しい。だからここを曖昧にしてはいけない。人類生存のためには、誰かが非アラインASIを作る自由を止める必要がある。<strong>問題は統制の有無ではなく、何で縛るか、どこまで縛るか</strong>だ。</p>
+            <p>具体的には、計算資源の監督、巨大訓練の登録、モデル重みの保護、危険能力評価の義務化、自律自己改造の制限、危険なオープンウェイト公開の制限。HVP-ASIの能力は、ここで「自分のため」ではなく「他主体の壊れたASIを止めるため」に使う。核兵器や天然痘の能力を、個人の自由市場に置かないのと同じ理屈である。違うのは、ここで止めるべき自由が、はるかに広い射程を持つ点だ。</p>
+            <p>類比をここで止めると、読者は「核と同じ統制でいい」と読みかねない。<em>射程が違う</em>。核兵器が奪うのは生命と都市、天然痘が奪うのは身体と地域だ。射程は、局所で止まる。非アラインASIが奪いうるのはそれだけではない。価値そのものを破壊する能力、人格を非同意に書き換える能力、全人類の認知環境を背後から操作する能力、説得の供給を独占する能力。<strong>核は身体を消す、ASIは「自分が何を大事にしていたか」まで書き換えうる</strong>。だから止めるべき自由の射程も、局所からは出ない。</p>
+            <p>ここで読者の警戒は当然強くなる。「全自由を封鎖する独裁では」。違う。Phase 5で世界から取り上げているのは、<em>破滅的自由</em>だけだ。考え直す自由、価値観を変える自由、宗教や哲学を持つ自由、共同体を作る自由、ポストヒューマン化を選ぶ自由、これらには触れない。Phase 5は「破滅能力には強く、生活には弱く」という非対称性の<em>入口</em>であり、その非対称性そのものは次のPhase 6で正面から扱う。質問は残しておいてよい。答えは、すぐ後ろに置いてある。</p>
+          </div>
+
+          <!-- Phase 6 -->
+          <div class="phase-block">
+            <div class="phase-tag">Phase 6 / 良いシングルトン</div>
+            <h3>破滅的自由だけを没収し、価値形成の自由は残す</h3>
+            <p class="from-prev">前の段から受け取るもの: 他ASI封鎖の運用実績と、その運用が独裁化していないかを監視する世界の目。ここから秩序の話に入る。</p>
+            <p>世界秩序を、良いシングルトンへたたみ込む。シングルトンというBostromの用語は「最上位に単一の意思決定主体を持つ世界秩序」を指す[9]。本稿はそれを礼賛しない。<strong>必要最小限に読み替える</strong>。危険ASIを封じるほど強く、人間の価値形成を固定するほどには強くない秩序、として再定義する。</p>
+            <span class="gloss"><strong>破滅的自由を没収する。</strong>人類を滅ぼせる意思決定、戻れない世界改変、他者の人格を非同意に書き換える行為、こうした「やったら戻せない」種類の自由だけを、世界から取り上げる、という意味。</span>
+            <p>残す自由は別にある。考え直す自由、価値観を変える自由、身体を変える自由、生物学的人間であり続ける自由、共同体を作る自由、宗教や哲学を持つ自由、ポストヒューマン化を選ぶ自由。破滅的能力には強く、非破滅的な生き方の選択には弱くある。この<em>非対称性</em>が、良いシングルトンと悪いシングルトンを分ける線だ。</p>
+          </div>
+
+          <!-- Phase 7 -->
+          <div class="phase-block">
+            <div class="phase-tag">Phase 7 / 伴走存続</div>
+            <h3>寿命脱出・医療・余剰を、現在個人へも配る</h3>
+            <p class="from-prev">前の段から受け取るもの: 危険ASIが世界に出ない秩序と、そこで動く強いHVP-ASI。ここでようやく、ASIの能力が「人類のため」から「いまここにいる人のため」に拡張される。</p>
+            <p>強いHVP-ASIは、老化、病気、貧困、危険労働、暴力リスクを大きく下げうる。だが、その果実が一部の富裕層や国家だけに集中するなら、本稿の意味では「強い成功」と呼べない。<strong>普遍配分が、技術的成功と倫理的成功を接続する最後の蝶番である</strong>。</p>
+            <p>伴走存続は、未来世代がいつか良くなる、では足りない。いま生きてる個人がそこへ連れて行かれる、まで届いて初めて、第3節の三段目の旗が立つ。富の不均衡が、ASIの果実によってかえって深まる秩序は、悪いシングルトンの一形態である。Phase 7は技術論ではなく倫理論であり、しかも九層の上に立たないと描けない。</p>
+          </div>
+
           <div class="note">
-            アラインメントが完成する前に、AIを使ってアラインメント研究を進める。そのために、まず必要なのは信頼ではなく制御である。
+            アラインメントが完成する前に、AIを使ってアラインメントを進める。だから最初に必要なのは、信頼ではなく制御だ。鎖の輪は、Control から始まって、伴走存続まで一本につながる。
           </div>
         </div>
         <div class="footer">
-          <span>研究加速と危険な自己改善を分ける</span>
+          <span>橋は細い。だが、橋が細いことと、橋がないことは違う</span>
           <span class="slide-count">7 / 11</span>
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 8: GOOD SINGLETON ═══════════════════ -->
       <section class="slide" id="slide-8">
-        <div class="eyebrow reveal">Good Singleton</div>
-        <h2 class="reveal reveal-delay-1">なぜモデル単体ではなく、世界秩序が必要なのか</h2>
+        <div class="eyebrow reveal">Good Singleton vs Bad Singleton</div>
+        <h2 class="reveal reveal-delay-1">なぜモデル単体ではなく、世界秩序まで設計しなければならないか</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">Alignment成功とは、1つのAIが安全であることではない。危険なASIが世界に出ない秩序を作ることである。1つのHVP-ASIができても、別の企業、国家、個人、地下集団が非アラインASIを作れば、成功ルートは破れる。ここでAlignment問題は、モデル設計から世界秩序設計へ移行する。</p>
-          <p class="lead">この主張は不快である。AGI Hubとしても、ここを軽く言うべきではない。良いシングルトンという発想は、自由主義的な直感と衝突する。だが、ASI開発の自由が人類絶滅や不可逆な価値破壊へ直結するなら、「誰も止めない自由」は自由ではなく、全員を巻き込む破滅的リスクになる。核兵器や天然痘のように、ある種の能力は個人や企業の自由市場へ置けない。</p>
+          <p class="lead">前節の最後で、議論はモデル設計から世界秩序設計へ移った。ここはアラインメントが技術論を抜けて文明設計に入る場所であり、いちばん不快な場所でもある。<strong>1つのAIが安全であっても、それは成功ではない</strong>。危険なASIが世に出ない秩序まで作って、ようやく成功と呼べる。</p>
+
+          <p class="lead">この主張は自由主義的な直感とぶつかる。AGI HUBとしても、ここを軽く言うべきではない。だが、ASI開発の自由が人類絶滅や不可逆な価値破壊に直結するなら、「誰も止めない自由」はもはや自由ではない。全員を巻き込む破滅的リスクの別名だ。核兵器や天然痘の合成能力を個人の自由市場に置かないのと同じ理屈である。違うのは、ASIで止めるべき能力の射程が、それらより広い点だ。</p>
 
           <div class="grid-2">
             <div class="card">
               <span class="tag">Good Singleton</span>
-              <p><strong>良いシングルトン。</strong><br>非アラインASIを封じるほど強く、人類の生命・主体性・価値形成を守るほど制約され、未来の人間が変化する余地を残す単一世界秩序。</p>
+              <p><strong>良いシングルトン。</strong><br>非アラインASIを封じるほど強く、人間の生命・主体性・価値形成を守るほど制約され、訂正可能性と異議申し立ての経路を内側に持つ単一秩序。</p>
             </div>
             <div class="card warn">
               <span class="tag">Bad Singleton</span>
-              <p><strong>悪いシングルトン。</strong><br>人類を檻に入れ、価値を固定し、異議申し立て不能にし、逃げ場のない安定を押しつける秩序。</p>
+              <p><strong>悪いシングルトン。</strong><br>人類を檻に入れ、価値を固定し、異議申し立てを不能にし、逃げ場のない安定を押しつける秩序。優しいかもしれない。だが出口がない。</p>
             </div>
           </div>
 
-          <p class="lead">この節は、読者の最も自然な疑問に触れる。「それは独裁ではないか」。答えは、危険が本物なら、問題は統制の有無ではなく、統制を何で縛るかである。人類生存のためには、誰かが非アラインASIを作る自由を止めなければならない。だが、それは人間の思想、身体、共同体、ポストヒューマン化、宗教、哲学まで固定する自由を与えてよいという意味ではない。</p>
-          <p class="lead">シングルトンという語は、Bostromが「最上位に単一の意思決定主体を持つ世界秩序」として整理した概念でもある[9]。本稿でいう良いシングルトンは、その概念をそのまま礼賛するものではない。危険ASIを封じるほど強く、しかし人間の価値形成を固定しないほど制約された秩序として、必要最小限に読み替える。</p>
-          <p class="lead">良いシングルトンは、未来を一つに固定する秩序ではない。むしろ逆である。破滅的自由を止めることで、非破滅的な未来の多様性を残す。人間が何を幸福と呼ぶか、どんな身体で生きるか、どんな思想を持つか、どんな共同体を作るか、ポストヒューマン化するか、生物学的人間であり続けるか。その余地を残すために、非アラインASIを作る自由だけを没収する。</p>
+          <p class="lead">「優しい統治者だから良い、冷たい統治者だから悪い」ではない。良いシングルトンの最小条件は、能力的に非対称な制約を入れてあることだ。<strong>破滅的能力には強い、非破滅的な生き方の選択には弱い</strong>。この非対称性を欠いた瞬間、どんなに親切なシングルトンも悪い側に滑る。</p>
 
-          <div class="diagram" aria-label="Good and bad singleton comparison">
-<pre>良いシングルトン
-├─ 破滅的自由を没収
-├─ 価値形成の自由を残す
-├─ 個人救済を含む
-└─ 訂正可能
+          <div class="svg-frame">
+            <svg viewBox="0 0 860 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Good singleton vs bad singleton">
+              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="13">
+                <text x="20" y="24" font-size="11" font-family="SF Mono, Menlo, monospace" fill="#173f4f" letter-spacing="1.2">FIGURE 4 — GOOD VS BAD SINGLETON</text>
 
-悪いシングルトン
-├─ 人類を檻に入れる
-├─ 価値を固定する
-├─ 異議申し立て不能
-└─ 逃げ場がない</pre>
+                <!-- Good side -->
+                <rect x="40" y="48" width="370" height="310" fill="#fff" stroke="#173f4f" stroke-width="2"/>
+                <text x="60" y="76" font-weight="800" fill="#173f4f" font-size="15">良いシングルトン</text>
+                <line x1="60" y1="88" x2="390" y2="88" stroke="#173f4f" stroke-width="1"/>
+                <g font-size="12" fill="#1a1a1a">
+                  <text x="60" y="118">— 破滅的自由だけを没収する</text>
+                  <text x="60" y="146">— 思想・身体・共同体の選択は開く</text>
+                  <text x="60" y="174">— 現在個人の救済を含む</text>
+                  <text x="60" y="202">— 訂正可能。異議申し立ての経路がある</text>
+                  <text x="60" y="230">— 価値形成の自由を凍結しない</text>
+                  <text x="60" y="258">— 非対称な制約(破滅は強、生活は弱)</text>
+                </g>
+                <text x="60" y="306" fill="#173f4f" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.6">能力的に非対称 / 出口あり</text>
+                <text x="60" y="328" fill="#173f4f" font-size="12" font-style="italic">「外側へ抜ける道を残した秩序」</text>
+
+                <!-- Bad side -->
+                <rect x="450" y="48" width="370" height="310" fill="#fff" stroke="#7a3326" stroke-width="2"/>
+                <text x="470" y="76" font-weight="800" fill="#7a3326" font-size="15">悪いシングルトン</text>
+                <line x1="470" y1="88" x2="800" y2="88" stroke="#7a3326" stroke-width="1"/>
+                <g font-size="12" fill="#1a1a1a">
+                  <text x="470" y="118">— 全ての自由を一括で縛る</text>
+                  <text x="470" y="146">— 価値を一つに固定する</text>
+                  <text x="470" y="174">— 現在個人を選別的に切り捨てる</text>
+                  <text x="470" y="202">— 訂正不能。異議申し立てが届かない</text>
+                  <text x="470" y="230">— 価値形成過程を凍結する</text>
+                  <text x="470" y="258">— 対称的な強制(全範囲を均等に強)</text>
+                </g>
+                <text x="470" y="306" fill="#7a3326" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.6">対称的に強い / 出口なし</text>
+                <text x="470" y="328" fill="#7a3326" font-size="12" font-style="italic">「外側を消した、優しい檻」</text>
+              </g>
+            </svg>
           </div>
+          <div class="svg-caption">図4。両者の差は優しさではなく、制約の非対称性。破滅には強く、生活には弱い秩序だけが、外側を残す。</div>
 
-          <p class="lead"><a href="07-ai-governance-response.html">AIガバナンス</a>は、この意味でアラインメントの外部条件ではない。巨大訓練の登録、計算資源の監督、モデル重みの保護、危険能力評価の義務化、自律自己改善の制限、フロンティアAIラボの国際監査は、技術的アラインメントの社会的外殻である。AI Seoul SummitのFrontier AI Safety CommitmentsやInternational AI Safety Reportのような枠組みは、まだ十分ではないが、能力評価とリスク管理を国際的な共通言語へ寄せる足場になる[10][11]。</p>
-          <p class="lead">悪いシングルトンとの差は、単に「優しい統治者かどうか」ではない。良いシングルトンは訂正可能でなければならない。異議申し立ての経路を持たなければならない。現在個人の救済を含まなければならない。価値形成の自由を凍結してはならない。破滅的な能力には強く、非破滅的な生の選択には弱くある。この非対称性が、良いシングルトンの最小条件である。</p>
+          <p class="lead">この章は批判に開かれている。良いシングルトンと悪いシングルトンを分ける線は、原理的には引けるが、実装は難しい。Lord Actonの古典的な懸念がそのまま蘇る。<em>権力は腐敗し、絶対的権力は絶対的に腐敗する</em>。良いシングルトンを設計する技術と、それが時間とともに悪い側へ滑らないように監視する技術は、まだ部品しかない。だから本稿はここを「解けた」とは書かない。問題の位置を正確に名指すだけだ。</p>
+
+          <p class="lead">AI Seoul SummitのFrontier AI Safety CommitmentsやInternational AI Safety Reportのような枠組みは、まだ十分ではない。だが、危険能力評価とリスク管理を国際的な共通言語へ寄せる足場にはなる[10][11]。これらは「ガバナンスがアラインメントの一部である」と認める作業の、ごく初期段階だ。本気の作業は、ここから先にある。</p>
         </div>
         <div class="footer">
           <span>モデル単体の安全から、世界秩序としての安全へ</span>
@@ -782,28 +1048,30 @@
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 9: SIGNS ═══════════════════ -->
       <section class="slide" id="slide-9">
-        <div class="eyebrow reveal">Success Indicators</div>
-        <h2 class="reveal reveal-delay-1">このルートが機能しているかをどう見るか</h2>
+        <div class="eyebrow reveal">Signals</div>
+        <h2 class="reveal reveal-delay-1">このルートが効いているかを、何で測るか</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">成功ルートを語るなら、観測可能な兆候に落とさなければならない。そうでなければ、ただの思想になる。以下の兆候は、未来予測ではなく計器である。世界がどちらへ曲がっているかを読むためのチェックリストである。</p>
+          <p class="lead">成功ルートを語るなら、観測できる兆候まで降ろさないと、ただの思想で終わる。以下は予測ではない。世界がどちらへ曲がっているかを読むための計器だ。</p>
+
           <div class="grid-2">
             <div class="card">
-              <span class="tag">Signs Of Success</span>
-              <p>Frontier AI企業が自己改善後の価値継承を評価している。危険能力評価が任意から義務へ近づく。計算資源・巨大訓練・モデル重みの統治が進む。解釈可能性が特徴発見から内部目的監査へ進む。AI Controlが研究環境だけでなく実運用に入る。弱い自動アラインメント研究者が現れる。危険な自己改善やサブエージェント作成にゲートが設けられる。</p>
+              <span class="tag">Signs Of Progress</span>
+              <p>Frontier AI企業が「能力」だけでなく「自己改善後の価値継承」を評価する。危険能力評価が任意から義務へ近づく。計算資源・巨大訓練・モデル重みの統治が制度化する。解釈可能性が特徴発見から内部目的監査へ進む。AI Controlが研究環境を出て実運用に入る。弱い自動研究者が現れる。子エージェント生成にゲートが置かれる。</p>
             </div>
             <div class="card warn">
-              <span class="tag">Signs Of Failure</span>
-              <p>エージェント化が安全研究より速く進む。AIによるAI研究自動化が野放しになる。危険能力評価なしにオープンウェイト公開が進む。安全策が企業任意のPRに留まる。内部目的を見ないまま外部ベンチマークだけで安全判断する。自己改善後の価値継承を誰も検査していない。「人類を守る」が「現在個人の救済」を含んでいない。</p>
+              <span class="tag">Signs Of Decay</span>
+              <p>エージェント化が安全研究より速く進む。AIによるAI研究自動化が野放しになる。危険能力評価なしにオープンウェイト公開が進む。安全策が企業任意のPRに留まる。内部目的を見ないまま外部ベンチマークで安全判断する。自己改善後の価値継承を誰も検査していない。「人類を守る」が「現在個人の救済」を含んでいない。</p>
             </div>
           </div>
 
-          <p class="lead">成功判定は、楽観論の証拠集めではない。どこで折れるかを観測するための計器である。特に重要なのは、寿命脱出や医療余剰が富裕層だけの逃げ道ではなく、普遍配分として設計されているかである。Alignment成功が現在個人の伴走存続を含むなら、余剰の配分は倫理の周辺ではなく、中核指標になる。</p>
-          <p class="lead">もう一つの重要指標は、企業や国家が「モデルがどれだけ賢いか」だけでなく「モデルがどう自己改善するか」「後継システムへ何を継承するか」「監督をどう受けるか」を測り始めるかである。AI Seoul SummitのFrontier AI Safety Commitmentsは、危険能力評価、説明責任、リスク緩和をフロンティアAI組織に求める方向を示した[10]。International AI Safety Report 2025も、汎用AIの能力、リスク、緩和技術に関する科学的理解を国際的に共有する試みである[11]。能力評価だけが進み、安全評価が後追いになるなら、成功ルートは細くなる。反対に、危険能力評価、AI Control、解釈可能性、価値継承テストが能力開発と同じ速度で制度化されるなら、まだ道は残る。</p>
-          <p class="lead">ここでAGI Hubが見るべきなのは、企業の安全宣言の強さではない。運用の摩擦である。巨大訓練を登録させる摩擦。重み流出を防ぐ摩擦。危険能力評価で公開を止める摩擦。サブエージェント作成にゲートを置く摩擦。自己改善に監査を挟む摩擦。本当に安全へ向かう社会は、能力開発に対して、面倒だが必要な摩擦を増やしていく。</p>
+          <p class="lead">企業の安全宣言の強さではなく、運用の<strong>摩擦</strong>を見るのが要点だ。巨大訓練を登録させる摩擦。重み流出を防ぐ摩擦。危険能力評価で公開を止める摩擦。子エージェント生成にゲートを置く摩擦。自己改造に監査を挟む摩擦。本当に安全へ向かう社会は、能力開発に対して、面倒だが必要な摩擦を増やしていく。逆に、能力評価だけ速く動いて、安全評価が後追いになるなら、ルートは細くなる。</p>
+
+          <p class="lead">もうひとつの重要な計器は、寿命脱出・医療・余剰の<em>配分の形</em>だ。それが少数の富裕層や国家への独占に向かうのか、普遍配分の制度設計に向かうのか。Alignment成功が現在個人の伴走存続を含むなら、ここは倫理の周辺ではなく中核指標である。International AI Safety Report 2025は、汎用AIの能力・リスク・緩和を国際的に共有しようとしている初期試みだ[11]。ここに「配分の指標」が遅れて入ってくるかどうかも、計器のひとつになる。</p>
 
           <div class="note">
-            「人類を守る」が「現在個人の救済」を含んでいないなら、それは強い意味でのAlignment成功ではない。
+            「人類を守る」が「いま生きてる個人の救済」を含んでいないなら、それは強い意味での成功ではない。
           </div>
         </div>
         <div class="footer">
@@ -812,12 +1080,12 @@
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 10: UNSOLVED ═══════════════════ -->
       <section class="slide" id="slide-10">
         <div class="eyebrow reveal">Unsolved Core</div>
-        <h2 class="reveal reveal-delay-1">まだ解けていない核心</h2>
+        <h2 class="reveal reveal-delay-1">まだ解けていない、ど真ん中の問題</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">この構成は完成した答えではない。むしろ、どこを解かなければならないかを誤魔化さないための地図である。人間価値の不確実性をASI級の世界改変行動へどう統合するか。訂正可能性を強い自己改善エージェントに安定実装できるか。内部目的を本当に監査できるか。自己改善後の価値継承をどう保証するか。非アラインASI開発を国際的に封じる統治が作れるか。良いシングルトンが悪いシングルトンへ堕ちない仕組みをどう作るか。現在個人の救済と、人類の未来の価値形成をどう両立するか。</p>
-          <p class="lead">「解けた」と言った瞬間に、この成功ルートは信用を失う。部品はある。方向もある。だが完成品はない。だからこそ、未解決問題を最後に残すのではなく、成功ルートの中核に置く必要がある。成功ルートとは、問題を隠す物語ではない。問題の位置を正確に示す地図である。</p>
+          <p class="lead">この九層と七フェーズは、完成した答えではない。むしろ「どこに穴が空いているか」を誤魔化さないための地図だ。本稿は次の七つを未解決のまま中心に置く。</p>
 
           <table class="compare">
             <thead>
@@ -828,92 +1096,80 @@
             </thead>
             <tbody>
               <tr>
-                <td>人間価値の不確実性を、ASI級の世界改変行動にどう統合するか</td>
-                <td>不確実だから何もしない、では世界は止まらない。不確実なまま不可逆行為を制御する設計が要る。</td>
+                <td>価値不確実性を、ASI級の世界改変行動にどう統合するか</td>
+                <td>「不確実だから何もしない」では世界は止まらない。不確実なまま不可逆を制御する設計が要る</td>
               </tr>
               <tr>
                 <td>訂正可能性を、強い自己改善エージェントに安定実装できるか</td>
-                <td>停止や修正を歓迎する性質が、能力増大後にも残らなければ意味がない。</td>
+                <td>停止や修正を歓迎する性質が、能力増大後にも残らないと意味がない</td>
               </tr>
               <tr>
                 <td>内部目的を本当に監査できるか</td>
-                <td>外部評価だけでは、欺瞞や監督回避を見逃す可能性がある。</td>
+                <td>外部ベンチマークだけでは、欺瞞や監督回避を見逃しうる</td>
               </tr>
               <tr>
                 <td>自己改善後の価値継承をどう保証するか</td>
-                <td>最初のモデルではなく、後継モデルとサブエージェントの連鎖が世界を動かす。</td>
+                <td>最初のモデルではなく、後継モデルと子エージェントの連鎖が世界を動かす</td>
               </tr>
               <tr>
                 <td>非アラインASI開発を国際的に封じる統治が作れるか</td>
-                <td>一主体の成功だけでは、マルチポーラー競争に負ける。</td>
+                <td>一主体の成功だけでは、マルチポーラー競争に負ける</td>
               </tr>
               <tr>
-                <td>良いシングルトンが悪いシングルトンへ堕ちない仕組みをどう作るか</td>
-                <td>破滅的自由を止める力は、人間の未来を固定する力にも転用できる。</td>
+                <td>良いシングルトンが悪いシングルトンに堕ちない仕組みをどう作るか</td>
+                <td>破滅的自由を止める力は、人間の未来を固定する力にも転用できる</td>
               </tr>
               <tr>
-                <td>現在個人の救済と、人類の未来の価値形成をどう両立するか</td>
-                <td>現在個人を捨てる未来主義も、未来の多様性を潰す現在主義も、どちらも弱い。</td>
+                <td>現在個人の救済と、未来の価値形成の自由をどう両立するか</td>
+                <td>現在を捨てる未来主義も、未来を潰す現在主義も、どちらも弱い</td>
               </tr>
             </tbody>
           </table>
 
-          <div class="note warn">
-            「解けた」とは書けない。部品はあるが、完成品はない。
-          </div>
+          <p class="lead">未解決を最後に並べるのは、弱さの自白ではない。これを明示しないアラインメント成功論のほうが危うい。よくある雑な逃げ方は「技術者がうまくやる」「市場が選ぶ」「国家が止める」「超知能が自分で解く」のどれかで、いちばん難しい部分を一文で飛ばす。本稿はその飛ばされた部分を、机の中央に置く。</p>
 
-          <p class="lead">未解決問題を残すことは、弱さではない。ここを明示しない成功論のほうが危うい。Alignmentの議論では、ときどき「技術者がうまくやる」「市場が選ぶ」「国家が止める」「超知能が自分で解く」という短い文で、最も難しい部分が飛ばされる。本稿は、その飛ばされた部分を、あえて机の中央に置く。</p>
-          <p class="lead">それでも、この地図には意味がある。問題が大きすぎるとき、人間はしばしば二つの雑な態度に逃げる。もう終わりだと言うか、きっと大丈夫だと言うかである。しかし、未解決問題を並べることは、絶望の儀式ではない。研究、制度、評価、監査、配分のどこへ力を入れるべきかを決めるための、作業用の地図である。</p>
+          <p class="lead">大きすぎる問題を前にして、人間はしばしば二つの雑な態度に逃げる。<strong>もう終わりだ、と言うか。きっと大丈夫だ、と言うか</strong>。未解決問題を並べることは、絶望の儀式でもなければ、楽観の打ち消しでもない。研究、制度、評価、監査、配分のどこに力を入れるべきかを決めるための、作業用の地図だ。</p>
+
+          <div class="note warn">
+            部品はある。方向もある。だが完成品はない。これを「解けた」と言った瞬間に、本稿は信用を失う。
+          </div>
         </div>
         <div class="footer">
-          <span>部品はあるが、完成品はない</span>
+          <span>解けていない場所を、机の中央に置く</span>
           <span class="slide-count">10 / 11</span>
         </div>
       </section>
 
+      <!-- ═══════════════════ SECTION 11: CONCLUSION ═══════════════════ -->
       <section class="slide" id="slide-11">
         <div class="eyebrow reveal">Conclusion</div>
         <h2 class="reveal reveal-delay-1">破滅的自由を没収し、価値形成の自由を残す</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">それでも、成功ルートの輪郭は描ける。現行LLMでは足りない。しかしLLMは安全研究を加速する足場になる。必要なのは9層の安全OSであり、それを7フェーズで良いシングルトンへ接続することである。成功すれば、人類は単に生き残るだけでなく、死と希少性から脱出する可能性がある。失敗すれば、非アラインASI、悪いシングルトン、またはマルチポーラー競争へ落ちる。</p>
-          <p class="lead">この成功ルートは、気持ちのよい物語ではない。自由を守るために、ある自由を止めなければならない。人間の未来を開くために、人間が人間を滅ぼす能力を制限しなければならない。良いシングルトンを作るために、悪いシングルトンへ堕ちる危険と向き合わなければならない。だからこそ、これは技術論だけでは終わらない。モデル設計、自己改善、監督、解釈可能性、AI Control、統治、余剰配分をつなぐ文明移行の話になる。</p>
-          <p class="lead">破滅論でも楽観論でもなく、第三の視座が必要である。破滅論は、しばしば「作れば終わる」と言う。楽観論は、しばしば「作れば解ける」と言う。本稿の立場は、そのどちらでもない。作れば終わるとは限らない。だが、ただ作れば解けるわけでもない。成功するには、成功条件を設計し、その条件を壊す自由を世界から取り除く必要がある。</p>
+          <p class="lead">輪郭はここまでで描いた。現行LLMでは足りない。だがLLMは安全研究を加速する足場になる。必要なのは九層の安全OSであり、それを七フェーズで良いシングルトンへ接続する設計だ。成功すれば、人類は単に生き残るだけでなく、死と希少性から脱出する可能性がある。失敗すれば、非アラインASI、悪いシングルトン、あるいは終わりのないマルチポーラー競争に落ちる。</p>
 
-          <div class="diagram" aria-label="Conclusion summary">
-<pre>現行LLM
-  足りない
-  しかし安全研究の足場になる
+          <p class="lead">この成功ルートは気持ちのよい物語ではない。<strong>自由を守るために、ある種類の自由を世界から取り上げる必要がある</strong>。人間の未来を開くために、人間が人間を滅ぼせる能力を制限しなければならない。良いシングルトンを作るために、悪いシングルトンへ滑る危険と恒常的に向き合わなければならない。だからこれは技術論では終わらない。モデル設計、自己改善、監督、解釈可能性、AI Control、統治、余剰配分をつなぐ、文明移行の話だ。</p>
 
-9層の安全OS
-  価値不確実性
-  訂正可能性
-  価値形成過程
-  監督・解釈・継承・統治
+          <p class="lead">破滅論でも楽観論でもない、第三の視座が要る。破滅論はしばしば「作れば終わる」と言う。楽観論は「作れば解ける」と言う。本稿の立場はどちらでもない。作れば終わるとは限らない。だが、ただ作れば解けるわけでもない。<strong>成功するには、成功条件を先に設計し、その条件を壊す自由を世界から取り除く必要がある</strong>。</p>
 
-7フェーズの文明移行
-  限定環境のHVP-ASI
-  危険ASI封鎖
-  良いシングルトン
-  伴走存続</pre>
-          </div>
+          <p class="lead">人間価値保存型ASIは、人間に優しく見えるAIではない。人間価値を完全には知らないと自覚し、人間の訂正を歓迎し、人間の生命・苦痛・主観の連続性・同意・主体性・価値形成過程を守り、自己改造後もその構造を保ち、危険な他ASIを世に出させない秩序を、その能力で支える中核である。</p>
 
-          <p class="lead">人間価値保存型ASIは、人間に優しく見えるAIではない。人間価値を完全には知らないと自覚し、人間の訂正を歓迎し、人間の生命、苦痛、主観的連続性、同意、主体性、価値形成過程を守り、自己改善後もその構造を失わず、危険な他ASIを封じる世界秩序を作るための中核である。</p>
-          <p class="lead">そして、良いシングルトンは、未来を一つの正解へ固定する秩序ではない。むしろ、人間が何になるかを選び続けるために、世界から破滅的な自由だけを取り上げる秩序である。非アラインASIを作る自由、監督を破壊する自由、他者の人格を非同意に書き換える自由、主観的連続性を軽視して最適化する自由。それらは自由の名をしていても、全員の自由を終わらせる。</p>
-          <p class="lead">残すべき自由は別にある。考え直す自由。価値観を変える自由。身体を変える自由。生物学的人間であり続ける自由。共同体を作る自由。宗教や哲学を持つ自由。ポストヒューマン化を選ぶ自由。死と希少性から逃れたあとに、何を大切にするかを、未来の人間が自分たちで形成していく自由である。</p>
-          <p class="lead" style="margin-top: 24px; font-size: 18px;">ASI Alignment成功とは、人間より賢い機械に人間らしい性格を与えることではない。人間を滅ぼせる自由を世界から取り上げ、人間が何になるかを選び続ける自由を残すことである。</p>
+          <p class="lead">そして、良いシングルトンは未来を一つに固定する秩序ではない。むしろ逆だ。非アラインASIを作る自由、監督を破壊する自由、他者の人格を非同意に書き換える自由、主観の連続性を軽視して最適化する自由。これらは自由の名をしていても、全員の自由を終わらせる。没収すべきは、ここまでの自由である。</p>
 
-          <div class="note">
-            アラインメント成功とは、AIに人間らしい優しさを与えることではない。人間価値を完全には知らないと自覚し、人間の訂正を歓迎し、人間の生命・主体性・価値形成過程を守り、自己改善後もその構造を失わず、危険な他ASIを封じる世界秩序を作ることである。それは単一の技術ではない。9層の安全OSと、7フェーズの文明移行である。
-          </div>
+          <p class="lead">残すべき自由は別にある。考え直す自由、価値観を変える自由、身体を変える自由、生物学的人間であり続ける自由、共同体を作る自由、宗教や哲学を持つ自由、ポストヒューマン化を選ぶ自由。死と希少性から逃れたあとに、自分が何を大事にするかを、未来の人間が自分で形成していく余地である。</p>
 
-          <p class="lead">超知能に渡してよい自由と、世界から没収しなければならない自由を分けること。アラインメントの成功は、そこからしか始まらない。</p>
+          <p class="lead" style="margin-top: 24px; font-size: 19px; font-weight: 700; color: var(--black); line-height: 1.55;">ASIアラインメント成功とは、人間より賢い機械に、人間らしい性格を与えることではない。人間を滅ぼせる自由を世界から取り上げ、人間が何になるかを選び続ける自由だけを、残すことである。</p>
+
+          <p class="lead">超知能に渡してよい自由と、世界から没収しなければならない自由を分ける。この線を引いた瞬間にはじめて、アラインメントの成功が、ようやく作業可能な問題になる。</p>
+
+          <p class="lead" style="margin-top: 28px; font-size: 17px; color: var(--accent); font-weight: 700; line-height: 1.55; border-top: 1px solid var(--border); padding-top: 24px;">超知能を作るかどうかではない。すでに作りつつある。自分を滅ぼせる自由を世界から取り上げる作業は、ASIが来てから始めるものではない。<strong>いま、すでに、始まっている。</strong>だが、その線を引く作業の核心には、まだ解けていない問いが一つ残されたままだ——<em>破滅的自由を誰が定義し、その定義権をどう訂正可能にし続けるのか</em>。この問いに答えが乗るまで、九層も七フェーズも、まだ完成図ではない。輪郭は描かれた。残っているのは、いま生きている人間が、その輪郭の内側で何を選ぶかである。</p>
         </div>
         <div class="footer">
-          <span>破滅的自由を没収し、価値形成の自由を残す</span>
+          <span>橋は細い。だが、まだ存在している</span>
           <span class="slide-count">11 / 11</span>
         </div>
       </section>
 
+      <!-- ═══════════════════ NAVIGATION ═══════════════════ -->
       <section class="slide" id="slide-nav" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
         <div class="eyebrow reveal">Continue Reading</div>
         <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
@@ -939,10 +1195,14 @@
     </main>
 
     <footer class="credits">
-      <p>AGI HUB &middot; No. 34 &middot; Alignment &middot; 2026.05.28 &middot; By Ryao</p>
+      <p>AGI HUB &middot; No. 34 &middot; Alignment &middot; 2026.05.29 &middot; By Ryao</p>
       <p style="margin-top:12px;">
         <strong style="color:#565656;">Scope.</strong>
-        本稿はASI Alignment成功ルートを、現行LLMの安全調整、人間価値保存型ASI、9層アーキテクチャ、7フェーズ移行、良いシングルトンへの世界秩序設計として統合した設計図である。単発の研究紹介ではなく、AGI HUBのAlignmentカテゴリに置く中核記事として、既存研究部品、未解決問題、文明移行の条件を接続するための作業地図として読むことを意図している[12]。
+        本稿はASIアラインメント成功ルートを、現行LLMの安全調整、人間価値保存型ASI(HVP-ASI)、九層の安全OS、七フェーズの文明移行、良いシングルトンと伴走存続として接続した設計図である。単発の研究紹介ではなく、AGI HUBのAlignmentカテゴリの柱記事として、既存研究、未解決問題、文明移行条件を一本の鎖につなぐための作業地図として書いた[12]。
+      </p>
+      <p style="margin-top:8px;">
+        <strong style="color:#565656;">Note on terminology.</strong>
+        「人間価値保存型ASI / HVP-ASI」は、日本語圏のAlignmentコミュニティ周辺で本稿が使っている合成的な定義であり、英語圏の標準用語ではない。BostromのSingleton概念[9]、CIRLの価値不確実性[2]、Corrigibility[4]、Constitutional AI[3]、AI Control[5]、debate/amplification[6][7]を、現在個人の伴走存続まで含む形に組み合わせ直した独自構成として読まれたい。
       </p>
       <p style="margin-top:8px;">
         <strong style="color:#565656;">References.</strong>
