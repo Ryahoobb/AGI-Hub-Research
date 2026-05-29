@@ -3,11 +3,11 @@
     "no": 34,
     "slug": "34-alignment-success-route",
     "category": "alignment",
-    "date": "2026.05.28",
-    "slides": "11 Sections",
-    "thumb": "images/thumb-alignment-research-landscape.jpg",
-    "title": "アラインメントはどう成功しうるか — 人間価値保存型ASIと良いシングルトンへの設計図",
-    "excerpt": "現行LLMの安全調整だけでは、ASIの整合は担保できない。人間の望みを完全には知らないと自覚し、訂正を歓迎し、自己改造後も価値を引き継ぐ。さらに危険な他ASIを世界の側で塞ぐ。九層と七フェーズが、現行LLMから伴走存続へ至る細い橋を一本につなぐ。橋は細い。だが、橋が細いことと、橋がないことは違う。",
+    "date": "2026.05.29",
+    "slides": "8 Sections",
+    "thumb": "images/thumb-alignment-success-route.jpg",
+    "title": "アラインメントは、どう成功しうるか — ASIと共に在るための設計図",
+    "excerpt": "アラインメントは「AIをいい子にする話」ではなく、人間が間違い、気づき、やり直す自由を持ったまま生き続けられる世界秩序を設計する話である。本稿は現行LLMで届かない4つの段差、成功の4条件、9つの崩壊点、独立に効く9つの審級、弱いLLMから良いシングルトンへの7段階の軌道を、一枚の設計図として描く。停止は安全ではない。組みながら走るしかない。",
     "featured": true
   },
   {

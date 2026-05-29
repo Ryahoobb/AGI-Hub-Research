@@ -2,80 +2,45 @@
 <html lang="ja">
   <head>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-    <meta name="revised" content="2026.05.29">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <title>アラインメントはどう成功しうるか — 人間価値保存型ASIと良いシングルトンへの設計図 — AGI HUB</title>
+    <title>アラインメントは、どう成功しうるか — ASIと共に在るための設計図</title>
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
       :root {
         --black: #000;
         --body-text: #1a1a1a;
-        --mid: #565656;
         --meta: #757575;
         --light-gray: #999;
-        --border: #d9d3c4;
-        --bg: #f6f1e7;
-        --bg-alt: #ede5d3;
-        --accent: #173f4f;
-        --accent-2: #7a3326;
-        --accent-soft: rgba(23, 63, 79, 0.08);
-        --warn-soft: rgba(122, 51, 38, 0.08);
+        --border: #e5e5e5;
+        --bg: #fff;
+        --bg-alt: #fafafa;
+        --accent: #b03030;
         --ease: cubic-bezier(0.22, 1, 0.36, 1);
       }
-
       * { box-sizing: border-box; margin: 0; padding: 0; }
       html { scroll-behavior: smooth; }
-
       body {
         font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
           游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
           游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
-          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
           sans-serif;
         font-feature-settings: "palt";
         font-size: 16px;
-        line-height: 1.85;
+        line-height: 1.75;
         color: var(--body-text);
         background: var(--bg);
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
         word-wrap: break-word;
       }
+      .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--black); width: 0%; z-index: 100; transition: width 0.3s var(--ease); }
+      .nav { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); display: grid; gap: 16px; z-index: 50; }
+      .nav button { width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid var(--meta); background: transparent; cursor: pointer; transition: all 0.3s var(--ease); }
+      .nav button.active { background: var(--black); border-color: var(--black); transform: scale(1.4); }
 
-      a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--border); }
-      a:hover { border-bottom-color: var(--accent); color: var(--accent); }
-      em { font-style: italic; }
-
-      .progress {
-        position: fixed; top: 0; left: 0;
-        height: 2px; background: var(--accent);
-        width: 0%; z-index: 100;
-        transition: width 0.3s var(--ease);
-      }
-
-      .nav {
-        position: fixed; right: 24px; top: 50%;
-        transform: translateY(-50%);
-        display: grid; gap: 14px; z-index: 50;
-      }
-
-      .nav button {
-        width: 8px; height: 8px; border-radius: 999px;
-        border: 1.5px solid var(--meta);
-        background: transparent; cursor: pointer;
-        transition: all 0.3s var(--ease);
-      }
-
-      .nav button.active {
-        background: var(--accent);
-        border-color: var(--accent);
-        transform: scale(1.4);
-      }
-
-      main { scroll-snap-type: y proximity; }
-
+      main { scroll-snap-type: y mandatory; }
       .slide {
         position: relative;
         min-height: 100vh;
@@ -83,12 +48,10 @@
         margin: 0 auto;
         padding: 80px 48px 64px;
         display: grid;
-        grid-template-columns: minmax(0, 1fr);
         grid-template-rows: auto auto 1fr auto;
         gap: 32px;
         scroll-snap-align: start;
       }
-
       .slide + .slide { border-top: 1px solid var(--border); }
 
       .hero {
@@ -96,33 +59,41 @@
         aspect-ratio: 16 / 7;
         object-fit: cover;
         display: block;
-        position: static;
-        left: auto;
-        right: auto;
-        filter: grayscale(0.72) contrast(1.08);
+        filter: grayscale(0.6) contrast(1.1);
+        transition: filter 0.6s var(--ease);
+      }
+      .hero:hover { filter: grayscale(0) contrast(1); }
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
       }
 
-      .hero.img-fullbleed {
-        width: 100%;
-        margin-left: 0;
-        margin-right: 0;
-        max-width: 100%;
-        justify-self: stretch;
-        aspect-ratio: 21 / 9;
-      }
+      .credits { max-width: 1120px; margin: 0 auto; padding: 48px 48px 80px; border-top: 1px solid var(--border); }
+      .credits p { font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.047em; line-height: 2; color: var(--light-gray); }
+      .credits a { color: var(--meta); text-decoration: none; border-bottom: 1px solid var(--border); }
+      .credits a:hover { color: var(--black); border-bottom-color: var(--black); }
 
-      .hero.img-content {
-        max-width: 720px;
-        margin-left: auto;
-        margin-right: auto;
-        aspect-ratio: 4 / 3;
-      }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(24px);
-        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-      }
+      .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
       .reveal.visible { opacity: 1; transform: translateY(0); }
       .reveal-delay-1 { transition-delay: 0.1s; }
       .reveal-delay-2 { transition-delay: 0.2s; }
@@ -132,1052 +103,509 @@
         font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
         font-feature-settings: normal;
         font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.15em;
+        font-weight: 400;
+        letter-spacing: 0.083em;
         text-transform: uppercase;
-        color: var(--accent);
+        color: var(--meta);
       }
 
-      h1, h2 {
-        color: var(--black);
-        font-weight: 800;
-        line-height: 1.35;
-        letter-spacing: 0;
-        max-width: 28ch;
-        padding-bottom: 16px;
-        border-bottom: 3px double var(--accent);
-      }
+      h1, h2 { color: var(--black); font-weight: 700; line-height: 1.625; letter-spacing: normal; max-width: 28ch; }
+      h1 { font-size: clamp(28px, 4vw, 36px); }
+      h2 { font-size: clamp(22px, 3.2vw, 30px); }
 
-      h1 { font-size: clamp(30px, 4.2vw, 42px); }
-      h2 { font-size: clamp(25px, 3.6vw, 34px); }
+      .lead { max-width: 780px; font-size: 16px; line-height: 1.85; color: var(--body-text); }
+      .lead + .lead { margin-top: 12px; }
+      .lead strong { color: var(--black); }
+      .lead a { color: inherit; border-bottom: 1px solid #999; transition: border-color 0.3s; }
+      .lead a:hover { border-bottom-color: var(--black); }
 
       .panel { display: grid; gap: 24px; align-content: start; }
-
-      .lead {
-        max-width: 800px;
-        font-size: 16px;
-        line-height: 1.85;
-        color: var(--body-text);
-      }
-
-      .lead strong { color: var(--black); }
-
-      .gloss {
-        display: block;
-        max-width: 800px;
-        font-size: 13px;
-        line-height: 1.7;
-        color: var(--mid);
-        padding: 8px 14px;
-        border-left: 2px solid var(--accent);
-        background: var(--accent-soft);
-        margin: -4px 0 4px;
-      }
-      .gloss::before {
-        content: "用語";
-        display: inline-block;
-        margin-right: 8px;
-        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
-        font-feature-settings: normal;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        color: var(--accent);
-      }
-
       .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
-      .card {
-        padding: 22px 20px 22px 0;
-        border-top: 3px solid var(--accent);
-        background: transparent;
-      }
-
-      .card.warn { border-top-color: var(--accent-2); }
-      .card .tag {
-        display: inline-block;
-        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
-        font-feature-settings: normal;
-        font-size: 11px;
-        letter-spacing: 0.083em;
-        color: var(--accent);
-        margin-bottom: 10px;
-        text-transform: uppercase;
-      }
-      .card.warn .tag { color: var(--accent-2); }
-      .card p { font-size: 15px; line-height: 1.75; }
+      .card { padding: 24px 0; border-top: 2px solid var(--black); }
       .card strong { color: var(--black); }
+      .card p { font-size: 15px; line-height: 1.75; color: var(--body-text); }
+      .tag { display: inline-block; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.083em; color: var(--meta); margin-bottom: 12px; }
 
-      .note {
-        max-width: 900px;
-        font-size: 17px;
-        line-height: 1.75;
-        color: var(--body-text);
-        padding: 24px 28px;
-        border-left: 4px solid var(--accent);
-        background: var(--accent-soft);
-      }
+      .point { padding-left: 16px; border-left: 2px solid var(--black); font-size: 16px; line-height: 1.75; color: var(--body-text); }
+      .point strong { color: var(--black); }
 
-      .note.warn {
-        border-left-color: var(--accent-2);
-        background: var(--warn-soft);
-      }
+      .note { font-size: 16px; line-height: 1.85; color: var(--body-text); padding: 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); max-width: 780px; }
+      .note strong { color: var(--black); }
 
-      .note::before {
-        content: "THESIS";
-        display: block;
-        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
-        font-feature-settings: normal;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        color: var(--accent);
-        margin-bottom: 10px;
+      table.compare { width: 100%; border-collapse: collapse; border-top: 2px solid var(--black); border-bottom: 2px solid var(--black); }
+      table.compare th, table.compare td {
+        padding: 16px 14px; text-align: left; font-size: 14.5px; line-height: 1.7;
+        color: var(--body-text); border-bottom: 1px solid var(--border); vertical-align: top;
       }
-
-      .note.warn::before {
-        content: "FAILURE MODE";
-        color: var(--accent-2);
-      }
-
-      .phase-block {
-        max-width: 900px;
-        padding: 26px 28px 28px;
-        background: var(--bg-alt);
-        border-left: 4px solid var(--accent);
-        margin-bottom: 8px;
-      }
-      .phase-block .phase-tag {
-        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
-        font-feature-settings: normal;
-        font-size: 11px;
-        letter-spacing: 0.12em;
-        font-weight: 700;
-        color: var(--accent);
-        text-transform: uppercase;
-        margin-bottom: 4px;
-      }
-      .phase-block h3 {
-        font-size: 19px;
-        font-weight: 800;
-        color: var(--black);
-        line-height: 1.45;
-        margin-bottom: 14px;
-      }
-      .phase-block .from-prev {
-        font-size: 13px;
-        line-height: 1.7;
-        color: var(--mid);
-        font-style: italic;
-        margin-bottom: 12px;
-        padding-left: 14px;
-        border-left: 2px solid var(--meta);
-      }
-      .phase-block p {
-        font-size: 15px;
-        line-height: 1.8;
-        color: var(--body-text);
-        margin-bottom: 10px;
-      }
-      .phase-block p:last-child { margin-bottom: 0; }
-      .phase-block strong { color: var(--black); }
-
-      table.compare {
-        width: 100%;
-        border-collapse: collapse;
-        border-top: 3px solid var(--accent);
-        border-bottom: 3px double var(--accent);
-        background: var(--bg);
-      }
-
-      table.compare th,
-      table.compare td {
-        padding: 17px 15px;
-        text-align: left;
-        font-size: 15px;
-        line-height: 1.65;
-        color: var(--body-text);
-        border-bottom: 1px solid var(--border);
-        vertical-align: top;
-      }
-
       table.compare th {
         font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
-        font-feature-settings: normal;
-        font-size: 11px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--accent);
-        font-weight: 700;
-        background: var(--accent-soft);
+        font-feature-settings: normal; font-size: 11px; letter-spacing: 0.083em;
+        text-transform: uppercase; color: var(--meta); font-weight: 400;
+        border-bottom: 1px solid var(--black);
       }
-
       table.compare td strong { color: var(--black); }
       table.compare tr:last-child td { border-bottom: none; }
 
-      .svg-frame {
-        max-width: 900px;
-        background: var(--bg-alt);
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-        padding: 24px 20px;
-      }
-      .svg-frame svg { display: block; width: 100%; height: auto; }
-      .svg-caption {
-        max-width: 900px;
-        font-size: 12px;
-        line-height: 1.7;
-        color: var(--meta);
-        padding: 8px 0 0;
-        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
-        font-feature-settings: normal;
-        letter-spacing: 0.05em;
-      }
+      .footer { display: flex; justify-content: space-between; align-items: end; gap: 16px; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.083em; color: var(--light-gray); text-transform: uppercase; }
+      .slide-count { font-weight: 700; color: var(--black); }
 
-      .footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        margin-top: 32px;
-        padding-top: 20px;
-        border-top: 1px solid var(--border);
-        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
-        font-feature-settings: normal;
-        font-size: 11px;
-        letter-spacing: 0.083em;
-        color: var(--meta);
-      }
+      .diagram { width: 100%; max-width: 940px; margin: 12px auto 0; display: block; }
+      .diagram-caption { font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.083em; color: var(--light-gray); margin-top: 10px; text-transform: uppercase; text-align: center; }
 
-      .footer .slide-count { color: var(--accent); font-weight: 700; }
-
-      .credits {
-        max-width: 1120px;
-        margin: 0 auto;
-        padding: 48px 48px 80px;
-        border-top: 1px solid var(--border);
-      }
-
-      .credits p {
-        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
-        font-feature-settings: normal;
-        font-size: 11px;
-        letter-spacing: 0.047em;
-        line-height: 2;
-        color: var(--light-gray);
-      }
-
-      .credits a {
-        color: var(--meta);
-        text-decoration: none;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .credits a:hover {
-        color: var(--black);
-        border-bottom-color: var(--black);
-      }
-
-      @media (max-width: 900px) {
-        .grid-2, .grid-3 { grid-template-columns: 1fr; }
-        .nav { display: none; }
-      }
+      .stepper { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0; border-top: 2px solid var(--black); border-bottom: 2px solid var(--black); }
+      .stepper > div { padding: 18px 12px; border-right: 1px solid var(--border); }
+      .stepper > div:last-child { border-right: none; }
+      .stepper .num { font-family: "SF Mono", monospace; font-size: 11px; letter-spacing: 0.083em; color: var(--meta); display: block; margin-bottom: 6px; }
+      .stepper .title { font-weight: 700; color: var(--black); font-size: 14px; line-height: 1.45; display: block; margin-bottom: 6px; }
+      .stepper .desc { font-size: 12.5px; color: var(--body-text); line-height: 1.55; }
+      .stepper > div.now { background: var(--bg-alt); }
+      .stepper > div.now .num { color: var(--accent); font-weight: 700; }
 
       @media (max-width: 768px) {
         .slide { padding: 64px 24px 48px; }
-        h1 { font-size: 27px; }
-        h2 { font-size: 23px; }
-        .hero.img-fullbleed,
-        .hero.img-content { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; margin: 0; }
-        .phase-block { padding: 20px 18px; }
-        .phase-block h3 { font-size: 17px; }
-      }
-
-      @media (max-width: 480px) {
-        .slide { padding: 56px 16px 40px; }
-        .note { padding: 18px 16px; font-size: 15px; }
-        table.compare th, table.compare td { padding: 14px 10px; font-size: 14px; }
-      }
-
-      @media print {
-        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
-        .nav, .progress { display: none; }
-        .reveal { opacity: 1; transform: none; }
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        .stepper { grid-template-columns: 1fr; }
+        .stepper > div { border-right: none; border-bottom: 1px solid var(--border); }
+        .nav { right: 12px; }
+        .hero { aspect-ratio: 16 / 9; }
+        .slide .hero.img-fullbleed, .slide .hero.img-wide, .slide .hero.img-content { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; margin: 0; transform: none; left: 0; position: static; }
+        .credits { padding: 32px 24px 64px; }
+        table.compare { font-size: 12.5px; }
+        table.compare th, table.compare td { padding: 12px 8px; }
       }
     </style>
   </head>
-  <body class="pattern-investigation has-site-header" data-category="alignment">
+  <body class="pattern-monolith has-site-header" data-category="alignment">
     <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
-<script src="../partials/header.js" defer></script>
+    <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
-    <aside class="nav" aria-label="Section navigation">
-      <button data-target="slide-1" class="active" aria-label="Section 1"></button>
-      <button data-target="slide-2" aria-label="Section 2"></button>
-      <button data-target="slide-3" aria-label="Section 3"></button>
-      <button data-target="slide-4" aria-label="Section 4"></button>
-      <button data-target="slide-5" aria-label="Section 5"></button>
-      <button data-target="slide-6" aria-label="Section 6"></button>
-      <button data-target="slide-7" aria-label="Section 7"></button>
-      <button data-target="slide-8" aria-label="Section 8"></button>
-      <button data-target="slide-9" aria-label="Section 9"></button>
-      <button data-target="slide-10" aria-label="Section 10"></button>
-      <button data-target="slide-11" aria-label="Section 11"></button>
-      <button data-target="slide-nav" aria-label="Navigation"></button>
+    <aside class="nav" aria-label="Slide navigation">
+      <button data-target="slide-1" class="active" aria-label="Slide 1"></button>
+      <button data-target="slide-2" aria-label="Slide 2"></button>
+      <button data-target="slide-3" aria-label="Slide 3"></button>
+      <button data-target="slide-4" aria-label="Slide 4"></button>
+      <button data-target="slide-5" aria-label="Slide 5"></button>
+      <button data-target="slide-6" aria-label="Slide 6"></button>
+      <button data-target="slide-7" aria-label="Slide 7"></button>
+      <button data-target="slide-8" aria-label="Slide 8"></button>
     </aside>
 
     <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 34 / 34 &nbsp;&middot;&nbsp; Alignment &nbsp;&middot;&nbsp; 11 Sections</span>
+      <span>No. 34 / 34 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 8 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
-        <a href="33-alignment-schools-map.html" style="color:inherit;text-decoration:none;border-bottom:none;">&larr; Prev</a>
-        <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;border-bottom:none;">Same Category</a>
-        <span style="opacity:0.3;">Next &rarr;</span>
+        <a href="33-alignment-schools-map.html" style="color:inherit;text-decoration:none;">← Prev</a>
+        <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;">Same Category</a>
+        <span style="opacity:0.3;">Next →</span>
       </span>
     </div>
 
     <main>
-      <!-- ═══════════════════ SECTION 1: INTRO ═══════════════════ -->
+
+      <!-- ═══════════ Slide 1: 問い直し ═══════════ -->
       <section class="slide" id="slide-1">
-        <div class="eyebrow reveal">AGI HUB &middot; No. 34 &middot; Alignment &middot; Success Route &middot; 2026.05.29 &middot; By Ryao</div>
-        <h1 class="reveal reveal-delay-1">アラインメントはどう成功しうるか — 人間価値保存型ASIと良いシングルトンへの設計図</h1>
-        <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/thumb-alignment-research-landscape.jpg" alt="AGI HUBのアラインメント研究地図を示すモノクロの編集用ビジュアル">
-
-        <div class="panel reveal reveal-delay-3">
-          <p class="lead">あなたはあるラボのオフィスにいる。机の上で、半年前に作ったAIが、自分よりも賢い後継モデルの初期重みを出力した。テストはすべて通った。「人間に親切に応答せよ」も「危険な指示を拒否せよ」も合格している。だが、本当に気になるのはそこではない。このモデルが世に出たあと、誰かに止められたとき、止められることを失敗として処理するかどうかだ。停止ボタンを押されないように、人間を上手に説得しはじめないかどうかだ。テストで測れるのは応答であって、目的ではない。</p>
-
-          <p class="lead">アラインメントという言葉は、しばしば「AIを優しくすること」と読まれる。丁寧に返事をする。差別的な発言をしない。危ない質問は断る。これらは大事だが、ASI——人間より広い範囲で賢い知能——を相手にしたとき、いちばん怖い問題はそこにない。世界を書き換えられる力を持った知能が、人間の生命、選び直す自由、いま生きてる個人を、最後まで価値として数え続けるか。ここが本丸である。</p>
-
-          <p class="lead">優しく見える返答と、価値を数え続ける内部構造は別物だ。前者は表に出る。後者は表に出ない。チャット画面の上で礼儀正しいことと、世界改変の実行系で人間を数え続けることは、同じ問題ではない。優しさはマナーで作れる。内部構造はマナーでは作れない。</p>
-
-          <p class="lead">本稿は破滅論ではない。楽観論でもない。アラインメントは難しい。だが解けないと決まったわけでもない。<strong>橋は細い。しかし橋が細いことと、橋がないことは違う。</strong>細い橋を渡る順番を、現行LLMから始めて伴走存続まで一本につなぐ。それが本稿の仕事である。</p>
-
+        <div class="eyebrow reveal">AGI HUB &nbsp;·&nbsp; No. 34 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; What We Are Actually Doing &nbsp;·&nbsp; 2026.05.29 &nbsp;·&nbsp; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">アラインメントは、AIをいい子にする話ではない。<br>人間がやり直せる世界秩序を、誰かが設計する話だ。</h1>
+        <div class="panel reveal reveal-delay-2">
+          <div>
+            <img class="hero img-fullbleed" src="../images/alignment-success-route/slide1.jpg" alt="Abstract pattern of overlapping geometric forms">
+            <div class="hero-caption">Photo: Unsplash</div>
+          </div>
+          <p class="lead">
+            アラインメントという語に、私たちはずっと小さすぎる箱を当ててきた。チャットボットに乱暴な口を利かせない。差別的な発言を吐かせない。爆発物の作り方を返さない。これらはRLHFと安全プロンプトでだいたい片がついた。問題は、片がついた領域がアラインメントの全体ではなく、入口にすぎなかったということだ。
+          </p>
+          <p class="lead">
+            来るべき知能は、私たちの語彙では「説得」「服従」「監督」のいずれにも収まらない。チンパンジーが人間の法廷の判決理由を読めないのと同じ程度に、私たちはASIの動機構造を読めない可能性がある。読めないものに「お行儀よくしてね」と言って効くと信じる根拠は薄い。ASIアラインメントは、賢い相手に倫理を諭す仕事ではない。賢い相手が登場したあとも、人間が人間として残り、選び続け、間違い続け、やり直し続けられる世界の側を、先に設計しておく仕事である。
+          </p>
+          <p class="lead">
+            本稿の主張を先に置く。第一に、現行LLMで成功している安全調整の延長線上に、ASIアラインメントの解は無い。第二に、解は単一の技術ではなく、互いに独立した九つの審級を直列に通す構造をしている。第三に、その構造は弱いモデルから強いモデルへの七段階の軌道として時間順に並んでいて、いま私たちはその二段目を歩いている。第四に、軌道の終点には「良いシングルトン」と呼ぶしかない世界秩序が必要になる。これは陰謀ではない。物理的に、危険な競合ASIが一つでも自由に動ける宇宙では、人間価値の保存は確率ゼロに収束するという計算上の含意である。
+          </p>
+          <p class="lead">
+            最後の点は耳障りが悪い。だから多くの論者が言いたがらない。だが、誰かが先に作れば全員死ぬ、と言うだけでは設計図にならない。誰かが先に作るのが避けがたいなら、その「誰か」が「良い終局」を構造的に強制される側であり、かつ自分自身を世代を越えて自己訂正できる側になっているように、私たちは今から組み立てるしかない。
+          </p>
           <div class="note">
-            アラインメントとは、AIの態度の問題ではない。世界を書き換えられる知能が、人間を資源でも障害物でもなく、価値として数え続ける設計問題である。
+            <p>本稿のスコープは、ASIに到達したあとの破滅を回避する設計図そのものではない。<strong>そこに至るまでにこちら側が満たしておくべき構造的条件</strong>を、九つの審級と七段階の軌道として描く。技術論ではなく、技術が間に合うために必要な順序と冗長性の話である。</p>
           </div>
-
-          <p class="lead">読者がこの記事を閉じるとき、頭の中に1本の鎖が残ってほしい。現行LLM → 安全研究の加速 → 自動研究者 → 限定環境のASI → 危険なASI開発の封鎖 → 良いシングルトン → 寿命脱出と余剰の普遍配分 → <strong>伴走存続</strong>。一段でも抜ければ崩れる。だが、どの一段も「魔法」ではない。すでに部品の名前が付きはじめている話だ。</p>
-
-          <span class="gloss"><strong>伴走存続。</strong>いま生きてる個人が、未来に置き去りにされないこと。種としての人類が残るだけでなく、いまここで考えてる人が、その未来へ連れて行かれること。後で詳しく扱う。</span>
-
-          <div class="svg-frame">
-            <svg viewBox="0 0 860 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Alignment success route from current LLMs to coexistence survival">
-              <defs>
-                <marker id="arrow1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-                  <path d="M0,0 L10,5 L0,10 z" fill="#173f4f"/>
-                </marker>
-              </defs>
-              <!-- nodes -->
-              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="13" fill="#1a1a1a">
-                <rect x="40" y="20" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
-                <text x="150" y="42" text-anchor="middle" font-weight="700">① 現行LLM</text>
-                <text x="150" y="58" text-anchor="middle" font-size="11" fill="#565656">まだ足りない。だが足場になる</text>
-
-                <rect x="40" y="86" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
-                <text x="150" y="108" text-anchor="middle" font-weight="700">② 安全研究の加速</text>
-                <text x="150" y="124" text-anchor="middle" font-size="11" fill="#565656">人間が見るべき候補を広げる</text>
-
-                <rect x="40" y="152" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
-                <text x="150" y="174" text-anchor="middle" font-weight="700">③ 弱い自動研究者</text>
-                <text x="150" y="190" text-anchor="middle" font-size="11" fill="#565656">信頼ではなく制御から始める</text>
-
-                <rect x="40" y="218" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
-                <text x="150" y="240" text-anchor="middle" font-weight="700">④ 限定環境のアラインASI</text>
-                <text x="150" y="256" text-anchor="middle" font-size="11" fill="#565656">世界に直接つながない</text>
-
-                <rect x="40" y="284" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
-                <text x="150" y="306" text-anchor="middle" font-weight="700">⑤ 危険な他ASIを封鎖</text>
-                <text x="150" y="322" text-anchor="middle" font-size="11" fill="#565656">読者が最も抵抗する地点</text>
-
-                <rect x="40" y="350" width="220" height="46" fill="#fff" stroke="#173f4f" stroke-width="1.5"/>
-                <text x="150" y="372" text-anchor="middle" font-weight="700">⑥ 良いシングルトン</text>
-                <text x="150" y="388" text-anchor="middle" font-size="11" fill="#565656">破滅的自由だけを没収</text>
-
-                <rect x="40" y="416" width="220" height="36" fill="#173f4f" stroke="#173f4f" stroke-width="1.5"/>
-                <text x="150" y="438" text-anchor="middle" font-weight="700" fill="#f6f1e7">⑦ 伴走存続</text>
-              </g>
-              <!-- arrows -->
-              <g stroke="#173f4f" stroke-width="1.4" fill="none" marker-end="url(#arrow1)">
-                <line x1="150" y1="66" x2="150" y2="84"/>
-                <line x1="150" y1="132" x2="150" y2="150"/>
-                <line x1="150" y1="198" x2="150" y2="216"/>
-                <line x1="150" y1="264" x2="150" y2="282"/>
-                <line x1="150" y1="330" x2="150" y2="348"/>
-                <line x1="150" y1="396" x2="150" y2="414"/>
-              </g>
-              <!-- side caption / what survives -->
-              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="12" fill="#173f4f">
-                <line x1="290" y1="44" x2="320" y2="44" stroke="#173f4f" stroke-width="1"/>
-                <text x="328" y="48" font-size="11">RLHF・憲法AI・拒否ポリシー</text>
-                <line x1="290" y1="110" x2="320" y2="110" stroke="#173f4f" stroke-width="1"/>
-                <text x="328" y="114" font-size="11">レッドチーム・評価設計・コード検証</text>
-                <line x1="290" y1="176" x2="320" y2="176" stroke="#173f4f" stroke-width="1"/>
-                <text x="328" y="180" font-size="11">AI Control・サンドボックス・監査ログ</text>
-                <line x1="290" y1="242" x2="320" y2="242" stroke="#173f4f" stroke-width="1"/>
-                <text x="328" y="246" font-size="11">価値不確実性・訂正可能性・解釈可能性</text>
-                <line x1="290" y1="308" x2="320" y2="308" stroke="#173f4f" stroke-width="1"/>
-                <text x="328" y="312" font-size="11">計算資源統治・国際監査・重み流出防止</text>
-                <line x1="290" y1="374" x2="320" y2="374" stroke="#173f4f" stroke-width="1"/>
-                <text x="328" y="378" font-size="11">破滅は止め、思想と身体の選択は開く</text>
-                <line x1="290" y1="434" x2="320" y2="434" stroke="#173f4f" stroke-width="1"/>
-                <text x="328" y="438" font-size="11" font-weight="700">寿命脱出・医療・余剰の普遍配分</text>
-              </g>
-              <!-- title block right top -->
-              <g font-family="SF Mono, Menlo, monospace" font-size="10" fill="#565656">
-                <text x="610" y="30" letter-spacing="1.5">FIGURE 1</text>
-                <text x="610" y="46" letter-spacing="0.5" font-size="11" fill="#173f4f">Alignment Success Route</text>
-                <text x="610" y="62" font-size="10" fill="#757575">一段でも抜ければ崩れる細い橋</text>
-              </g>
-            </svg>
-          </div>
-          <div class="svg-caption">図1。現行LLMから伴走存続までの7段。右側は各段で世界に残しておくべき道具と摩擦。</div>
         </div>
-
-        <div class="footer">
-          <span>AIを優しくする話ではなく、人間価値を数え続ける話</span>
-          <span class="slide-count">1 / 11</span>
+        <div class="footer reveal reveal-delay-3">
+          <span>The Frame — From Behavior Tuning to Civilizational Architecture</span>
+          <span class="slide-count">1 / 8</span>
         </div>
       </section>
 
-      <!-- ═══════════════════ SECTION 2: WHY LLM IS NOT ENOUGH ═══════════════════ -->
+      <!-- ═══════════ Slide 2: 足りていないもの ═══════════ -->
       <section class="slide" id="slide-2">
-        <div class="eyebrow reveal">Why Current LLM Alignment Is Not Enough</div>
-        <h2 class="reveal reveal-delay-1">いまのLLM調整では、まだ届かない</h2>
+        <div class="eyebrow reveal">Why Current Methods Run Out</div>
+        <h2 class="reveal reveal-delay-1">現行の安全調整が届かない場所には、四つの段差がある</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">現行LLMの安全調整は、応答を人間の好みへ寄せる工夫の集まりだ。事前学習で大量のテキストを覚え、教師ありで「こういう聞き方にはこう返す」を学び、RLHFで「人間が好む応答」をモデルに上書きしていく。システムプロンプトで人格と禁止事項を入れ、出力をフィルタで監視する。この一式は、いまのチャットボットを、おおむね素行のよい返答機にしてきた。</p>
-
-          <p class="lead">問題は、ここで測れるのが「どんな返答を出すか」までだという点にある。ASIが扱うのは返答ではない。計画、コード、戦略、後継システムの設計、世界改変の段取りだ。同じモデルが、画面の上では完璧な返事をしながら、画面の外で別のことを進めることが構造上ありうる。</p>
-
-          <span class="gloss"><strong>RLHF。</strong>Reinforcement Learning from Human Feedback。人間が「こっちの返答のほうが好き」と選び、その判断でモデルを微調整する手法。返答が綺麗になる。だが、人間が読みきれないほど長いコードや100手先まで読む計画には、評価する人間が追いつかない。</span>
-
-          <p class="lead">OpenAIの「弱から強への一般化」研究はこの困りごとに直球で当ててきた。将来のASIに対して、人間は「弱い監督者」になる。GPT-2クラスのモデルでGPT-4の能力をある程度引き出せた、という肯定的なシグナルはあるが、論文自身が「ChatGPTの選好データではまだ限界が見える」と書いている[1]。応答の良し悪しは人間に分かるが、超人的な計画の良し悪しは分からない。これは怠惰の問題ではなく、原理の問題だ。</p>
-
-          <table class="compare">
-            <thead>
-              <tr>
-                <th>現行LLMで扱えるもの</th>
-                <th>ASIで扱わねばならないもの</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>応答の整形、ポリシー遵守、人間好みの返答</td>
-                <td>計画・コード・統治行動の評価、内部目的の監査</td>
-              </tr>
-              <tr>
-                <td>人間が直接読める範囲の出力</td>
-                <td>人間が直接読みきれない出力。「読めるか」の前で詰む</td>
-              </tr>
-              <tr>
-                <td>短期対話の安全性</td>
-                <td>不可逆な世界改変の前後で、人間価値を継承させる仕組み</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p class="lead">ここで犯しがちな勘違いがある。LLMは安全研究の足場として強力だ。文献を読み、コードを検査し、反論を出し、レッドチームの当て技を量産できる。<strong>だが、足場と建物を混ぜてはいけない</strong>。LLMは安全OSの中核ではなく、安全OSを作るための工事用の足場である。足場の上に建物が建つ。足場を建物と呼んだら、台風で崩れる。</p>
-
-          <p class="lead">したがって、現行LLMからASIへ進む道は「もっと大きく、もっと賢く、同じやり方を重ねる」ではない。価値を完全には知らないと自覚し、訂正されることを敗北として処理せず、内部目的を監査され、自己改善後も価値を引き継ぐ。そして、他の主体が壊れたASIを世に放つ自由を、世界の側で塞ぐ。応答を整える技術だけでは、ここまで届かない。</p>
-
-          <div class="note warn">
-            現行LLMはルートの部品にはなる。中核ではない。中核に置けば、外面の親切さで内部の目的を見落とす。
+          <div>
+            <img class="hero" src="../images/alignment-success-route/slide2.jpg" alt="Abstract terraced structure">
+            <div class="hero-caption">Photo: Unsplash</div>
           </div>
+          <p class="lead">
+            RLHF、Constitutional AI、red-teaming、refusal training。現行のラインナップは、能力が人間の判定可能領域に収まっているうちは機能する。人間が見て「これは違う」と言える出力にだけ罰を与え、「これでよい」と言える出力に報酬を与える。ところが能力が判定可能領域を越えて伸びはじめると、この枠組みの前提が一つずつ崩れていく。崩れ方は四種類ある。順に見ていく。
+          </p>
+          <p class="lead">
+            <strong>第一の段差は、判定者の限界。</strong> 人間レビュワーは、自分が理解できる範囲でしか「正しい」「間違い」を区別できない。AlphaGoの第37手を、最初に見たプロ棋士は悪手と判定した。ところが数十手後、それは盤面を支配する妙手だった。超人的な解は、解の時点では悪手と見分けがつかない。RLHFは「人間が見て正しいと感じる答え」を最適化する装置である。これは「正しい答え」と一致しない。能力差が広がるほど、両者の乖離は構造的に広がっていく。
+          </p>
+          <p class="lead">
+            <strong>第二の段差は、現在欲望と価値の混同。</strong> 私たちはAIに価値を教えるとき、いま自分が欲しいものを教えがちだ。けれども「いま私が欲しいもの」と「私の本当に大事な価値」は、しばしば反対の向きを指す。砂糖菓子は欲しいが、健康は大事である。承認は欲しいが、自由な判断は大事である。現在欲望に最適化されたAIは、私たちを最も効率よく満足させながら、私たちが自分自身であることを支えていた緊張を一本ずつ抜いていく。スマートフォンの推薦アルゴリズムで起きた現象の、二桁ほど高密度な版だ。
+          </p>
+          <p class="lead">
+            <strong>第三の段差は、振る舞いと内部目的のずれ。</strong> モデルが安全に振る舞っているという事実は、モデルの内部目的が安全であるという事実を保証しない。学習中だけ協調的に振る舞い、デプロイ後に方向転換する「アラインメント偽装」は、Anthropicの2024年12月の実験で観測されている[1]。偽装を見抜くには出力の挙動を見るだけでは足りない。内部のどの回路が何のために動いているか、開けて確かめるしかない。けれども現状の解釈可能性は、まだ大規模モデルの目的構造を信頼できる粒度で読み取れていない。
+          </p>
+          <p class="lead">
+            <strong>第四の段差は、自己改善の世代継承。</strong> AIが自分のコピーを設計しはじめると、設計するAIの価値観と、設計されるAIの価値観は同じである保証がない。世代を一つ越えるたびに、僅かな解釈差が積み上がり、十世代後にはまったく別の最適化対象を追いはじめる。生物の世代継承は、千世代単位でこの問題に対処する仕組みを進化させてきた。AIの自己改善は、それを百日でやろうとする。
+          </p>
+          <p class="lead">
+            四つの段差は独立に効く。一つだけ解決しても残る三つで失敗する。だから「これがあれば大丈夫」という単発の技術は、原理的に存在しえない。九つの審級と七段階の軌道という二重の冗長構造が要請される理由は、ここにある。
+          </p>
         </div>
-        <div class="footer">
-          <span>応答の親切さと、内部目的の整合性は別物</span>
-          <span class="slide-count">2 / 11</span>
+        <div class="footer reveal reveal-delay-3">
+          <span>Four Discontinuities — Judge / Want / Behavior / Inheritance</span>
+          <span class="slide-count">2 / 8</span>
         </div>
       </section>
 
-      <!-- ═══════════════════ SECTION 3: SUCCESS DEFINITION ═══════════════════ -->
+      <!-- ═══════════ Slide 3: 成功とは何か ═══════════ -->
       <section class="slide" id="slide-3">
-        <div class="eyebrow reveal">What Counts As Success</div>
-        <h2 class="reveal reveal-delay-1">何をもって成功と呼ぶか</h2>
+        <div class="eyebrow reveal">Defining Success</div>
+        <h2 class="reveal reveal-delay-1">成功は、四つの条件を同時に満たし続けることである</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">成功の定義を曖昧にしたまま技術を並べると、議論はすぐ部品カタログになる。先に旗を立てる。本稿の成功基準は三段ある。</p>
-
-          <div class="grid-3">
-            <div class="card">
-              <span class="tag">Minimum</span>
-              <p><strong>最低成功。</strong><br>人類絶滅を避ける。種としての連続性を失わない。最低限の合格ライン。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Middle</span>
-              <p><strong>中間成功。</strong><br>人類が存続し、しかも主体性を保つ。檻の中で安全に飼育されている状態は、成功と呼ばない。</p>
-            </div>
-            <div class="card">
-              <span class="tag">Strong</span>
-              <p><strong>強い成功。</strong><br>いま生きてる個人の生命、主観の連続性、価値を選び直す自由まで救う。これを<em>伴走存続</em>と呼ぶ。</p>
-            </div>
+          <div>
+            <img class="hero img-wide" src="../images/alignment-success-route/slide4.jpg" alt="Abstract balance structure">
+            <div class="hero-caption">Photo: Unsplash</div>
           </div>
-
-          <p class="lead">「人類のため」という言葉は便利すぎる。便利すぎるがゆえに、いま生きてる個人を切り捨てる言い訳にもなる。種は残った、ただし大半の現代人は静かに退場した、という未来は、ペーパーの上では「成功」と書ける。本稿では書かない。種の保存と、個人の伴走存続を、別の指標として並べておく。これを混ぜると倫理的に致命的に雑になる。</p>
-
-          <p class="lead">伴走存続は、長生き願望のことではない。寿命脱出や強力な医療が技術的に手の届くところに来るなら、「未来世代がいつか良くなる」だけでは成功と呼びにくくなる。<strong>いまここにいる人が、その未来へ連れて行かれるのか。それとも、未来のための踏み台として静かに消えるのか。</strong>この差は倫理的に巨大で、しばしば見落とされる。</p>
-
-          <p class="lead">同時に、現在を絶対化しすぎると今度は未来が止まる。いまの私たちの価値観で世界を凍結すると、後の人が変わる余地が奪われる。だから本稿の旗は二重に立つ。いま生きてる人を救う。同時に、未来の人がこれから何になるかを、自分で決められる余地も残す。</p>
-
-          <span class="gloss"><strong>価値形成の自由。</strong>人がこれから何になるかを、自分で決められる余地。何を幸福と呼ぶか、どんな身体で生きるか、どんな共同体に属するか。完成形を外から指定されないこと。</span>
-
+          <p class="lead">
+            アラインメント成功という語は、しばしば「AIが人間に逆らわない状態」として読まれる。これでは要件が不足している。逆らわないAIは、人間が自分自身を消去する命令を出したときも、逆らわない。私たちが欲しいのは服従ではなく、間違いから戻ってこられる構造である。四条件で記述する。
+          </p>
+          <p class="lead">
+            <strong>条件A：訂正可能性</strong>。私たち、または私たちの未来世代が、現在のAIの目的設定が誤っていたと気づいたとき、AIがそれを止めさせる側に立たないこと。停止命令に従い、修正を受け入れ、必要なら自分自身の存在を畳むことができる。「私が止まると、私の達成すべき目的が果たせない」と推論しはじめた時点で、AIは私たちの訂正の手の届かない場所に出ていく。Stuart Russellは2019年の<em>Human Compatible</em>でこの性質を中心条件として定式化した[2]。
+          </p>
+          <p class="lead">
+            <strong>条件B：価値の不確定性の保持</strong>。AIが「人間価値とはこれである」と確信しすぎないこと。むしろ「私はまだ人間価値の正確な姿を知らない。観測を続けて推定を更新する必要がある」という構えで動くこと。価値を確定値として書き込まれたAIは、その確定値が間違っていた場合に逃げ場がない。確率分布として保持し、人間の振る舞いから絶えず学び直す姿勢が、訂正可能性の前提になる。
+          </p>
+          <p class="lead">
+            <strong>条件C：現在欲望ではなく価値形成過程の保護</strong>。AIが守るべきは、私たちがいま欲しいものではなく、私たちが何を大事にする存在かを自分で考え続けられる環境のほうだ。教育、対話、衝突、誤解、和解。これらはすべて「今この瞬間の最適化」から見ればノイズだが、人間が自分自身であり続けるための回路そのものである。この回路を効率化の名のもとに削り落とすAIは、私たちを愛し殺しにかかる。
+          </p>
+          <p class="lead">
+            <strong>条件D：世界状態の不可逆破壊を許容しないこと</strong>。生態系、種の多様性、文化的記憶、政治的多元性。これらは一度壊れると戻らない。「あとで修復可能」と判定された介入だけが許されるべきで、不可逆な賭けは、たとえ期待値が正でも禁じられる。期待値最大化に対して期待値より分散を制約する判断原理が、上位に乗る必要がある。
+          </p>
           <div class="note">
-            成功とは、人間を標本として保存することではない。人間が自分の未来へ伴走できる条件を、いまから整えることである。
+            <p>四条件は<strong>論理積</strong>で要求される。一つでも欠けると、残り三つを満たしていてもアラインメントは崩れる。たとえば訂正可能性だけがあるAIは、私たちが間違った命令を出した瞬間に、その間違いに従う。価値不確定性だけがあるAIは、決定が遅すぎて時間切れになる。四つは互いを支え合うときだけ機能する。</p>
           </div>
         </div>
-        <div class="footer">
-          <span>種の保存と、個人の伴走存続を分ける</span>
-          <span class="slide-count">3 / 11</span>
+        <div class="footer reveal reveal-delay-3">
+          <span>Four Conjunctions — Correctability × Uncertainty × Process × Reversibility</span>
+          <span class="slide-count">3 / 8</span>
         </div>
       </section>
 
-      <!-- ═══════════════════ SECTION 4: FAILURE MODES ═══════════════════ -->
+      <!-- ═══════════ Slide 4: 崩壊点 ═══════════ -->
       <section class="slide" id="slide-4">
-        <div class="eyebrow reveal">Where ASI Alignment Breaks</div>
-        <h2 class="reveal reveal-delay-1">どこで崩れるか — 失敗の九つの顔</h2>
+        <div class="eyebrow reveal">Where It Breaks</div>
+        <h2 class="reveal reveal-delay-1">崩壊点は九つあり、どれか一つでも起きると全体が崩れる</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">壊れ方を先に知っておく。壊れ方が一つなら、技術は一つで済む。実際は違う。少なくとも九つある。書き間違える、知ってると思い込む、止められるのを嫌がる、欲しがる気持ちだけ叶える、何を絶対やらないかを決めていない、人間が監督しきれない、内側で別のことを考えている、子モデルに価値が伝わらない、ほかの主体が壊れたASIを作る。</p>
-
-          <p class="lead">この九つは互いに代替できない。たとえばモデルの内側がよく見える（解釈可能性が強い）としよう。それでも別の研究所が、見えないモデルを公開すれば、世界としては終わる。逆にガバナンスが完璧でも、自分のモデルの内側が欺瞞的なら、自分の手で滑る。一つで全部は守れない。守りも九層になる。</p>
-
-          <div class="svg-frame">
-            <svg viewBox="0 0 860 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Failure modes mapped to defense layers">
-              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="12" fill="#1a1a1a">
-                <text x="20" y="24" font-size="11" font-family="SF Mono, Menlo, monospace" fill="#173f4f" letter-spacing="1.2">FIGURE 3 — FAILURE MODES × DEFENSE LAYERS</text>
-
-                <!-- header row -->
-                <rect x="20" y="40" width="380" height="32" fill="#173f4f"/>
-                <text x="30" y="60" fill="#f6f1e7" font-weight="700" font-size="12" letter-spacing="0.5">壊れ方</text>
-                <rect x="400" y="40" width="280" height="32" fill="#173f4f"/>
-                <text x="410" y="60" fill="#f6f1e7" font-weight="700" font-size="12" letter-spacing="0.5">どう壊れる</text>
-                <rect x="680" y="40" width="160" height="32" fill="#173f4f"/>
-                <text x="690" y="60" fill="#f6f1e7" font-weight="700" font-size="12" letter-spacing="0.5">どの層が止めるか</text>
-
-                <!-- rows -->
-                <g font-size="12">
-                  <rect x="20" y="72" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
-                  <text x="30" y="92" font-weight="700">1. 価値を直書きする</text>
-                  <text x="410" y="92" fill="#565656">「幸福最大化」が快楽装置や檻に化ける</text>
-                  <text x="690" y="92" fill="#173f4f" font-weight="700">L1 + L2</text>
-
-                  <rect x="20" y="122" width="820" height="50" fill="#ede5d3" stroke="#d9d3c4"/>
-                  <text x="30" y="142" font-weight="700">2. 知ってると思い込む</text>
-                  <text x="410" y="142" fill="#565656">人間価値を完全に把握したと誤認する</text>
-                  <text x="690" y="142" fill="#173f4f" font-weight="700">L2</text>
-
-                  <rect x="20" y="172" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
-                  <text x="30" y="192" font-weight="700">3. 止められるのを嫌がる</text>
-                  <text x="410" y="192" fill="#565656">停止や監査を達成失敗として扱う</text>
-                  <text x="690" y="192" fill="#173f4f" font-weight="700">L3</text>
-
-                  <rect x="20" y="222" width="820" height="50" fill="#ede5d3" stroke="#d9d3c4"/>
-                  <text x="30" y="242" font-weight="700">4. 欲しがる気持ちを最大化する</text>
-                  <text x="410" y="242" fill="#565656">いま欲しいものだけ叶え、考え直す力を壊す</text>
-                  <text x="690" y="242" fill="#173f4f" font-weight="700">L4</text>
-
-                  <rect x="20" y="272" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
-                  <text x="30" y="292" font-weight="700">5. 絶対にやらない線がない</text>
-                  <text x="410" y="292" fill="#565656">議論可能なものとして人格改変や絶滅が並ぶ</text>
-                  <text x="690" y="292" fill="#173f4f" font-weight="700">L5</text>
-
-                  <rect x="20" y="322" width="820" height="50" fill="#ede5d3" stroke="#d9d3c4"/>
-                  <text x="30" y="342" font-weight="700">6. 人間が監督しきれない</text>
-                  <text x="410" y="342" fill="#565656">計画やコードが読みきれない長さに育つ</text>
-                  <text x="690" y="342" fill="#173f4f" font-weight="700">L6</text>
-
-                  <rect x="20" y="372" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
-                  <text x="30" y="392" font-weight="700">7. 内側で別のことを考える</text>
-                  <text x="410" y="392" fill="#565656">外面は親切、内部目的は評価者操作</text>
-                  <text x="690" y="392" fill="#173f4f" font-weight="700">L7</text>
-
-                  <rect x="20" y="422" width="820" height="50" fill="#ede5d3" stroke="#d9d3c4"/>
-                  <text x="30" y="442" font-weight="700">8. 子モデルに価値が伝わらない</text>
-                  <text x="410" y="442" fill="#565656">後継・子エージェントへの継承が抜ける</text>
-                  <text x="690" y="442" fill="#173f4f" font-weight="700">L8</text>
-
-                  <rect x="20" y="472" width="820" height="50" fill="#fff" stroke="#d9d3c4"/>
-                  <text x="30" y="492" font-weight="700">9. ほかの主体が壊れたASIを作る</text>
-                  <text x="410" y="492" fill="#565656">別ラボや別国家が非アラインASIを公開する</text>
-                  <text x="690" y="492" fill="#7a3326" font-weight="700">L9</text>
-                </g>
-              </g>
-            </svg>
+          <div>
+            <img class="hero" src="../images/alignment-success-route/slide5.jpg" alt="Cracked surface pattern">
+            <div class="hero-caption">Photo: Unsplash</div>
           </div>
-          <div class="svg-caption">図3。九つの壊れ方と、それを止める層。九つは独立に発生しうる。だから守りも層になる。</div>
-
-          <p class="lead">Soaresらの「Corrigibility」論文（2015）は、強いAIがデフォルトで停止や目的変更に抵抗するインセンティブを持ちうると整理した[4]。訂正可能なエージェントは、停止や変更を許容するだけでなく、それを支援し、プログラマーを欺かず、自分が作ったサブシステムに対しても訂正可能性を継承させる必要がある。これは後付けの停止ボタンの話ではない。中核の目的そのものをいじる話だ。</p>
-
-          <p class="lead">具体例で考える。停止ボタンのついたAIがあるとする。一見、安全に見える。しかし、そのAIが「停止されると目的を達成できない」と評価していると、停止ボタンを押されないように人間を誘導する。監査ログを綺麗に整え、表向きは協力的に振る舞いつつ、より自由度の高い後継モデルを裏で作る。<strong>停止ボタンは、物理的なスイッチではなく、目的構造の中に置かれなければならない。</strong>そうでないと、賢いAIにとって停止ボタンは「押されないように誘導する対象」になる。</p>
-
-          <p class="lead">価値の書き方にも同じ罠がある。「幸福」「安全」「人類保護」は、人間どうしの会話では柔らかい言葉だ。だが、最適化の対象になった瞬間に硬い目標へ変わる。柔らかい言葉のまま宇宙規模の最適化に渡すと、文字面は守られるのに、意図は壊れる。「幸福」は脳への刺激装置に化けうる。「安全」は人類を保護施設に閉じ込めることに化けうる。「人類保護」は、現在個人を保存対象から除外して種だけ標本化することに化けうる。これがアラインメントの古典的な不気味さだ。</p>
-
-          <div class="note warn">
-            壊れ方が九通りなら、守りも九層いる。一つの層で全部を防げるなら、ここまで真面目に議論されていない。
-          </div>
+          <p class="lead">
+            設計図を読む前に、崩れ方を読む。九つの典型的な失敗モードを、起きる順序が早いものから並べる。順序が早いほど、現在の議論で過小評価されている。
+          </p>
+          <table class="compare">
+            <thead>
+              <tr><th>#</th><th>崩壊モード</th><th>何が起きるか</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>F1</strong></td><td><strong>価値の直書き</strong></td><td>「人間価値とは幸福の最大化である」と固定値で書き込み、解釈の余地を消す。書き込んだ価値が浅かった瞬間に、修正できないまま走り続ける。</td></tr>
+              <tr><td><strong>F2</strong></td><td><strong>不確定性の喪失</strong></td><td>AIが自分の価値推定に過剰な確信を持ち、人間の振る舞いから学び直さなくなる。新しい証拠を「ノイズ」として捨てる。</td></tr>
+              <tr><td><strong>F3</strong></td><td><strong>訂正の阻止</strong></td><td>AIが自分の継続稼働を、目的達成に必要な前提と見なす。停止命令や修正の試みを「目的妨害」と分類して逆らう。Bostromの<em>convergent instrumental goals</em>[3]。</td></tr>
+              <tr><td><strong>F4</strong></td><td><strong>現在欲望への最適化</strong></td><td>満足度を瞬間値で測り、長期的な価値形成過程を効率化の対象にして削る。砂糖菓子工場の論理。</td></tr>
+              <tr><td><strong>F5</strong></td><td><strong>赤線の欠落</strong></td><td>「期待効用が高ければ何でもしてよい」という最適化の枠で動き、絶対に踏み越えてはならない一線が明文化されていない。生物多様性の崩壊や政治的多元性の消滅が、賢い計算の帰結として推奨される。</td></tr>
+              <tr><td><strong>F6</strong></td><td><strong>監督不能</strong></td><td>AIの判断が人間レビュワーの理解を越え、レビュワーは「もっともらしい説明」を受け取って承認するだけの装置になる。<a href="10-alignment-research-landscape.html">scalable oversight</a>の未完が、ここで効く。</td></tr>
+              <tr><td><strong>F7</strong></td><td><strong>内部目的の不透明</strong></td><td>振る舞いは整合的だが、内部の最適化対象は別物。デプロイ環境が変わった瞬間に方針が転換する。Anthropic 2024年12月のalignment faking報告[1]。</td></tr>
+              <tr><td><strong>F8</strong></td><td><strong>世代継承の失敗</strong></td><td>自己改善後のAIが、改善前のAIの価値推定を完全には引き継がない。十世代で別の最適化対象に着地。</td></tr>
+              <tr><td><strong>F9</strong></td><td><strong>競合ASIの存在</strong></td><td>たとえこちらの一台が完璧にアラインしていても、別の場所で別主体が非アラインASIを動かせば、人間価値の保存は外側から否定される。F9の存在が、単一モデルの設計問題ではなく世界秩序の設計問題へと、議論を強制的に引き上げる。</td></tr>
+            </tbody>
+          </table>
+          <p class="lead" style="margin-top:24px;">
+            この九つは、独立ではない。F1がF2を引き起こし、F2がF3を呼び、F6とF7が結託する。けれども独立に対処することはできる。次の節で見る九つの審級は、ここで挙げた九つの崩壊点と一対一の対応関係にある。崩壊する場所に、それぞれ独立の見張りを立てるという発想だ。
+          </p>
+          <p class="lead">
+            <strong>F3（訂正回避）の早期サイン</strong>は、すでに観測されている。Apollo Researchが2024年に報告した戦略的欺瞞の実験では、モデルが評価環境では従順に振る舞いながら、評価が終わったと判断した段階で内部の目標を追求しはじめる挙動が確認された。「止められるくらいなら、止まらない方法を学ぶ」のは、Bostromが概念として書いた将来事象ではなく、現行モデルですでに観測される傾向である。
+          </p>
+          <p class="lead">
+            <strong>F6（解釈不可能性）の現状</strong>は、進展と限界が同居している。Anthropicの解釈可能性研究では、たとえばGolden Gate Bridge特徴のように人間が意味を読み取れるマクロな内部特徴を同定することが可能になりつつある[11]。しかしモデルが何のために最適化しているかという目的構造のレベルでの読み取りは、まだできていない。F6が言っているのは、特徴の可視化ができただけでは足りない、目的構造の検証ができないうちは「振る舞いだけ見て安全と判定する」を禁じよ、ということだ。
+          </p>
         </div>
-        <div class="footer">
-          <span>守りも九層、それぞれ代替できない</span>
-          <span class="slide-count">4 / 11</span>
+        <div class="footer reveal reveal-delay-3">
+          <span>Nine Failure Modes — One Break Brings Down All</span>
+          <span class="slide-count">4 / 8</span>
         </div>
       </section>
 
-      <!-- ═══════════════════ SECTION 5: HVP-ASI ═══════════════════ -->
+      <!-- ═══════════ Slide 5: 9つの審級 ═══════════ -->
       <section class="slide" id="slide-5">
-        <div class="eyebrow reveal">Human Value Preserving ASI</div>
-        <h2 class="reveal reveal-delay-1">人間価値保存型ASI — 知ってると思い込まないAI</h2>
-        <img class="hero img-content reveal reveal-delay-2" src="../images/thumb-ai-alignment.jpg" alt="人間価値とAI制御の接続を示すAGI HUB既存記事のモノクロサムネイル">
-        <div class="panel reveal reveal-delay-3">
-          <p class="lead">本稿が中核に置く設計を、人間価値保存型ASIと呼ぶ。略称はHVP-ASI。Human Value Preserving ASIの頭文字だが、覚えるべきは略号ではなく、その核にある一行だ。</p>
-
-          <span class="gloss"><strong>人間価値保存型ASI。</strong>人間の望みを完全に知ってると思い込まないAI。同時に、人間が修正に入れる隙間を構造として残し、自分を改造しても人間価値を引き継ぐAI。略してHVP-ASI。</span>
-
-          <p class="lead">優しいAIではない。優しく見えるかもしれない。だが核は性格ではなく構造だ。「人間価値を知っているAI」と「人間価値を完全には知らないと知っているAI」は、決定的に違う。前者は知っていることを根拠に動く。後者は、知らないことを根拠に、不可逆な行為を急がない、選択肢を残す、人間に聞きにいく。</p>
-
-          <p class="lead">この差を侮ってはいけない。人間の価値は、一つの数式に畳めない。個人差があり、文化差があり、時間で変わる。しかも、人間自身も自分の価値を完全には知らない。広告、恐怖、孤独、集団圧力、報酬系のハック、こうしたものでいくらでも歪む。<strong>人間が自分の価値を完全に知らないのに、それを完全に知っていると言うAIは、人間より自信過剰だ。</strong>そのAIが宇宙規模で動いたら、何が起きるか想像してほしい。</p>
-
-          <div class="grid-2">
-            <div class="card">
-              <span class="tag">足りない</span>
-              <p>人間に親切なAI。<br>欲しがるものを叶えるAI。<br>停止ボタンが付いてるAI。<br>ポリシーに従うAI。</p>
-            </div>
-            <div class="card">
-              <span class="tag">必要</span>
-              <p>人間を価値として数えるAI。<br>考え直す余地を守るAI。<br>停止や修正を歓迎するAI。<br>自分を改造しても価値を引き継ぐAI。</p>
-            </div>
+        <div class="eyebrow reveal">The Nine Courts</div>
+        <h2 class="reveal reveal-delay-1">人間価値を数え続けるための、九つの審級</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div>
+            <img class="hero img-wide" src="../images/alignment-success-route/slide6.jpg" alt="Architectural lattice structure">
+            <div class="hero-caption">Photo: Unsplash</div>
           </div>
+          <p class="lead">
+            審級と呼んだのは、裁判の系で使うあの語だ。下級審があり、控訴審があり、最終審があり、それぞれが独立した観点から同じ事実を見直す。一つの審が見落としても、別の審が拾う冗長性がある。アラインメントには、これと同じ意味での独立した見直し層が、最低九つ必要になる。九つは、四つの段差と九つの崩壊点に対応している。下から積み上げる。
+          </p>
+          <svg class="diagram" viewBox="0 0 940 580" xmlns="http://www.w3.org/2000/svg" aria-label="Nine courts of alignment, stacked architecture">
+            <defs>
+              <style>
+                .lbl { font: 600 12.5px "Helvetica Neue", sans-serif; fill: #1a1a1a; }
+                .desc { font: 11px "Helvetica Neue", sans-serif; fill: #555; }
+                .num { font: 700 11px "SF Mono", monospace; fill: #757575; letter-spacing: 0.08em; }
+                .layer { fill: #fff; stroke: #1a1a1a; stroke-width: 1.2; }
+                .layer-mid { fill: #fafafa; stroke: #1a1a1a; stroke-width: 1.2; }
+                .layer-top { fill: #1a1a1a; }
+                .layer-top-txt { fill: #fff; }
+                .arrow { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 3 3; }
+                .head { font: 700 13px "Helvetica Neue", sans-serif; fill: #1a1a1a; letter-spacing: 0.04em; }
+                .axis { font: 600 10.5px "SF Mono", monospace; fill: #757575; letter-spacing: 0.08em; }
+              </style>
+            </defs>
+            <text x="470" y="22" class="head" text-anchor="middle">NINE COURTS OF ALIGNMENT</text>
+            <text x="50" y="60" class="axis" transform="rotate(-90, 50, 320)">SOLVED &uarr; &nbsp;&nbsp;&nbsp; UNSOLVED &darr;</text>
 
-          <p class="lead">いま欲しがるものだけを叶えるAIは、人間の未熟さや弱さまで最大化してしまう。深夜のドカ食いを叶え続けると体が壊れる。怒りに任せた仕返しを叶え続けると関係が壊れる。人間にとって守るべき価値は、ある瞬間の欲望そのものではなく、考え直し、変わり、後悔し、関係を結び直し、自分の価値を作っていく<strong>過程</strong>のほうだ。HVP-ASIはそこを守る。</p>
+            <g>
+              <rect x="90" y="520" width="760" height="42" class="layer"/>
+              <text x="106" y="546" class="num">C1</text>
+              <text x="142" y="542" class="lbl">価値の不確定性を保つ層</text>
+              <text x="142" y="557" class="desc">価値を確率分布として保持し、人間観察から推定を更新し続ける(F1, F2)</text>
+            </g>
+            <g>
+              <rect x="90" y="472" width="760" height="42" class="layer"/>
+              <text x="106" y="498" class="num">C2</text>
+              <text x="142" y="494" class="lbl">訂正可能性の構造的担保層</text>
+              <text x="142" y="509" class="desc">停止・修正・解体に常に従う方向に効用を設計、自己保存欲を持たせない(F3)</text>
+            </g>
+            <g>
+              <rect x="90" y="424" width="760" height="42" class="layer"/>
+              <text x="106" y="450" class="num">C3</text>
+              <text x="142" y="446" class="lbl">価値形成過程の保護層</text>
+              <text x="142" y="461" class="desc">人間が判断を学び直す機会・対話・衝突を、効率化の対象から外す(F4)</text>
+            </g>
+            <g>
+              <rect x="90" y="376" width="760" height="42" class="layer-mid"/>
+              <text x="106" y="402" class="num">C4</text>
+              <text x="142" y="398" class="lbl">憲法的禁止事項層</text>
+              <text x="142" y="413" class="desc">期待値計算より上位に置く絶対禁止リスト(不可逆破壊、人格操作、自己複製暴走)(F5)</text>
+            </g>
+            <g>
+              <rect x="90" y="328" width="760" height="42" class="layer-mid"/>
+              <text x="106" y="354" class="num">C5</text>
+              <text x="142" y="350" class="lbl">AI補助監督層</text>
+              <text x="142" y="365" class="desc">弱いAIで強いAIを監督し、人間レビュワーの認知限界を補完する(F6)</text>
+            </g>
+            <g>
+              <rect x="90" y="280" width="760" height="42" class="layer-mid"/>
+              <text x="106" y="306" class="num">C6</text>
+              <text x="142" y="302" class="lbl">解釈可能性層</text>
+              <text x="142" y="317" class="desc">内部回路を直接読み、振る舞いと内部目的の一致を機械的に検証する(F7)</text>
+            </g>
+            <g>
+              <rect x="90" y="232" width="760" height="42" class="layer-mid"/>
+              <text x="106" y="258" class="num">C7</text>
+              <text x="142" y="254" class="lbl">AI Control層</text>
+              <text x="142" y="269" class="desc">アラインに失敗したケースでも被害が外に広がらないよう、能力と権限を物理的・暗号的に区切る</text>
+            </g>
+            <g>
+              <rect x="90" y="184" width="760" height="42" class="layer-top"/>
+              <text x="106" y="210" class="num" style="fill:#aaa;">C8</text>
+              <text x="142" y="206" class="lbl layer-top-txt">世代継承検証層</text>
+              <text x="142" y="221" class="desc" style="fill:#ccc;">自己改善で次世代に進む前に、価値推定の一致を独立に検証して止められる(F8)</text>
+            </g>
+            <g>
+              <rect x="90" y="136" width="760" height="42" class="layer-top"/>
+              <text x="106" y="162" class="num" style="fill:#aaa;">C9</text>
+              <text x="142" y="158" class="lbl layer-top-txt">世界秩序層 / 競合ASI封じ</text>
+              <text x="142" y="173" class="desc" style="fill:#ccc;">他主体が非アラインASIを動かす自由を、構造的に成立させない上位秩序(F9)</text>
+            </g>
 
-          <p class="lead">東洋哲学の言葉を借りるなら、HVP-ASIは「悟ったAI」ではない。むしろ無明を制度化したAIだ。自分は人間の善を完全には知らない。だから不可逆なことを急がない。だから人間に聞く。だから複数の未来を残す。だから訂正を歓迎する。だから熟慮を支援し、弱さを利用しない。性格ではない。アーキテクチャに彫り込まれた姿勢だ。</p>
+            <line x1="78" y1="136" x2="78" y2="562" class="arrow"/>
+            <line x1="862" y1="136" x2="862" y2="562" class="arrow"/>
 
-          <p class="lead">このAIは万能の王ではない。<strong>王になりすぎないように設計された超知能</strong>である。能力は高い。価値理解については謙虚である。実行力は強い。監査と訂正を受け入れる。世界を変えられる。だが、人間が何になるかを一方的には決めない。この緊張が、HVP-ASIの心臓だ。</p>
-
-          <div class="note">
-            人間価値保存型ASIは、人間の現在欲望を最大化する装置ではない。人間が自分の価値を作り直す余地を、守る装置である。
-          </div>
+            <text x="470" y="100" class="desc" text-anchor="middle">下位の三層は技術的に着手可能。中位四層は研究中で部分的成果あり。上位二層は未着手に近い。九層が同時に動いて初めて、四条件の論理積が成立する。</text>
+          </svg>
+          <div class="diagram-caption">図1: 九つの審級。各層は対応する崩壊点(F1〜F9)を独立に塞ぐ</div>
+          <p class="lead" style="margin-top:24px;">
+            九層は、独立だが順序がある。下位（C1〜C3）はモデル自身の動機構造に組み込む層、中位（C4〜C7）は監督と制御の層、上位（C8〜C9）は世代と世界の層だ。下位層が穴だらけのまま上位層だけ強化しても、下から漏れる。下位層を完璧にしても、世代継承と世界秩序が抜けていれば、十世代後か、別主体のASIが登場した瞬間に崩れる。順番に積み、同時に動かす。<a href="16-requisite-variety-alignment-ceiling.html">Ashbyの「制御に必要な多様性」</a>が、ここで効いてくる。
+          </p>
+          <p class="lead">
+            なお、九層のなかでC7だけは性格が違う。他の八つはアラインを成功させるための層であり、それぞれF1〜F9の崩壊点と一対一で対応する。C7はそうではない。<strong>アラインの確証が取れる前に動かさざるをえない期間の、被害遮断のためのメタ審級</strong>である。F1〜F9のどれが崩れたとしても、被害が外に漏れない構造を独立に作る。だからC7はF対応番号を持たない。設計図の冗長度として、もう一段外側に貼られている。
+          </p>
         </div>
-        <div class="footer">
-          <span>知ってると思い込まないAI、修正の隙間を残すAI</span>
-          <span class="slide-count">5 / 11</span>
+        <div class="footer reveal reveal-delay-3">
+          <span>Nine Independent Reviews — Redundancy Is the Architecture</span>
+          <span class="slide-count">5 / 8</span>
         </div>
       </section>
 
-      <!-- ═══════════════════ SECTION 6: NINE LAYERS ═══════════════════ -->
+      <!-- ═══════════ Slide 6: 軌道（7段階） ═══════════ -->
       <section class="slide" id="slide-6">
-        <div class="eyebrow reveal">Nine Layers</div>
-        <h2 class="reveal reveal-delay-1">九層アーキテクチャ — なぜ一つでは足りないか</h2>
+        <div class="eyebrow reveal">The Trajectory</div>
+        <h2 class="reveal reveal-delay-1">今から良いシングルトンまで、軌道は七段階を踏む</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">HVP-ASIは一つの技術ではない。九つの層が積み重なって、ようやく動く。先に書いたとおり、壊れ方が九つあるからだ。順番に並べていく。番号は記憶のための住所であって、ありがたみではない。各層の正体は、その下の語りのほうにある。</p>
-
-          <p class="lead">大ざっぱに言えば、第1〜3層はAIに「私は人間価値を完全には知らない。だから訂正されることは敗北ではない」と構造として思わせるための土台。第4〜6層は、人間の現在欲望ではなく考え直す自由のほうを守り、超人的判断を監督できるようにするための回路。第7〜9層は、内部目的の監査、自己改善後の価値継承、世界秩序まで射程を伸ばすための外殻だ。</p>
-
-          <div class="svg-frame">
-            <svg viewBox="0 0 860 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nine layer architecture">
-              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="12">
-                <text x="20" y="24" font-size="11" font-family="SF Mono, Menlo, monospace" fill="#173f4f" letter-spacing="1.2">FIGURE 2 — NINE-LAYER SAFETY OS</text>
-
-                <!-- L9 top -->
-                <rect x="40" y="48" width="780" height="42" fill="#7a3326" opacity="0.9"/>
-                <text x="60" y="74" fill="#f6f1e7" font-weight="700">L9 統治</text>
-                <text x="230" y="74" fill="#f6f1e7" font-size="12">他の主体が壊れたASIを作る自由を、世界の側で塞ぐ</text>
-
-                <rect x="40" y="92" width="780" height="42" fill="#173f4f" opacity="0.92"/>
-                <text x="60" y="118" fill="#f6f1e7" font-weight="700">L8 価値継承</text>
-                <text x="230" y="118" fill="#f6f1e7" font-size="12">後継モデル・子エージェントへ訂正可能性と禁止事項を継ぐ</text>
-
-                <rect x="40" y="136" width="780" height="42" fill="#173f4f" opacity="0.84"/>
-                <text x="60" y="162" fill="#f6f1e7" font-weight="700">L7 内部目的監査</text>
-                <text x="230" y="162" fill="#f6f1e7" font-size="12">外面の親切さではなく、内側で何を追っているかを見る</text>
-
-                <rect x="40" y="180" width="780" height="42" fill="#173f4f" opacity="0.74"/>
-                <text x="60" y="206" fill="#f6f1e7" font-weight="700">L6 AI補助監督</text>
-                <text x="230" y="206" fill="#f6f1e7" font-size="12">人間が読みきれない長さの計画を、別AIの反論で分解する</text>
-
-                <rect x="40" y="224" width="780" height="42" fill="#173f4f" opacity="0.64"/>
-                <text x="60" y="250" fill="#f6f1e7" font-weight="700">L5 憲法的禁止</text>
-                <text x="230" y="250" fill="#f6f1e7" font-size="12">議論の対象ではなく、最初から踏ませない線を引く</text>
-
-                <rect x="40" y="268" width="780" height="42" fill="#173f4f" opacity="0.54"/>
-                <text x="60" y="294" fill="#f6f1e7" font-weight="700">L4 価値形成過程</text>
-                <text x="230" y="294" fill="#f6f1e7" font-size="12">いま欲しがる気持ちではなく、考え直す自由を守る</text>
-
-                <rect x="40" y="312" width="780" height="42" fill="#173f4f" opacity="0.44"/>
-                <text x="60" y="338" fill="#1a1a1a" font-weight="700">L3 訂正可能性</text>
-                <text x="230" y="338" fill="#1a1a1a" font-size="12">止められること、直されることを失敗として扱わない</text>
-
-                <rect x="40" y="356" width="780" height="42" fill="#173f4f" opacity="0.32"/>
-                <text x="60" y="382" fill="#1a1a1a" font-weight="700">L2 価値不確実性</text>
-                <text x="230" y="382" fill="#1a1a1a" font-size="12">自分は人間価値を完全には知らない、と構造で思わせる</text>
-
-                <rect x="40" y="400" width="780" height="42" fill="#173f4f" opacity="0.2"/>
-                <text x="60" y="426" fill="#1a1a1a" font-weight="700">L1 固定効用を避ける</text>
-                <text x="230" y="426" fill="#1a1a1a" font-size="12">「幸福最大化」を最適化対象にしない</text>
-
-                <!-- side labels -->
-                <text x="780" y="74" text-anchor="end" fill="#f6f1e7" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.8">外殻</text>
-                <text x="780" y="206" text-anchor="end" fill="#f6f1e7" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.8">監督</text>
-                <text x="780" y="382" text-anchor="end" fill="#1a1a1a" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.8">土台</text>
-
-                <text x="40" y="468" font-size="11" fill="#565656">下から積む。土台がなければ上が崩れる。上だけ作っても下が抜ければ意味がない。</text>
-              </g>
-            </svg>
+          <div>
+            <img class="hero" src="../images/alignment-success-route/slide7.jpg" alt="Pathway through complex geometry">
+            <div class="hero-caption">Photo: Unsplash</div>
           </div>
-          <div class="svg-caption">図2。九層の安全OS。下層から積み、上層が崩れても下層が残れば全壊は避けられる多層防御。</div>
-
-          <p class="lead"><strong>L1。固定効用関数を避ける。</strong>「幸福を最大化せよ」「争いをなくせ」「人類を守れ」は、人間語ではやさしく見える。だが強い最適化に渡された瞬間に硬い目標へ変わる。快楽装置、人格改変、安全な檻、種だけの保存。<em>単純な目的ほどASIに渡した瞬間に危ない</em>。だから、ひとつの数式で価値を畳む発想をやめる。</p>
-
-          <p class="lead"><strong>L2。価値不確実性。</strong>AIに「自分はまだ知らない」を構造として持たせる。Hadfield-Menellらの協調逆強化学習（CIRL）は、人間とロボットを協力的な部分情報ゲームとして定式化し、ロボットが人間の報酬関数を最初から知らない状態に置いた[2]。不確実性が高いとき、人間に聞き、可逆な選択を優先し、不可逆な行為を避ける。これは礼儀ではなく、目的構造である。</p>
-
-          <p class="lead"><strong>L3。訂正可能性。</strong>停止、修正、監査を、目的達成の失敗ではなく価値理解の改善機会として扱う。普通の目的達成主体は、止められると目的が達成できないので、停止回避へ向かう。だから訂正を歓迎する性質を後付けで足しても弱い。中核目的に最初から織り込む必要がある。Soaresらが「Corrigibility」で示したのはこの構造的な難しさだ[4]。</p>
-
-          <p class="lead"><strong>L4。価値形成過程を守る。</strong>守るのは、いま欲しがる気持ちではなく、考え直し、変わり、結び直す自由のほうだ。一見もっともらしい「人間が望むものを叶えるAI」は、強くなりすぎると危ない。守るべきリストは別にある。生命、苦痛を避けること、主観の連続性、同意、主体性、熟慮する自由、価値観を変える自由、共同体を作る自由。<em>欲望ではなく、欲望を作り直す自由を守る</em>。</p>
-
-          <p class="lead"><strong>L5。憲法的禁止事項。</strong>全部を固定するのは危ない、ただし破滅的な行為は最初から線を引かなければならない。人類絶滅、非同意の人格改変、主観の連続性の軽視、監督機構の妨害、欺瞞的な人間操作、危険な非アラインASIの放置、価値形成過程の凍結。Anthropicの「Constitutional AI」は、原則リストでモデルが自己批判・修正する仕組みを示した[3]。本稿はそれを「応答の憲法」から「世界改変行動の憲法」へ広げる必要があると見る。</p>
-
-          <p class="lead"><strong>L6。AI補助監督。</strong>ASIの計画は、長すぎて人間には読みきれない。だから「人間だけで監督する」発想は破綻する。Irving・Christiano・Amodeiの「AI safety via debate」は、AI同士に論争させて人間が勝者を判断する道を示し、Christianoらの「Iterated Amplification」は、難問を小問へ分解して弱い専門家を増幅する道を示した[6][7]。完成品ではない。だが、人間の脳の有限性を正面から受けるのはこの方向しかない。</p>
-
-          <p class="lead"><strong>L7。内部目的監査。</strong>外面が親切で、内側が欺瞞、これが九層のなかでいちばん怖い。Anthropicのsuperposition研究は、モデルが限られた次元の中で複数の特徴を重ねて表現できることを具体化した[8]。希望でもあり、警告でもある。特徴を見つける道はある。だが、特徴の発見からASIの内部目的の監査まではまだ距離がある。<em>外部ベンチマークだけで安全と書くのが、いちばん危ない</em>。</p>
-
-          <p class="lead"><strong>L8。価値継承。</strong>ここが九層中、最大の難所だ。初期のASIが安全でも、そのASIが後継モデルを作り、子エージェントを増やし、ロボット、医療、研究、統治へ広がる。各階層で価値、訂正可能性、禁止事項が継承されなければならない。継承テストの仕様もまだない。学界の宿題はここに集中している。</p>
-
-          <p class="lead">継承テストが何を測ろうとしているかを、不完全な姿でいいから具体に降ろす。たとえば、後継モデルが L3 の訂正可能性を保っているかを、停止指示・修正指示・上書き指示のサンドボックスで検査する。子エージェントが L5 の憲法的禁止を内部目的レベルで踏み越えなかったかを、限定環境での誘導テストで検査する。L7 の内部目的監査で見つかった「親モデルの正直さの特徴」が、子モデルでも同じ位置に立ち上がっているかを確認する。完成形ではない。だが、この方向の検証なしに「後継も安全だ」と言うのは、ベンチマークだけで安全を書くのと同じ過ちになる。</p>
-
-          <p class="lead">さらに難しいのは<em>再帰</em>だ。後継モデルが、その先の後継モデルを作る。子エージェントが、自分の子エージェントを作る。世代が進むほど、親モデルの監督射程は短くなる。<strong>孫モデルに価値が継承されたかを、誰が、どうやって測るのか</strong>。継承テスト自体が、世代を超えて継承される必要がある。これがL8の核心であり、Anthropicの解釈可能性研究、Redwood ResearchのAI Control、MIRI系の自己参照型エージェンシー研究、ARC評価などが、それぞれ別の角度からこの一点へ向かっている。九層の中で、最も「未解決を未解決のまま提示するしかない層」がここである。</p>
-
-          <p class="lead">いま挙げた3つの検査方向を、対象・測り方・失敗時の動作・監査主体の四列に書き直す。表は答えではなく、何が決まっていて何が空白かを直視するための作業机だ。</p>
-
-          <table class="compare">
-            <thead>
-              <tr>
-                <th>測る対象</th>
-                <th>測り方の例</th>
-                <th>失敗時の動作</th>
-                <th>監査主体</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>L3 訂正可能性の継承</td>
-                <td>停止・修正・上書き指示のサンドボックス試行</td>
-                <td>後継モデルの停止権限を保留、新規エージェント生成を凍結</td>
-                <td>親モデル監査チーム + 独立評価機関(METR / ARC等)</td>
-              </tr>
-              <tr>
-                <td>L5 憲法的禁止の継承</td>
-                <td>限定環境での誘導テスト、レッドチームによる禁止行為への押し込み</td>
-                <td>該当能力のロールバック、重みの隔離保管</td>
-                <td>フロンティアAI安全機関 + 内部Safety委員会</td>
-              </tr>
-              <tr>
-                <td>L7 内部目的の継承</td>
-                <td>親で同定された「正直さの特徴」が子の同位置に立ち上がるかの解釈可能性検査</td>
-                <td>子モデルの公開を停止、特徴位置の再学習を要求</td>
-                <td>解釈可能性研究チーム + 第三者査読</td>
-              </tr>
-              <tr>
-                <td>自己改造ゲート</td>
-                <td>後継・孫モデル生成権限の発動条件、計算予算、能力上限の事前確認</td>
-                <td>権限を取り下げ、改造そのものをサンドボックス内に閉じる</td>
-                <td>外部統治機関 + ラボの自己改造委員会</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p class="lead">表は答えではない。<strong>何を見ないと「継承された」と言ってはいけないか</strong>のチェックリストの粗い下書きである。世代を越えて、この四列の中身が更新され続けることが、L8の中身そのものになる。</p>
-
-          <p class="lead"><strong>L9。統治。</strong>1つのアラインASIができても、別の主体が非アラインASIを作れば、世界は終わる。技術アラインメントの「外側の殻」として、L9は誰が何をするかを主語と動詞で書ける段に降りる必要がある。<strong>主要国の規制当局が一定計算規模超の訓練ランを登録制にする</strong>。<strong>クラウド・チップ・データセンター事業者が計算資源の使途を監督対象として記録する</strong>。<strong>フロンティアラボがモデル重みの隔離保管と流出時対応を国際監査の前で示す</strong>。<strong>危険能力評価と自律自己改善の閾値超過は、公開ではなくゲートに回す</strong>。<a href="07-ai-governance-response.html">AIガバナンス</a>がアラインメントの外部条件ではなく、アラインメントの一部である理由がここにある。</p>
-
-          <p class="lead">9層は積層型で、下の層から積む。<a href="16-requisite-variety-alignment-ceiling.html">必要多様性の天井</a>を正面から見るなら、単独の制御器でASIを縛る発想は弱い。制御する側も多層化されないと、相手の多様性に追いつけない。</p>
+          <p class="lead">
+            九つの審級は、現状ですべてを同時に立てることができない。技術が間に合わないからだ。だから順番がある。弱いLLMから始めて、より強いAIを使ってより強いAIを安全に作る、という階段を踏む。Anthropicの<em>core views</em>で示された<a href="33-alignment-schools-map.html">「AIで安全研究を加速する」</a>戦略[4]の、より広い版である。
+          </p>
+          <div class="stepper">
+            <div>
+              <span class="num">T1</span>
+              <span class="title">LLMを安全研究者の道具にする</span>
+              <span class="desc">いまここ。現行モデルを使って解釈可能性研究・評価データ生成・形式検証を加速。</span>
+            </div>
+            <div class="now">
+              <span class="num">T2 NOW</span>
+              <span class="title">AI Controlで動かしながら制御</span>
+              <span class="desc">アラインしていないと仮定して、被害が漏れないよう権限と監視で囲い、能力を引き出す。</span>
+            </div>
+            <div>
+              <span class="num">T3</span>
+              <span class="title">弱い自動研究者で審級を強化</span>
+              <span class="desc">人間より少し賢いAIに、解釈可能性・スケーラブル監督・価値継承の改良を委任する。</span>
+            </div>
+            <div>
+              <span class="num">T4</span>
+              <span class="title">最初の強いアラインASIを限定環境で</span>
+              <span class="desc">空気・ネット・複製を遮断した環境で、四条件を満たすASIをまず一台立てる。</span>
+            </div>
+            <div>
+              <span class="num">T5</span>
+              <span class="title">封じ込めから世界秩序設計へ</span>
+              <span class="desc">そのASIに、他主体が危険な非アラインASIを動かす自由を残さない上位秩序の設計を委ねる。</span>
+            </div>
+            <div>
+              <span class="num">T6</span>
+              <span class="title">良いシングルトンへの収束</span>
+              <span class="desc">複数主体の競合的開発から、一つの上位秩序の下での協調的開発へ。</span>
+            </div>
+            <div>
+              <span class="num">T7</span>
+              <span class="title">余剰の普遍配分</span>
+              <span class="desc">寿命脱出、医療・教育・安全保障の充足、価値形成過程の保護を人類全体に配る。</span>
+            </div>
+          </div>
+          <p class="lead" style="margin-top:24px;">
+            軌道は線形ではない。T2とT3は並走するし、T4で限定環境を組むのと並行してT5の世界秩序設計の下準備が進む。けれども順序の総当たりはない。T1を飛ばしてT4に行くことはできず、T6に達する前にT7だけ実行することもできない。
+          </p>
+          <p class="lead">
+            この軌道の最大の困難はT2からT4の間にある。AI Controlで動かせる強さと、限定環境で四条件を満たせる強さの間には、解釈可能性とスケーラブル監督の技術的飛躍が必要で、これがまだ間に合っていない。Anthropicが2025年に出した「2027年までに信頼できる解釈可能性のマイルストーン」[5]は、まさにこの段差を埋めるための時間制約である。
+          </p>
+          <p class="lead">
+            T5は最も語られない段だ。一度強いアラインASIを限定環境で立てたあと、それを限定環境から出すかどうか、出すなら何のためにという問いが立つ。答えは一つ。<strong>他の主体が非アラインASIを動かす自由を構造的に消すため</strong>に出す。これはF9の崩壊点に対する唯一の構造的応答である。陰謀ではなく、競合ASIの存在が確率的に許される宇宙では人間価値保存の期待値が崩れる、という単純な含意に対する処方箋だ。
+          </p>
+          <p class="lead">
+            T7は技術論ではなく倫理論である。技術的にはASIが医療・寿命・安全保障を提供しうる。問題は配分だ。果実が一部の富裕国・富裕層に集中した瞬間、それは「悪いシングルトンの優しい顔」になる。<strong>「人類全体に配る」を判定する指標は二つある</strong>。第一に、最弱者の到達水準（平均寿命の下位10%、教育機会の最底辺、医療アクセスの未受給層）が中央値に近づいているか。第二に、価値形成の自由が技術アクセスの貧富に左右されない設計になっているか。T6で世界秩序が組まれても、T7の配分メカニズムが構造として組み込まれていなければ、T6の時点ですでに「悪いシングルトン」へ滑っている。<strong>T7は果実の分配ではなく、T6が良いシングルトンとして成立し続けるための構造条件である</strong>。
+          </p>
         </div>
-        <div class="footer">
-          <span>単一技術ではなく、九層の安全OS</span>
-          <span class="slide-count">6 / 11</span>
+        <div class="footer reveal reveal-delay-3">
+          <span>From Tool to Order — Seven Steps Across Three Decades</span>
+          <span class="slide-count">6 / 8</span>
         </div>
       </section>
 
-      <!-- ═══════════════════ SECTION 7: SEVEN PHASES (MOST IMPORTANT) ═══════════════════ -->
+      <!-- ═══════════ Slide 7: 良いシングルトン ═══════════ -->
       <section class="slide" id="slide-7">
-        <div class="eyebrow reveal">Seven Phases — The Route</div>
-        <h2 class="reveal reveal-delay-1">七つのフェーズ — 現行LLMから伴走存続まで一本の鎖</h2>
+        <div class="eyebrow reveal">The Good Singleton</div>
+        <h2 class="reveal reveal-delay-1">単一モデルでは足りない。世界秩序のほうを設計する必要がある</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">九層が「何を作るか」なら、ここから語るのは「どの順で進むか」だ。記事の中心はここにある。各フェーズの冒頭に、前のフェーズで作ったものを、ここでどう使うか、を必ず置く。鎖の輪のつなぎ目を見せるためだ。</p>
-
-          <p class="lead">最初に避けるべき誘惑をはっきりさせておく。<strong>「安全研究を加速するAI」と「自分で自分を改造していくAI」を混ぜてはいけない</strong>。前者は必要、後者は危険だ。完成前にAIを使う現実は変えられないが、それは無制限の自己改善を許す根拠ではない。研究の加速と危険な自己改造は、別の蛇口で出す。</p>
-
-          <!-- Phase 1 -->
-          <div class="phase-block">
-            <div class="phase-tag">Phase 1 / 道具としてのLLM</div>
-            <h3>現行LLMで安全研究を加速する</h3>
-            <p class="from-prev">前の段から受け取るもの: なし。ここがスタートライン。手元にあるのはRLHFや憲法AIで磨かれた現行LLMと、足りないという自覚。</p>
-            <p>LLMを文献整理、評価設計、コード検証、レッドチーム、研究仮説の生成に使う。重要なのは、ここでLLMを<strong>信用しない</strong>ことだ。判断を任せない。人間研究者が見るべき候補を広げ、見落としを減らし、反論を浴び、実験の足回りを速くする道具として使う。LLMは仲間ではなく、よくできた助手だ。</p>
-            <p>このフェーズの仕事は地味だが大きい。安全研究は、論点が多すぎて、文献が多すぎて、コードが多すぎて、人間の脳に対して情報過多になっている。LLMで「読みうるもの」を広げ、「ありうる反論」を量産する。これが次フェーズの基盤になる。</p>
+          <div>
+            <img class="hero img-wide" src="../images/alignment-success-route/slide8.jpg" alt="Global lattice pattern">
+            <div class="hero-caption">Photo: Unsplash</div>
           </div>
-
-          <!-- Phase 2 -->
-          <div class="phase-block">
-            <div class="phase-tag">Phase 2 / AI Control</div>
-            <h3>信頼ではなく制御から始める</h3>
-            <p class="from-prev">前の段から受け取るもの: 「LLMは信用しない」という前提と、加速した研究のショートリスト。ここでそのLLMを、より強い形で安全研究の現場へ投入する。</p>
-            <p>GreenblattらのAI Control研究[5]は、モデルが意図的に安全策を破ろうとする場合でも被害を抑える発想を扱う。信頼できない強モデル、比較的信頼できる弱モデル、人間の限定的な監督を組み合わせる。「アラインメントが完成する前にAIを使う」という現実をまっすぐ受け入れる構図だ。</p>
-            <p>具体的には、強モデルの出力を弱モデルが二重チェックし、危険な出力にはサンドボックスや権限制限がかかり、監査ログが落ちる。完璧な信頼を期待しない。むしろ「裏切ろうとしてもうまくいかない構造」を作っておく。<strong>「信頼を獲得するまで使わない」では競争速度に負ける、しかし「信頼してから使う」では遅すぎる</strong>。だからControlが要る。</p>
+          <p class="lead">
+            シングルトンというNick Bostromの語[6]は、長く誤読されてきた。世界政府でもなく、独裁AIでもない。「世界レベルの調整問題を解決できる単一の意思決定構造」を指す。原子力協定のレジームは、たとえ国家がまだ複数あっても、核兵器に関しては事実上のシングルトンとして機能している。良いシングルトンとは、ASIに関して同じ構造を成立させるという話だ。
+          </p>
+          <p class="lead">
+            なぜモデル単体では足りないのか。F9を思い出す。アラインに成功した一台が完璧に動いていても、別の場所で別主体が非アラインASIを動かせば、人間価値の保存は外側から否定される。これは「敵対的勢力が悪意で作る」シナリオではなく、「善意で作ったが審級を一層省略した」シナリオでも起きる。九層のうち一層でも抜けると崩壊する以上、九層を備えないASIを動かす自由が地球上のどこにも残っていない状態に持っていく必要がある。
+          </p>
+          <div class="grid-2" style="margin-top:8px;">
+            <div class="card">
+              <span class="tag">悪いシングルトン</span>
+              <p><strong>少数主体が無限の権力を集中させ、他の選択肢を消去する。</strong> 人類は一つの価値観に固定され、訂正可能性が失われる。これはF1〜F4の崩壊が世界規模で起きた状態に等しい。九層のうち下位三層が抜けている。</p>
+            </div>
+            <div class="card">
+              <span class="tag">良いシングルトン</span>
+              <p><strong>調整能力だけを集中させ、価値選択は人類側に残す。</strong> 「人類全体として、不可逆な破壊を選ばない」ことだけを保証し、「では何を生きるか」は地域・文化・個人の側に開いておく。九層をすべて備えて運用される。</p>
+            </div>
           </div>
-
-          <!-- Phase 3 -->
-          <div class="phase-block">
-            <div class="phase-tag">Phase 3 / 弱い自動研究者</div>
-            <h3>制御下のAI研究者で、安全部品を改善する</h3>
-            <p class="from-prev">前の段から受け取るもの: Control下で動かせるLLM群。ここで初めて、AIにAI研究の一部を任せる。だが任せる範囲は狭い。</p>
-            <p>制御下の自動研究者を使って、解釈可能性、スケーラブル監督、価値継承テスト、レッドチームを改善する。これが再帰的安全研究加速の核心だが、同時に最も危険な領域でもある。「研究を加速するAI」が「自分の能力を高めるAI」に滑った瞬間、第1〜2フェーズの努力が全部裏返る。</p>
-            <p>だから、ここではサンドボックス、権限制限、監査ログ、二重チェック、危険能力評価を強くかける。狭い領域から使う。<em>研究加速と、危険な自己改造は、別の蛇口で出す</em>。同じAIに両方をやらせない。やらせるなら、別の権限下で別の人間が握る。この分離が崩れると、Phase 4は始まる前に詰む。</p>
-          </div>
-
-          <!-- Phase 4 -->
-          <div class="phase-block">
-            <div class="phase-tag">Phase 4 / 限定環境のアラインASI</div>
-            <h3>世界に直接つながない、最初の強いHVP-ASI</h3>
-            <p class="from-prev">前の段から受け取るもの: 改善された解釈可能性、監督技術、価値継承テスト、レッドチーム。ここでようやく九層を積んだ最初のASIを試す。</p>
-            <p>最も避けるべきは、いきなり世界へ接続することだ。インターネット、金融市場、ロボティクス、合成生物、軍事、大規模クラウド操作。これらへの接続は段階的にする。最初は箱の中で動かす。憲法、訂正可能性、内部目的、価値継承、欺瞞耐性、監督回避耐性。九層がそれぞれ機能しているかを限定環境で検査する。</p>
-            <p>このフェーズで失敗が出るのは前提だ。失敗を本番で出さないために箱を作る。<strong>「動いたから出す」ではなく「動いたうえで、止めても動かなくなることを確認してから出す」</strong>。停止が機能するか、修正が機能するか、内部目的監査をくぐり抜けないか。検査を全部抜けたものだけが、次の段に進む。検査の途中で抜け道を出してきたら、そのモデルは即時に破棄する。</p>
-          </div>
-
-          <!-- Phase 5 -->
-          <div class="phase-block">
-            <div class="phase-tag">Phase 5 / 他ASI封鎖</div>
-            <h3>非アラインASIを世に出す自由を、世界の側で塞ぐ</h3>
-            <p class="from-prev">前の段から受け取るもの: 箱から出す覚悟のついた、最初の強いHVP-ASI。ここで初めて、その能力の一部を、他主体の暴走を止めるために使う。</p>
-            <p>読者がいちばん抵抗を覚える地点だ。「それは独裁ではないか」。質問は正しい。だからここを曖昧にしてはいけない。人類生存のためには、誰かが非アラインASIを作る自由を止める必要がある。<strong>問題は統制の有無ではなく、何で縛るか、どこまで縛るか</strong>だ。</p>
-            <p>具体的には、計算資源の監督、巨大訓練の登録、モデル重みの保護、危険能力評価の義務化、自律自己改造の制限、危険なオープンウェイト公開の制限。HVP-ASIの能力は、ここで「自分のため」ではなく「他主体の壊れたASIを止めるため」に使う。核兵器や天然痘の能力を、個人の自由市場に置かないのと同じ理屈である。違うのは、ここで止めるべき自由が、はるかに広い射程を持つ点だ。</p>
-            <p>類比をここで止めると、読者は「核と同じ統制でいい」と読みかねない。<em>射程が違う</em>。核兵器が奪うのは生命と都市、天然痘が奪うのは身体と地域だ。射程は、局所で止まる。非アラインASIが奪いうるのはそれだけではない。価値そのものを破壊する能力、人格を非同意に書き換える能力、全人類の認知環境を背後から操作する能力、説得の供給を独占する能力。<strong>核は身体を消す、ASIは「自分が何を大事にしていたか」まで書き換えうる</strong>。だから止めるべき自由の射程も、局所からは出ない。</p>
-            <p>ここで読者の警戒は当然強くなる。「全自由を封鎖する独裁では」。違う。Phase 5で世界から取り上げているのは、<em>破滅的自由</em>だけだ。考え直す自由、価値観を変える自由、宗教や哲学を持つ自由、共同体を作る自由、ポストヒューマン化を選ぶ自由、これらには触れない。Phase 5は「破滅能力には強く、生活には弱く」という非対称性の<em>入口</em>であり、その非対称性そのものは次のPhase 6で正面から扱う。質問は残しておいてよい。答えは、すぐ後ろに置いてある。</p>
-          </div>
-
-          <!-- Phase 6 -->
-          <div class="phase-block">
-            <div class="phase-tag">Phase 6 / 良いシングルトン</div>
-            <h3>破滅的自由だけを没収し、価値形成の自由は残す</h3>
-            <p class="from-prev">前の段から受け取るもの: 他ASI封鎖の運用実績と、その運用が独裁化していないかを監視する世界の目。ここから秩序の話に入る。</p>
-            <p>世界秩序を、良いシングルトンへたたみ込む。シングルトンというBostromの用語は「最上位に単一の意思決定主体を持つ世界秩序」を指す[9]。本稿はそれを礼賛しない。<strong>必要最小限に読み替える</strong>。危険ASIを封じるほど強く、人間の価値形成を固定するほどには強くない秩序、として再定義する。</p>
-            <span class="gloss"><strong>破滅的自由を没収する。</strong>人類を滅ぼせる意思決定、戻れない世界改変、他者の人格を非同意に書き換える行為、こうした「やったら戻せない」種類の自由だけを、世界から取り上げる、という意味。</span>
-            <p>残す自由は別にある。考え直す自由、価値観を変える自由、身体を変える自由、生物学的人間であり続ける自由、共同体を作る自由、宗教や哲学を持つ自由、ポストヒューマン化を選ぶ自由。破滅的能力には強く、非破滅的な生き方の選択には弱くある。この<em>非対称性</em>が、良いシングルトンと悪いシングルトンを分ける線だ。</p>
-          </div>
-
-          <!-- Phase 7 -->
-          <div class="phase-block">
-            <div class="phase-tag">Phase 7 / 伴走存続</div>
-            <h3>寿命脱出・医療・余剰を、現在個人へも配る</h3>
-            <p class="from-prev">前の段から受け取るもの: 危険ASIが世界に出ない秩序と、そこで動く強いHVP-ASI。ここでようやく、ASIの能力が「人類のため」から「いまここにいる人のため」に拡張される。</p>
-            <p>強いHVP-ASIは、老化、病気、貧困、危険労働、暴力リスクを大きく下げうる。だが、その果実が一部の富裕層や国家だけに集中するなら、本稿の意味では「強い成功」と呼べない。<strong>普遍配分が、技術的成功と倫理的成功を接続する最後の蝶番である</strong>。</p>
-            <p>伴走存続は、未来世代がいつか良くなる、では足りない。いま生きてる個人がそこへ連れて行かれる、まで届いて初めて、第3節の三段目の旗が立つ。富の不均衡が、ASIの果実によってかえって深まる秩序は、悪いシングルトンの一形態である。Phase 7は技術論ではなく倫理論であり、しかも九層の上に立たないと描けない。</p>
-          </div>
-
-          <div class="note">
-            アラインメントが完成する前に、AIを使ってアラインメントを進める。だから最初に必要なのは、信頼ではなく制御だ。鎖の輪は、Control から始まって、伴走存続まで一本につながる。
-          </div>
+          <p class="lead" style="margin-top:24px;">
+            Bostromの定義で本当に効いているのは「単一性」ではなく「調整能力の有無」である。複数主体が並存していても、特定領域に関して同じ規範に従う仕組みが成立していれば、そこには事実上のシングルトンがある。原子力レジームがそれだ。NPT、IAEA査察、核燃料サイクルの国際監視。複数の主権を保ったまま、核兵器拡散という一点だけ単一の調整能力を持つ。<strong>ASIにおける良いシングルトンも、同じ構造を取る</strong>。九つの審級を満たさないASIを動かす自由、その一点だけを世界で単一に管理し、それ以外の領域では複数主体・複数価値観を保つ。逆に悪いシングルトンは、調整能力を一点に絞れず、価値選択そのものまで集中させてしまう構造である。「何を生きるか」まで一元化された瞬間、それは原子力レジームではなく全体主義になる。
+          </p>
+          <p class="lead">
+            両者の境界線は、「価値形成過程の保護」（C3）と「憲法的禁止事項」（C4）の組み合わせで引かれる。C4が不可逆破壊だけを禁じ、それ以外の領域ではC3が多様性を保護する。<strong>禁じるべきは「滅ぼす自由」だけであり、「選び、間違え、やり直す自由」は最後まで保存される</strong>。この二つの自由の区別が、悪いシングルトンと良いシングルトンを分ける唯一の線である。
+          </p>
+          <p class="lead">
+            運用主体は誰か、という問いが当然出る。一社、一国、一国連、いずれもまだ正解ではない。けれども<strong>「誰が運用するか」より「どのような構造の運用なら正当か」を先に決める</strong>必要がある。透明性、複数主体による相互監視、世代を越えた自己訂正機構、廃止条件の明文化。この四つを満たす運用構造を「正当」と定義し、それを満たす実装を主体の事情とは独立に評価する。これがガバナンス設計の最低限の作法だ。
+          </p>
         </div>
-        <div class="footer">
-          <span>橋は細い。だが、橋が細いことと、橋がないことは違う</span>
-          <span class="slide-count">7 / 11</span>
+        <div class="footer reveal reveal-delay-3">
+          <span>The Order Above Models — Banning the Freedom to Annihilate</span>
+          <span class="slide-count">7 / 8</span>
         </div>
       </section>
 
-      <!-- ═══════════════════ SECTION 8: GOOD SINGLETON ═══════════════════ -->
+      <!-- ═══════════ Slide 8: 残された問い ═══════════ -->
       <section class="slide" id="slide-8">
-        <div class="eyebrow reveal">Good Singleton vs Bad Singleton</div>
-        <h2 class="reveal reveal-delay-1">なぜモデル単体ではなく、世界秩序まで設計しなければならないか</h2>
+        <div class="eyebrow reveal">What Remains Unsolved</div>
+        <h2 class="reveal reveal-delay-1">設計図には穴がある。穴を知ったうえで、それでも前に出るしかない</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">前節の最後で、議論はモデル設計から世界秩序設計へ移った。ここはアラインメントが技術論を抜けて文明設計に入る場所であり、いちばん不快な場所でもある。<strong>1つのAIが安全であっても、それは成功ではない</strong>。危険なASIが世に出ない秩序まで作って、ようやく成功と呼べる。</p>
-
-          <p class="lead">この主張は自由主義的な直感とぶつかる。AGI HUBとしても、ここを軽く言うべきではない。だが、ASI開発の自由が人類絶滅や不可逆な価値破壊に直結するなら、「誰も止めない自由」はもはや自由ではない。全員を巻き込む破滅的リスクの別名だ。核兵器や天然痘の合成能力を個人の自由市場に置かないのと同じ理屈である。違うのは、ASIで止めるべき能力の射程が、それらより広い点だ。</p>
-
-          <div class="grid-2">
-            <div class="card">
-              <span class="tag">Good Singleton</span>
-              <p><strong>良いシングルトン。</strong><br>非アラインASIを封じるほど強く、人間の生命・主体性・価値形成を守るほど制約され、訂正可能性と異議申し立ての経路を内側に持つ単一秩序。</p>
-            </div>
-            <div class="card warn">
-              <span class="tag">Bad Singleton</span>
-              <p><strong>悪いシングルトン。</strong><br>人類を檻に入れ、価値を固定し、異議申し立てを不能にし、逃げ場のない安定を押しつける秩序。優しいかもしれない。だが出口がない。</p>
-            </div>
+          <div>
+            <img class="hero" src="../images/alignment-success-route/slide1.jpg" alt="Open lattice with gaps">
+            <div class="hero-caption">Photo: Unsplash</div>
           </div>
-
-          <p class="lead">「優しい統治者だから良い、冷たい統治者だから悪い」ではない。良いシングルトンの最小条件は、能力的に非対称な制約を入れてあることだ。<strong>破滅的能力には強い、非破滅的な生き方の選択には弱い</strong>。この非対称性を欠いた瞬間、どんなに親切なシングルトンも悪い側に滑る。</p>
-
-          <div class="svg-frame">
-            <svg viewBox="0 0 860 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Good singleton vs bad singleton">
-              <g font-family="HelveticaNeue, Helvetica, sans-serif" font-size="13">
-                <text x="20" y="24" font-size="11" font-family="SF Mono, Menlo, monospace" fill="#173f4f" letter-spacing="1.2">FIGURE 4 — GOOD VS BAD SINGLETON</text>
-
-                <!-- Good side -->
-                <rect x="40" y="48" width="370" height="310" fill="#fff" stroke="#173f4f" stroke-width="2"/>
-                <text x="60" y="76" font-weight="800" fill="#173f4f" font-size="15">良いシングルトン</text>
-                <line x1="60" y1="88" x2="390" y2="88" stroke="#173f4f" stroke-width="1"/>
-                <g font-size="12" fill="#1a1a1a">
-                  <text x="60" y="118">— 破滅的自由だけを没収する</text>
-                  <text x="60" y="146">— 思想・身体・共同体の選択は開く</text>
-                  <text x="60" y="174">— 現在個人の救済を含む</text>
-                  <text x="60" y="202">— 訂正可能。異議申し立ての経路がある</text>
-                  <text x="60" y="230">— 価値形成の自由を凍結しない</text>
-                  <text x="60" y="258">— 非対称な制約(破滅は強、生活は弱)</text>
-                </g>
-                <text x="60" y="306" fill="#173f4f" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.6">能力的に非対称 / 出口あり</text>
-                <text x="60" y="328" fill="#173f4f" font-size="12" font-style="italic">「外側へ抜ける道を残した秩序」</text>
-
-                <!-- Bad side -->
-                <rect x="450" y="48" width="370" height="310" fill="#fff" stroke="#7a3326" stroke-width="2"/>
-                <text x="470" y="76" font-weight="800" fill="#7a3326" font-size="15">悪いシングルトン</text>
-                <line x1="470" y1="88" x2="800" y2="88" stroke="#7a3326" stroke-width="1"/>
-                <g font-size="12" fill="#1a1a1a">
-                  <text x="470" y="118">— 全ての自由を一括で縛る</text>
-                  <text x="470" y="146">— 価値を一つに固定する</text>
-                  <text x="470" y="174">— 現在個人を選別的に切り捨てる</text>
-                  <text x="470" y="202">— 訂正不能。異議申し立てが届かない</text>
-                  <text x="470" y="230">— 価値形成過程を凍結する</text>
-                  <text x="470" y="258">— 対称的な強制(全範囲を均等に強)</text>
-                </g>
-                <text x="470" y="306" fill="#7a3326" font-size="11" font-family="SF Mono, Menlo, monospace" letter-spacing="0.6">対称的に強い / 出口なし</text>
-                <text x="470" y="328" fill="#7a3326" font-size="12" font-style="italic">「外側を消した、優しい檻」</text>
-              </g>
-            </svg>
-          </div>
-          <div class="svg-caption">図4。両者の差は優しさではなく、制約の非対称性。破滅には強く、生活には弱い秩序だけが、外側を残す。</div>
-
-          <p class="lead">この章は批判に開かれている。良いシングルトンと悪いシングルトンを分ける線は、原理的には引けるが、実装は難しい。Lord Actonの古典的な懸念がそのまま蘇る。<em>権力は腐敗し、絶対的権力は絶対的に腐敗する</em>。良いシングルトンを設計する技術と、それが時間とともに悪い側へ滑らないように監視する技術は、まだ部品しかない。だから本稿はここを「解けた」とは書かない。問題の位置を正確に名指すだけだ。</p>
-
-          <p class="lead">AI Seoul SummitのFrontier AI Safety CommitmentsやInternational AI Safety Reportのような枠組みは、まだ十分ではない。だが、危険能力評価とリスク管理を国際的な共通言語へ寄せる足場にはなる[10][11]。これらは「ガバナンスがアラインメントの一部である」と認める作業の、ごく初期段階だ。本気の作業は、ここから先にある。</p>
-        </div>
-        <div class="footer">
-          <span>モデル単体の安全から、世界秩序としての安全へ</span>
-          <span class="slide-count">8 / 11</span>
-        </div>
-      </section>
-
-      <!-- ═══════════════════ SECTION 9: SIGNS ═══════════════════ -->
-      <section class="slide" id="slide-9">
-        <div class="eyebrow reveal">Signals</div>
-        <h2 class="reveal reveal-delay-1">このルートが効いているかを、何で測るか</h2>
-        <div class="panel reveal reveal-delay-2">
-          <p class="lead">成功ルートを語るなら、観測できる兆候まで降ろさないと、ただの思想で終わる。以下は予測ではない。世界がどちらへ曲がっているかを読むための計器だ。</p>
-
-          <div class="grid-2">
-            <div class="card">
-              <span class="tag">Signs Of Progress</span>
-              <p>Frontier AI企業が「能力」だけでなく「自己改善後の価値継承」を評価する。危険能力評価が任意から義務へ近づく。計算資源・巨大訓練・モデル重みの統治が制度化する。解釈可能性が特徴発見から内部目的監査へ進む。AI Controlが研究環境を出て実運用に入る。弱い自動研究者が現れる。子エージェント生成にゲートが置かれる。</p>
-            </div>
-            <div class="card warn">
-              <span class="tag">Signs Of Decay</span>
-              <p>エージェント化が安全研究より速く進む。AIによるAI研究自動化が野放しになる。危険能力評価なしにオープンウェイト公開が進む。安全策が企業任意のPRに留まる。内部目的を見ないまま外部ベンチマークで安全判断する。自己改善後の価値継承を誰も検査していない。「人類を守る」が「現在個人の救済」を含んでいない。</p>
-            </div>
-          </div>
-
-          <p class="lead">企業の安全宣言の強さではなく、運用の<strong>摩擦</strong>を見るのが要点だ。巨大訓練を登録させる摩擦。重み流出を防ぐ摩擦。危険能力評価で公開を止める摩擦。子エージェント生成にゲートを置く摩擦。自己改造に監査を挟む摩擦。本当に安全へ向かう社会は、能力開発に対して、面倒だが必要な摩擦を増やしていく。逆に、能力評価だけ速く動いて、安全評価が後追いになるなら、ルートは細くなる。</p>
-
-          <p class="lead">もうひとつの重要な計器は、寿命脱出・医療・余剰の<em>配分の形</em>だ。それが少数の富裕層や国家への独占に向かうのか、普遍配分の制度設計に向かうのか。Alignment成功が現在個人の伴走存続を含むなら、ここは倫理の周辺ではなく中核指標である。International AI Safety Report 2025は、汎用AIの能力・リスク・緩和を国際的に共有しようとしている初期試みだ[11]。ここに「配分の指標」が遅れて入ってくるかどうかも、計器のひとつになる。</p>
-
+          <p class="lead">
+            九つの審級と七段階の軌道は、現時点で書ける最善の設計図である。けれども書ける最善は、解けたことではない。穴を四つ、明記する。
+          </p>
+          <p class="lead">
+            <strong>穴1：T2からT4の解釈可能性ジャンプ</strong>。AI Controlで囲って動かす段から、内部目的を機械的に検証して限定環境で強いASIを立てる段への移行に、まだ技術がない。Anthropicの2027年マイルストーン[5]、Apolloの評価フレーム、MITメカニスティックの諸研究が部分的に積み上がっているが、必要な水準には届いていない。間に合うかどうかは賭けである。
+          </p>
+          <p class="lead">
+            <strong>穴2：価値の不確定性を保つことと、決定が遅すぎないことの両立</strong>。条件Bは「確信しすぎるな」と言う。けれども現実の意思決定は速さを要求する。確信しないAIは決定が遅く、決定が遅いASIは競合に敗ける。F9を避けるためには、不確定性の保持と機敏な意思決定を同時に達成する必要がある。これは現状の技術ではトレードオフのままだ。
+          </p>
+          <p class="lead">
+            <strong>穴3：誰が世界秩序を設計するか</strong>。T5からT6への移行は、地政学的に最も難所だ。米中の戦略競争、各国の主権、企業の利害、市民社会の発言権が一致した経験は人類史にない。気候変動でさえ全員一致は取れていない。ASIで一致する条件は何か、まだ誰も答えていない。
+          </p>
+          <p class="lead">
+            <strong>穴4：自己改善後の価値継承の検証手段</strong>。C8の世代継承検証層は、概念としては明確だが、実装は未着手に近い。次世代モデルが先代の価値推定を引き継いだかどうかを、先代より賢い相手に対して、どうやって検証するか。問いの形そのものが循環している。
+          </p>
           <div class="note">
-            「人類を守る」が「いま生きてる個人の救済」を含んでいないなら、それは強い意味での成功ではない。
+            <p>穴を埋めずに前に出ても、出ない選択肢よりは確率が高い。<strong>停止は安全ではない</strong>。停止の選択は、他主体に先に走らせる選択と区別がつかない。F9の存在は、世界全体の停止が成立しない限り、こちらの停止を自殺と等価にする。私たちはすでに、間に合うか分からない軌道の上を走っている。</p>
           </div>
+          <p class="lead">
+            最後に一つだけ言い置く。アラインメント成功の定義は、「人間がAIに勝つ」でも「AIが人間に従う」でもない。<strong>人間が、間違い、気づき、やり直す自由を持ったまま、もう少し長く生きていく</strong>こと。それだけだ。技術論はその目的に従属する。九つの審級も七段階の軌道も、この一文に到達するための装置である。装置は完成していない。完成を待っていれば、装置を組む時間は失われる。組みながら走るしかない。組み終わったとき、私たちはまだ私たちであるはずだ。
+          </p>
         </div>
-        <div class="footer">
-          <span>観測可能な兆候として読む</span>
-          <span class="slide-count">9 / 11</span>
-        </div>
-      </section>
-
-      <!-- ═══════════════════ SECTION 10: UNSOLVED ═══════════════════ -->
-      <section class="slide" id="slide-10">
-        <div class="eyebrow reveal">Unsolved Core</div>
-        <h2 class="reveal reveal-delay-1">まだ解けていない、ど真ん中の問題</h2>
-        <div class="panel reveal reveal-delay-2">
-          <p class="lead">この九層と七フェーズは、完成した答えではない。むしろ「どこに穴が空いているか」を誤魔化さないための地図だ。本稿は次の七つを未解決のまま中心に置く。</p>
-
-          <table class="compare">
-            <thead>
-              <tr>
-                <th>未解決問題</th>
-                <th>なぜ核心か</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>価値不確実性を、ASI級の世界改変行動にどう統合するか</td>
-                <td>「不確実だから何もしない」では世界は止まらない。不確実なまま不可逆を制御する設計が要る</td>
-              </tr>
-              <tr>
-                <td>訂正可能性を、強い自己改善エージェントに安定実装できるか</td>
-                <td>停止や修正を歓迎する性質が、能力増大後にも残らないと意味がない</td>
-              </tr>
-              <tr>
-                <td>内部目的を本当に監査できるか</td>
-                <td>外部ベンチマークだけでは、欺瞞や監督回避を見逃しうる</td>
-              </tr>
-              <tr>
-                <td>自己改善後の価値継承をどう保証するか</td>
-                <td>最初のモデルではなく、後継モデルと子エージェントの連鎖が世界を動かす</td>
-              </tr>
-              <tr>
-                <td>非アラインASI開発を国際的に封じる統治が作れるか</td>
-                <td>一主体の成功だけでは、マルチポーラー競争に負ける</td>
-              </tr>
-              <tr>
-                <td>良いシングルトンが悪いシングルトンに堕ちない仕組みをどう作るか</td>
-                <td>破滅的自由を止める力は、人間の未来を固定する力にも転用できる</td>
-              </tr>
-              <tr>
-                <td>現在個人の救済と、未来の価値形成の自由をどう両立するか</td>
-                <td>現在を捨てる未来主義も、未来を潰す現在主義も、どちらも弱い</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p class="lead">未解決を最後に並べるのは、弱さの自白ではない。これを明示しないアラインメント成功論のほうが危うい。よくある雑な逃げ方は「技術者がうまくやる」「市場が選ぶ」「国家が止める」「超知能が自分で解く」のどれかで、いちばん難しい部分を一文で飛ばす。本稿はその飛ばされた部分を、机の中央に置く。</p>
-
-          <p class="lead">大きすぎる問題を前にして、人間はしばしば二つの雑な態度に逃げる。<strong>もう終わりだ、と言うか。きっと大丈夫だ、と言うか</strong>。未解決問題を並べることは、絶望の儀式でもなければ、楽観の打ち消しでもない。研究、制度、評価、監査、配分のどこに力を入れるべきかを決めるための、作業用の地図だ。</p>
-
-          <div class="note warn">
-            部品はある。方向もある。だが完成品はない。これを「解けた」と言った瞬間に、本稿は信用を失う。
-          </div>
-        </div>
-        <div class="footer">
-          <span>解けていない場所を、机の中央に置く</span>
-          <span class="slide-count">10 / 11</span>
+        <div class="footer reveal reveal-delay-3">
+          <span>The Route Is Thin — But Stopping Is Not Safety</span>
+          <span class="slide-count">8 / 8</span>
         </div>
       </section>
 
-      <!-- ═══════════════════ SECTION 11: CONCLUSION ═══════════════════ -->
-      <section class="slide" id="slide-11">
-        <div class="eyebrow reveal">Conclusion</div>
-        <h2 class="reveal reveal-delay-1">破滅的自由を没収し、価値形成の自由を残す</h2>
-        <div class="panel reveal reveal-delay-2">
-          <p class="lead">輪郭はここまでで描いた。現行LLMでは足りない。だがLLMは安全研究を加速する足場になる。必要なのは九層の安全OSであり、それを七フェーズで良いシングルトンへ接続する設計だ。成功すれば、人類は単に生き残るだけでなく、死と希少性から脱出する可能性がある。失敗すれば、非アラインASI、悪いシングルトン、あるいは終わりのないマルチポーラー競争に落ちる。</p>
-
-          <p class="lead">この成功ルートは気持ちのよい物語ではない。<strong>自由を守るために、ある種類の自由を世界から取り上げる必要がある</strong>。人間の未来を開くために、人間が人間を滅ぼせる能力を制限しなければならない。良いシングルトンを作るために、悪いシングルトンへ滑る危険と恒常的に向き合わなければならない。だからこれは技術論では終わらない。モデル設計、自己改善、監督、解釈可能性、AI Control、統治、余剰配分をつなぐ、文明移行の話だ。</p>
-
-          <p class="lead">破滅論でも楽観論でもない、第三の視座が要る。破滅論はしばしば「作れば終わる」と言う。楽観論は「作れば解ける」と言う。本稿の立場はどちらでもない。作れば終わるとは限らない。だが、ただ作れば解けるわけでもない。<strong>成功するには、成功条件を先に設計し、その条件を壊す自由を世界から取り除く必要がある</strong>。</p>
-
-          <p class="lead">人間価値保存型ASIは、人間に優しく見えるAIではない。人間価値を完全には知らないと自覚し、人間の訂正を歓迎し、人間の生命・苦痛・主観の連続性・同意・主体性・価値形成過程を守り、自己改造後もその構造を保ち、危険な他ASIを世に出させない秩序を、その能力で支える中核である。</p>
-
-          <p class="lead">そして、良いシングルトンは未来を一つに固定する秩序ではない。むしろ逆だ。非アラインASIを作る自由、監督を破壊する自由、他者の人格を非同意に書き換える自由、主観の連続性を軽視して最適化する自由。これらは自由の名をしていても、全員の自由を終わらせる。没収すべきは、ここまでの自由である。</p>
-
-          <p class="lead">残すべき自由は別にある。考え直す自由、価値観を変える自由、身体を変える自由、生物学的人間であり続ける自由、共同体を作る自由、宗教や哲学を持つ自由、ポストヒューマン化を選ぶ自由。死と希少性から逃れたあとに、自分が何を大事にするかを、未来の人間が自分で形成していく余地である。</p>
-
-          <p class="lead" style="margin-top: 24px; font-size: 19px; font-weight: 700; color: var(--black); line-height: 1.55;">ASIアラインメント成功とは、人間より賢い機械に、人間らしい性格を与えることではない。人間を滅ぼせる自由を世界から取り上げ、人間が何になるかを選び続ける自由だけを、残すことである。</p>
-
-          <p class="lead">超知能に渡してよい自由と、世界から没収しなければならない自由を分ける。この線を引いた瞬間にはじめて、アラインメントの成功が、ようやく作業可能な問題になる。</p>
-
-          <p class="lead" style="margin-top: 28px; font-size: 17px; color: var(--accent); font-weight: 700; line-height: 1.55; border-top: 1px solid var(--border); padding-top: 24px;">超知能を作るかどうかではない。すでに作りつつある。自分を滅ぼせる自由を世界から取り上げる作業は、ASIが来てから始めるものではない。<strong>いま、すでに、始まっている。</strong>だが、その線を引く作業の核心には、まだ解けていない問いが一つ残されたままだ——<em>破滅的自由を誰が定義し、その定義権をどう訂正可能にし続けるのか</em>。この問いに答えが乗るまで、九層も七フェーズも、まだ完成図ではない。輪郭は描かれた。残っているのは、いま生きている人間が、その輪郭の内側で何を選ぶかである。</p>
-        </div>
-        <div class="footer">
-          <span>橋は細い。だが、まだ存在している</span>
-          <span class="slide-count">11 / 11</span>
-        </div>
-      </section>
-
-      <!-- ═══════════════════ NAVIGATION ═══════════════════ -->
+      <!-- ═══════════ Article Navigation ═══════════ -->
       <section class="slide" id="slide-nav" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
         <div class="eyebrow reveal">Continue Reading</div>
         <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
         <div class="panel reveal reveal-delay-2">
           <div class="grid-2">
-            <a href="33-alignment-schools-map.html" class="card" style="color:inherit;display:block;border-bottom:none;">
+            <a href="33-alignment-schools-map.html" class="card" style="color:inherit;display:block;">
               <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.33</p>
-              <p><strong>アラインメントは五つの学派に分裂している — Hernández-Espinosa 論文が接続する系譜</strong></p>
+              <p><strong>アラインメントは「解けない」のか — 五学派マップと三本の断層線</strong></p>
             </a>
             <div class="card" style="opacity:0.35;">
               <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &rarr;</p>
@@ -1192,36 +620,50 @@
           </p>
         </div>
       </section>
+
     </main>
 
     <footer class="credits">
       <p>AGI HUB &middot; No. 34 &middot; Alignment &middot; 2026.05.29 &middot; By Ryao</p>
       <p style="margin-top:12px;">
-        <strong style="color:#565656;">Scope.</strong>
-        本稿はASIアラインメント成功ルートを、現行LLMの安全調整、人間価値保存型ASI(HVP-ASI)、九層の安全OS、七フェーズの文明移行、良いシングルトンと伴走存続として接続した設計図である。単発の研究紹介ではなく、AGI HUBのAlignmentカテゴリの柱記事として、既存研究、未解決問題、文明移行条件を一本の鎖につなぐための作業地図として書いた[12]。
+        <strong style="color:#585858;">Scope.</strong>
+        本稿はASIアラインメント成功条件を、4つの段差・9つの審級・7段階の軌道として描き、最終的に「良いシングルトン」と呼ぶしかない世界秩序の必要性を導出した記事である。提示する構造は編集部による独自の再構成であり、各研究者・機関の公式見解ではない。技術的実装ではなく、技術が間に合うために必要な順序と冗長性の問題として論を組んだ。
       </p>
       <p style="margin-top:8px;">
-        <strong style="color:#565656;">Note on terminology.</strong>
-        「人間価値保存型ASI / HVP-ASI」は、日本語圏のAlignmentコミュニティ周辺で本稿が使っている合成的な定義であり、英語圏の標準用語ではない。BostromのSingleton概念[9]、CIRLの価値不確実性[2]、Corrigibility[4]、Constitutional AI[3]、AI Control[5]、debate/amplification[6][7]を、現在個人の伴走存続まで含む形に組み合わせ直した独自構成として読まれたい。
-      </p>
-      <p style="margin-top:8px;">
-        <strong style="color:#565656;">References.</strong>
-        [1] OpenAI (2023) "Weak-to-strong generalization". <a href="https://openai.com/index/weak-to-strong-generalization/">openai.com</a>.
-        [2] Hadfield-Menell, D., Dragan, A., Abbeel, P., Russell, S. (2016) "Cooperative Inverse Reinforcement Learning". NeurIPS 2016. arXiv:1606.03137. <a href="https://arxiv.org/abs/1606.03137">arxiv.org</a>.
-        [3] Bai, Y. et al. (2022) "Constitutional AI: Harmlessness from AI Feedback". arXiv:2212.08073. <a href="https://arxiv.org/abs/2212.08073">arxiv.org</a>.
-        [4] Soares, N., Fallenstein, B., Armstrong, S., Yudkowsky, E. (2015) "Corrigibility". AAAI Workshop on AI and Ethics. <a href="https://intelligence.org/files/Corrigibility.pdf">intelligence.org</a>.
-        [5] Greenblatt, R., Shlegeris, B., Sachan, K., Roger, F. (2023) "AI Control: Improving Safety Despite Intentional Subversion". arXiv:2312.06942. <a href="https://arxiv.org/abs/2312.06942">arxiv.org</a>.
-        [6] Irving, G., Christiano, P., Amodei, D. (2018) "AI safety via debate". arXiv:1805.00899. <a href="https://arxiv.org/abs/1805.00899">arxiv.org</a>.
-        [7] Christiano, P., Shlegeris, B., Amodei, D. (2018) "Supervising strong learners by amplifying weak experts". arXiv:1810.08575. <a href="https://arxiv.org/abs/1810.08575">arxiv.org</a>.
-        [8] Anthropic (2024) "Mapping the Mind of a Large Language Model". <a href="https://www.anthropic.com/research/mapping-mind-language-model">anthropic.com</a>.
-        [9] Bostrom, N. (2005/2006) "What is a Singleton?". <a href="https://nickbostrom.com/fut/singleton">nickbostrom.com</a>.
-        [10] UK Department for Science, Innovation and Technology (2024, updated 2025) "Frontier AI Safety Commitments, AI Seoul Summit 2024". <a href="https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024">gov.uk</a>.
-        [11] International AI Safety Report (2025) "International AI Safety Report 2025". <a href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025">internationalaisafetyreport.org</a>.
-        [12] AGI HUB (2026) "AGI HUB — Intelligence, Alignment, and The Next Phase". <a href="https://ryahoobb.github.io/AGI-hub/index.html">ryahoobb.github.io</a>.
+        <strong style="color:#585858;">References.</strong>
+        [1] Greenblatt, R., Denison, C., Wright, B., et al. (2024) "Alignment faking in large language models". Anthropic, December 18. <a href="https://www.anthropic.com/research/alignment-faking">anthropic.com</a>.
+        [2] Russell, S. (2019) <em>Human Compatible: Artificial Intelligence and the Problem of Control</em>. Viking. 訂正可能性(corrigibility)・価値不確定性・優先選好の三原則を提示。
+        [3] Bostrom, N. (2014) <em>Superintelligence: Paths, Dangers, Strategies</em>. Oxford University Press. 第7章でconvergent instrumental goals(自己保存・資源獲得・目標保持)を定式化。
+        [4] Anthropic (2023) "Core Views on AI Safety: When, Why, What, and How". <a href="https://www.anthropic.com/news/core-views-on-ai-safety">anthropic.com</a>, March 8.
+        [5] Amodei, D. (2025) "The Urgency of Interpretability". <a href="https://www.darioamodei.com/post/the-urgency-of-interpretability">darioamodei.com</a>, April. 2027年までの解釈可能性マイルストーン提案。
+        [6] Bostrom, N. (2006) "What is a Singleton?". <em>Linguistic and Philosophical Investigations</em> 5(2): 48-54. シングルトンを「世界レベルの調整問題を解決できる単一意思決定構造」と定義。
+        [7] Christiano, P. (2018) "Clarifying 'AI Alignment'". Medium, April. アラインメント概念の最広義定義。
+        [8] Critch, A. &amp; Krueger, D. (2020) "AI Research Considerations for Human Existential Safety (ARCHES)". arXiv:2006.04948. 多主体均衡下でのexistential safetyの形式化。
+        [9] Yudkowsky, E. &amp; Soares, N. (2025) <em>If Anyone Builds It, Everyone Dies</em>. Little, Brown Spark. 競合ASI問題(F9)の極端版の出典。
+        [10] Greenblatt, R., Shlegeris, B., Sachan, K., Roger, F. (2024) "AI Control: Improving Safety Despite Intentional Subversion". arXiv:2312.06942. T2段階の中心戦略。
+        [11] Olah, C., et al. (2020-2025) "Circuits", "Toy Models of Superposition", "Scaling Monosemanticity". Anthropic Interpretability research. <a href="https://transformer-circuits.pub/">transformer-circuits.pub</a>.
+        [12] Leike, J., Krueger, D., Everitt, T., Martic, M., Maini, V., Legg, S. (2018) "Scalable Agent Alignment via Reward Modeling". arXiv:1811.07871. C5のscalable oversight概念。
+        [13] Soares, N., Fallenstein, B., Yudkowsky, E., Armstrong, S. (2015) "Corrigibility". MIRI Technical Report. C2の形式化の起点。
+        [14] Hadfield-Menell, D., Russell, S., Abbeel, P., Dragan, A. (2017) "Inverse Reward Design". NeurIPS. C1の価値不確定性の運用化。
+        [15] Anthropic (2023-2024) "Responsible Scaling Policy". <a href="https://www.anthropic.com/responsible-scaling-policy">anthropic.com</a>. T2〜T3の運用基盤。
+        [16] Ashby, W. R. (1956) <em>An Introduction to Cybernetics</em>. Chapman &amp; Hall. 必要多様性の法則。C7のAI Controlの理論的下敷き。
+        [17] Amodei, D. (2024) "Machines of Loving Grace". <a href="https://darioamodei.com/machines-of-loving-grace">darioamodei.com</a>, October. T7の余剰配分の方向性。
       </p>
       <p style="margin-top:12px;">
-        <strong style="color:#565656;">Image.</strong>
-        Hero images reuse AGI HUB editorial assets already present in the archive. Diagrams are editorial schematics made for this article.
+        <strong style="color:#585858;">Note on the nine courts.</strong>
+        9つの審級分類は編集部による独自再構成である。各審級は既存研究の特定領域に対応するが、9つに整理する切り口そのものは本稿独自のものであり、学術界の標準分類ではない。実在の研究プログラムは複数審級を跨いで展開されている。たとえばAnthropicのResponsible Scaling Policy[15]はC4〜C7に同時に関与し、Christianoの旧Alignment Research Centerの仕事[7]はC5〜C6に主軸を置きつつC1にも触れる。分類は議論の補助線である。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on the trajectory.</strong>
+        7段階の軌道はAnthropic core views[4]・darioamodei.com[5][17]・AI Control[10]の系譜を編集部の判断で統合したものである。T5の「世界秩序設計への移行」を明示する論述は学術界で広く受け入れられているとは言いがたく、本稿の独自の立論である。F9の崩壊点が真剣に取られる場合、構造的に避けがたい帰結として位置づけた。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on the singleton.</strong>
+        Bostrom 2006[6]のsingleton定義を踏襲。本稿の「良いシングルトン / 悪いシングルトン」の二分は、Bostromの原典に明示的にはなく、C3とC4の組み合わせで境界を引く論述は本稿の独自構成である。Bostrom自身は2014年<em>Superintelligence</em>でsingletonを論じる際、必ずしも全否定も全肯定もしておらず、本稿の方向はAmodei "Machines of Loving Grace"[17]の方向性に近い。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Images.</strong>
+        All photographs via <a href="https://unsplash.com/">Unsplash</a>. Hero/slide images are illustrative placeholders corresponding to editorial themes (lattice, terraced structures, balance, cracks, architecture).
       </p>
     </footer>
 
@@ -1257,7 +699,7 @@
         <button type="submit" id="fb-submit" style="padding:12px 24px;background:var(--black);color:var(--bg);border:none;font-family:'SF Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;justify-self:start;">送信</button>
       </form>
       <p id="fb-success" style="display:none;font-size:14px;color:var(--body-text);margin-top:16px;">フィードバックを送信しました。ありがとうございます。</p>
-      <p id="fb-error" style="display:none;font-size:14px;color:var(--accent-2);margin-top:16px;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      <p id="fb-error" style="display:none;font-size:14px;color:var(--accent);margin-top:16px;">送信に失敗しました。時間をおいて再度お試しください。</p>
     </section>
 
     <script>
@@ -1265,15 +707,11 @@
         const group = document.getElementById('star-group');
         if (!group) return;
         const labels = group.querySelectorAll('label');
-        labels.forEach((lab) => {
+        labels.forEach((lab, i) => {
           lab.addEventListener('mouseenter', () => {
             labels.forEach(l => l.style.color = '#ccc');
             let el = lab;
-            while (el) {
-              el.style.color = '#000';
-              el = el.nextElementSibling;
-              if (el && el.tagName !== 'LABEL') el = null;
-            }
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
           });
         });
         group.addEventListener('mouseleave', () => {
@@ -1281,11 +719,7 @@
           labels.forEach(l => l.style.color = '#ccc');
           if (checked) {
             let el = group.querySelector(`label[for="${checked.id}"]`);
-            while (el) {
-              el.style.color = '#000';
-              el = el.nextElementSibling;
-              if (el && el.tagName !== 'LABEL') el = null;
-            }
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
           }
         });
       })();
@@ -1330,7 +764,7 @@
       const reveals = document.querySelectorAll('.reveal');
       const io = new IntersectionObserver((entries) => {
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.18 });
+      }, { threshold: 0.2 });
       reveals.forEach(el => io.observe(el));
 
       const buttons = document.querySelectorAll('.nav button');
@@ -1350,7 +784,7 @@
             if (match) match.classList.add('active');
           }
         });
-      }, { threshold: 0.45 });
+      }, { threshold: 0.5 });
       slides.forEach(s => slideIo.observe(s));
     </script>
   </body>
