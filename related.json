@@ -2,20 +2,80 @@
   "generated": "2026-04-22",
   "note": "編集者が選定した関連記事ペア。無向。ペアを1行追加すると header.js の関連記事セクションと article-graph.html の実線エッジに自動反映される。slug は articles.json と同じく .html 拡張子なし。",
   "relations": [
-    {"a": "01-ai-alignment", "b": "34-alignment-success-route", "rationale": "アラインメント問題提起の次に置く、9審級・7段階の成功設計図"},
-    {"a": "10-alignment-research-landscape", "b": "34-alignment-success-route", "rationale": "研究布陣図を9つの審級と7段階の軌道の上にマッピングし直す"},
-    {"a": "33-alignment-schools-map", "b": "34-alignment-success-route", "rationale": "五学派の分裂を、9審級のどこを担うかという冗長層配置として読み直す"},
-    {"a": "30-nagi-npt-analog-closing-window", "b": "34-alignment-success-route", "rationale": "NPT類比による多極競争抑制を、世界秩序層(C9)と良いシングルトンの前段に位置づける"},
-    {"a": "17-alignment-as-western-problem", "b": "34-alignment-success-route", "rationale": "西洋的アラインメント定義の偏りを、価値不確定性層(C1)で扱うべき問題として再浮上"},
-    {"a": "16-requisite-variety-alignment-ceiling", "b": "34-alignment-success-route", "rationale": "必要多様性の原理的上限を、9つの審級の冗長設計の理論的下敷きとする"},
-    {"a": "10-alignment-research-landscape", "b": "33-alignment-schools-map", "rationale": "5学派マップはalignment布陣図の具体化"},
-    {"a": "17-alignment-as-western-problem", "b": "33-alignment-schools-map", "rationale": "5学派の分断は西洋制御概念の派生"},
-    {"a": "04-takeoff-speed-debate", "b": "31-agi-timelines-institutions-map", "rationale": "9機関タイムラインは代替の弾力性のp(AGI)軸投影"},
-    {"a": "04-takeoff-speed-debate", "b": "15-scaling-never-satisfies", "rationale": "3加速路は代替の弾力性の具体化"},
-    {"a": "11-industrial-explosion-before-agi", "b": "15-scaling-never-satisfies", "rationale": "スケーリング延長戦の出口が産業爆発閾値"},
-    {"a": "07-ai-governance-response", "b": "30-nagi-npt-analog-closing-window", "rationale": "Compute Governance/国際協力は時間窓閉鎖の具体策"},
-    {"a": "28-geopolitics-phase-transition", "b": "30-nagi-npt-analog-closing-window", "rationale": "時間窓が閉じた後が地政学相転移"},
-    {"a": "07-ai-governance-response", "b": "32-japan-agi-silence", "rationale": "民意反映・国際協力の欠如が日本の非対称の正体"},
-    {"a": "31-agi-timelines-institutions-map", "b": "32-japan-agi-silence", "rationale": "日本研究者の不在は9機関マップの裏面"}
+    {
+      "a": "01-ai-alignment",
+      "b": "34-alignment-success-route",
+      "rationale": "アラインメント問題の提起を受けて、訂正可能性を軸にした時系列の成功ルートを置く"
+    },
+    {
+      "a": "10-alignment-research-landscape",
+      "b": "34-alignment-success-route",
+      "rationale": "研究布陣を、追い越される前・その境・追い越した後の三幕のどこに効くかで読み直す"
+    },
+    {
+      "a": "33-alignment-schools-map",
+      "b": "34-alignment-success-route",
+      "rationale": "五学派の分裂を、訂正可能性を生き残らせる三幕のどこを担うかという観点で読み直す"
+    },
+    {
+      "a": "30-nagi-npt-analog-closing-window",
+      "b": "34-alignment-success-route",
+      "rationale": "NPT類比による競争抑制を、離陸を遅らせ手綱の効く窓を広げる国際枠組みとして位置づける"
+    },
+    {
+      "a": "17-alignment-as-western-problem",
+      "b": "34-alignment-success-route",
+      "rationale": "西洋的アラインメント定義の偏りを、目的の不確実性を保つ設計の論点として再浮上させる"
+    },
+    {
+      "a": "16-requisite-variety-alignment-ceiling",
+      "b": "34-alignment-success-route",
+      "rationale": "必要多様性の原理的上限を、多体均衡に賭ける道の理論的制約として読む"
+    },
+    {
+      "a": "10-alignment-research-landscape",
+      "b": "33-alignment-schools-map",
+      "rationale": "5学派マップはalignment布陣図の具体化"
+    },
+    {
+      "a": "17-alignment-as-western-problem",
+      "b": "33-alignment-schools-map",
+      "rationale": "5学派の分断は西洋制御概念の派生"
+    },
+    {
+      "a": "04-takeoff-speed-debate",
+      "b": "31-agi-timelines-institutions-map",
+      "rationale": "9機関タイムラインは代替の弾力性のp(AGI)軸投影"
+    },
+    {
+      "a": "04-takeoff-speed-debate",
+      "b": "15-scaling-never-satisfies",
+      "rationale": "3加速路は代替の弾力性の具体化"
+    },
+    {
+      "a": "11-industrial-explosion-before-agi",
+      "b": "15-scaling-never-satisfies",
+      "rationale": "スケーリング延長戦の出口が産業爆発閾値"
+    },
+    {
+      "a": "07-ai-governance-response",
+      "b": "30-nagi-npt-analog-closing-window",
+      "rationale": "Compute Governance/国際協力は時間窓閉鎖の具体策"
+    },
+    {
+      "a": "28-geopolitics-phase-transition",
+      "b": "30-nagi-npt-analog-closing-window",
+      "rationale": "時間窓が閉じた後が地政学相転移"
+    },
+    {
+      "a": "07-ai-governance-response",
+      "b": "32-japan-agi-silence",
+      "rationale": "民意反映・国際協力の欠如が日本の非対称の正体"
+    },
+    {
+      "a": "31-agi-timelines-institutions-map",
+      "b": "32-japan-agi-silence",
+      "rationale": "日本研究者の不在は9機関マップの裏面"
+    }
   ]
 }

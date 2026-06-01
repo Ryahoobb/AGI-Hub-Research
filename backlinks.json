@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-29T16:10:55+09:00",
+  "generated_at": "2026-06-01T14:52:43+09:00",
   "edges": [
     {
       "from": "01-ai-alignment.html",
@@ -207,15 +207,7 @@
     },
     {
       "from": "34-alignment-success-route.html",
-      "to": "10-alignment-research-landscape.html"
-    },
-    {
-      "from": "34-alignment-success-route.html",
-      "to": "16-requisite-variety-alignment-ceiling.html"
-    },
-    {
-      "from": "34-alignment-success-route.html",
-      "to": "33-alignment-schools-map.html"
+      "to": "01-ai-alignment.html"
     }
   ]
 }
