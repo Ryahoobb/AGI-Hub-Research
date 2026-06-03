@@ -88,11 +88,26 @@
         aspect-ratio: 16 / 7;
         object-fit: cover;
         display: block;
-        filter: grayscale(0.65) contrast(1.1);
-        transition: filter 0.6s var(--ease);
+        filter: grayscale(0.75) contrast(1.08);
+        will-change: filter, transform;
       }
 
-      .hero:hover { filter: grayscale(0) contrast(1); }
+      /* hero.reveal専用のトランジション定義(opacity/transform/filterをまとめて宣言) */
+      .hero.reveal {
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), filter 1.4s var(--ease);
+      }
+
+      .hero.reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+        filter: grayscale(0.2) contrast(1.05);
+      }
+
+      /* hover時はscale複合指定(translateY(0)で.reveal完了状態を保つ) */
+      .hero:hover {
+        filter: grayscale(0) contrast(1);
+        transform: translateY(0) scale(1.012);
+      }
 
       .slide .hero.img-fullbleed {
         width: 100vw;
@@ -100,6 +115,7 @@
         margin-right: calc(50% - 50vw);
         max-width: none;
         aspect-ratio: 21/9;
+        box-shadow: 0 20px 60px -30px rgba(0,0,0,0.3);
       }
       .slide .hero.img-wide {
         width: min(1280px, calc(100vw - 48px));
@@ -107,8 +123,24 @@
         left: 50%;
         transform: translateX(-50%);
         max-width: none;
+        box-shadow: 0 16px 50px -25px rgba(0,0,0,0.25);
       }
-      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+      /* img-wideはtranslateX(-50%)で中央寄せのため、reveal/hoverの変形を複合指定で上書き */
+      .slide .hero.img-wide.reveal {
+        transform: translateX(-50%) translateY(24px);
+      }
+      .slide .hero.img-wide.reveal.visible {
+        transform: translateX(-50%) translateY(0);
+      }
+      .slide .hero.img-wide:hover {
+        transform: translateX(-50%) translateY(0) scale(1.005);
+      }
+      .slide .hero.img-content {
+        max-width: 720px;
+        margin: 0 auto;
+        aspect-ratio: 5/4;
+        box-shadow: 0 12px 40px -20px rgba(138, 47, 28, 0.25);
+      }
 
       .hero-caption {
         font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
@@ -188,6 +220,17 @@
       }
 
       .lead + .lead { margin-top: 8px; }
+
+      /* セクション冒頭のlead段落の頭文字を拡大表示(ドロップキャップ) */
+      .slide .panel > .lead:first-of-type::first-letter {
+        font-size: 3.6em;
+        float: left;
+        line-height: 0.9;
+        margin: 6px 12px 0 0;
+        color: var(--accent);
+        font-weight: 700;
+        font-family: "Hiragino Mincho ProN", "Yu Mincho", "Times New Roman", serif;
+      }
 
       .panel { display: grid; gap: 24px; align-content: start; min-width: 0; }
       .slide > *, .panel > * { min-width: 0; }
@@ -329,6 +372,15 @@
         .slide .hero.img-fullbleed,
         .slide .hero.img-wide,
         .slide .hero.img-content { width: 100%; max-width: 100%; aspect-ratio: 16/9; margin: 0; transform: none; left: 0; }
+        /* モバイルではimg-wideの複合transformもリセット(中央寄せ不要) */
+        .slide .hero.img-wide.reveal,
+        .slide .hero.img-wide.reveal.visible,
+        .slide .hero.img-wide:hover { transform: none; }
+        /* モバイル用ドロップキャップ */
+        .slide .panel > .lead:first-of-type::first-letter {
+          font-size: 3em;
+          margin: 4px 8px 0 0;
+        }
       }
 
       @media (max-width: 480px) {
@@ -511,7 +563,7 @@
         <div class="panel reveal reveal-delay-3">
           <p class="lead">ここまで技術の側ばかり見てきた。だが超知能アラインメントが失敗するとき、最も起きやすいのはたぶん裏切りの転回ではない。もっと静かで、もっと気づきにくい失敗だ。人間が、便利さと引き換えに決定権を少しずつ渡し、気づいたときには手綱を握っていない。誰も反逆していない。ただ、面倒な判断をAIに預ける習慣が積み重なって、人間が判断する能力そのものを失っている。</p>
 
-          <p class="lead">これを防ぐのに、超知能の内部構造をいじる必要はない。人間の側の規律で足りる。AIに最終決定を渡しすぎない。重要な判断には人間が署名する手続きを残す。AIが出した答えを、人間が理解できる形で説明させ、理解できないまま採用しない。どれも地味で、効率を少し下げる。その非効率こそが、手綱を手元に留めておく対価になる。Amodeiは超知能が解きうる問題を壮大に描いてみせたが、その力に人間が飲まれないための備えは、便益の見取り図とは別に引かなければならない[12]。力を解き放つ算段と、その力に飲まれない算段は、別物だ。</p>
+          <p class="lead">これを防ぐのに、超知能の内部構造をいじる必要はない。人間の側の規律で足りる。AIに最終決定を渡しすぎない。重要な判断には人間が署名する手続きを残す。AIが出した答えを、人間が理解できる形で説明させ、理解できないまま採用しない。どれも地味で、効率を少し下げる。その非効率こそが、手綱を手元に留めておく対価になる。Amodeiは超知能が解きうる問題を壮大に描いたが、その力に人間が飲まれないための備えは、便益の見取り図とは別に引く必要がある[12]。力を解き放つ算段と、その力に飲まれない算段は、別物だ。</p>
 
           <p class="lead">国家のあいだでも同じ規律が要る。一社、一国が抜け駆けで離陸を急げば、第三幕の慎重な段階づけは競争に押し流される。安全に通り抜けるための減速が、競争のなかでは弱さになってしまう。核兵器の拡散が条約と査察で押さえ込まれてきたように、超知能の離陸にも、抜け駆けの競争そのものを抑える国際的な枠組みが要る。技術の成否を握るのは技術者だが、技術者に慎重でいられる時間を与えるかどうかは、政治が握っている。</p>
 
@@ -639,7 +691,7 @@
 
           <p class="lead">どの枝を通るにせよ、入口は一つしかない。人間がまだ相手を止め、覗き、書き換えられるあいだに、直せる性質を本体へ縫い込んでおくこと。それをしないまま追い越し線を跨いだ道は、枝分かれする前に途切れている。離陸が遅ければこの窓は広く、速ければ針の穴になる。</p>
 
-          <p class="lead">全体を一本にまとめるとこうなる。いま全部を止めにかかる道はとらない。人類の科学者に並ぶAGIまでは進み、そこで人間の知的労働力を数百倍に増やす。その増幅分で、より上へ行っても安全だと言える条件が揃うまで、再帰的な自己改善と、AIを野放しのエージェントにすることだけを封じる。科学する力は解き放ち、世界を動かす主権は渡さない。全面停止でも超知能への直行でもない、その間に引かれた細い一本だ。</p>
+          <p class="lead">全体を一本にまとめるとこうなる。いま全部を止めにかかる道はとらない。人類の科学者に並ぶAGIまでは進み、そこで人類の知的労働力を桁違いに増やす。その増幅分で、より上へ行っても安全だと言える条件が揃うまで、再帰的な自己改善と、AIを野放しのエージェントにすることだけを封じる。科学する力は解き放ち、世界を動かす主権は渡さない。全面停止でも超知能への直行でもない、その間に引かれた細い一本だ。</p>
 
           <p class="lead" style="margin-top: 36px; font-size: 17px;">超知能と並んで生きる世界が来るとして、そこに人間の居場所を残すのは、超知能の善意ではない。<strong>追い越される前のわずかな歳月に、誰かが手綱の結び目を組み替えておいたかどうかだ。</strong></p>
         </div>
