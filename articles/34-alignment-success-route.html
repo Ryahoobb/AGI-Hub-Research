@@ -108,6 +108,11 @@
         filter: grayscale(0) contrast(1);
         transform: translateY(0) scale(1.012);
       }
+      /* .reveal.visible(特異性0,2,0)に勝たせるため特異性確保 */
+      .hero.reveal:hover {
+        filter: grayscale(0) contrast(1);
+        transform: translateY(0) scale(1.012);
+      }
 
       .slide .hero.img-fullbleed {
         width: 100vw;
@@ -133,6 +138,10 @@
         transform: translateX(-50%) translateY(0);
       }
       .slide .hero.img-wide:hover {
+        transform: translateX(-50%) translateY(0) scale(1.005);
+      }
+      /* .reveal.visible(特異性0,4,1)に勝つよう0,4,2 */
+      .slide .hero.img-wide.reveal:hover {
         transform: translateX(-50%) translateY(0) scale(1.005);
       }
       .slide .hero.img-content {
