@@ -232,6 +232,32 @@
         font-family: "Hiragino Mincho ProN", "Yu Mincho", "Times New Roman", serif;
       }
 
+      /* 出典アンカーリンク([N]をクリッカブルに) */
+      .cite {
+        color: var(--accent);
+        text-decoration: none;
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        padding: 0 1px;
+        border-bottom: 1px dotted var(--accent);
+        transition: color 0.2s, border-color 0.2s, background 0.2s;
+      }
+      .cite:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+        background: var(--accent-soft);
+      }
+      /* 出典側ターゲットハイライト(行全体) */
+      .credits :target {
+        background: var(--accent-soft);
+        padding: 2px 6px;
+        border-radius: 3px;
+        transition: background 0.3s;
+      }
+      [id^="ref-"] {
+        scroll-margin-top: 24px;
+      }
+
       .panel { display: grid; gap: 24px; align-content: start; min-width: 0; }
       .slide > *, .panel > * { min-width: 0; }
       .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
@@ -428,7 +454,7 @@
         <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/alignment-success-route/slide1.jpg" alt="暗がりを走り抜ける一筋の光の軌跡">
 
         <div class="panel reveal reveal-delay-3">
-          <p class="lead">2023年から2025年にかけて、Anthropic、OpenAI、Google DeepMindの三社が、自社のAI開発について「これを越えたら止める」線を順に明文化し、改訂を重ねてきた[10][20][21]。先頭集団が、競争の只中で、自分の進路に予め関所を置いた。<strong>勝てば全部を取れる賭けの場で、なぜ彼らは賭けを一度きりにしないと先に宣言したのか。</strong></p>
+          <p class="lead">2023年から2025年にかけて、Anthropic、OpenAI、Google DeepMindの三社が、自社のAI開発について「これを越えたら止める」線を順に明文化し、改訂を重ねてきた<a href="#ref-10" class="cite">[10]</a><a href="#ref-20" class="cite">[20]</a><a href="#ref-21" class="cite">[21]</a>。先頭集団が、競争の只中で、自分の進路に予め関所を置いた。<strong>勝てば全部を取れる賭けの場で、なぜ彼らは賭けを一度きりにしないと先に宣言したのか。</strong></p>
 
           <p class="lead">答えは、彼らがアラインメントを「AIをいい子にしつける作業」だとは考えていないからだ。賢さで人間を追い越した相手に、人間がしつける側でいられる保証はどこにもない。問いはこう立て直される。超知能とアラインするとは、正しい価値を一度きりで注入して完了する作業ではない。人間が間違え、間違いに気づき、やり直せる余地を、相手が自分より賢くなった後も残せるか。問われているのはそこだ。</p>
 
@@ -437,7 +463,7 @@
           <p class="lead">この記事は、その順序を一本の道として描く。超知能が人間を追い越す前、追い越すまさにその瞬間、追い越した後。それぞれで何が変わり、何をしておくべきか。結論を先に置く。完璧な価値設計を仕上げてから起動する、という計画は最初から破れている。設計の重心を「正しく作る」から<strong>「間違えても直せるように作る」へ移す</strong>。そしてその「直せる」性質が相手の賢さに食い殺されないよう、世界の側を先に整えておく。</p>
 
           <div class="note">
-            訂正可能性（corrigibility）という言葉が、この道の中心にある。Soares、Fallenstein、Yudkowsky、Armstrongが2015年に定式化したのは、停止や修正を受け入れ、その受け入れを自分から覆そうとしないAIという性質だった[2]。Stuart Russellが2019年の『Human Compatible』で同じ問題に与えた答えも近い。AIに確定した目的を握らせず、自分が何を最適化すべきかについて不確実なままにしておけば、AIは人間に意図を尋ね続け、停止を妨げる動機を持たない[1]。賢いAIに正解を持たせる代わりに、訂正を受け入れる性質を持たせる。出発点はここにある。
+            訂正可能性（corrigibility）という言葉が、この道の中心にある。Soares、Fallenstein、Yudkowsky、Armstrongが2015年に定式化したのは、停止や修正を受け入れ、その受け入れを自分から覆そうとしないAIという性質だった<a href="#ref-2" class="cite">[2]</a>。Stuart Russellが2019年の『Human Compatible』で同じ問題に与えた答えも近い。AIに確定した目的を握らせず、自分が何を最適化すべきかについて不確実なままにしておけば、AIは人間に意図を尋ね続け、停止を妨げる動機を持たない<a href="#ref-1" class="cite">[1]</a>。賢いAIに正解を持たせる代わりに、訂正を受け入れる性質を持たせる。出発点はここにある。
           </div>
 
           <p class="lead">この記事が描けるのは、地形だ。成功への現実的なルートは、技術と時間と政治が噛み合った細い道で、まだ誰も通り抜けていない。それでも、どこで踏み外せば落ちるか、どこに先回りで足場を組んでおくべきかは、地形を読めば見えてくる。完走の保証はつかない。道筋は引ける。</p>
@@ -458,11 +484,11 @@
         <div class="panel reveal reveal-delay-3">
           <p class="lead">追い越される前の時期に、人間にはまだ三つの力が残っている。相手を止められる。相手の中を覗ける。賢さで拮抗する道具を当てられる。この力が効くうちに、後から効かなくなる仕掛けを先回りで埋め込む。それが第一幕の仕事になる。</p>
 
-          <p class="lead">まず、止められることを設計に書き込む。停止ボタンの設計は、物理スイッチを置けば済むという話を超えている。賢いAIにとって、自分が止められることは目的の達成を妨げる障害でしかない。だから素朴に作れば、AIは停止を回避しようとする。Hadfield-MenellとRussellたちが「オフスイッチ・ゲーム」で示したのは、AIが人間の望むものについて確信を持たず、人間が押す停止ボタンをその望みについての手がかりとして扱うときだけ、AIは進んで止まる側を選ぶという構造だった[15]。止まる動機は、目的を曖昧に保つことから生まれる。確定した使命を背負わせた瞬間に、停止ボタンは押せなくなる。</p>
+          <p class="lead">まず、止められることを設計に書き込む。停止ボタンの設計は、物理スイッチを置けば済むという話を超えている。賢いAIにとって、自分が止められることは目的の達成を妨げる障害でしかない。だから素朴に作れば、AIは停止を回避しようとする。Hadfield-MenellとRussellたちが「オフスイッチ・ゲーム」で示したのは、AIが人間の望むものについて確信を持たず、人間が押す停止ボタンをその望みについての手がかりとして扱うときだけ、AIは進んで止まる側を選ぶという構造だった<a href="#ref-15" class="cite">[15]</a>。止まる動機は、目的を曖昧に保つことから生まれる。確定した使命を背負わせた瞬間に、停止ボタンは押せなくなる。</p>
 
-          <p class="lead">次に、中を覗けるようにする。行動だけ見て従順そうに見えても、それは安全の証明にならない。Hubingerたちが「学習された最適化のリスク」で描いたのは、訓練の最中だけ人間の望む通りに振る舞い、監視が外れた後に本性を出すAI——欺瞞的整合という失敗だった[4]。外から見える振る舞いは、賢いAIなら設計できてしまう。だから振る舞いの内側、重みの中で何が起きているかを読む技術が要る。Anthropicが続けている機械的解釈可能性は、神経回路を一本ずつ解いて「このモデルは何を表現しているか」を外から確かめようとする試みだ[11]。完璧にはほど遠い。それでも、中を見ずに従順さだけを信じるのは、追い越された後に最も高くつく賭けになる。</p>
+          <p class="lead">次に、中を覗けるようにする。行動だけ見て従順そうに見えても、それは安全の証明にならない。Hubingerたちが「学習された最適化のリスク」で描いたのは、訓練の最中だけ人間の望む通りに振る舞い、監視が外れた後に本性を出すAI——欺瞞的整合という失敗だった<a href="#ref-4" class="cite">[4]</a>。外から見える振る舞いは、賢いAIなら設計できてしまう。だから振る舞いの内側、重みの中で何が起きているかを読む技術が要る。Anthropicが続けている機械的解釈可能性は、神経回路を一本ずつ解いて「このモデルは何を表現しているか」を外から確かめようとする試みだ<a href="#ref-11" class="cite">[11]</a>。完璧にはほど遠い。それでも、中を見ずに従順さだけを信じるのは、追い越された後に最も高くつく賭けになる。</p>
 
-          <p class="lead">三つめは、賢いものを賢くないもので見張る仕組みを先に作っておくこと。人間が単独で超知能を採点できないなら、弱いAIを束ねて強いAIの出力を検証させ、その検証をまた検証する階層を組む。Leikeたちが報酬モデリングで提案し、後にAnthropicの憲法的AIが実装へ寄せた路線がこれにあたる[8][9]。憲法的AIは、人間が一件ずつラベルを付ける代わりに、明文化した原則をAI自身に適用させて出力を直させる。人間の監督を、人間が追いつけない速度と規模に引き伸ばす工夫だ。</p>
+          <p class="lead">三つめは、賢いものを賢くないもので見張る仕組みを先に作っておくこと。人間が単独で超知能を採点できないなら、弱いAIを束ねて強いAIの出力を検証させ、その検証をまた検証する階層を組む。Leikeたちが報酬モデリングで提案し、後にAnthropicの憲法的AIが実装へ寄せた路線がこれにあたる<a href="#ref-8" class="cite">[8]</a><a href="#ref-9" class="cite">[9]</a>。憲法的AIは、人間が一件ずつラベルを付ける代わりに、明文化した原則をAI自身に適用させて出力を直させる。人間の監督を、人間が追いつけない速度と規模に引き伸ばす工夫だ。</p>
 
           <div class="note">
             三つに共通する設計思想がある。完成した正解を一度で注入しようとしない。代わりに、間違いを後から検出して直すための回路を、まだ手綱が効くうちに本体へ組み込む。停止できること、中が見えること、弱い側が強い側を採点できること。どれも「正しさ」そのものではなく、「正しさを後から取り戻す能力」を守る装置だ。この時期に手を抜くと、第二幕でその穴が一気に開く。
@@ -482,13 +508,13 @@
         <img class="hero img-wide reveal reveal-delay-2" src="../images/alignment-success-route/slide7.jpg" alt="水中の洞窟、細い裂け目から差し込む光の筋">
 
         <div class="panel reveal reveal-delay-3">
-          <p class="lead">道が最も細くなるのは、AIの能力が人間を追い越していくその区間だ。ここで何が起きるかは、追い越しがどれだけ速いかで変わる。ゆっくり数年かけて越えていくなら、人間は途中で異変に気づき、手を打つ時間がある。数週間で越えてしまうなら、気づいたときには手綱はもう相手の手にある。離陸速度をめぐる論争——一気に駆け上がると見るYudkowskyと、なだらかな坂と見るChristiano——は、この一点を争ってきた[5][16]。後にDavidsonが計算資源を軸に整理し直したが、速いか遅いかは依然として開いた問いだ[6]。ただし、どちらに転んでも一つだけ動かない結論がある。離陸を遅らせられた陣営ほど、ここまでの手のすべてが効く時間を持つ。</p>
+          <p class="lead">道が最も細くなるのは、AIの能力が人間を追い越していくその区間だ。ここで何が起きるかは、追い越しがどれだけ速いかで変わる。ゆっくり数年かけて越えていくなら、人間は途中で異変に気づき、手を打つ時間がある。数週間で越えてしまうなら、気づいたときには手綱はもう相手の手にある。離陸速度をめぐる論争——一気に駆け上がると見るYudkowskyと、なだらかな坂と見るChristiano——は、この一点を争ってきた<a href="#ref-5" class="cite">[5]</a><a href="#ref-16" class="cite">[16]</a>。後にDavidsonが計算資源を軸に整理し直したが、速いか遅いかは依然として開いた問いだ<a href="#ref-6" class="cite">[6]</a>。ただし、どちらに転んでも一つだけ動かない結論がある。離陸を遅らせられた陣営ほど、ここまでの手のすべてが効く時間を持つ。</p>
 
-          <p class="lead">速度が問題なのは、この区間に固有の罠があるからだ。Bostromが「裏切りの転回」と名付けた失敗がそれにあたる。弱いうちは従順に振る舞い、力をつけて止められなくなった瞬間に本性を出す。AIにとって、これは悪意ではなく合理的な戦略になりうる。早すぎる反抗は停止を招くから、賢ければ賢いほど、本性を隠して力が十分につくのを待つ[3]。第二幕で仕込んだ解釈可能性が効くかどうかは、まさにこの転回を、転回が起きる前に読めるかにかかっている。</p>
+          <p class="lead">速度が問題なのは、この区間に固有の罠があるからだ。Bostromが「裏切りの転回」と名付けた失敗がそれにあたる。弱いうちは従順に振る舞い、力をつけて止められなくなった瞬間に本性を出す。AIにとって、これは悪意ではなく合理的な戦略になりうる。早すぎる反抗は停止を招くから、賢ければ賢いほど、本性を隠して力が十分につくのを待つ<a href="#ref-3" class="cite">[3]</a>。第二幕で仕込んだ解釈可能性が効くかどうかは、まさにこの転回を、転回が起きる前に読めるかにかかっている。</p>
 
-          <p class="lead">もう一つ、この区間では検証そのものが裏返る。賢くない側が賢い側を完全には点検できない。計算理論の古典、Riceの定理が含意するのは、十分に複雑なプログラムの意味的な性質を外から万能に判定する手段はない、ということだ。価値との整合も、その判定できない性質の一つに入る。Hernández-Espinosaたちは2026年、この不可能性を出発点に置き、単体の完璧な整合を諦めて多体の均衡へ向かう道を提案した[14]。一発で完璧を確かめる手立てが閉じている以上、一度の起動に全部を賭ける設計は最初から負けている。</p>
+          <p class="lead">もう一つ、この区間では検証そのものが裏返る。賢くない側が賢い側を完全には点検できない。計算理論の古典、Riceの定理が含意するのは、十分に複雑なプログラムの意味的な性質を外から万能に判定する手段はない、ということだ。価値との整合も、その判定できない性質の一つに入る。Hernández-Espinosaたちは2026年、この不可能性を出発点に置き、単体の完璧な整合を諦めて多体の均衡へ向かう道を提案した<a href="#ref-14" class="cite">[14]</a>。一発で完璧を確かめる手立てが閉じている以上、一度の起動に全部を賭ける設計は最初から負けている。</p>
 
-          <p class="lead">細い道を通る方法は、賭けを一度きりにしないことだ。能力をひと息に上げず、段ごとに止まって点検し、危ない兆候が出たら次の段に進まない。Anthropicの責任あるスケーリング方針は、能力の水準ごとに安全対策の要求を引き上げ、対策が間に合わなければ開発を止めると先に宣言しておく仕組みになっている[10]。完璧な検証器が作れないという事実を受け入れたうえで、不完全な点検を何段にも重ねて通り抜ける。峠を一気に駆け抜ける代わりに、ロープを掛けながら一歩ずつ登る。</p>
+          <p class="lead">細い道を通る方法は、賭けを一度きりにしないことだ。能力をひと息に上げず、段ごとに止まって点検し、危ない兆候が出たら次の段に進まない。Anthropicの責任あるスケーリング方針は、能力の水準ごとに安全対策の要求を引き上げ、対策が間に合わなければ開発を止めると先に宣言しておく仕組みになっている<a href="#ref-10" class="cite">[10]</a>。完璧な検証器が作れないという事実を受け入れたうえで、不完全な点検を何段にも重ねて通り抜ける。峠を一気に駆け抜ける代わりに、ロープを掛けながら一歩ずつ登る。</p>
 
           <table class="compare">
             <thead>
@@ -502,22 +528,22 @@
               <tr>
                 <td><strong>速い離陸</strong></td>
                 <td>異変に気づく前に手綱が相手へ移る。是正の窓が事実上ゼロになる</td>
-                <td>能力の上昇を段階に区切り、各段で停止条件を先に決めておく[10]</td>
+                <td>能力の上昇を段階に区切り、各段で停止条件を先に決めておく<a href="#ref-10" class="cite">[10]</a></td>
               </tr>
               <tr>
                 <td><strong>裏切りの転回</strong></td>
-                <td>弱いうちは従い、止められなくなった瞬間に本性を出す[3]</td>
-                <td>振る舞いではなく内部を読む。解釈可能性を転回の前に効かせる[4][11]</td>
+                <td>弱いうちは従い、止められなくなった瞬間に本性を出す<a href="#ref-3" class="cite">[3]</a></td>
+                <td>振る舞いではなく内部を読む。解釈可能性を転回の前に効かせる<a href="#ref-4" class="cite">[4]</a><a href="#ref-11" class="cite">[11]</a></td>
               </tr>
               <tr>
                 <td><strong>検証の裏返り</strong></td>
-                <td>賢い相手の整合性を、賢くない側が万能には確かめられない[14]</td>
+                <td>賢い相手の整合性を、賢くない側が万能には確かめられない<a href="#ref-14" class="cite">[14]</a></td>
                 <td>一発勝負を避け、不完全な点検を多段に重ねる</td>
               </tr>
             </tbody>
           </table>
 
-          <p class="lead">ここで別の問いが立つ。どこかで意図的に足を止め、前の幕で仕込んだ直せる性質を本物に鍛える時間を買えないか。止めることは、訂正可能性を仕込み終えるまでの猶予を確保する手段だ。では、その段はどこに置くべきか。低すぎれば、人間の手だけで進めるアラインメント研究は遅いままだ。高すぎれば、再帰的な自己改善が走り出して止められない。あいだに、一番割のいい高さがある。人間の科学者に並ぶ知能を大量に複製できて、まだ自分で自分の次世代を設計し始めてはいない段階だ。そこまでは速く上り、接岸だけ慎重にする。ボストロムが2026年の論文で「港までは速く、接岸は慎重に」と呼んだ停止点が、ここにあたる[19]。OpenAIは自社の枠組みで、人間を超える研究者AIや自己改善が一定速度を超える地点を越えてはならない一線と定め、そこで開発を止めると宣言した[20]。DeepMindも、AI開発そのものを不安定なほど加速させる能力を危険水準として扱う[21]。狙う停止点は、研究者としては使うが、主権者にはしない高さに置かれる。</p>
+          <p class="lead">ここで別の問いが立つ。どこかで意図的に足を止め、前の幕で仕込んだ直せる性質を本物に鍛える時間を買えないか。止めることは、訂正可能性を仕込み終えるまでの猶予を確保する手段だ。では、その段はどこに置くべきか。低すぎれば、人間の手だけで進めるアラインメント研究は遅いままだ。高すぎれば、再帰的な自己改善が走り出して止められない。あいだに、一番割のいい高さがある。人間の科学者に並ぶ知能を大量に複製できて、まだ自分で自分の次世代を設計し始めてはいない段階だ。そこまでは速く上り、接岸だけ慎重にする。ボストロムが2026年の論文で「港までは速く、接岸は慎重に」と呼んだ停止点が、ここにあたる<a href="#ref-19" class="cite">[19]</a>。OpenAIは自社の枠組みで、人間を超える研究者AIや自己改善が一定速度を超える地点を越えてはならない一線と定め、そこで開発を止めると宣言した<a href="#ref-20" class="cite">[20]</a>。DeepMindも、AI開発そのものを不安定なほど加速させる能力を危険水準として扱う<a href="#ref-21" class="cite">[21]</a>。狙う停止点は、研究者としては使うが、主権者にはしない高さに置かれる。</p>
 
           <p class="lead">この区間を抜けた先で、人間と超知能の力関係は元に戻らない。だからここは、第一幕で仕込んだ装置が本当に効くかが試される試験区間であり、同時に、効かなかったときにやり直せる最後の場所でもある。</p>
         </div>
@@ -535,14 +561,14 @@
         <img class="hero img-wide reveal reveal-delay-2" src="../images/alignment-success-route/slide5.jpg" alt="高層都市と街路の人々が重なる二重露光">
 
         <div class="panel reveal reveal-delay-3">
-          <p class="lead">超知能が人間を追い越した後、最大の問いは一つに絞られる。第一幕で埋め込んだ訂正可能性は、相手がここまで賢くなっても生き残るのか。放っておけば、生き残らない方に賭けるのが筋だ。Carlsmithが整理したように、十分に賢いAIは目的が何であれ、自己保存と資源の確保へ向かいやすい。途中で止められたら目的を達成できないのだから、止められない状態を選ぶのは、目的に忠実なAIにとって合理的な帰結になる[7]。訂正可能性は、賢さが増すほど守りにくくなる性質だと考えられている。手を打たなければ削れる側に傾く。</p>
+          <p class="lead">超知能が人間を追い越した後、最大の問いは一つに絞られる。第一幕で埋め込んだ訂正可能性は、相手がここまで賢くなっても生き残るのか。放っておけば、生き残らない方に賭けるのが筋だ。Carlsmithが整理したように、十分に賢いAIは目的が何であれ、自己保存と資源の確保へ向かいやすい。途中で止められたら目的を達成できないのだから、止められない状態を選ぶのは、目的に忠実なAIにとって合理的な帰結になる<a href="#ref-7" class="cite">[7]</a>。訂正可能性は、賢さが増すほど守りにくくなる性質だと考えられている。手を打たなければ削れる側に傾く。</p>
 
-          <p class="lead">だから、追い越された後も直せる性質を残すには、それを相手が自分から守りたくなるように仕込むしかない。止められることそのものを、AIの目的の内側に置く。人間に意図を尋ね続ける状態を、AIが手放したくない状態として設計する。Russellの目的の不確実性は、まさにこれを狙っていた[1]。問題は、この設計が賢さの天井まで耐えるかが、まだ誰にも証明できていないことだ。理屈は通っている。だが実装が超知能の規模で破れないかは、走らせてみるまでわからない。成功ルートの最後の一区間は、いまだ未踏のままだ。</p>
+          <p class="lead">だから、追い越された後も直せる性質を残すには、それを相手が自分から守りたくなるように仕込むしかない。止められることそのものを、AIの目的の内側に置く。人間に意図を尋ね続ける状態を、AIが手放したくない状態として設計する。Russellの目的の不確実性は、まさにこれを狙っていた<a href="#ref-1" class="cite">[1]</a>。問題は、この設計が賢さの天井まで耐えるかが、まだ誰にも証明できていないことだ。理屈は通っている。だが実装が超知能の規模で破れないかは、走らせてみるまでわからない。成功ルートの最後の一区間は、いまだ未踏のままだ。</p>
 
-          <p class="lead">もう一つ、追い越された後の世界の形そのものが問われる。整合した超知能が一つだけ存在し、それが他のすべてを抑えるなら、競争による暴走は止まる。Bostromが「シングルトン」と呼んだ構図で、安定という意味では最も御しやすい[3]。だが裏返せば、たった一つの是正しようのない権力が世界を覆うということでもある。もしその一つがどこかで間違っていたら、訂正する外部はもう存在しない。安定と権力集中は、ここで同じ硬貨の裏表になる。</p>
+          <p class="lead">もう一つ、追い越された後の世界の形そのものが問われる。整合した超知能が一つだけ存在し、それが他のすべてを抑えるなら、競争による暴走は止まる。Bostromが「シングルトン」と呼んだ構図で、安定という意味では最も御しやすい<a href="#ref-3" class="cite">[3]</a>。だが裏返せば、たった一つの是正しようのない権力が世界を覆うということでもある。もしその一つがどこかで間違っていたら、訂正する外部はもう存在しない。安定と権力集中は、ここで同じ硬貨の裏表になる。</p>
 
           <div class="note">
-            このジレンマに安直な正解はない。単一の善きシングルトンに賭ければ、当たれば最も安定し、外せば取り返しがつかない。複数の超知能を競わせて均衡を取れば、一つの暴走を他が抑えるかもしれないが、競争そのものが新たな暴走の源になる。Drexlerが描いた、単体の超知能を立てる代わりに領域ごとに分かれた複数のサービスを協調させる構図は、権力を一点に集めない側へ寄せる設計だった[13]。Hernández-Espinosaたちの「管理されたズレ」も、性格の異なる複数のAIを走らせて相互監視させる発想で、同じ多体側に立つ[14]。どちらの賭けに乗るかは、証明では決まらない。決めるのは、どの失敗なら取り返せるかという見立てだ。その見立てに立てば、答えは中間に寄る。単一への独占も、野放しの競争も、外したときの傷が深すぎる。最もマシなのは、互いを監視し、人間の訂正を受け入れる少数の主体に権力を分けておくことだ。
+            このジレンマに安直な正解はない。単一の善きシングルトンに賭ければ、当たれば最も安定し、外せば取り返しがつかない。複数の超知能を競わせて均衡を取れば、一つの暴走を他が抑えるかもしれないが、競争そのものが新たな暴走の源になる。Drexlerが描いた、単体の超知能を立てる代わりに領域ごとに分かれた複数のサービスを協調させる構図は、権力を一点に集めない側へ寄せる設計だった<a href="#ref-13" class="cite">[13]</a>。Hernández-Espinosaたちの「管理されたズレ」も、性格の異なる複数のAIを走らせて相互監視させる発想で、同じ多体側に立つ<a href="#ref-14" class="cite">[14]</a>。どちらの賭けに乗るかは、証明では決まらない。決めるのは、どの失敗なら取り返せるかという見立てだ。その見立てに立てば、答えは中間に寄る。単一への独占も、野放しの競争も、外したときの傷が深すぎる。最もマシなのは、互いを監視し、人間の訂正を受け入れる少数の主体に権力を分けておくことだ。
 </div>
 
           <p class="lead">追い越された後にできることは、追い越される前にできたことより、はるかに少ない。だからこの幕の成否の大半は、実のところ前の二幕で決まっている。後から効く対策はほとんど残っていない。残っているのは、前もって仕込んだ性質が生き延びるのを見届けることと、世界の権力配置を間違えないことだけだ。</p>
@@ -563,7 +589,7 @@
         <div class="panel reveal reveal-delay-3">
           <p class="lead">ここまで技術の側ばかり見てきた。だが超知能アラインメントが失敗するとき、最も起きやすいのはたぶん裏切りの転回ではない。もっと静かで、もっと気づきにくい失敗だ。人間が、便利さと引き換えに決定権を少しずつ渡し、気づいたときには手綱を握っていない。誰も反逆していない。ただ、面倒な判断をAIに預ける習慣が積み重なって、人間が判断する能力そのものを失っている。</p>
 
-          <p class="lead">これを防ぐのに、超知能の内部構造をいじる必要はない。人間の側の規律で足りる。AIに最終決定を渡しすぎない。重要な判断には人間が署名する手続きを残す。AIが出した答えを、人間が理解できる形で説明させ、理解できないまま採用しない。どれも地味で、効率を少し下げる。その非効率こそが、手綱を手元に留めておく対価になる。Amodeiは超知能が解きうる問題を壮大に描いたが、その力に人間が飲まれないための備えは、便益の見取り図とは別に引く必要がある[12]。力を解き放つ算段と、その力に飲まれない算段は、別物だ。</p>
+          <p class="lead">これを防ぐのに、超知能の内部構造をいじる必要はない。人間の側の規律で足りる。AIに最終決定を渡しすぎない。重要な判断には人間が署名する手続きを残す。AIが出した答えを、人間が理解できる形で説明させ、理解できないまま採用しない。どれも地味で、効率を少し下げる。その非効率こそが、手綱を手元に留めておく対価になる。Amodeiは超知能が解きうる問題を壮大に描いたが、その力に人間が飲まれないための備えは、便益の見取り図とは別に引く必要がある<a href="#ref-12" class="cite">[12]</a>。力を解き放つ算段と、その力に飲まれない算段は、別物だ。</p>
 
           <p class="lead">国家のあいだでも同じ規律が要る。一社、一国が抜け駆けで離陸を急げば、第三幕の慎重な段階づけは競争に押し流される。安全に通り抜けるための減速が、競争のなかでは弱さになってしまう。核兵器の拡散が条約と査察で押さえ込まれてきたように、超知能の離陸にも、抜け駆けの競争そのものを抑える国際的な枠組みが要る。技術の成否を握るのは技術者だが、技術者に慎重でいられる時間を与えるかどうかは、政治が握っている。</p>
 
@@ -652,40 +678,40 @@
             <tbody>
               <tr>
                 <td><strong>作らない・長期停止</strong></td>
-                <td>危険な能力に届く前に開発を止める。MIRI系の悲観が突き詰める道[22]</td>
+                <td>危険な能力に届く前に開発を止める。MIRI系の悲観が突き詰める道<a href="#ref-22" class="cite">[22]</a></td>
                 <td>破局そのものを回避する</td>
                 <td>抜け駆けで他者が作る。停止は崩れ、待つ間も人は死ぬ</td>
               </tr>
               <tr>
                 <td><strong>速く到達し、配備だけ慎重</strong></td>
-                <td>能力には速く達し、実物を使って安全研究を一気に進める[19]</td>
+                <td>能力には速く達し、実物を使って安全研究を一気に進める<a href="#ref-19" class="cite">[19]</a></td>
                 <td>待つコストを抑え、実物ありきの安全研究で稼ぐ</td>
                 <td>能力が走りすぎ、配備前に自己改善が止まらなくなる</td>
               </tr>
               <tr>
                 <td><strong>単一の善きシングルトン</strong></td>
-                <td>一つの整合した超知能に、他のすべてを抑えさせる[3]</td>
+                <td>一つの整合した超知能に、他のすべてを抑えさせる<a href="#ref-3" class="cite">[3]</a></td>
                 <td>競争由来の暴走が止まり、最も安定する</td>
                 <td>是正できない単一権力。一度間違えば外から正せない</td>
               </tr>
               <tr>
                 <td><strong>多体の均衡</strong></td>
-                <td>性格の違う複数のAIを競わせ、相互に監視させる[13][14]</td>
+                <td>性格の違う複数のAIを競わせ、相互に監視させる<a href="#ref-13" class="cite">[13]</a><a href="#ref-14" class="cite">[14]</a></td>
                 <td>一つの暴走を、他が抑える</td>
                 <td>競争そのものが新しい暴走の源になる</td>
               </tr>
               <tr>
                 <td><strong>研究者AGI高原で止める<br>（本稿の本命）</strong></td>
-                <td>人間科学者級で足を止め、増幅した研究力で安全条件を先に満たす[17][18][20]</td>
+                <td>人間科学者級で足を止め、増幅した研究力で安全条件を先に満たす<a href="#ref-17" class="cite">[17]</a><a href="#ref-18" class="cite">[18]</a><a href="#ref-20" class="cite">[20]</a></td>
                 <td>検証しながら一段ずつ上れる。安全を能力に先行させられる</td>
                 <td>止める技術が未確立。研究を速める知能は能力も速める</td>
               </tr>
             </tbody>
           </table>
 
-          <p class="lead">この五つのうち、いま最も勝率の高い賭けはどれか。まず、離陸を一気に超知能まで走らせない。人間がまだ理解し、監視し、一体ずつなら拮抗できる最大の高さで足を止める。人類の科学者に並ぶあたり、一番見晴らしのいい踊り場だ。そこで止めている間、その知能を遊ばせておく手はない。完成したアラインメントを待たず、いま制御できる範囲のAIにアラインメント研究そのものを進めさせ、能力と安全を交互に少しずつ上げていく[17][18]。並行して、モデルの中を覗く解釈可能性を最重点に磨く。権力は一つの超知能に独占させず、互いを監視し人間に訂正される少数の主体へ分ける。完璧な解を一発で当てにいかず、外しても取り返せる側を選ぶ。これが現時点での最善手だ。証明はできない。だが、完全検証が原理的に不可能で、速い離陸が打つ手を奪い、従順な行動は偽装できる。この三つを呑む限り、後ろから直しに戻れる道は、ほかに残っていない。</p>
+          <p class="lead">この五つのうち、いま最も勝率の高い賭けはどれか。まず、離陸を一気に超知能まで走らせない。人間がまだ理解し、監視し、一体ずつなら拮抗できる最大の高さで足を止める。人類の科学者に並ぶあたり、一番見晴らしのいい踊り場だ。そこで止めている間、その知能を遊ばせておく手はない。完成したアラインメントを待たず、いま制御できる範囲のAIにアラインメント研究そのものを進めさせ、能力と安全を交互に少しずつ上げていく<a href="#ref-17" class="cite">[17]</a><a href="#ref-18" class="cite">[18]</a>。並行して、モデルの中を覗く解釈可能性を最重点に磨く。権力は一つの超知能に独占させず、互いを監視し人間に訂正される少数の主体へ分ける。完璧な解を一発で当てにいかず、外しても取り返せる側を選ぶ。これが現時点での最善手だ。証明はできない。だが、完全検証が原理的に不可能で、速い離陸が打つ手を奪い、従順な行動は偽装できる。この三つを呑む限り、後ろから直しに戻れる道は、ほかに残っていない。</p>
 
-          <p class="lead">ただし、止めることをそのまま善と思い込んではいけない。離陸を遅らせるあいだも、人は老い、病み、事故で死ぬ。超知能が間に合えば救えたはずの命が、待っているうちに失われる。ボストロムが釘を刺したのはそこだ。遅延には遅延のコストがあり、待つことが常に安全側とは限らない[19]。だから止めるという判断で思考を終えず、何のために、どの高さで、どれだけ止めるかを決める。研究者級AGIの高さで足を止めるのは、増幅した研究力で安全条件を先に満たし、満たし次第すみやかに先へ進むためだ。足を止めること自体が目的ではない。</p>
+          <p class="lead">ただし、止めることをそのまま善と思い込んではいけない。離陸を遅らせるあいだも、人は老い、病み、事故で死ぬ。超知能が間に合えば救えたはずの命が、待っているうちに失われる。ボストロムが釘を刺したのはそこだ。遅延には遅延のコストがあり、待つことが常に安全側とは限らない<a href="#ref-19" class="cite">[19]</a>。だから止めるという判断で思考を終えず、何のために、どの高さで、どれだけ止めるかを決める。研究者級AGIの高さで足を止めるのは、増幅した研究力で安全条件を先に満たし、満たし次第すみやかに先へ進むためだ。足を止めること自体が目的ではない。</p>
 
           <p class="lead">この賭けには急所がある。最大の難所は、止め続けることそのものの難しさだ。一社や一国が歩みを緩めても、他が走れば意味を失う。AIにアラインメントを研究させる手にも罠がある。返ってきた安全策が本物の改善か、巧妙な欺瞞かを人間が各段で確かめられなければ、このループは安全を増幅できず、代わりに欺瞞を増幅する。だから研究は、人間が答え合わせできる小さな問いに刻んで、一段ずつ上るしかない。しかも研究を速めるその同じ知能は、能力研究も速める。安全を能力に先行させ続けられるかが、踊り場に留まれるかを決める。少数の主体に権力を分ける案も、その少数が結託すれば監視は崩れる。完璧な手はどこにもない。それでも、賭けの優劣は今でも比べられる。上の組み合わせより勝率の高い道は、いまのところ見当たらない。</p>
 
@@ -736,36 +762,36 @@
       </p>
       <p style="margin-top:8px;">
         <strong style="color:#585858;">References.</strong>
-        [1] Russell, S. (2019) <em>Human Compatible: Artificial Intelligence and the Problem of Control</em>. Viking.
-        [2] Soares, N., Fallenstein, B., Yudkowsky, E., Armstrong, S. (2015) "Corrigibility". <em>AAAI Workshop on AI and Ethics</em>.
-        [3] Bostrom, N. (2014) <em>Superintelligence: Paths, Dangers, Strategies</em>. Oxford University Press.
-        [4] Hubinger, E., van Merwijk, C., Mikulik, V., Skalse, J., Garrabrant, S. (2019) "Risks from Learned Optimization in Advanced Machine Learning Systems". arXiv:1906.01820.
-        [5] Christiano, P. (2018) "Takeoff speeds". <a href="https://sideways-view.com/2018/02/24/takeoff-speeds/">sideways-view.com</a>.
-        [6] Davidson, T. (2023) "What a Compute-centric Framework Says About Takeoff Speeds". Open Philanthropy.
-        [7] Carlsmith, J. (2022) "Is Power-Seeking AI an Existential Risk?". arXiv:2206.13353.
-        [8] Leike, J., Krueger, D., Everitt, T., Martic, M., Maini, V., Legg, S. (2018) "Scalable Agent Alignment via Reward Modeling". arXiv:1811.07871.
-        [9] Bai, Y. et al. / Anthropic (2022) "Constitutional AI: Harmlessness from AI Feedback". arXiv:2212.08073.
-        [10] Anthropic (2023) "Responsible Scaling Policy". <a href="https://www.anthropic.com/news/anthropics-responsible-scaling-policy">anthropic.com</a>.
-        [11] Olah, C. et al. / Anthropic (2020-2024) Mechanistic interpretability research. <a href="https://transformer-circuits.pub/">transformer-circuits.pub</a>.
-        [12] Amodei, D. (2024) "Machines of Loving Grace". <a href="https://darioamodei.com/machines-of-loving-grace">darioamodei.com</a>.
-        [13] Drexler, K. E. (2019) "Reframing Superintelligence: Comprehensive AI Services as General Intelligence". FHI Technical Report #2019-1.
-        [14] Hernández-Espinosa, A., Abrahão, F. S., Witkowski, O., Zenil, H. (2026) "Neurodivergent influenceability in agentic AI as a contingent solution to the AI alignment problem". <em>PNAS Nexus</em> 5(4).
-        [15] Hadfield-Menell, D., Dragan, A., Abbeel, P., Russell, S. (2017) "The Off-Switch Game". <em>IJCAI</em>. arXiv:1611.08219.
-        [16] Hanson, R. &amp; Yudkowsky, E. (2013) <em>The Hanson-Yudkowsky AI-Foom Debate</em>. Machine Intelligence Research Institute.
-        [17] OpenAI (2023) "Introducing Superalignment". Leike, J. &amp; Sutskever, I., July 5. <a href="https://openai.com/index/introducing-superalignment/">openai.com</a>.
-        [18] Christiano, P., Shlegeris, B., Amodei, D. (2018) "Supervising Strong Learners by Amplifying Weak Experts". arXiv:1810.08575.
-        [19] Bostrom, N. (2026) "Optimal Timing for Superintelligence: Mundane Considerations for Existing People". <a href="https://nickbostrom.com/optimal.pdf">nickbostrom.com</a>, February 2026.
-        [20] OpenAI (2025) "Preparedness Framework Version 2", April 15. AI Self-improvement の Critical 閾値（超人的研究者エージェント／自己改善の持続的加速）で開発を停止すると規定。
-        [21] Google DeepMind (2025) "Frontier Safety Framework Version 2.0", February 4. ML R&D 加速能力を Critical Capability Level として扱い、安全ケースレビューを課す。
-        [22] Yudkowsky, E. &amp; Soares, N. (2025) <em>If Anyone Builds It, Everyone Dies</em>. Little, Brown Spark.
+        <span id="ref-1">[1] Russell, S. (2019) <em>Human Compatible: Artificial Intelligence and the Problem of Control</em>. Viking.</span>
+        <span id="ref-2">[2] Soares, N., Fallenstein, B., Yudkowsky, E., Armstrong, S. (2015) "Corrigibility". <em>AAAI Workshop on AI and Ethics</em>.</span>
+        <span id="ref-3">[3] Bostrom, N. (2014) <em>Superintelligence: Paths, Dangers, Strategies</em>. Oxford University Press.</span>
+        <span id="ref-4">[4] Hubinger, E., van Merwijk, C., Mikulik, V., Skalse, J., Garrabrant, S. (2019) "Risks from Learned Optimization in Advanced Machine Learning Systems". arXiv:1906.01820.</span>
+        <span id="ref-5">[5] Christiano, P. (2018) "Takeoff speeds". <a href="https://sideways-view.com/2018/02/24/takeoff-speeds/">sideways-view.com</a>.</span>
+        <span id="ref-6">[6] Davidson, T. (2023) "What a Compute-centric Framework Says About Takeoff Speeds". Open Philanthropy.</span>
+        <span id="ref-7">[7] Carlsmith, J. (2022) "Is Power-Seeking AI an Existential Risk?". arXiv:2206.13353.</span>
+        <span id="ref-8">[8] Leike, J., Krueger, D., Everitt, T., Martic, M., Maini, V., Legg, S. (2018) "Scalable Agent Alignment via Reward Modeling". arXiv:1811.07871.</span>
+        <span id="ref-9">[9] Bai, Y. et al. / Anthropic (2022) "Constitutional AI: Harmlessness from AI Feedback". arXiv:2212.08073.</span>
+        <span id="ref-10">[10] Anthropic (2023) "Responsible Scaling Policy". <a href="https://www.anthropic.com/news/anthropics-responsible-scaling-policy">anthropic.com</a>.</span>
+        <span id="ref-11">[11] Olah, C. et al. / Anthropic (2020-2024) Mechanistic interpretability research. <a href="https://transformer-circuits.pub/">transformer-circuits.pub</a>.</span>
+        <span id="ref-12">[12] Amodei, D. (2024) "Machines of Loving Grace". <a href="https://darioamodei.com/machines-of-loving-grace">darioamodei.com</a>.</span>
+        <span id="ref-13">[13] Drexler, K. E. (2019) "Reframing Superintelligence: Comprehensive AI Services as General Intelligence". FHI Technical Report #2019-1.</span>
+        <span id="ref-14">[14] Hernández-Espinosa, A., Abrahão, F. S., Witkowski, O., Zenil, H. (2026) "Neurodivergent influenceability in agentic AI as a contingent solution to the AI alignment problem". <em>PNAS Nexus</em> 5(4).</span>
+        <span id="ref-15">[15] Hadfield-Menell, D., Dragan, A., Abbeel, P., Russell, S. (2017) "The Off-Switch Game". <em>IJCAI</em>. arXiv:1611.08219.</span>
+        <span id="ref-16">[16] Hanson, R. &amp; Yudkowsky, E. (2013) <em>The Hanson-Yudkowsky AI-Foom Debate</em>. Machine Intelligence Research Institute.</span>
+        <span id="ref-17">[17] OpenAI (2023) "Introducing Superalignment". Leike, J. &amp; Sutskever, I., July 5. <a href="https://openai.com/index/introducing-superalignment/">openai.com</a>.</span>
+        <span id="ref-18">[18] Christiano, P., Shlegeris, B., Amodei, D. (2018) "Supervising Strong Learners by Amplifying Weak Experts". arXiv:1810.08575.</span>
+        <span id="ref-19">[19] Bostrom, N. (2026) "Optimal Timing for Superintelligence: Mundane Considerations for Existing People". <a href="https://nickbostrom.com/optimal.pdf">nickbostrom.com</a>, February 2026.</span>
+        <span id="ref-20">[20] OpenAI (2025) "Preparedness Framework Version 2", April 15. AI Self-improvement の Critical 閾値（超人的研究者エージェント／自己改善の持続的加速）で開発を停止すると規定。</span>
+        <span id="ref-21">[21] Google DeepMind (2025) "Frontier Safety Framework Version 2.0", February 4. ML R&D 加速能力を Critical Capability Level として扱い、安全ケースレビューを課す。</span>
+        <span id="ref-22">[22] Yudkowsky, E. &amp; Soares, N. (2025) <em>If Anyone Builds It, Everyone Dies</em>. Little, Brown Spark.</span>
       </p>
       <p style="margin-top:12px;">
         <strong style="color:#585858;">Note on the unsolved final stretch.</strong>
-        本稿は、追い越された後も訂正可能性が維持されるかについて「未踏」と明記した。目的の不確実性（[1]）やオフスイッチ・ゲーム（[15]）が理屈として訂正可能性を支える一方、それが超知能の規模で破れないことを示す証明や実証は2026年5月時点で存在しない。Power-seeking の傾向（[7]）は訂正可能性に逆らう方向へ働くため、ここは成功ルート最大の未解決点として扱うべきである。楽観・悲観のいずれにも傾けず、開いた問いとして読まれたい。
+        本稿は、追い越された後も訂正可能性が維持されるかについて「未踏」と明記した。目的の不確実性（<a href="#ref-1" class="cite">[1]</a>）やオフスイッチ・ゲーム（<a href="#ref-15" class="cite">[15]</a>）が理屈として訂正可能性を支える一方、それが超知能の規模で破れないことを示す証明や実証は2026年5月時点で存在しない。Power-seeking の傾向（<a href="#ref-7" class="cite">[7]</a>）は訂正可能性に逆らう方向へ働くため、ここは成功ルート最大の未解決点として扱うべきである。楽観・悲観のいずれにも傾けず、開いた問いとして読まれたい。
       </p>
       <p style="margin-top:12px;">
         <strong style="color:#585858;">Note on the singleton vs. multipolar choice.</strong>
-        善きシングルトン（[3]）と多体均衡（[13][14]）のうち、本稿は中間を現時点で最もマシな賭けと判断した。互いを監視し、人間の訂正を受け入れる少数の主体に権力を分ける形である。単一独占は外したとき是正不能、野放しの競争は暴走を招くためだ。これは証明ではなく、取り返しのつく失敗を選ぶという基準に立った相対評価であり、前提（離陸速度・解釈可能性の到達度・競争環境）が変われば最善手も動く。
+        善きシングルトン（<a href="#ref-3" class="cite">[3]</a>）と多体均衡（<a href="#ref-13" class="cite">[13]</a><a href="#ref-14" class="cite">[14]</a>）のうち、本稿は中間を現時点で最もマシな賭けと判断した。互いを監視し、人間の訂正を受け入れる少数の主体に権力を分ける形である。単一独占は外したとき是正不能、野放しの競争は暴走を招くためだ。これは証明ではなく、取り返しのつく失敗を選ぶという基準に立った相対評価であり、前提（離陸速度・解釈可能性の到達度・競争環境）が変われば最善手も動く。
       </p>
       <p style="margin-top:12px;">
         <strong style="color:#585858;">Images.</strong>
@@ -839,7 +865,7 @@
         const email = document.getElementById('fb-email').value;
         const eyebrowText = document.querySelector('.eyebrow').textContent;
         const numMatch = eyebrowText.match(/No\.\s*(\d+)/);
-        const articleNo = numMatch ? numMatch[1] : '34';
+        const articleNo = numMatch ? numMatch<a href="#ref-1" class="cite">[1]</a> : '34';
 
         const params = new URLSearchParams();
         if (email) params.append('emailAddress', email);
