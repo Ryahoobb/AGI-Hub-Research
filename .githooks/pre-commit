@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# AGI HUB pre-commit hook: rebuild backlinks.json when articles change.
+# Enable with: git config core.hooksPath .githooks
+
+set -euo pipefail
+
+changed_articles=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '^articles/.+\.html$' || true)
+changed_builder=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '^scripts/build-backlinks\.py$' || true)
+
+if [ -z "$changed_articles" ] && [ -z "$changed_builder" ]; then
+  exit 0
+fi
+
+echo "[pre-commit] articles/builder changed → rebuilding backlinks.json"
+if ! python3 scripts/build-backlinks.py >/dev/null; then
+  echo "[pre-commit] build-backlinks.py failed. Abort commit." >&2
+  exit 1
+fi
+
+if ! git diff --quiet backlinks.json; then
+  git add backlinks.json
+  echo "[pre-commit] backlinks.json updated and staged"
+fi

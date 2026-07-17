@@ -1,0 +1,241 @@
+{
+  "generated_at": "2026-07-17T17:22:02+09:00",
+  "edges": [
+    {
+      "from": "01-ai-alignment.html",
+      "to": "04-takeoff-speed-debate.html"
+    },
+    {
+      "from": "03-agi-explosion.html",
+      "to": "04-takeoff-speed-debate.html"
+    },
+    {
+      "from": "03-agi-explosion.html",
+      "to": "08-agi-self-replication-premise.html"
+    },
+    {
+      "from": "04-takeoff-speed-debate.html",
+      "to": "01-ai-alignment.html"
+    },
+    {
+      "from": "08-agi-self-replication-premise.html",
+      "to": "18-ten-year-impossibility-illusion.html"
+    },
+    {
+      "from": "10-alignment-research-landscape.html",
+      "to": "01-ai-alignment.html"
+    },
+    {
+      "from": "10-alignment-research-landscape.html",
+      "to": "03-agi-explosion.html"
+    },
+    {
+      "from": "10-alignment-research-landscape.html",
+      "to": "05-ai-risk-lineage.html"
+    },
+    {
+      "from": "10-alignment-research-landscape.html",
+      "to": "06-misaligned-ai-mechanics.html"
+    },
+    {
+      "from": "10-alignment-research-landscape.html",
+      "to": "07-ai-governance-response.html"
+    },
+    {
+      "from": "11-industrial-explosion-before-agi.html",
+      "to": "03-agi-explosion.html"
+    },
+    {
+      "from": "11-industrial-explosion-before-agi.html",
+      "to": "04-takeoff-speed-debate.html"
+    },
+    {
+      "from": "11-industrial-explosion-before-agi.html",
+      "to": "08-agi-self-replication-premise.html"
+    },
+    {
+      "from": "12-agi-narrative-meta-structure.html",
+      "to": "01-ai-alignment.html"
+    },
+    {
+      "from": "12-agi-narrative-meta-structure.html",
+      "to": "04-takeoff-speed-debate.html"
+    },
+    {
+      "from": "12-agi-narrative-meta-structure.html",
+      "to": "05-ai-risk-lineage.html"
+    },
+    {
+      "from": "12-agi-narrative-meta-structure.html",
+      "to": "07-ai-governance-response.html"
+    },
+    {
+      "from": "12-agi-narrative-meta-structure.html",
+      "to": "09-corporate-phase-transition.html"
+    },
+    {
+      "from": "13-dissipative-controllability.html",
+      "to": "01-ai-alignment.html"
+    },
+    {
+      "from": "13-dissipative-controllability.html",
+      "to": "02-agi-evolution.html"
+    },
+    {
+      "from": "13-dissipative-controllability.html",
+      "to": "04-takeoff-speed-debate.html"
+    },
+    {
+      "from": "13-dissipative-controllability.html",
+      "to": "07-ai-governance-response.html"
+    },
+    {
+      "from": "14-agi-pill-cognitive-disaster-reduction.html",
+      "to": "04-takeoff-speed-debate.html"
+    },
+    {
+      "from": "14-agi-pill-cognitive-disaster-reduction.html",
+      "to": "07-ai-governance-response.html"
+    },
+    {
+      "from": "14-agi-pill-cognitive-disaster-reduction.html",
+      "to": "12-agi-narrative-meta-structure.html"
+    },
+    {
+      "from": "16-requisite-variety-alignment-ceiling.html",
+      "to": "10-alignment-research-landscape.html"
+    },
+    {
+      "from": "16-requisite-variety-alignment-ceiling.html",
+      "to": "13-dissipative-controllability.html"
+    },
+    {
+      "from": "17-alignment-as-western-problem.html",
+      "to": "13-dissipative-controllability.html"
+    },
+    {
+      "from": "17-alignment-as-western-problem.html",
+      "to": "16-requisite-variety-alignment-ceiling.html"
+    },
+    {
+      "from": "18-ten-year-impossibility-illusion.html",
+      "to": "04-takeoff-speed-debate.html"
+    },
+    {
+      "from": "18-ten-year-impossibility-illusion.html",
+      "to": "08-agi-self-replication-premise.html"
+    },
+    {
+      "from": "21-outside-the-garden.html",
+      "to": "20-hakoniwa-world-as-allocation.html"
+    },
+    {
+      "from": "22-permitted-side-landscape.html",
+      "to": "19-berserker-asi-optimization-trap.html"
+    },
+    {
+      "from": "23-ethics-beyond-allocation.html",
+      "to": "20-hakoniwa-world-as-allocation.html"
+    },
+    {
+      "from": "23-ethics-beyond-allocation.html",
+      "to": "21-outside-the-garden.html"
+    },
+    {
+      "from": "23-ethics-beyond-allocation.html",
+      "to": "22-permitted-side-landscape.html"
+    },
+    {
+      "from": "23-ethics-beyond-allocation.html",
+      "to": "24-cross-temporal-consent.html"
+    },
+    {
+      "from": "23-ethics-beyond-allocation.html",
+      "to": "25-pre-ethical-beyond-gesture.html"
+    },
+    {
+      "from": "24-cross-temporal-consent.html",
+      "to": "20-hakoniwa-world-as-allocation.html"
+    },
+    {
+      "from": "24-cross-temporal-consent.html",
+      "to": "22-permitted-side-landscape.html"
+    },
+    {
+      "from": "24-cross-temporal-consent.html",
+      "to": "23-ethics-beyond-allocation.html"
+    },
+    {
+      "from": "25-pre-ethical-beyond-gesture.html",
+      "to": "19-berserker-asi-optimization-trap.html"
+    },
+    {
+      "from": "25-pre-ethical-beyond-gesture.html",
+      "to": "20-hakoniwa-world-as-allocation.html"
+    },
+    {
+      "from": "25-pre-ethical-beyond-gesture.html",
+      "to": "22-permitted-side-landscape.html"
+    },
+    {
+      "from": "25-pre-ethical-beyond-gesture.html",
+      "to": "23-ethics-beyond-allocation.html"
+    },
+    {
+      "from": "25-pre-ethical-beyond-gesture.html",
+      "to": "24-cross-temporal-consent.html"
+    },
+    {
+      "from": "26-automation-bottleneck-regime.html",
+      "to": "08-agi-self-replication-premise.html"
+    },
+    {
+      "from": "26-automation-bottleneck-regime.html",
+      "to": "18-ten-year-impossibility-illusion.html"
+    },
+    {
+      "from": "27-every-view-is-wild.html",
+      "to": "13-dissipative-controllability.html"
+    },
+    {
+      "from": "27-every-view-is-wild.html",
+      "to": "26-automation-bottleneck-regime.html"
+    },
+    {
+      "from": "28-geopolitics-phase-transition.html",
+      "to": "03-agi-explosion.html"
+    },
+    {
+      "from": "28-geopolitics-phase-transition.html",
+      "to": "07-ai-governance-response.html"
+    },
+    {
+      "from": "28-geopolitics-phase-transition.html",
+      "to": "26-automation-bottleneck-regime.html"
+    },
+    {
+      "from": "29-deep-utopia-solved-world.html",
+      "to": "03-agi-explosion.html"
+    },
+    {
+      "from": "29-deep-utopia-solved-world.html",
+      "to": "05-ai-risk-lineage.html"
+    },
+    {
+      "from": "29-deep-utopia-solved-world.html",
+      "to": "06-misaligned-ai-mechanics.html"
+    },
+    {
+      "from": "35-catastrophic-vocabulary-deletion.html",
+      "to": "05-ai-risk-lineage.html"
+    },
+    {
+      "from": "35-catastrophic-vocabulary-deletion.html",
+      "to": "30-nagi-npt-analog-closing-window.html"
+    },
+    {
+      "from": "35-catastrophic-vocabulary-deletion.html",
+      "to": "32-japan-agi-silence.html"
+    }
+  ]
+}

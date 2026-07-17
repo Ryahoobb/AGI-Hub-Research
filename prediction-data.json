@@ -1,0 +1,32 @@
+{
+  "metaculus": {
+    "q5121": {
+      "title": "Will we have AGI by 2030?",
+      "url": "https://www.metaculus.com/questions/5121/",
+      "probability": 0.26,
+      "forecasters": 2847,
+      "description": "Metaculus上の「2030年末までにAGIは達成されるか」への予測確率"
+    },
+    "q3479": {
+      "title": "When will the first AGI be created?",
+      "url": "https://www.metaculus.com/questions/3479/",
+      "median_year": 2032,
+      "forecasters": 3512,
+      "description": "Metaculus上の「AGI到達年」中央予測値"
+    }
+  },
+  "ceo_timeline": [
+    { "name": "Sam Altman", "org": "OpenAI", "quote": "超知能は数千日先にある", "date": "2024-09", "year_predicted": 2027 },
+    { "name": "Dario Amodei", "org": "Anthropic", "quote": "2026年末までにAGIの可能性", "date": "2024-10", "year_predicted": 2026 },
+    { "name": "Demis Hassabis", "org": "Google DeepMind", "quote": "AGIは3-5年以内に到達しうる", "date": "2025-01", "year_predicted": 2028 },
+    { "name": "Jensen Huang", "org": "NVIDIA", "quote": "AIは5年以内にあらゆるテストで人間に匹敵する", "date": "2024-11", "year_predicted": 2029 }
+  ],
+  "investment": [
+    { "entity": "TSMC 2025 CAPEX", "amount_usd_billion": 40, "year": 2025 },
+    { "entity": "Microsoft AI infrastructure", "amount_usd_billion": 80, "year": 2025 },
+    { "entity": "xAI Memphis Supercluster", "amount_usd_billion": 10, "year": 2025, "note": "100万GPU" },
+    { "entity": "Figure Robotics Series C", "amount_usd_billion": 1, "year": 2025 }
+  ],
+  "last_updated": "2026-04-13",
+  "note": "手動スナップショット。Metaculus値は概算。正確な値はリンク先を参照。"
+}

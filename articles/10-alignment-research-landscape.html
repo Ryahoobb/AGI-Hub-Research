@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <title>alignment研究の布陣図 — 全員が同じ問題を解いているわけではない</title>
+    <meta name="revised" content="2026.04.14" />
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
       /* ══════════════════════════════════════
@@ -209,6 +210,18 @@
         border-bottom: 1px solid var(--accent);
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(30px, 4.4vw, 40px); }
       h2 { font-size: clamp(26px, 3.8vw, 34px); }
 
@@ -429,7 +442,7 @@
     </style>
   </head>
   <body class="pattern-broadsheet accent-deepblue has-site-header" data-category="lineage">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -442,7 +455,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 10 / 15 &nbsp;·&nbsp; Lineage &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 10 &nbsp;·&nbsp; Lineage &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="09-corporate-phase-transition.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=lineage" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -460,25 +473,25 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead dropcap">
-            2024年5月、OpenAIのSuperalignmentチーム共同リーダーJan Leikeが「安全性の文化が光沢ある製品に敗れた」とXに投稿し、辞任した。同日、Ilya Sutskeverも退社を発表。Leikeは直後にAnthropicに移籍した。「alignment」を最も声高に掲げていた企業で、alignment専門チームが1年で消滅した。この事件は、alignment研究が一枚岩ではないことを世界に示した。
+            2024年5月、OpenAIのSuperalignmentチーム共同リーダーJan Leikeが「安全性の文化と手続きが、耳目を集める新製品の後回しにされた」とXに投稿し、辞任した。同日、Ilya Sutskeverも退社を発表。Leikeは直後にAnthropicに移籍した。「alignment」を最も声高に掲げていた企業で、alignment専門チームが1年で消滅した。この事件は、alignment研究が一枚岩ではないことを世界に示した。
           </p>
           <p class="lead">
-            数字は拡大を示している。2024年末時点で、AI alignmentに直接関わる研究者は推定300-400人。2019年の約50人から5年で8倍に増えた。年間投資額は推定3-5億ドル。OpenAI、Anthropic、Google DeepMindの3社だけで全体の60%以上を占め、Open Philanthropyが残りの大部分を非営利機関に配分している。
+            数字は拡大を示している。2024年末時点で、AI alignmentに直接関わる研究者は300-400人（公開求人・主要機関の人員・論文著者数からの著者推計）。2019年の約50人から5年で8倍に増えた。年間投資額は3-5億ドル規模とみられる（企業の安全性チーム人件費＋計算資源＋独立助成金の合算、著者推計）。OpenAI、Anthropic、Google DeepMindの3社で全体の6割超を占める（資金ベース、著者推計）。残りの大部分はOpen Philanthropyが非営利機関に配分している。これらはすべて公開データからの著者推計であり、厳密な統計ではない。
           </p>
           <p class="lead">
             だが、この「拡大」の内実は均質ではない。Anthropicが解こうとしている問題と、MIRIが解こうとしている問題は、同じ「alignment」という単語を使いながら、射程が根本的に異なる。Anthropicの<a href="01-ai-alignment.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">Constitutional AI</a>は現行のLLMを安全に運用するための即効薬だ。MIRIのAgent Foundationsは超知能が出現した後の数学的整合性を扱う。前者の時間軸は数か月から数年、後者は数十年。前者は実験結果で検証できるが、後者は対象がまだ存在しない。
           </p>
           <p class="lead">
-            この記事は、alignment研究の布陣図を描く。誰が、どの問題を、どの時間軸で、誰のカネで解こうとしているか。全体像が見えると、一つの事実が浮かび上がる。<strong>alignment研究は、一つの分野ではない。同じ看板を掲げた複数の分野が、協力しているふりをしながら、互いに別の山を登っている。</strong>この構造を理解しなければ、「alignmentは解決に向かっている」とも「alignmentは絶望的だ」とも、正確に言えない。
+            この記事は、alignment研究の布陣図を描く。誰が、どの問題を、どの時間軸で、誰のカネで解こうとしているか。全体像が見えると、一つの事実が見えてくる。<strong>alignment研究は、一つの分野ではない。同じ看板を掲げた複数の分野が、協力しているふりをしながら、互いに別の山を登っている。</strong>この構造を理解しなければ、「alignmentは解決に向かっている」とも「alignmentは絶望的だ」とも、正確に言えない。
           </p>
           <div class="grid-3">
             <div class="card">
               <span class="tag">01</span>
-              <p><strong>研究者300-400人</strong><br>alignment研究に専従する研究者の推定総数（2024年末）。2019年の約50人から急増したが、AI研究全体の推定30万人と比較すると0.1%に過ぎない。能力開発に投じられる人材の1,000分の1がalignmentに回っている計算になる。</p>
+              <p><strong>研究者300-400人</strong><br>alignment研究に専従する研究者の推定総数（2024年末、公開データからの著者推計）。2019年の約50人から急増したが、AI研究全体の推定30万人と比較すると0.1%に過ぎない。能力開発に投じられる人材の1,000分の1がalignmentに回っている計算になる。</p>
             </div>
             <div class="card">
               <span class="tag">02</span>
-              <p><strong>年間3-5億ドル</strong><br>alignment研究に投じられる年間資金の推定値。企業の安全性チーム人件費を含む。対照的に、OpenAIの2024年の総支出は推定85億ドル前後。Anthropicの総調達額は約76億ドル。安全性研究はフロンティアモデル開発コストの5-10%程度とみられる。</p>
+              <p><strong>年間3-5億ドル</strong><br>alignment研究に投じられる年間資金の著者推計（公開助成記録と企業発表の合算）。企業の安全性チーム人件費を含む。対照的に、OpenAIの2024年の総支出は推定85億ドル前後。Anthropicの総調達額は約76億ドル。安全性研究はフロンティアモデル開発コストの5-10%程度とみられる（著者推計）。</p>
             </div>
             <div class="card">
               <span class="tag">03</span>
@@ -621,6 +634,16 @@
             </div>
           </div>
 
+          <div class="card" style="margin-top:24px;">
+              <span class="tag">E</span>
+              <p><strong>アジア圏のalignment研究 — 中国と日本</strong></p>
+              <div class="bullets" style="margin-top: 16px">
+                <p class="point"><strong>中国</strong> 欧米のalignment議論とは異なる文脈で安全性研究が進む。拠点は2018年設立の<strong>智源研究院（BAAI, Beijing Academy of Artificial Intelligence）</strong>と、張亞勤（Ya-Qin Zhang）が院長を務める<strong>清華大学AIR（Institute for AI Industry Research）</strong>。北京大学では<strong>Jiaming Ji</strong>らのPKU-Alignmentグループが<strong>Safe RLHF</strong>や<strong>BeaverTails</strong>データセットを公開し、RLHFの安全性改良では国際的に引用される成果を出している。政策面では2023年施行の「生成式人工智能服務管理暫行弁法」がモデル出力の政治的適合性を法的に要求し、alignmentは技術問題であると同時にコンプライアンスの問題として扱われる。DeepSeek、Baidu、Alibabaのモデル安全投資は存亡リスクより規制準拠が先に立ち、Bostrom/Yudkowsky流の存亡論は主軸にならない。</p>
+                <p class="point"><strong>日本</strong> 2024年2月、IPA（情報処理推進機構）内に<strong>AIセーフティ・インスティテュート（AISI Japan）</strong>が設立された。村上明子所長のもと、評価手法のガイドライン（評価観点ガイド、レッドチーミング手法ガイド）を公表し、英米AISIと連携する立ち位置にある。総務省・経産省は2024年4月に「AI事業者ガイドライン」を公表したが、alignment研究への直接的な資金配分には至っていない。東京大学松尾豊研究室、理化学研究所AIPセンター、国立情報学研究所（NII）がAI研究の中核を担うが、主軸は基盤モデル開発と産業応用で、MIRIやARCに相当するalignment専門組織は不在である。日本の固有性は「評価・ガバナンスの制度設計」に寄っており、技術的alignmentの生産者ではなく消費者の位置にある。</p>
+                <p class="point"><strong>構造的な非対称</strong> alignment研究の地理的分布は極端に偏っている。研究者の大半と資金の主要部は英語圏の財団と企業から出る。中国は独自の規制枠組みで安全性に取り組むが、欧米コミュニティとの知識交換は制限されている。日本はAISI設立で制度面の参加権は得たが、研究の担い手というより評価の整備者である。この非対称は、alignmentの定義そのものが英語圏の価値観に引きずられるリスクを孕む。「human values」とは誰の価値観か、という問いは、中国と日本の議論が入らない限り閉じた円のまま回り続ける。</p>
+              </div>
+            </div>
+
           <p class="lead">
             独立機関に共通する課題は人材流出である。alignment研究者の市場価値は高く、Anthropic、OpenAI、DeepMindは積極的に採用する。MIRI出身のChris Olah（Anthropicの解釈可能性チームのリーダー）、ARC出身のBeth Barnesなど、独立機関で育った人材が企業に移る例は多い。この流れは研究成果の産業移転としては健全だが、独立機関の組織的持続性を蝕む。特にMIRIの縮小は、非営利でalignment研究を維持する困難さの象徴である。
           </p>
@@ -644,7 +667,7 @@
             独立機関が問いを作り、企業が実装し、人材は企業に流れる。この構造が持続するには、独立機関を支える資金が必要だ。ではカネはどこから来ているのか。alignment研究の資金源は大きく3層に分かれる。第1層は企業の自己資金。Anthropic、OpenAI、Google DeepMindの安全性チーム人件費と計算資源は、各社の事業予算から出る。第2層はOpen Philanthropy。Dustin Moskovitz（Facebook共同創設者）とCari Tuna夫妻が設立した財団で、alignment研究の外部資金として最大の出し手である。第3層はSurvival and Flourishing Fund（SFF）、Long-Term Future Fund、各種の小規模助成金。
           </p>
           <p class="lead">
-            Open Philanthropyの影響は突出している。ARC、MIRI、CAIS、Redwood Research、UC Berkeley CHAI、Cambridge CSER。主要な独立研究機関のほぼすべてがOpen Philanthropyから助成を受けている。2022年から2024年の累計で、Open PhilanthropyがAI安全分野に拠出した金額は推定2-3億ドル。alignment研究の非企業資金の過半を一つの財団が賄っている。
+            Open Philanthropyの影響は突出している。ARC、MIRI、CAIS、Redwood Research、UC Berkeley CHAI、Cambridge CSER。主要な独立研究機関のほぼすべてがOpen Philanthropyから助成を受けている。2022年から2024年の累計で、Open PhilanthropyがAI安全分野に拠出した金額は2-3億ドル規模とみられる（公開助成リストからの著者推計）。alignment研究の非企業資金の過半を一つの財団が賄っている構図である。
           </p>
 
           <!-- SVG Infographic: Funding Flow -->
@@ -772,6 +795,9 @@
           <div class="note">
             alignment研究の独立性は、<strong>カネの出どころの多様性</strong>に依存する。現状、非企業資金の大部分が一つの財団に集中し、その財団がEA運動のx-risk重視を反映する以上、研究テーマの分布は資金提供者の世界観に影響される。これは善意の偏りだが、偏りであることに変わりはない。
           </div>
+          <aside class="note" style="margin-top:24px;border-left:3px solid #1a1a1a;">
+            <strong>同じ山ではない ― そして登頂可能性は等しくない。</strong> ここまで描いてきた布陣図は、<strong>「alignment」という単一の山に皆で登っている地図</strong>ではなく、呼び名だけ共通で異なる山が並ぶ地図だ。Anthropicが登っているのはモデル内部の表現を外から読む山、OpenAIが登っているのはスケーラブルな監督プロトコルの山、DeepMindが登っているのは数学的整合性と安全性定理の山、MIRIが登っていたのは自己参照的エージェントの決定理論の山だった。著者としての賭けを明示する。<strong>2026〜2030年の5年間で最も登頂可能な山は「解釈可能性」</strong>である。理由は三つ。第一に、モデル内部の観測技術（sparse autoencoder, activation patching, circuit analysis）が過去2年で実装技術として成立し、企業の製品品質管理に組み込まれ始めた。第二に、評価結果が短いフィードバックループで回る（数日〜数週間）ため、研究と工学の距離が最も近い。第三に、規制側（EU AI Act、NIST AI RMF）が「説明可能性」を要件として引き受けられる形に標準化されつつある。逆に、<strong>「数学的整合性（例: agent foundations, decision theory）」の山は少なくともこの5年では登頂不能</strong>だと予測する。フォーマリズムが実装より10年以上先行しており、検証可能なマイルストーンを持たないからだ。どの山に資源を張るかは、研究者個人と機関の戦略判断である。本稿はこの地図を、その判断の材料として残す。
+          </aside>
         </div>
         <div class="footer reveal reveal-delay-3">
           <span>カネの出どころが一つに集中するとき、研究の独立性は構造的に脅かされる</span>
@@ -782,14 +808,14 @@
       <!-- ═══════════ Slide 5 ═══════════ -->
       <section class="slide" id="slide-5">
         <div class="eyebrow reveal">2030 Forecast</div>
-        <h2 class="reveal reveal-delay-1">2030年に残るのは「解釈可能性」と「評価」、淘汰されるのは「数学的整合性」</h2>
+        <h2 class="reveal reveal-delay-1">2030年に残るのは「解釈可能性」と「評価」、退くのは「数学的整合性」（予測）</h2>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero img-fullbleed" src="../images/alignment-research-landscape/slide5.jpg" alt="Empty road stretching toward horizon">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            企業は事業戦略にalignmentを引きずり、独立機関は人材を企業に奪われ、資金は一つの財団に集中している。この構造のまま2030年を迎えたとき、布陣図はどう変わっているか。予測は外れうるが、逃げ表現で括弧付きの「かもしれない」を並べるより、根拠を示した上で言い切った方が検証可能である。
+            ここから先は予測である。ここまでの現況整理とは性質が異なるため、前提が崩れれば結論も変わる。企業は事業戦略にalignmentを引きずり、独立機関は人材を企業に奪われ、資金は一つの財団に集中している。この構造のまま2030年を迎えたとき、布陣図はどう変わっているか。予測は外れうるが、逃げ表現で括弧付きの「かもしれない」を並べるより、根拠を示した上で言い切った方が検証可能である。以下は2025年時点の動向を延長した著者のシナリオであり、決定論ではない。
           </p>
           <p class="lead">
             予測の軸は「スケーリング則の継続」という前提条件である。2025年時点で、GPT-4クラスのモデルが2026年から2027年にかけてさらに1-2桁スケールする見通しが複数の推計から示されている。この前提が成立するなら、alignmentへの実需は急増する。企業は「出荷する前にモデルが何をしているか理解する」必要に迫られる。この実需に最も直接応えるアプローチが、解釈可能性（Interpretability）と評価（Evals）である。
@@ -798,7 +824,7 @@
           <div class="timeline">
             <div class="timeline-step highlight">
               <div class="num">Winner</div>
-              <p><strong>Interpretability</strong><br>Anthropicのモノセマンティシティ研究（2023年のToy Models of Superposition、2024年のScaling Monosemanticity論文）は、モデルの内部状態を人間が読める形に変換する道を開いた。この研究路線はモデルのスケーリングと並走できるため、企業の実需に直結する。2030年にはalignment研究の主流になっている。</p>
+              <p><strong>Interpretability</strong><br>Anthropicのモノセマンティシティ研究（2023年のToy Models of Superposition、2024年のScaling Monosemanticity論文）は、モデルの内部状態を人間が読める形に変換する道を開いた。この研究路線はモデルのスケーリングと並走できるため、企業の実需に直結する。スケーリング則が継続する条件下では、2030年にalignment研究の中核に据わる可能性が高い。</p>
             </div>
             <div class="timeline-step highlight">
               <div class="num">Winner</div>
@@ -810,11 +836,11 @@
             </div>
             <div class="timeline-step">
               <div class="num">Decline</div>
-              <p><strong>Agent Foundations</strong><br>MIRIの数学的alignment研究は、対象が超知能に限定されているため実証が困難。MIRI自身が2023年に研究方針を転換した。後継者が現れなければ、2030年にはアカデミアの少数派論文として残存する程度になる。</p>
+              <p><strong>Agent Foundations</strong><br>MIRIの数学的alignment研究は、対象が超知能に限定されているため実証が困難。MIRI自身が2023年に研究方針を転換した。後継者が現れなければ、2030年にはアカデミアの少数派論文として残存する程度にとどまると見られる。</p>
             </div>
             <div class="timeline-step">
               <div class="num">Wild Card</div>
-              <p><strong>d/acc批判</strong><br>Vitalik Buterinが提唱するd/acc（Defensive Acceleration）は、alignment研究そのものを「中央集権的発想」と批判する。オープンウェイト、分散型検証、プライバシー技術による防御を主張。2030年にalignment研究の主流にはならないが、企業主導のalignmentへの対抗言語として影響力を持つ。</p>
+              <p><strong>d/acc批判</strong><br>Vitalik Buterinが提唱するd/acc（Defensive Acceleration）は、alignment研究そのものを「中央集権的発想」と批判する。オープンウェイト、分散型検証、プライバシー技術による防御を主張。2030年にalignment研究の主流にはなりにくいが、企業主導のalignmentへの対抗言語として一定の影響力を保つ可能性がある。</p>
             </div>
           </div>
 
@@ -822,7 +848,7 @@
             これらの予測を一言で要約すると、<strong>alignment研究は哲学から工学に移行する</strong>。MIRIが2000年に始めた「超知能と人類の関係をどう設計するか」という哲学的問いは、「モデルの内部を可視化し、危険な振る舞いを公開前に検出する」という工学的問いに置き換わりつつある。この移行は良くも悪くも不可避である。工学的問いへの回答は計測可能で、資金を呼び、規制と接続する。哲学的問いへの回答は計測困難で、資金を失い、政策に反映されにくい。建築に喩えると、「この建物は地震で倒れないか」は工学で答えられるが、「そもそもこの場所に建てるべきか」は工学の範囲外だ。alignment研究で今起きているのは、後者の問いが前者に飲み込まれていく過程に他ならない。
           </p>
           <p class="lead">
-            ただし、ここに一つの危険が潜む。工学的alignmentが「モデルを安全に出荷する技術」に矮小化されるとき、Yudkowskyが本来提起した「知能の爆発的拡大に人類はどう対処するか」という問いは宙に浮く。2030年時点でAGI（汎用人工知能）が達成されていなければ、この問いは学者の空論にとどまる。しかし<a href="03-agi-explosion.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">技術爆発</a>が現実になれば、工学的alignmentでは手が届かない領域が一気に露出する。冒頭のSuperalignment解散を思い出してほしい。「光沢ある製品」が安全性の文化に勝ったあの事件は、alignment研究全体の縮図だ。最も声高にalignmentを掲げた企業で、最も野心的なチームが最も早く消えた。「布陣図」は結局のところ、最悪のシナリオに対する備えが十分かどうかを問うための地図である。そしてこの地図が示しているのは、最前線で戦っている人間が最も少ない、という事実だ。
+            ただし、ここに一つの危険が潜む。工学的alignmentが「モデルを安全に出荷する技術」に矮小化されるとき、Yudkowskyが本来提起した「知能の爆発的拡大に人類はどう対処するか」という問いは宙に浮く。2030年時点でAGI（汎用人工知能）が達成されていなければ、この問いは学者の空論にとどまる。しかし<a href="03-agi-explosion.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">技術爆発</a>が現実になれば、工学的alignmentでは手が届かない領域が一気に露出する。冒頭のSuperalignment解散を思い出してほしい。耳目を集める新製品が安全性の文化に勝ったあの事件は、alignment研究全体の縮図だ。最も声高にalignmentを掲げた企業で、最も野心的なチームが最も早く消えた。「布陣図」は結局のところ、最悪のシナリオに対する備えが十分かどうかを問うための地図である。そしてこの地図が示しているのは、最前線で戦っている人間が最も少ない、という事実だ。
           </p>
 
           <div class="note">
@@ -871,6 +897,128 @@
         Thumbnail: <a href="https://unsplash.com/photos/LVADbQTjMcE">Chess pieces</a>
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -935,5 +1083,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

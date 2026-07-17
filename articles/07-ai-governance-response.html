@@ -197,6 +197,18 @@
         border-bottom: 3px double var(--accent);
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(30px, 4.4vw, 38px); }
       h2 { font-size: clamp(26px, 3.8vw, 34px); }
 
@@ -375,6 +387,18 @@
         color: var(--accent);
       }
 
+      /* ── SVG Diagram ── */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media (max-width: 768px) {
         .slide { padding: 64px 24px 48px; }
         .grid-2, .grid-3, .timeline { grid-template-columns: 1fr; }
@@ -402,7 +426,7 @@
     </style>
   </head>
   <body class="pattern-investigation has-site-header" data-category="governance">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -415,7 +439,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 07 / 15 &nbsp;·&nbsp; Governance &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 07 &nbsp;·&nbsp; Governance &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="06-misaligned-ai-mechanics.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=governance" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -633,9 +657,58 @@
               </tr>
             </tbody>
           </table>
+          <!-- SVG: Governance Layer Timeline -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#b23a2f"/>
+                </marker>
+              </defs>
+
+              <!-- Time axis -->
+              <line x1="80" y1="280" x2="640" y2="280" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowR)"/>
+              <text x="660" y="284" font-family="'SF Mono',monospace" font-size="10" fill="#757575">TIME</text>
+
+              <!-- Time labels -->
+              <text x="140" y="298" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575">2024</text>
+              <text x="300" y="298" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575">2028</text>
+              <text x="460" y="298" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575">2032</text>
+              <text x="600" y="298" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575">2036+</text>
+
+              <!-- Layer 1: Compute Governance -->
+              <rect x="100" y="60" width="300" height="40" rx="3" fill="#b23a2f" opacity="0.85"/>
+              <rect x="400" y="60" width="120" height="40" rx="3" fill="#b23a2f" opacity="0.25"/>
+              <text x="250" y="85" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#fff" letter-spacing="0.04em">COMPUTE GOVERNANCE</text>
+              <text x="40" y="85" text-anchor="end" font-family="sans-serif" font-size="11" fill="#1a1a1a">物理層</text>
+
+              <!-- Layer 2: International Treaties -->
+              <rect x="200" y="120" width="360" height="40" rx="3" fill="#1a1a1a" opacity="0.15"/>
+              <rect x="300" y="120" width="260" height="40" rx="3" fill="#1a1a1a" opacity="0.6"/>
+              <text x="430" y="145" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#fff" letter-spacing="0.04em">INTERNATIONAL TREATIES</text>
+              <text x="40" y="145" text-anchor="end" font-family="sans-serif" font-size="11" fill="#1a1a1a">制度層</text>
+
+              <!-- Layer 3: d/acc Defense -->
+              <rect x="250" y="180" width="370" height="40" rx="3" fill="#b23a2f" opacity="0.15"/>
+              <rect x="350" y="180" width="270" height="40" rx="3" fill="#b23a2f" opacity="0.5"/>
+              <text x="485" y="205" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#1a1a1a" letter-spacing="0.04em">d/acc DEFENSE</text>
+              <text x="40" y="205" text-anchor="end" font-family="sans-serif" font-size="11" fill="#1a1a1a">技術層</text>
+
+              <!-- Annotation -->
+              <line x1="400" y1="45" x2="400" y2="235" stroke="#757575" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="405" y="40" font-family="'SF Mono',monospace" font-size="9" fill="#757575">主導権の移行点</text>
+
+              <!-- Title -->
+              <text x="340" y="20" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">ガバナンス手段の有効期間と層の遷移</text>
+            </svg>
+          </div>
+
           <div class="note">
             棲み分けの設計で最も重要な認識は、<strong>各アプローチには有効期限があり、それぞれが他のアプローチが機能しにくい局面で補完に回る</strong>、という構造だ。Compute Governanceが主導権を持つ今の局面の後に、d/accと国際条約が引き継ぐ設計を今から準備することが、ガバナンスの実務的な課題になっている。
           </div>
+          <aside class="note" style="margin-top:24px;border-left:3px solid #1a1a1a;">
+            <strong>優先順位を言い切る ― 2026〜2030年は Compute Governance を最強レバーと扱うべきだ。</strong> 7つのレバー（輸出管理、ライセンス、評価基準、透明性義務、責任法制、国際条約、分散化）を並列に配置することはできるが、著者は意思決定の観点から次のように順序を置く。 <strong>① Compute Governance（輸出管理＋クラスタ閾値）</strong> が最優先。フロンティアモデルの学習に必要な高性能GPUクラスタは世界に数十か所しかなく、物理的に監査可能な最後の層だからだ。 <strong>② 評価基準とred-teaming義務</strong> がその次。モデル能力の可観測性を制度側に取り戻さなければ、後続のすべての規制が空振りする。 <strong>③ 責任法制（liability）</strong> は企業の内部投資インセンティブを直接書き換える。 <strong>④ 国際条約</strong> は長期的には不可欠だが、先に①〜③で実績を作らないと交渉の土台ができない。 <strong>⑤ 透明性義務とライセンス</strong> は補助的。分散化（d/acc）は制約ではなく別の戦略軸として並走させる。 <strong>「全部同時にやる」は事実上「どれもやらない」に等しい</strong>。本稿は①に資源を集中することを推奨する。
+          </aside>
         </div>
         <div class="footer reveal reveal-delay-3">
           <span>各アプローチは有効期限を持ち、それぞれが他の補完に回る</span>
@@ -727,6 +800,128 @@
       </p>
     </footer>
 
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
       const slides = Array.from(document.querySelectorAll('.slide'));
@@ -777,5 +972,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

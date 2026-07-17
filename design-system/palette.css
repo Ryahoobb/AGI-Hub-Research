@@ -54,7 +54,27 @@
   --lh-normal: 1.5;
   --lh-relaxed: 1.75;
 
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* ── Motion (WIRED 2026-04-18 signature easing) ── */
+  --ease-signature: cubic-bezier(0.23, 1, 0.32, 1); /* WIRED本家のeaseOutExpo */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease: var(--ease-signature); /* legacy alias */
+  --dur-instant: 120ms;
+  --dur-fast: 200ms;
+  --dur-base: 300ms;
+  --dur-slow: 600ms;
+  --dur-hero: 900ms;
+
+  /* ── Spacing scale (4の倍数 / rem基準) ── */
+  --space-0: 0;
+  --space-1: 0.25rem;  /* 4px  — inline微調整 */
+  --space-2: 0.5rem;   /* 8px  — キャプションと図版 */
+  --space-3: 1rem;     /* 16px — 段落内余白 */
+  --space-4: 1.5rem;   /* 24px — 標準gutter */
+  --space-5: 2rem;     /* 32px — ブロック間 */
+  --space-6: 3rem;     /* 48px — セクション間 */
+  --space-7: 4rem;     /* 64px — 章区切り */
+  --space-8: 6rem;     /* 96px — ヒーロー前後 */
 }
 
 /* ═════════════════════════════════════════════════════
@@ -194,6 +214,52 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+
+/* ═════════════════════════════════════════════════════
+   Editorial Micro-typography (WIRED 2026-04-18)
+   Byline prefix / 日付書式 / セクション区切り記号
+   ═════════════════════════════════════════════════════ */
+
+.byline {
+  font-family: var(--ff-mono);
+  font-feature-settings: normal;
+  font-size: var(--fs-meta);
+  color: var(--meta);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+.byline .prefix {
+  font-style: italic;
+  color: var(--mid-gray);
+  margin-right: 0.3em;
+}
+/* Prefixバリエーション: By / Photography by / Illustration by /
+   In Conversation with / Edited by / As told to / Reported by /
+   Words by / Interview by */
+.byline strong {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* WIRED式日付表記 YYYY.MM.DD */
+.date-wired {
+  font-family: var(--ff-mono);
+  font-feature-settings: "tnum";
+  letter-spacing: 0.05em;
+  color: var(--meta);
+  font-size: var(--fs-meta);
+}
+
+/* セクション区切り記号（::, —, / の運用） */
+.sep {
+  display: inline-block;
+  margin: 0 0.5em;
+  color: var(--light-gray);
+  font-weight: 400;
+}
+.sep-dot::before { content: "::"; }
+.sep-em::before  { content: "—"; }
+.sep-slash::before { content: "/"; }
 
 /* アスペクト比ユーティリティ */
 .ar-1-1  { aspect-ratio: 1 / 1; }
@@ -1499,3 +1565,880 @@ body.has-site-header { padding-top: 48px; }
 /* Monolith: .slideのtop位置は変えず、progressバーだけずらす */
 .has-site-header .progress { top: 48px; }
 .has-site-header .nav { top: calc(50% + 24px); }
+
+/* ═════════════════════════════════════════════════════
+   Mobile Responsive — Article / Dashboard Common
+   全ページ共通のスマホ対応。個別CSSより後に読み込まれるため
+   palette.css に置くことで一括適用できる。
+   ═════════════════════════════════════════════════════ */
+
+/* ── 480px: スマートフォン ── */
+@media (max-width: 480px) {
+  /* Article slides */
+  .slide {
+    padding: 40px 16px 32px !important;
+    gap: 20px !important;
+    min-height: auto;
+  }
+
+  /* Navigation dots — 非表示（スマホではスクロールが自然） */
+  .nav { display: none; }
+
+  /* Grid collapse */
+  .grid-2,
+  .grid-3,
+  .timeline,
+  .portraits,
+  .portrait-grid { grid-template-columns: 1fr !important; }
+
+  /* Compare tables — 横スクロール */
+  .compare {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .compare th,
+  .compare td { padding: 12px 10px; font-size: 13px; }
+
+  /* Hero images */
+  .hero { aspect-ratio: 16 / 9; }
+  .hero.img-fullbleed,
+  .hero.img-wide {
+    width: 100% !important;
+    margin: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    position: static !important;
+  }
+  .hero.img-side-by-side { grid-template-columns: 1fr !important; }
+
+  /* Typography scale-down */
+  .eyebrow { font-size: 9px; }
+  h2, .slide h2 { font-size: 20px !important; }
+
+  /* Inline grid in articles (style属性のgrid) */
+  [style*="grid-template-columns: repeat("] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:repeat("] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Float解除 */
+  [style*="float: right"],
+  [style*="float:right"],
+  [style*="float: left"],
+  [style*="float:left"] {
+    float: none !important;
+    width: 100% !important;
+    margin: 12px 0 !important;
+  }
+
+  /* Credits / footer */
+  .credits { padding: 24px 16px 48px; }
+
+  /* Feedback section */
+  .feedback-section { padding: 24px 16px !important; }
+
+  /* People grid (thinkers etc) */
+  .people-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 16px !important; }
+  .person-photo { width: 80px; height: 80px; }
+  .person-name { font-size: 13px; }
+}
+
+/* ── 768px: タブレット（articles共通の安全ネット） ── */
+@media (max-width: 768px) {
+  /* Compare tables — タブレットでも横スクロール準備 */
+  .compare {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Side-by-side images */
+  .hero.img-side-by-side { grid-template-columns: 1fr !important; }
+}
+
+/* ═════════════════════════════════════════════════════
+   Motion primitives (WIRED 2026-04-18)
+   リンク・ナビ・カード・CTAの基本遷移を統一
+   reduced-motionユーザーは無効化
+   ═════════════════════════════════════════════════════ */
+
+a {
+  transition: color var(--dur-fast) var(--ease-signature),
+              opacity var(--dur-fast) var(--ease-signature),
+              border-color var(--dur-fast) var(--ease-signature);
+}
+
+.nav a,
+.site-nav a {
+  transition: color var(--dur-base) var(--ease-signature),
+              border-bottom-color var(--dur-base) var(--ease-signature);
+}
+
+.card,
+article.card,
+.article-card {
+  transition: transform var(--dur-base) var(--ease-signature),
+              box-shadow var(--dur-base) var(--ease-signature),
+              background-color var(--dur-base) var(--ease-signature);
+}
+.card:hover,
+article.card:hover,
+.article-card:hover {
+  transform: translateY(-2px);
+}
+
+.cta,
+button.cta,
+a.cta {
+  transition: background-color var(--dur-fast) var(--ease-signature),
+              color var(--dur-fast) var(--ease-signature),
+              transform var(--dur-fast) var(--ease-signature);
+}
+.cta:active { transform: scale(0.98); }
+
+/* Hero image transitions use signature easing (上書き) */
+.hero {
+  transition: filter var(--dur-slow) var(--ease-signature);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═════════════════════════════════════════════════════
+   Dark Mode
+   適用条件:
+   (A) <html data-theme="dark"> が明示されているとき
+   (B) ユーザーがlightを明示していない、かつOSがダークのとき
+   トークンを再マップして pattern-* のbg指定を経由して反映する。
+   ═════════════════════════════════════════════════════ */
+
+:root[data-theme="dark"],
+:root[data-theme="dark"] .pattern-monolith,
+:root[data-theme="dark"] .pattern-broadsheet,
+:root[data-theme="dark"] .pattern-conversation,
+:root[data-theme="dark"] .pattern-investigation,
+:root[data-theme="dark"] .pattern-dispatch {
+  --black: #e8e8e8;          /* 文字・構造線に使われる "黒" をライトへ */
+  --body-text: #e8e8e8;
+  --mid-gray: #9a9a9a;
+  --meta: #7c7c7c;
+  --light-gray: #5a5a5a;
+  --border: #2a2a2a;
+  --bg-gray: #141414;
+  --white: #0a0a0a;
+  --cream-light: #0f0e0a;
+  --cream-base:  #14120c;
+  --cream-warm:  #151309;
+  --cream-deep:  #1a1810;
+  --bg: #0a0a0a;
+  --fg: #e8e8e8;
+  --accent: #e8e8e8;         /* デフォルトaccent(=var(--black))を追従させる */
+  --data-0: #f0f0f0;
+  --data-1: #c0c0c0;
+  --data-2: #888888;
+  --data-3: #555555;
+  --data-4: #2a2a2a;
+  --data-grid: #2a2a2a;
+  --data-axis: #5a5a5a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]),
+  :root:not([data-theme="light"]) .pattern-monolith,
+  :root:not([data-theme="light"]) .pattern-broadsheet,
+  :root:not([data-theme="light"]) .pattern-conversation,
+  :root:not([data-theme="light"]) .pattern-investigation,
+  :root:not([data-theme="light"]) .pattern-dispatch {
+    --black: #e8e8e8;
+    --body-text: #e8e8e8;
+    --mid-gray: #9a9a9a;
+    --meta: #7c7c7c;
+    --light-gray: #5a5a5a;
+    --border: #2a2a2a;
+    --bg-gray: #141414;
+    --white: #0a0a0a;
+    --cream-light: #0f0e0a;
+    --cream-base:  #14120c;
+    --cream-warm:  #151309;
+    --cream-deep:  #1a1810;
+    --bg: #0a0a0a;
+    --fg: #e8e8e8;
+    --accent: #e8e8e8;
+    --data-0: #f0f0f0;
+    --data-1: #c0c0c0;
+    --data-2: #888888;
+    --data-3: #555555;
+    --data-4: #2a2a2a;
+    --data-grid: #2a2a2a;
+    --data-axis: #5a5a5a;
+  }
+}
+
+/* Hero画像: ダーク時はコントラスト・輝度を落として馴染ませる */
+:root[data-theme="dark"] .hero {
+  filter: grayscale(0.3) contrast(0.95) brightness(0.85);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero {
+    filter: grayscale(0.3) contrast(0.95) brightness(0.85);
+  }
+}
+
+/* index.htmlのinline hardcode対応 (.explore-tile / .card-interstitial) */
+:root[data-theme="dark"] .explore-tile { background: #141414 !important; border-color: #2a2a2a; }
+:root[data-theme="dark"] .explore-tile:hover { background: #1e1e1e !important; }
+:root[data-theme="dark"] .explore-tile.dark { background: #000 !important; }
+:root[data-theme="dark"] .explore-tile.dark:hover { background: #0a0a0a !important; }
+:root[data-theme="dark"] .explore-tile.cream { background: #14120c !important; }
+:root[data-theme="dark"] .explore-tile.cream:hover { background: #1a1810 !important; }
+:root[data-theme="dark"] .card-interstitial:hover { background: #141414 !important; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .explore-tile { background: #141414 !important; border-color: #2a2a2a; }
+  :root:not([data-theme="light"]) .explore-tile:hover { background: #1e1e1e !important; }
+  :root:not([data-theme="light"]) .explore-tile.dark { background: #000 !important; }
+  :root:not([data-theme="light"]) .explore-tile.dark:hover { background: #0a0a0a !important; }
+  :root:not([data-theme="light"]) .explore-tile.cream { background: #14120c !important; }
+  :root:not([data-theme="light"]) .explore-tile.cream:hover { background: #1a1810 !important; }
+  :root:not([data-theme="light"]) .card-interstitial:hover { background: #141414 !important; }
+}
+
+/* ═════════════════════════════════════════════════════
+   Dark Mode: ハードコード色の広域オーバーライド
+   旧来のページはトークンを経由せず #fff / #1a1a1a 等を直書きしている。
+   ダーク時にそれらが黒文字×黒背景で消えるのを防ぐ。
+   ═════════════════════════════════════════════════════ */
+
+/* インラインstyle属性の白背景を暗転 */
+:root[data-theme="dark"] [style*="background:#fff"],
+:root[data-theme="dark"] [style*="background: #fff"],
+:root[data-theme="dark"] [style*="background:#ffffff"],
+:root[data-theme="dark"] [style*="background: #ffffff"],
+:root[data-theme="dark"] [style*="background:white"],
+:root[data-theme="dark"] [style*="background-color:#fff"],
+:root[data-theme="dark"] [style*="background-color: #fff"] {
+  background: var(--bg-gray) !important;
+  background-color: var(--bg-gray) !important;
+}
+
+/* インラインstyle属性のダーク文字を淡色化 */
+:root[data-theme="dark"] [style*="color:#000"]:not([style*="color:#fff"]),
+:root[data-theme="dark"] [style*="color: #000"]:not([style*="color:#fff"]),
+:root[data-theme="dark"] [style*="color:#111"],
+:root[data-theme="dark"] [style*="color: #111"],
+:root[data-theme="dark"] [style*="color:#1a1a1a"],
+:root[data-theme="dark"] [style*="color: #1a1a1a"],
+:root[data-theme="dark"] [style*="color:#222"],
+:root[data-theme="dark"] [style*="color: #222"],
+:root[data-theme="dark"] [style*="color:#333"],
+:root[data-theme="dark"] [style*="color: #333"],
+:root[data-theme="dark"] [style*="color:black"] {
+  color: var(--body-text) !important;
+}
+
+/* クラスベース: Dashboard系ページの白箱 */
+:root[data-theme="dark"] .kpi-card,
+:root[data-theme="dark"] .kpi-grid,
+:root[data-theme="dark"] .model-table,
+:root[data-theme="dark"] .model-table thead,
+:root[data-theme="dark"] .model-table tbody tr,
+:root[data-theme="dark"] .agency-card,
+:root[data-theme="dark"] .agency-grid,
+:root[data-theme="dark"] .finding,
+:root[data-theme="dark"] .finding .body,
+:root[data-theme="dark"] .ranking-table,
+:root[data-theme="dark"] .ranking-table thead,
+:root[data-theme="dark"] .source-item,
+:root[data-theme="dark"] .big-stat,
+:root[data-theme="dark"] .stbl,
+:root[data-theme="dark"] .stbl thead,
+:root[data-theme="dark"] .stbl th,
+:root[data-theme="dark"] .stbl td,
+:root[data-theme="dark"] .diagram,
+:root[data-theme="dark"] .cs,
+:root[data-theme="dark"] .card-mini,
+:root[data-theme="dark"] .thinker-card,
+:root[data-theme="dark"] .node-card,
+:root[data-theme="dark"] .legend-box,
+:root[data-theme="dark"] .cluster-box,
+:root[data-theme="dark"] .align-box {
+  background: var(--bg-gray) !important;
+  color: var(--body-text) !important;
+  border-color: var(--border) !important;
+}
+
+:root[data-theme="dark"] .model-table tbody tr:hover,
+:root[data-theme="dark"] .stbl tr:hover td {
+  background: #1e1e1e !important;
+}
+
+/* ダーク文字で直書きされた頻出要素 */
+:root[data-theme="dark"] .kpi-value,
+:root[data-theme="dark"] .kpi-label,
+:root[data-theme="dark"] .model-table td,
+:root[data-theme="dark"] .model-table th,
+:root[data-theme="dark"] .agency-card .agency-name,
+:root[data-theme="dark"] .agency-card .agency-finding,
+:root[data-theme="dark"] .finding .title,
+:root[data-theme="dark"] .ranking-table td,
+:root[data-theme="dark"] .ranking-table th,
+:root[data-theme="dark"] .big-stat .big-stat-num,
+:root[data-theme="dark"] .big-stat .big-stat-label,
+:root[data-theme="dark"] .thinker-name,
+:root[data-theme="dark"] .node-label,
+:root[data-theme="dark"] .chart-title,
+:root[data-theme="dark"] .chart-caption,
+:root[data-theme="dark"] .data-label {
+  color: var(--body-text) !important;
+}
+
+/* OSダーク時（ユーザーがlight明示していない）にも同じ効果を適用 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [style*="background:#fff"],
+  :root:not([data-theme="light"]) [style*="background: #fff"],
+  :root:not([data-theme="light"]) [style*="background:#ffffff"],
+  :root:not([data-theme="light"]) [style*="background: #ffffff"],
+  :root:not([data-theme="light"]) [style*="background:white"],
+  :root:not([data-theme="light"]) [style*="background-color:#fff"],
+  :root:not([data-theme="light"]) [style*="background-color: #fff"] {
+    background: var(--bg-gray) !important;
+    background-color: var(--bg-gray) !important;
+  }
+
+  :root:not([data-theme="light"]) [style*="color:#000"]:not([style*="color:#fff"]),
+  :root:not([data-theme="light"]) [style*="color: #000"]:not([style*="color:#fff"]),
+  :root:not([data-theme="light"]) [style*="color:#111"],
+  :root:not([data-theme="light"]) [style*="color: #111"],
+  :root:not([data-theme="light"]) [style*="color:#1a1a1a"],
+  :root:not([data-theme="light"]) [style*="color: #1a1a1a"],
+  :root:not([data-theme="light"]) [style*="color:#222"],
+  :root:not([data-theme="light"]) [style*="color: #222"],
+  :root:not([data-theme="light"]) [style*="color:#333"],
+  :root:not([data-theme="light"]) [style*="color: #333"],
+  :root:not([data-theme="light"]) [style*="color:black"] {
+    color: var(--body-text) !important;
+  }
+
+  :root:not([data-theme="light"]) .kpi-card,
+  :root:not([data-theme="light"]) .kpi-grid,
+  :root:not([data-theme="light"]) .model-table,
+  :root:not([data-theme="light"]) .model-table thead,
+  :root:not([data-theme="light"]) .model-table tbody tr,
+  :root:not([data-theme="light"]) .agency-card,
+  :root:not([data-theme="light"]) .agency-grid,
+  :root:not([data-theme="light"]) .finding,
+  :root:not([data-theme="light"]) .finding .body,
+  :root:not([data-theme="light"]) .ranking-table,
+  :root:not([data-theme="light"]) .ranking-table thead,
+  :root:not([data-theme="light"]) .source-item,
+  :root:not([data-theme="light"]) .big-stat,
+  :root:not([data-theme="light"]) .stbl,
+  :root:not([data-theme="light"]) .stbl thead,
+  :root:not([data-theme="light"]) .stbl th,
+  :root:not([data-theme="light"]) .stbl td,
+  :root:not([data-theme="light"]) .diagram,
+  :root:not([data-theme="light"]) .cs,
+  :root:not([data-theme="light"]) .card-mini,
+  :root:not([data-theme="light"]) .thinker-card,
+  :root:not([data-theme="light"]) .node-card,
+  :root:not([data-theme="light"]) .legend-box,
+  :root:not([data-theme="light"]) .cluster-box,
+  :root:not([data-theme="light"]) .align-box {
+    background: var(--bg-gray) !important;
+    color: var(--body-text) !important;
+    border-color: var(--border) !important;
+  }
+
+  :root:not([data-theme="light"]) .model-table tbody tr:hover,
+  :root:not([data-theme="light"]) .stbl tr:hover td {
+    background: #1e1e1e !important;
+  }
+
+  :root:not([data-theme="light"]) .kpi-value,
+  :root:not([data-theme="light"]) .kpi-label,
+  :root:not([data-theme="light"]) .model-table td,
+  :root:not([data-theme="light"]) .model-table th,
+  :root:not([data-theme="light"]) .agency-card .agency-name,
+  :root:not([data-theme="light"]) .agency-card .agency-finding,
+  :root:not([data-theme="light"]) .finding .title,
+  :root:not([data-theme="light"]) .ranking-table td,
+  :root:not([data-theme="light"]) .ranking-table th,
+  :root:not([data-theme="light"]) .big-stat .big-stat-num,
+  :root:not([data-theme="light"]) .big-stat .big-stat-label,
+  :root:not([data-theme="light"]) .thinker-name,
+  :root:not([data-theme="light"]) .node-label,
+  :root:not([data-theme="light"]) .chart-title,
+  :root:not([data-theme="light"]) .chart-caption,
+  :root:not([data-theme="light"]) .data-label {
+    color: var(--body-text) !important;
+  }
+}
+
+/* ═════════════════════════════════════════════════════
+   Dark Mode: 記事内SVG図版のハードコード色オーバーライド
+   fill/stroke属性で直書きされたグレースケール／白背景を反転する。
+   アクセント色（赤#b23a2f、青#2f2b92等）は記事の意図色なので保持。
+   ═════════════════════════════════════════════════════ */
+
+/* 文字色・線色のダーク→ライト反転 */
+:root[data-theme="dark"] svg [fill="#000"],
+:root[data-theme="dark"] svg [fill="#000000"],
+:root[data-theme="dark"] svg [fill="#111"],
+:root[data-theme="dark"] svg [fill="#1a1a1a"],
+:root[data-theme="dark"] svg [fill="#222"],
+:root[data-theme="dark"] svg [fill="#2a2a2a"] { fill: #e8e8e8 !important; }
+
+:root[data-theme="dark"] svg [stroke="#000"],
+:root[data-theme="dark"] svg [stroke="#000000"],
+:root[data-theme="dark"] svg [stroke="#111"],
+:root[data-theme="dark"] svg [stroke="#1a1a1a"],
+:root[data-theme="dark"] svg [stroke="#222"],
+:root[data-theme="dark"] svg [stroke="#2a2a2a"] { stroke: #e8e8e8 !important; }
+
+/* グレーの階調を暗背景で読めるレベルに引き上げ */
+:root[data-theme="dark"] svg [fill="#333"],
+:root[data-theme="dark"] svg [fill="#555"],
+:root[data-theme="dark"] svg [fill="#585858"],
+:root[data-theme="dark"] svg [fill="#666"] { fill: #b8b8b8 !important; }
+
+:root[data-theme="dark"] svg [stroke="#333"],
+:root[data-theme="dark"] svg [stroke="#555"],
+:root[data-theme="dark"] svg [stroke="#585858"],
+:root[data-theme="dark"] svg [stroke="#666"] { stroke: #b8b8b8 !important; }
+
+:root[data-theme="dark"] svg [fill="#757575"],
+:root[data-theme="dark"] svg [fill="#999"],
+:root[data-theme="dark"] svg [fill="#999999"] { fill: #9a9a9a !important; }
+
+:root[data-theme="dark"] svg [stroke="#757575"],
+:root[data-theme="dark"] svg [stroke="#999"],
+:root[data-theme="dark"] svg [stroke="#999999"] { stroke: #9a9a9a !important; }
+
+/* ボーダー系(淡い) */
+:root[data-theme="dark"] svg [stroke="#ccc"],
+:root[data-theme="dark"] svg [stroke="#cccccc"],
+:root[data-theme="dark"] svg [stroke="#e5e5e5"],
+:root[data-theme="dark"] svg [stroke="#eee"] { stroke: #3a3a3a !important; }
+
+:root[data-theme="dark"] svg [fill="#ccc"],
+:root[data-theme="dark"] svg [fill="#cccccc"],
+:root[data-theme="dark"] svg [fill="#e5e5e5"],
+:root[data-theme="dark"] svg [fill="#eee"] { fill: #3a3a3a !important; }
+
+/* 白背景・クリーム背景を暗転 */
+:root[data-theme="dark"] svg [fill="#fff"],
+:root[data-theme="dark"] svg [fill="#ffffff"],
+:root[data-theme="dark"] svg [fill="#fafafa"] { fill: #141414 !important; }
+
+:root[data-theme="dark"] svg [fill="#faf8f1"],
+:root[data-theme="dark"] svg [fill="#f3f1e9"],
+:root[data-theme="dark"] svg [fill="#fefcf5"],
+:root[data-theme="dark"] svg [fill="#f9f7ef"] { fill: #14120c !important; }
+
+/* 濃いアクセント色（dark navy, dark red）は暗背景で沈むので明度を1段上げる */
+:root[data-theme="dark"] svg [fill="#1f3a5f"] { fill: #6b8fb8 !important; }
+:root[data-theme="dark"] svg [stroke="#1f3a5f"] { stroke: #6b8fb8 !important; }
+:root[data-theme="dark"] svg [fill="#8a2f1c"] { fill: #d85942 !important; }
+:root[data-theme="dark"] svg [stroke="#8a2f1c"] { stroke: #d85942 !important; }
+
+/* OSダーク時にも同じ効果を適用 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) svg [fill="#000"],
+  :root:not([data-theme="light"]) svg [fill="#000000"],
+  :root:not([data-theme="light"]) svg [fill="#111"],
+  :root:not([data-theme="light"]) svg [fill="#1a1a1a"],
+  :root:not([data-theme="light"]) svg [fill="#222"],
+  :root:not([data-theme="light"]) svg [fill="#2a2a2a"] { fill: #e8e8e8 !important; }
+
+  :root:not([data-theme="light"]) svg [stroke="#000"],
+  :root:not([data-theme="light"]) svg [stroke="#000000"],
+  :root:not([data-theme="light"]) svg [stroke="#111"],
+  :root:not([data-theme="light"]) svg [stroke="#1a1a1a"],
+  :root:not([data-theme="light"]) svg [stroke="#222"],
+  :root:not([data-theme="light"]) svg [stroke="#2a2a2a"] { stroke: #e8e8e8 !important; }
+
+  :root:not([data-theme="light"]) svg [fill="#333"],
+  :root:not([data-theme="light"]) svg [fill="#555"],
+  :root:not([data-theme="light"]) svg [fill="#585858"],
+  :root:not([data-theme="light"]) svg [fill="#666"] { fill: #b8b8b8 !important; }
+
+  :root:not([data-theme="light"]) svg [stroke="#333"],
+  :root:not([data-theme="light"]) svg [stroke="#555"],
+  :root:not([data-theme="light"]) svg [stroke="#585858"],
+  :root:not([data-theme="light"]) svg [stroke="#666"] { stroke: #b8b8b8 !important; }
+
+  :root:not([data-theme="light"]) svg [fill="#757575"],
+  :root:not([data-theme="light"]) svg [fill="#999"],
+  :root:not([data-theme="light"]) svg [fill="#999999"] { fill: #9a9a9a !important; }
+
+  :root:not([data-theme="light"]) svg [stroke="#757575"],
+  :root:not([data-theme="light"]) svg [stroke="#999"],
+  :root:not([data-theme="light"]) svg [stroke="#999999"] { stroke: #9a9a9a !important; }
+
+  :root:not([data-theme="light"]) svg [stroke="#ccc"],
+  :root:not([data-theme="light"]) svg [stroke="#cccccc"],
+  :root:not([data-theme="light"]) svg [stroke="#e5e5e5"],
+  :root:not([data-theme="light"]) svg [stroke="#eee"] { stroke: #3a3a3a !important; }
+
+  :root:not([data-theme="light"]) svg [fill="#ccc"],
+  :root:not([data-theme="light"]) svg [fill="#cccccc"],
+  :root:not([data-theme="light"]) svg [fill="#e5e5e5"],
+  :root:not([data-theme="light"]) svg [fill="#eee"] { fill: #3a3a3a !important; }
+
+  :root:not([data-theme="light"]) svg [fill="#fff"],
+  :root:not([data-theme="light"]) svg [fill="#ffffff"],
+  :root:not([data-theme="light"]) svg [fill="#fafafa"] { fill: #141414 !important; }
+
+  :root:not([data-theme="light"]) svg [fill="#faf8f1"],
+  :root:not([data-theme="light"]) svg [fill="#f3f1e9"],
+  :root:not([data-theme="light"]) svg [fill="#fefcf5"],
+  :root:not([data-theme="light"]) svg [fill="#f9f7ef"] { fill: #14120c !important; }
+
+  :root:not([data-theme="light"]) svg [fill="#1f3a5f"] { fill: #6b8fb8 !important; }
+  :root:not([data-theme="light"]) svg [stroke="#1f3a5f"] { stroke: #6b8fb8 !important; }
+  :root:not([data-theme="light"]) svg [fill="#8a2f1c"] { fill: #d85942 !important; }
+  :root:not([data-theme="light"]) svg [stroke="#8a2f1c"] { stroke: #d85942 !important; }
+}
+
+/* ═════════════════════════════════════════════════════
+   Dark Mode: 特集ページ向けオーバーライド
+   map/pill-map/prediction/taxonomy/thinkers/skeptics 等、
+   ページ独自の<style>で色を直書きしているクラスをカバー。
+   ═════════════════════════════════════════════════════ */
+
+/* 追加のインラインstyle属性カバー: グレー背景・入力要素背景 */
+:root[data-theme="dark"] [style*="background:#e5e5e5"],
+:root[data-theme="dark"] [style*="background: #e5e5e5"],
+:root[data-theme="dark"] [style*="background:#fafafa"],
+:root[data-theme="dark"] [style*="background: #fafafa"],
+:root[data-theme="dark"] [style*="background:#f7f7f7"],
+:root[data-theme="dark"] [style*="background: #f7f7f7"],
+:root[data-theme="dark"] [style*="background:#f0efea"],
+:root[data-theme="dark"] [style*="background: #f0efea"],
+:root[data-theme="dark"] [style*="background:#faf8f1"],
+:root[data-theme="dark"] [style*="background: #faf8f1"],
+:root[data-theme="dark"] [style*="background:#f3f1e9"],
+:root[data-theme="dark"] [style*="background: #f3f1e9"] {
+  background: var(--bg-gray) !important;
+  background-color: var(--bg-gray) !important;
+}
+
+/* インライン薄グレー文字(#999/#aaa/#ccc)はダーク時に見やすく */
+:root[data-theme="dark"] [style*="color:#aaa"],
+:root[data-theme="dark"] [style*="color: #aaa"],
+:root[data-theme="dark"] [style*="color:#ccc"],
+:root[data-theme="dark"] [style*="color: #ccc"] {
+  color: #b8b8b8 !important;
+}
+
+/* インラインborder指定の淡色 */
+:root[data-theme="dark"] [style*="border:1px solid #e5e5e5"],
+:root[data-theme="dark"] [style*="border: 1px solid #e5e5e5"],
+:root[data-theme="dark"] [style*="border:1px solid #e4e4e4"],
+:root[data-theme="dark"] [style*="border: 1px solid #e4e4e4"],
+:root[data-theme="dark"] [style*="border-bottom:1px solid #e5e5e5"],
+:root[data-theme="dark"] [style*="border-top:1px solid #e5e5e5"] {
+  border-color: var(--border) !important;
+}
+
+/* map.html / pill-map.html / taxonomy-*.html */
+:root[data-theme="dark"] .info-panel,
+:root[data-theme="dark"] .info-bar,
+:root[data-theme="dark"] .legend,
+:root[data-theme="dark"] .legend-line,
+:root[data-theme="dark"] .cat-banner,
+:root[data-theme="dark"] .domain-header,
+:root[data-theme="dark"] .domain,
+:root[data-theme="dark"] .domain-count,
+:root[data-theme="dark"] .topic,
+:root[data-theme="dark"] .topic-grid,
+:root[data-theme="dark"] .topic-thumb,
+:root[data-theme="dark"] .concept-grid,
+:root[data-theme="dark"] .concept-card,
+:root[data-theme="dark"] .concept-label,
+:root[data-theme="dark"] .article-chip,
+:root[data-theme="dark"] .depth-indicator,
+:root[data-theme="dark"] .gate,
+:root[data-theme="dark"] .grid-section,
+:root[data-theme="dark"] .info-fill,
+:root[data-theme="dark"] .chaos-map,
+:root[data-theme="dark"] .chaos-legend,
+:root[data-theme="dark"] .chaos-person,
+:root[data-theme="dark"] .chaos-name,
+:root[data-theme="dark"] .chaos-quadrant-label {
+  background-color: transparent;
+  color: var(--body-text) !important;
+  border-color: var(--border) !important;
+}
+
+:root[data-theme="dark"] .info-fill,
+:root[data-theme="dark"] .info-bar {
+  background: #3a3a3a !important;
+}
+
+:root[data-theme="dark"] .concept-card,
+:root[data-theme="dark"] .topic,
+:root[data-theme="dark"] .topic-grid {
+  background: var(--bg-gray) !important;
+}
+
+/* prediction.html */
+:root[data-theme="dark"] .big-stat-grid,
+:root[data-theme="dark"] .diff-hero,
+:root[data-theme="dark"] .editorial-spread,
+:root[data-theme="dark"] .extras-grid,
+:root[data-theme="dark"] .hero-timeline,
+:root[data-theme="dark"] .hero-timeline-header,
+:root[data-theme="dark"] .question,
+:root[data-theme="dark"] .timeline-wrap,
+:root[data-theme="dark"] .compare-bar,
+:root[data-theme="dark"] .divider-section {
+  color: var(--body-text) !important;
+  border-color: var(--border) !important;
+}
+
+/* thinkers.html */
+:root[data-theme="dark"] .dashboard,
+:root[data-theme="dark"] .dash-title,
+:root[data-theme="dark"] .dash-subtitle,
+:root[data-theme="dark"] .section-header,
+:root[data-theme="dark"] .star-label,
+:root[data-theme="dark"] .chaos-axis-x-label,
+:root[data-theme="dark"] .chaos-axis-y-label,
+:root[data-theme="dark"] .chaos-axis-x-ticks,
+:root[data-theme="dark"] .chaos-axis-y-ticks {
+  color: var(--body-text) !important;
+}
+
+/* skeptics-field-guide.html (詳細版) */
+:root[data-theme="dark"] .bias-group,
+:root[data-theme="dark"] .bias-group-head,
+:root[data-theme="dark"] .bias-group-name,
+:root[data-theme="dark"] .bias-group-desc,
+:root[data-theme="dark"] .bias-group-count,
+:root[data-theme="dark"] .bias-claims,
+:root[data-theme="dark"] .bias-claim-num,
+:root[data-theme="dark"] .bh-cell {
+  color: var(--body-text) !important;
+  border-color: var(--border) !important;
+}
+
+:root[data-theme="dark"] .bh-0 { background: #0f0f0f !important; }
+:root[data-theme="dark"] .bh-1 { background: #1a1a1a !important; }
+:root[data-theme="dark"] .bh-2 { background: #242424 !important; }
+:root[data-theme="dark"] .bh-3 { background: #2e2e2e !important; }
+
+/* フォーム要素(input/textarea/button)のインラインbg白→暗 */
+:root[data-theme="dark"] input[style*="background:#f0efea"],
+:root[data-theme="dark"] input[style*="background: #f0efea"],
+:root[data-theme="dark"] textarea[style*="background:#f0efea"],
+:root[data-theme="dark"] textarea[style*="background: #f0efea"] {
+  background: #1e1c18 !important;
+  color: var(--body-text) !important;
+  border-color: var(--border) !important;
+}
+
+:root[data-theme="dark"] button[style*="border:1px solid #1a1a1a"],
+:root[data-theme="dark"] button[style*="border: 1px solid #1a1a1a"] {
+  border-color: var(--body-text) !important;
+  color: var(--body-text) !important;
+}
+
+/* OSダーク時にも全て適用 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [style*="background:#e5e5e5"],
+  :root:not([data-theme="light"]) [style*="background: #e5e5e5"],
+  :root:not([data-theme="light"]) [style*="background:#fafafa"],
+  :root:not([data-theme="light"]) [style*="background: #fafafa"],
+  :root:not([data-theme="light"]) [style*="background:#f7f7f7"],
+  :root:not([data-theme="light"]) [style*="background: #f7f7f7"],
+  :root:not([data-theme="light"]) [style*="background:#f0efea"],
+  :root:not([data-theme="light"]) [style*="background: #f0efea"],
+  :root:not([data-theme="light"]) [style*="background:#faf8f1"],
+  :root:not([data-theme="light"]) [style*="background: #faf8f1"],
+  :root:not([data-theme="light"]) [style*="background:#f3f1e9"],
+  :root:not([data-theme="light"]) [style*="background: #f3f1e9"] {
+    background: var(--bg-gray) !important;
+    background-color: var(--bg-gray) !important;
+  }
+
+  :root:not([data-theme="light"]) [style*="color:#aaa"],
+  :root:not([data-theme="light"]) [style*="color: #aaa"],
+  :root:not([data-theme="light"]) [style*="color:#ccc"],
+  :root:not([data-theme="light"]) [style*="color: #ccc"] {
+    color: #b8b8b8 !important;
+  }
+
+  :root:not([data-theme="light"]) [style*="border:1px solid #e5e5e5"],
+  :root:not([data-theme="light"]) [style*="border: 1px solid #e5e5e5"],
+  :root:not([data-theme="light"]) [style*="border:1px solid #e4e4e4"],
+  :root:not([data-theme="light"]) [style*="border: 1px solid #e4e4e4"],
+  :root:not([data-theme="light"]) [style*="border-bottom:1px solid #e5e5e5"],
+  :root:not([data-theme="light"]) [style*="border-top:1px solid #e5e5e5"] {
+    border-color: var(--border) !important;
+  }
+
+  :root:not([data-theme="light"]) .info-panel,
+  :root:not([data-theme="light"]) .info-bar,
+  :root:not([data-theme="light"]) .legend,
+  :root:not([data-theme="light"]) .legend-line,
+  :root:not([data-theme="light"]) .cat-banner,
+  :root:not([data-theme="light"]) .domain-header,
+  :root:not([data-theme="light"]) .domain,
+  :root:not([data-theme="light"]) .domain-count,
+  :root:not([data-theme="light"]) .topic,
+  :root:not([data-theme="light"]) .topic-grid,
+  :root:not([data-theme="light"]) .topic-thumb,
+  :root:not([data-theme="light"]) .concept-grid,
+  :root:not([data-theme="light"]) .concept-card,
+  :root:not([data-theme="light"]) .concept-label,
+  :root:not([data-theme="light"]) .article-chip,
+  :root:not([data-theme="light"]) .depth-indicator,
+  :root:not([data-theme="light"]) .gate,
+  :root:not([data-theme="light"]) .grid-section,
+  :root:not([data-theme="light"]) .info-fill,
+  :root:not([data-theme="light"]) .chaos-map,
+  :root:not([data-theme="light"]) .chaos-legend,
+  :root:not([data-theme="light"]) .chaos-person,
+  :root:not([data-theme="light"]) .chaos-name,
+  :root:not([data-theme="light"]) .chaos-quadrant-label {
+    background-color: transparent;
+    color: var(--body-text) !important;
+    border-color: var(--border) !important;
+  }
+
+  :root:not([data-theme="light"]) .info-fill,
+  :root:not([data-theme="light"]) .info-bar {
+    background: #3a3a3a !important;
+  }
+
+  :root:not([data-theme="light"]) .concept-card,
+  :root:not([data-theme="light"]) .topic,
+  :root:not([data-theme="light"]) .topic-grid {
+    background: var(--bg-gray) !important;
+  }
+
+  :root:not([data-theme="light"]) .big-stat-grid,
+  :root:not([data-theme="light"]) .diff-hero,
+  :root:not([data-theme="light"]) .editorial-spread,
+  :root:not([data-theme="light"]) .extras-grid,
+  :root:not([data-theme="light"]) .hero-timeline,
+  :root:not([data-theme="light"]) .hero-timeline-header,
+  :root:not([data-theme="light"]) .question,
+  :root:not([data-theme="light"]) .timeline-wrap,
+  :root:not([data-theme="light"]) .compare-bar,
+  :root:not([data-theme="light"]) .divider-section {
+    color: var(--body-text) !important;
+    border-color: var(--border) !important;
+  }
+
+  :root:not([data-theme="light"]) .dashboard,
+  :root:not([data-theme="light"]) .dash-title,
+  :root:not([data-theme="light"]) .dash-subtitle,
+  :root:not([data-theme="light"]) .section-header,
+  :root:not([data-theme="light"]) .star-label,
+  :root:not([data-theme="light"]) .chaos-axis-x-label,
+  :root:not([data-theme="light"]) .chaos-axis-y-label,
+  :root:not([data-theme="light"]) .chaos-axis-x-ticks,
+  :root:not([data-theme="light"]) .chaos-axis-y-ticks {
+    color: var(--body-text) !important;
+  }
+
+  :root:not([data-theme="light"]) .bias-group,
+  :root:not([data-theme="light"]) .bias-group-head,
+  :root:not([data-theme="light"]) .bias-group-name,
+  :root:not([data-theme="light"]) .bias-group-desc,
+  :root:not([data-theme="light"]) .bias-group-count,
+  :root:not([data-theme="light"]) .bias-claims,
+  :root:not([data-theme="light"]) .bias-claim-num,
+  :root:not([data-theme="light"]) .bh-cell {
+    color: var(--body-text) !important;
+    border-color: var(--border) !important;
+  }
+
+  :root:not([data-theme="light"]) .bh-0 { background: #0f0f0f !important; }
+  :root:not([data-theme="light"]) .bh-1 { background: #1a1a1a !important; }
+  :root:not([data-theme="light"]) .bh-2 { background: #242424 !important; }
+  :root:not([data-theme="light"]) .bh-3 { background: #2e2e2e !important; }
+
+  :root:not([data-theme="light"]) input[style*="background:#f0efea"],
+  :root:not([data-theme="light"]) input[style*="background: #f0efea"],
+  :root:not([data-theme="light"]) textarea[style*="background:#f0efea"],
+  :root:not([data-theme="light"]) textarea[style*="background: #f0efea"] {
+    background: #1e1c18 !important;
+    color: var(--body-text) !important;
+    border-color: var(--border) !important;
+  }
+
+  :root:not([data-theme="light"]) button[style*="border:1px solid #1a1a1a"],
+  :root:not([data-theme="light"]) button[style*="border: 1px solid #1a1a1a"] {
+    border-color: var(--body-text) !important;
+    color: var(--body-text) !important;
+  }
+}
+
+/* ═════════════════════════════════════════════════════
+   Site Theme Toggle Button
+   Headerに配置。headerは両テーマで黒背景なので常時白アイコン。
+   ═════════════════════════════════════════════════════ */
+.site-theme-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  padding: 4px 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+  line-height: 0;
+}
+.site-theme-toggle:hover { opacity: 1; }
+.site-theme-toggle svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.site-theme-toggle .theme-icon-sun { display: none; }
+.site-theme-toggle .theme-icon-moon { display: inline-block; }
+:root[data-theme="dark"] .site-theme-toggle .theme-icon-sun { display: inline-block; }
+:root[data-theme="dark"] .site-theme-toggle .theme-icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .site-theme-toggle .theme-icon-sun { display: inline-block; }
+  :root:not([data-theme="light"]) .site-theme-toggle .theme-icon-moon { display: none; }
+}
+/* モバイルメニュー内表示: 行として並ばせる */
+@media (max-width: 700px) {
+  .site-header .site-nav-right .site-theme-toggle {
+    padding: 14px 24px;
+    justify-content: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #fff;
+    width: 100%;
+    border-bottom: 1px solid #2a2a2a;
+  }
+  .site-header .site-nav-right .site-theme-toggle::after {
+    content: "Theme";
+    letter-spacing: 0.083em;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+}

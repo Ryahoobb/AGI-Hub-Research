@@ -171,6 +171,18 @@
         padding-bottom: 14px;
         border-bottom: 1px solid var(--accent);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 36px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -282,6 +294,18 @@
       @media (max-width: 900px) {
         .timeline { grid-template-columns: repeat(2, 1fr); }
       }
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media (max-width: 768px) {
         .slide { padding: 64px 24px 48px; }
         .grid-2, .grid-3 { grid-template-columns: 1fr; }
@@ -313,7 +337,7 @@
     </aside>
 
     <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 21 / 25 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 21 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="20-hakoniwa-world-as-allocation.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -343,6 +367,9 @@
           <div class="note">
             内部の豊かさは、外部を作ることで測られる——これは配分思想に共通する構造律である。箱庭主義だけがこの律から逃れられると考える根拠はない。違うのは、これまでの外部が物理的に見えていたのに対し、箱庭の外部は<strong>構造上、見えないように設計されている</strong>点である。見えない外部は、抗議の声も届かない。
           </div>
+          <aside class="note" style="margin-top:24px;border-left:3px solid #1a1a1a;">
+            <strong>前提の取り扱い ― 箱庭主義は仮設だが、批判の足場は独立に成立する。</strong> 本稿は No.20 で提示した箱庭主義（全員にシミュレート世界を配給するという思想）が実現することを前提にしているわけではない。箱庭主義は<strong>現時点で一つの仮設</strong>であり、技術的実現性も社会的受容もまだ未決である。にもかかわらず、この仮設を検討する価値があるのは、次の三つの条件が成り立つからだ。 <strong>第一に、仮設が真であった場合に不可逆な帰結（外部の構造的不可視化）を持つ</strong>。第二に、その帰結が既存のユートピア論（プラトン、モア、ノージック、ロールズ）のどれもが想定していなかった範囲にある。第三に、<strong>仮設を棄却するとしても、そこで浮上する「誰が配給の対象か、誰を対象から外すか」という問いは、AGI以降のあらゆる配分設計に共通する普遍的な問い</strong>になる。つまり本稿の批判は、「箱庭主義が実現するならば X が起こる」という条件文ではなく、「配分の対象を主体性そのものに関与させる設計はすべて、以下の三類型の外部を生む」という独立命題として読むべきだ。この命題は箱庭主義の成否にかかわらず成立する。No.20 を読んでいない読者も、この命題の射程だけを取り出して使える。
+          </aside>
         </div>
         <div class="footer reveal reveal-delay-3">
           <span>配給される側の話しか、されていない</span>
@@ -419,6 +446,45 @@
               </tr>
             </tbody>
           </table>
+          <!-- SVG: Inside/Outside Two-Layer Structure -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+              <!-- Outer: Exterior (the outside) -->
+              <rect x="30" y="20" width="620" height="280" rx="6" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="6,4"/>
+              <text x="56" y="42" font-family="'SF Mono',monospace" font-size="9" fill="#757575" letter-spacing="0.08em">EXTERIOR — INVISIBLE</text>
+              <!-- Inner: Hakoniwa interior -->
+              <rect x="160" y="70" width="360" height="160" rx="4" fill="none" stroke="#2f2b92" stroke-width="2"/>
+              <text x="340" y="95" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#2f2b92" letter-spacing="0.08em">INTERIOR</text>
+              <text x="340" y="112" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">配給された箱庭の住民</text>
+              <!-- Interior boxes -->
+              <rect x="200" y="130" width="80" height="36" rx="3" fill="rgba(47,43,146,0.08)" stroke="#2f2b92" stroke-width="1"/>
+              <text x="240" y="152" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2f2b92">箱庭 A</text>
+              <rect x="300" y="130" width="80" height="36" rx="3" fill="rgba(47,43,146,0.08)" stroke="#2f2b92" stroke-width="1"/>
+              <text x="340" y="152" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2f2b92">箱庭 B</text>
+              <rect x="400" y="130" width="80" height="36" rx="3" fill="rgba(47,43,146,0.08)" stroke="#2f2b92" stroke-width="1"/>
+              <text x="440" y="152" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2f2b92">箱庭 C</text>
+              <text x="340" y="200" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">互いを認知しない</text>
+              <!-- Type I: Cost-selected (outside left) -->
+              <rect x="42" y="80" width="100" height="50" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="92" y="100" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#1a1a1a" letter-spacing="0.04em">TYPE I</text>
+              <text x="92" y="115" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#757575">コスト選別</text>
+              <text x="92" y="127" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#757575">FLOPS不足</text>
+              <!-- Type II: Refuser (outside right) -->
+              <rect x="538" y="80" width="100" height="50" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="588" y="100" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#1a1a1a" letter-spacing="0.04em">TYPE II</text>
+              <text x="588" y="115" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#757575">拒否者</text>
+              <text x="588" y="127" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#757575">現実に留まる</text>
+              <!-- Type III: No subject (outside bottom) -->
+              <rect x="240" y="250" width="200" height="40" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="340" y="268" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#1a1a1a" letter-spacing="0.04em">TYPE III</text>
+              <text x="340" y="282" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#757575">主語を持たない者 — 資格審査の外</text>
+              <!-- Visibility markers -->
+              <line x1="142" y1="100" x2="160" y2="100" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="152" y="92" font-family="sans-serif" font-size="7" fill="#757575" transform="rotate(-90,152,92)">不可視</text>
+              <line x1="520" y1="100" x2="538" y2="100" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="3,2"/>
+            </svg>
+          </div>
+
           <p class="lead">
             型Ⅰは最も素直に見える問題だ。ニコライ・カルダシェフが1964年に示したスケールから導かれる通り、太陽系規模の計算資源にも物理的上限がある。住民数と一人あたり解像度の積が上限を超えた瞬間、優先順位の決定が始まる。アマルティア・センが『Inequality Reexamined』（1992年）で批判した福祉測定の盲点——効用ではなく潜在能力で測るべきだという主張——は、箱庭経済では<strong>「どのプロセスに何FLOPS与えるかが潜在能力の分配そのものになる」</strong>という形で再出現する。マーサ・ヌスバウムが『Creating Capabilities』（2011年）で提示した十項目のcentral capabilitiesは、計算資源の言語に翻訳されない。翻訳を誰がやるかの議論が空白なまま、配分だけが進む。
           </p>
@@ -501,6 +567,32 @@
           <div class="note">
             もう一つ身近な例を挟む。現代のレコメンデーション・アルゴリズムは、すでに<strong>「見えない外部」を小規模に実装している</strong>。フィルターバブルに閉じ込められた利用者は、自分のタイムラインに表示されない情報の存在を認知できない。表示されなかった者の抗議は、表示されている者には届かない。これはまだ情報レベルの話だが、箱庭主義は同じ構造を経験のレイヤー全体に拡張する。見えない外部の原型は、すでに私たちのポケットのなかで動いている。
           </p>
+          <!-- SVG: Visibility Inversion -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+              <!-- Left: Historical utopias -->
+              <text x="150" y="20" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575" letter-spacing="0.08em">HISTORICAL UTOPIAS</text>
+              <rect x="70" y="35" width="160" height="40" rx="3" fill="none" stroke="#2f2b92" stroke-width="1.5"/>
+              <text x="150" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2f2b92">内部</text>
+              <rect x="70" y="95" width="160" height="40" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="150" y="120" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a">外部（可視）</text>
+              <line x1="150" y1="75" x2="150" y2="95" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="190" y="88" font-family="sans-serif" font-size="8" fill="#757575">見える</text>
+              <!-- Right: Hakoniwa -->
+              <text x="510" y="20" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#2f2b92" letter-spacing="0.08em">HAKONIWA</text>
+              <rect x="430" y="35" width="160" height="40" rx="3" fill="none" stroke="#2f2b92" stroke-width="1.5"/>
+              <text x="510" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2f2b92">内部</text>
+              <rect x="430" y="95" width="160" height="40" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="5,3"/>
+              <text x="510" y="116" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">外部（不可視）</text>
+              <text x="510" y="88" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#757575">見えない</text>
+              <!-- Center arrow -->
+              <line x1="260" y1="75" x2="410" y2="75" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="6,4"/>
+              <text x="335" y="68" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#757575">visibility inversion</text>
+              <!-- Bottom -->
+              <text x="340" y="175" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">抗議の伝達路が、設計上存在しない</text>
+            </svg>
+          </div>
+
           <p class="lead">
             ここで静かに起こる転倒を名指しする必要がある。歴史上のユートピアは、外部を見せることで内部の正当性を語ってきた。「我々はあの外部と違う」というコントラストがユートピアの自己認識を支えていた。箱庭主義はコントラストを必要としない。内部の住民はそれぞれの世界のなかに閉じて完結しているため、外部と自分を比較する契機がない。<strong>比較の契機そのものが内部設計から除去されている</strong>。比較しないから、正当性を問う必要もない。
           </p>
@@ -555,6 +647,128 @@
       </p>
     </section>
 
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
     <script>
       const progress = document.getElementById('progress');
       window.addEventListener('scroll', () => {
@@ -585,6 +799,21 @@
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
       }, { threshold: 0.15 });
       document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+    </script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
     </script>
   </body>
 </html>

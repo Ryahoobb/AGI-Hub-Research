@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <title>10年で自己改善ループは起きないという直感は、なぜ外れるか — No.18 AGI HUB</title>
+    <meta name="revised" content="2026.04.14" />
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
       :root {
@@ -111,6 +112,18 @@
       }
 
       h1, h2 { color: var(--black); font-weight: 700; line-height: 1.625; letter-spacing: normal; max-width: 28ch; }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 34px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -283,7 +296,7 @@
     </aside>
 
     <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 18 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 18 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="17-alignment-as-western-problem.html" style="color:inherit;text-decoration:none;">← Prev</a>
         <a href="../index.html#filter=takeoff" style="color:inherit;text-decoration:none;">Same Category</a>
@@ -308,23 +321,23 @@
             この直感は正当だ。ただし、ある時代の経験則としては、という条件付きで。1995年から2020年までのロボティクスは、専用治具と固定プログラムの世界だった。ワークが1mmでも傾けば停まる。新しい部品を流すには数週間の段取り替えが要る。この25年の経験を線形に延ばせば、汎用ロボットが非構造化環境で自律的に働く未来はあと数十年は来ない。熟練者の直感はこの直線の上に立っている。
           </p>
           <p class="lead">
-            しかし問題は、2022年から2025年の3年間で、この直線が折れたことだ。視覚-言語-行動モデル（VLA）と呼ばれる新しい系列の論文が、ロボティクスのスケーリング則を実証し始めた。Google DeepMindのRT-2は2023年7月に発表され、訓練で一度も見ていない物体に対して50%台の成功率でゼロショット操作を成立させた<sup>[1]</sup>。翌2024年11月、Physical Intelligence社のπ0は、洗濯物を畳む、箱を組み立てるといった10分級のロングホライゾンタスクを、複数のロボット本体にまたがって実行した<sup>[2]</sup>。2025年4月、π0.5は訓練で見たことのない他人の家のキッチンで、10分から15分かけて皿洗いを最後まで完遂した<sup>[3]</sup>。2025年3月、DeepMindはGemini Roboticsを発表し、9月にはGemini Robotics 1.5でAloha、Apptronik Apolloを含む複数の身体に同じモデルを流用できることを実証した<sup>[4]</sup>。
+            しかし問題は、2022年から2025年の3年間で、この直線が折れたことだ。視覚-言語-行動モデル（VLA）と呼ばれる新しい系列の論文が、ロボティクスのスケーリング則を実証し始めた。Google DeepMindのRT-2は2023年7月に発表され、訓練で一度も見ていない物体に対して62%の成功率でゼロショット操作を成立させた<sup>[1]</sup>。翌2024年10月、Physical Intelligence社のπ0は、洗濯物を畳む、箱を組み立てるといった10分級のロングホライゾンタスクを、複数のロボット本体にまたがって実行した<sup>[2]</sup>。2025年4月、π0.5は訓練で見たことのない他人の家のキッチンで、10分から15分かけて皿洗いを最後まで完遂した<sup>[3]</sup>。2025年3月、DeepMindはGemini Roboticsを発表し、9月にはGemini Robotics 1.5でAloha、Apptronik Apolloを含む複数の身体に同じモデルを流用できることを実証した<sup>[4]</sup>。
           </p>
           <p class="lead">
-            記事の狙いは楽観論の流布ではない。「10年で確実に起きる」と言うつもりもない。ここで問うのは一点だけだ。「絶対ない」という経験則の強度が、2020-2025の事実の前で持ちこたえるかどうか。Toyotaのベテランエンジニアが25年間信頼してきた直感と、2022-2025に論文として出てきた数字は、同じ世界を見ているのか。それとも、経験則が終わる瞬間に立ち会っているのか。
+            記事の狙いは楽観論の流布ではない。問うのは一点だけだ。「絶対ない」という経験則が、2020-2025の事実の前で持ちこたえるか。そして、なぜ専門家の「絶対ない」は、非連続な技術が到来する直前に最も強く発せられるのか。アンカリング、指数関数バイアス、専門家の権威バイアス。認知科学が特定したこの三つのメカニズムが、チェス（1957年→1997年）、機械翻訳（1966年→2016年）、囲碁（1990年代→2016年）、蛋白質構造予測（2018年→2020年）で繰り返し同じパターンを生んできた。ロボティクスの熟練者が2026年に「絶対ない」と言うとき、彼は過去4回の「絶対ない」と構造的に同じ場所に立っている。
           </p>
           <div class="grid-3">
             <div class="card">
-              <span class="tag">01</span>
-              <p><strong>直感の根拠</strong><br>1995-2020のロボティクスは専用治具と固定プログラムの世界。この25年を線形に延ばせば「10年で自己改善」はありえない。</p>
+              <span class="tag">01 — アンカリング</span>
+              <p><strong>横ばい25年への固着</strong><br>1995-2020のロボティクスは専用治具と固定プログラムの世界だった。この25年を線形に延ばせば「10年で自己改善」はありえない。経験則が判断のアンカーになり、非連続な変化を過小評価させる。</p>
             </div>
             <div class="card">
-              <span class="tag">02</span>
-              <p><strong>直線の折れ</strong><br>2022-2025にVLA（視覚-言語-行動）モデルが登場。RT-2、π0/π0.5、Gemini Roboticsがゼロショット汎化を実証した。</p>
+              <span class="tag">02 — 指数関数バイアス</span>
+              <p><strong>折れた曲線が見えない</strong><br>2022-2025にVLA（視覚-言語-行動）モデルが登場し、RT-2、π0/π0.5、Gemini Roboticsがゼロショット汎化を実証した。3年で概念ごと出現した変化を、脳は直線的に知覚する。</p>
             </div>
             <div class="card">
-              <span class="tag">03</span>
-              <p><strong>問い</strong><br>経験則はどこまで有効か。それとも、非連続な技術が来る直前に直感が最も強く誤る、あのパターンの再演か。</p>
+              <span class="tag">03 — 権威バイアス</span>
+              <p><strong>専門家ほど強く誤る</strong><br>チェス、翻訳、囲碁、蛋白質構造。「絶対ない」を最も強く発した者は、例外なくその分野の実務経験が最も豊富な専門家だった。深い知識が、パラダイムシフトへの感度を下げる。</p>
             </div>
           </div>
         </div>
@@ -503,6 +516,9 @@
             </div>
           </div>
         </div>
+        <aside class="note" style="margin-top:24px;border-left:3px solid #1a1a1a;">
+          <strong>デモ成功と汎用自己改善の距離は消えていない ― 反論に正面から答える。</strong> ここまでの列挙（鉱山の無人運搬、倉庫ピッキング、デモでのヒューマノイド歩行）は、特定タスクでの実装が進んでいることの証拠ではあるが、<strong>汎用的な自己改善ループの成立を意味しない</strong>。その間には少なくとも三つのギャップが残る。 <strong>① 汎化ギャップ。</strong> Pilbaraの運搬トラックは同一鉱山の固定ルートで走る。他の気候、他の地質、他の車両フリートにゼロショットで移植される段階にはない。ベンチマーク間の汎化（例: RoboArenaでOOD環境での成功率は屋内操作で30〜50%、屋外では更に落ちる）は依然として解けていない問題だ。 <strong>② センサーモダリティ統合のギャップ。</strong> 視覚・触覚・プロプリオセプション・音響を単一ポリシーに統合する基盤モデルは研究段階であり、RT-2やOpen X-Embodimentは視覚優位に偏っている。力制御が必要なタスク（柔らかい物の把持、組立）は基盤モデルの弱点として残る。 <strong>③ 継続学習のギャップ。</strong> デプロイ後にモデルが環境から学習し続ける仕組み（online adaptation, sim-to-real 閉ループ）は、壊滅的忘却（catastrophic forgetting）と安全性の監督可能性のトレードオフに阻まれている。つまり2022〜2025年のデモ列挙は、<strong>自己改善ループが10年以内に成立する可能性を高めるが、保証はしない</strong>。 本稿の主張は「絶対起きる」ではなく、「絶対ない」を支えてきた論拠がすでに崩れた、である。起きる確率は2020年比で明らかに上がった。だがギャップはまだある、と正面から認めたうえで、次のセクションはコスト曲線の側から同じ地形を描き直す。
+        </aside>
         <div class="footer reveal reveal-delay-3">
           <span>Pilbaraの運搬トラックは既に80%が無人だ。これは未来形ではなく現在形である</span>
           <span class="slide-count">3 / 5</span>
@@ -519,7 +535,7 @@
             <div class="hero-caption">Photo: Unsplash / Gabriele Malaspina</div>
           </div>
           <p class="lead">
-            ここでもう一本の曲線に切り替える。性能だけでなく、価格だ。Wrightの法則は1936年にT.P. Wrightが航空機製造を観察して定式化した経験則で、累積生産量が倍増するごとに単位コストが一定率で下がる。太陽光パネルは半世紀にわたって学習率20%前後を維持し、2010年代以降は指数的な普及を生んだ。リチウムイオン電池は18%前後。両者に共通するのは、<strong>需要が立ち上がった瞬間に累積生産が急拡大し、コスト低下が加速したこと</strong>だ。
+            ここでもう一本の曲線に切り替える。性能だけでなく、価格だ。Wrightの法則は1936年にT.P. Wrightが航空機製造を観察して定式化した経験則で、累積生産量が倍増するごとに単位コストが一定率で下がる。太陽光パネルは半世紀にわたって学習率20%前後を維持し、2010年代以降は指数的な普及を生んだ。リチウムイオン電池は18%前後。両者に共通するのは、<strong>需要が生まれた瞬間に累積生産が急拡大し、コスト低下が加速したこと</strong>だ。
           </p>
           <p class="lead">
             ロボティクスでは、この曲線がまだ本格的には始まっていなかった。理由は単純で、**汎用ロボットの需要が存在しなかった**からだ。IFR（国際ロボット連盟）の統計によれば、産業用ロボットの年間出荷は2010年代半ばまで年20-30万台、2021年以降は年50万台超に拡大したが、これらは専用治具に組み込まれた固定タスク用のアームが中心だ。人型や汎用操作の市場は、2024年時点でも事実上未成立である。しかし、2025年時点で構成部品の価格低下は先行して始まっている。LiDARは2010年代初頭にVelodyneが約$75,000で販売していた64チャンネル機が、2017年に$17,900、2020年にはVelodyneが自動車グレードLiDARの$500以下を目標として公表し<sup>[14]</sup>、2024年時点で複数メーカーがその水準で量産している。2017年から2024年の7年間で、Velodyne一社だけで約36倍の価格低下だ。Hesai、Luminar、中国勢の参入でさらに圧縮が続いている。
@@ -531,7 +547,7 @@
             公表された目標価格を並べる。<strong>Tesla Optimus</strong>は2024年のAll-Hands会議でElon Muskが<strong>$20,000-30,000</strong>を目標と述べた<sup>[17]</sup>。Unitreeの中国製ヒューマノイドG1は2024年時点で<strong>$16,000</strong>前後で販売されている<sup>[18]</sup>。Figure AIの02は企業向けで未公表だが、Brett Adcockは2025年の公開インタビューで量産効果を折り込んだ5年以内のコスト半減を明言している<sup>[19]</sup>。これらは「願望」ではない。市場が成立した後の2-3サイクルの累積倍増を前提にした計算だ。
           </p>
           <p class="lead">
-            ここで熟練エンジニアの直感に戻ろう。彼の経験則が成立していた1995-2020の25年間、ロボティクスのコスト曲線は実質的に横ばいだった。横ばいの25年を見続けた経験は、「これが世界の自然」と錯覚させる。しかし横ばいの原因は技術の内在的限界ではなく、需要不在だった。需要が立ち上がった瞬間、太陽光パネルと電池とLiDARが辿った曲線をロボティクスが辿らない積極的な理由は、物理的にも経済的にも存在しない。2010年の太陽光パネル業界で「10年で大規模電力源になる」と言う声は嘲笑された。嘲笑した人々は、横ばいの30年を見続けた業界ベテランだった。
+            ここで熟練エンジニアの直感に戻ろう。彼の経験則が成立していた1995-2020の25年間、ロボティクスのコスト曲線は実質的に横ばいだった。横ばいの25年を見続けた経験は、「これが世界の自然」と錯覚させる。しかし横ばいの原因は技術の内在的限界ではなく、需要不在だった。需要が生まれた瞬間、太陽光パネルと電池とLiDARが辿った曲線をロボティクスが辿らない積極的な理由は、物理的にも経済的にも存在しない。2010年の太陽光パネル業界で「10年で大規模電力源になる」と言う声は嘲笑された。嘲笑した人々は、横ばいの30年を見続けた業界ベテランだった。
           </p>
           <div class="chart">
             <div class="chart-title">構成部品のコスト低下：既に曲線に乗っている</div>
@@ -607,7 +623,7 @@
             <div class="hero-caption">Photo: Unsplash / Cash Macanaya</div>
           </div>
           <p class="lead">
-            この記事は「10年で確実に自己改善ループが閉じる」と言わない。言えない。不確実性は大きく、ボトルネックは複数残っている。No.08で論じた通り、採掘・精錬・半導体・エネルギーの4層が同時に閉ループを成立させる必要があり、最後の一つが最も困難だ。熟練者の抵抗の一つは「物理層の制約は情報処理と質的に異なる」という正しい指摘だろう。実際そうだ。物理は慣性・摩擦・部品公差の世界で、情報処理のスケール則がそのまま横滑りしない。本記事の論点は、**情報処理側のフロンティアがどこまで物理層の設計サイクルを短縮するか**である。設計・シミュレーション・制御・学習が情報処理側に移管されるほど、物理層の試行回数が安くなる。だが、ここで扱う問いはそこではない。<strong>「絶対ない」という言い切りが、論理的に擁護できるか</strong>、それだけだ。
+            この記事は「10年で確実に自己改善ループが閉じる」と言わない。不確実性は大きい。No.08で論じた通り、採掘・精錬・半導体・エネルギーの4層が同時に閉ループを成立させる必要があり、物理層の制約は情報処理と質的に異なる。慣性・摩擦・部品公差の世界で、スケーリング則はそのまま横滑りしない。ここで扱う問いはただ一つ。<strong>「絶対ない」という言い切りが、論理的に擁護できるか</strong>。そしてなぜ、「絶対ない」と言い切る人は、ほぼ例外なくその分野の最も経験豊富な専門家なのか。
           </p>
           <p class="lead">
             歴史を並べる。1957年、Herbert Simonは人工知能研究の草創期に、「10年以内にコンピュータがチェスの世界チャンピオンを破る」と予言した<sup>[20]</sup>。外れた。40年かかった。1997年5月、DeepBlueがGarry Kasparovを破った。Simonが間違っていたのはタイミングだけで、結果は予言通りに起きた。1966年、米国学術会議のALPAC報告書は、機械翻訳の実用化は困難でありコストが人間翻訳を上回ると結論し、米国の自動翻訳研究予算の打ち切りを招いた<sup>[21]</sup>。50年後の2016年、Google Neural Machine Translationが商用品質の翻訳を実現する。2019年、DeepLが英独翻訳で人間を超えた。
@@ -619,7 +635,7 @@
             2017年のMcKinseyレポートは、自動化による労働代替のタイムラインを職種別に予測した<sup>[24]</sup>。翻訳、画像診断、コーディング支援、文章生成、データ分析。全ての予測が、2020-2024年の実績に対して5年から15年遅れた。2018年に研究者コミュニティで行われたAGI到達時期のサーベイは、中央値2060年だった<sup>[25]</sup>。2023年の同じサーベイでは2047年に前倒しされ、2024年のMetaculusコミュニティ予測は2030年代前半に収束している<sup>[26]</sup>。専門家の「慎重な予測」が、5年ごとに10年ずつ前倒しされている。
           </p>
           <p class="lead">
-            共通パターンがある。<strong>「絶対ない」と言った人々は、全員、その分野の実務経験が最も豊富な専門家だった</strong>。チェスのGrand Master、翻訳言語学者、囲碁のプロ棋士、構造生物学者、コンピュータビジョン研究者、McKinseyのアナリスト。彼らは現場を知っていた。現場の複雑さを知っていたがゆえに、「こんなの機械にできるわけがない」と確信した。そして、全員が同じ理由で外れた。非連続な技術、基盤モデル、自己対戦学習、ニューラルアーキテクチャが、横ばいだった曲線を折ったからだ。
+            共通パターンがある。<strong>「絶対ない」と言った人々は、全員、その分野の実務経験が最も豊富な専門家だった</strong>。チェスのGrand Master、翻訳言語学者、囲碁のプロ棋士、構造生物学者、コンピュータビジョン研究者、McKinseyのアナリスト。彼らは現場を知っていた。だからこそ外れた。認知科学はこの構造を三つのバイアスで説明する。<strong>アンカリング</strong>：横ばい期の実績に判断が固定され、曲線が折れる可能性を過小評価する。<strong>指数関数バイアス</strong>：人間の脳は指数的変化を直線的に知覚する。Wagenaar &amp; Sagaria（1975）の実験では、被験者は指数的成長の10年後の値を10倍以上過小推定する事例が頻出した。<strong>専門家の権威バイアス</strong>：専門知識が深いほど「この分野の困難さを知っている」という自信が強化され、パラダイムシフトへの感度が下がる。Philip Tetlockの2005年の研究では、専門分野の予測精度は非専門家と有意差がなく、むしろ過信度が高かった。
           </p>
           <div class="portraits">
             <div class="portrait-card">
@@ -698,14 +714,14 @@
             </tbody>
           </table>
           <div class="note" style="margin-top:24px;">
-            <strong>表の最後の行</strong>に「？」が一つ残っている。過去4行のパターンを正直に見つめた上で、この「？」を「絶対ない」で埋めるには、相応の論理的な根拠が要る。線形外挿だけでは足りない。横ばいの25年を見た体験だけでも足りない。2022-2025の基盤モデル論文と、2024年のPilbara 48億トン輸送と、2024年$500のLiDARを、全て否定する論理が要る。それを提示せずに「絶対ない」と言うなら、それは根拠ではなく、祈りに近い。
+            <strong>「不可能」の直感を疑うためのチェックリスト</strong>。過去4行のパターンから抽出した検証項目だ。(1) 自分の予測は横ばい期の線形外挿に依拠していないか。(2) 過去3年間に、その分野で「概念そのものが存在しなかった」技術が登場していないか。VLAモデルは2022年に名前すらなかった。(3) 構成部品のコスト曲線が折れ始めていないか。LiDARは7年で36倍の価格低下を記録した。(4) 他分野で同じ構造のパターン（横ばい→基盤モデル→曲線の折れ）が過去に成立しているか。チェス、翻訳、囲碁、蛋白質構造、画像認識で5回成立している。(5) 自分の確信の強さは、経験の深さと比例して強化されていないか。Tetlockの研究が示す通り、専門知識の深さは予測精度を改善しない。
           </div>
           <p class="lead" style="margin-top:24px;">
-            1957年、Herbert Simonは10年と言った。間違いは時間だけだった。40年後、DeepBlueがKasparovを破った。2026年、ラインを30年設計してきた熟練エンジニアは「10年で絶対ない」と言う。彼が間違いうるのは、やはり時間だけかもしれない。それが何年になるかを、我々はまだ知らない。
+            表の最後の行に「？」が一つ残っている。この「？」を「絶対ない」で埋めるには、上記5項目のすべてに反論が要る。2022-2025の基盤モデル論文、Pilbaraの48億トン無人輸送、$500のLiDAR。これらを全て否定する論理を提示せずに「絶対ない」と言うなら、それは根拠ではなく、アンカリングの産物だ。1957年、Herbert Simonは10年と言った。間違いは時間だけだった。2026年、ラインを30年設計してきた熟練エンジニアは「10年で絶対ない」と言う。彼が間違いうるのは、やはり時間だけかもしれない。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>「絶対ない」と言う熟練者ほど、曲線が折れる瞬間に立ち会っている</span>
+          <span>アンカリング・指数関数バイアス・権威バイアスの三重構造が「絶対ない」を生む</span>
           <span class="slide-count">5 / 5</span>
         </div>
       </section>
@@ -784,6 +800,128 @@
       </p>
     </section>
 
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
     <script>
       const slides = [...document.querySelectorAll("main > section.slide")];
       const navButtons = [...document.querySelectorAll(".nav button")];
@@ -823,5 +961,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

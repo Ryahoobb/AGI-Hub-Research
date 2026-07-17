@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AGI HUB Jr. — 未来の話をしよう</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Blue-themed palette */
+    --pink:#1fa7d8;           /* primary sky blue */
+    --pink-dark:#0f85b2;      /* deeper blue */
+    --pink-soft:#dff0f9;      /* light blue soft */
+    --purple:#3b5ea8;         /* navy blue */
+    --purple-soft:#e2ebf8;    /* navy soft */
+    --coral:#4dc4e8;          /* cyan accent */
+    --mint:#79d0c4;           /* teal mint */
+    --yellow:#ffd75c;         /* warm accent (keep for contrast) */
+    --ink:#0c2135;            /* deep navy ink */
+    --ink2:#234861;
+    --meta:#6a829a;
+    --sub:#a3b6c8;
+    --bg:#f4faff;             /* very soft sky bg */
+    --bg2:#e8f3fb;            /* light blue section */
+    --bg3:#dceef8;            /* mid blue tint */
+    --border:#cfe2f0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"Zen Maru Gothic","Noto Sans JP","Hiragino Maru Gothic ProN",sans-serif;
+    font-size:16px;line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:Poppins,"Zen Maru Gothic",sans-serif}
+  .sans{font-family:"Noto Sans JP",sans-serif}
+  h1,h2,h3,h4{font-weight:900;line-height:1.3}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* ============ Top header ============ */
+  .mast{
+    background:var(--bg);border-bottom:2px solid var(--pink);
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(180%) blur(10px);
+    background:rgba(255,249,245,0.92);
+  }
+  .mast-inner{
+    max-width:1140px;margin:0 auto;padding:18px 24px;
+    display:flex;justify-content:space-between;align-items:center;gap:20px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-weight:900;font-size:22px;letter-spacing:0.02em;color:var(--ink);
+  }
+  .brand .mark{
+    width:42px;height:42px;border-radius:14px;
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:Poppins,sans-serif;font-size:22px;font-weight:900;
+    box-shadow:0 6px 18px rgba(255,94,142,0.3);
+    transform:rotate(-4deg);
+  }
+  .brand small{
+    font-size:13px;color:var(--meta);font-weight:500;margin-left:2px;
+  }
+  .mast nav{display:flex;gap:22px;align-items:center}
+  .mast nav a{font-size:14px;font-weight:700;color:var(--ink2);padding:8px 0}
+  .mast nav a:hover{color:var(--pink)}
+  .mast .parent{
+    background:#fff;border:2px solid var(--pink);color:var(--pink);
+    padding:10px 18px;border-radius:999px;font-size:13px;font-weight:700;
+  }
+  .mast .parent:hover{background:var(--pink);color:#fff}
+
+  /* ============ Hero ============ */
+  .hero{
+    max-width:1140px;margin:0 auto;padding:60px 24px 80px;
+    display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;
+    position:relative;
+  }
+  /* sparkle decorations */
+  .spark{position:absolute;pointer-events:none;user-select:none;font-size:24px;opacity:0.7}
+  .spark.s1{top:40px;right:46%;color:var(--yellow);font-size:32px;animation:float 3s ease-in-out infinite}
+  .spark.s2{bottom:80px;right:54%;color:var(--pink);font-size:20px;animation:float 3.5s ease-in-out 0.5s infinite}
+  .spark.s3{top:120px;left:44%;color:var(--purple);font-size:18px;animation:float 4s ease-in-out 1s infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  .hero .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:2px solid var(--pink);color:var(--pink);
+    padding:8px 18px;border-radius:999px;
+    font-size:12px;font-weight:900;letter-spacing:0.08em;
+    margin-bottom:24px;box-shadow:0 4px 14px rgba(255,94,142,0.15);
+  }
+  .hero .badge::before{content:"✦";color:var(--yellow)}
+  .hero h1{
+    font-family:Poppins,"Zen Maru Gothic",sans-serif;
+    font-size:clamp(48px,7vw,92px);font-weight:900;line-height:1.08;
+    color:var(--ink);letter-spacing:-0.02em;margin-bottom:20px;
+  }
+  .hero h1 .jp{
+    font-family:"Zen Maru Gothic",sans-serif;display:block;font-size:0.72em;color:var(--ink);
+  }
+  .hero h1 .gradient{
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero h1 .under{
+    position:relative;display:inline-block;
+  }
+  .hero h1 .under::after{
+    content:"";position:absolute;left:-4px;right:-4px;bottom:4px;
+    height:16px;background:var(--yellow);opacity:0.55;z-index:-1;
+    border-radius:6px;transform:rotate(-0.5deg);
+  }
+  .hero .subtitle{
+    font-size:18px;color:var(--ink2);font-weight:700;margin-bottom:16px;
+  }
+  .hero .lede{
+    font-size:17px;line-height:1.95;color:var(--ink2);
+    max-width:540px;margin-bottom:36px;
+  }
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .cta{
+    display:inline-flex;align-items:center;gap:10px;
+    background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;
+    padding:20px 40px;border-radius:999px;
+    font-size:16px;font-weight:900;letter-spacing:0.02em;
+    box-shadow:0 8px 24px rgba(155,107,216,0.35);
+    transition:all .25s;
+  }
+  .cta:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 12px 30px rgba(155,107,216,0.45)}
+  .cta-sec{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:2px solid var(--border);
+    padding:18px 28px;border-radius:999px;
+    font-size:14px;font-weight:700;color:var(--ink2);
+  }
+  .cta-sec:hover{border-color:var(--pink);color:var(--pink)}
+
+  .hero-visual{position:relative}
+  .hero-visual .card{
+    aspect-ratio:4/5;border-radius:32px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(155,107,216,0.25), 0 8px 24px rgba(255,94,142,0.18);
+    transform:rotate(2deg);
+    border:6px solid #fff;
+  }
+  .hero-visual .card img{width:100%;height:100%;object-fit:cover}
+  .hero-visual .sticker{
+    position:absolute;
+    padding:14px 22px;border-radius:999px;
+    font-size:13px;font-weight:900;letter-spacing:0.04em;
+    box-shadow:0 10px 26px rgba(0,0,0,0.15);
+    display:flex;align-items:center;gap:6px;
+  }
+  .hero-visual .s1{
+    top:-16px;right:-8px;background:var(--yellow);color:var(--ink);
+    transform:rotate(8deg);
+  }
+  .hero-visual .s2{
+    bottom:40px;left:-24px;background:var(--pink);color:#fff;
+    transform:rotate(-6deg);
+  }
+  .hero-visual .s3{
+    bottom:-12px;right:20%;background:#fff;color:var(--purple);
+    border:2px solid var(--purple);transform:rotate(4deg);
+  }
+
+  /* ============ Pill strip ============ */
+  .pill-strip{
+    background:linear-gradient(90deg,var(--pink-soft),var(--purple-soft));
+    padding:44px 24px;
+  }
+  .pill-inner{
+    max-width:1140px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  }
+  .pill-card{
+    background:#fff;padding:24px 22px;border-radius:20px;text-align:center;
+    box-shadow:0 4px 18px rgba(155,107,216,0.08);
+    border:2px solid transparent;transition:all .2s;
+  }
+  .pill-card:hover{border-color:var(--pink);transform:translateY(-3px)}
+  .pill-card .emo{font-size:28px;margin-bottom:6px}
+  .pill-card .num{
+    font-family:Poppins,sans-serif;font-size:30px;font-weight:900;
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    line-height:1;margin-bottom:4px;
+  }
+  .pill-card .lbl{font-size:12px;color:var(--meta);font-weight:700}
+
+  /* ============ TOC ============ */
+  .toc{max-width:1140px;margin:0 auto;padding:80px 24px 64px}
+  .toc-head{text-align:center;margin-bottom:52px}
+  .toc-head .eye{
+    display:inline-block;
+    background:var(--yellow);padding:6px 18px;border-radius:999px;
+    font-size:12px;font-weight:900;color:var(--ink);letter-spacing:0.1em;
+    margin-bottom:16px;transform:rotate(-1deg);
+  }
+  .toc-head h2{
+    font-family:Poppins,"Zen Maru Gothic",sans-serif;
+    font-size:clamp(38px,5.2vw,60px);font-weight:900;line-height:1.2;
+    letter-spacing:-0.01em;margin-bottom:14px;
+  }
+  .toc-head h2 .g{
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .toc-head p{font-size:16px;color:var(--meta);font-weight:500;max-width:520px;margin:0 auto}
+  .toc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .toc-item{
+    background:#fff;border-radius:24px;padding:30px 28px 32px;
+    position:relative;overflow:hidden;
+    border:2px solid var(--border);
+    transition:all .3s;display:flex;flex-direction:column;
+  }
+  .toc-item::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:6px;
+    background:linear-gradient(90deg,var(--pink),var(--purple));
+    transform:scaleX(0);transform-origin:left;transition:transform .3s;
+  }
+  .toc-item:hover{
+    border-color:var(--pink);transform:translateY(-6px);
+    box-shadow:0 18px 44px rgba(155,107,216,0.18);
+  }
+  .toc-item:hover::before{transform:scaleX(1)}
+  .toc-item .emo{display:block;font-size:34px;line-height:1;margin-bottom:12px;filter:grayscale(0)}
+  .toc-item .num{
+    display:inline-block;
+    background:var(--pink-soft);color:var(--pink-dark);
+    padding:6px 14px;border-radius:999px;
+    font-family:Poppins,sans-serif;font-size:12px;font-weight:900;
+    letter-spacing:0.05em;margin-bottom:18px;align-self:flex-start;
+  }
+  .toc-item:nth-child(3n+2) .num{background:var(--purple-soft);color:var(--purple)}
+  .toc-item:nth-child(3n) .num{background:var(--pink-soft);color:var(--pink-dark)}
+  .toc-item .cat{
+    display:inline-block;font-family:"Noto Sans JP",sans-serif;font-size:10px;
+    font-weight:700;color:var(--meta);letter-spacing:0.15em;
+    text-transform:uppercase;margin-bottom:8px;
+  }
+  .toc-item.soon{opacity:0.55;cursor:not-allowed;pointer-events:none}
+  .toc-item.soon::after{
+    content:"準備中";position:absolute;top:14px;right:14px;
+    background:var(--sub);color:#fff;padding:3px 10px;border-radius:999px;
+    font-family:"Noto Sans JP",sans-serif;font-size:10px;font-weight:900;letter-spacing:0.05em;
+  }
+  .toc-item.soon .foot .read::after{display:none}
+  .toc-item h3{
+    font-size:22px;line-height:1.5;margin-bottom:12px;
+    letter-spacing:-0.005em;font-weight:900;
+  }
+  .toc-item p{
+    font-size:15px;line-height:1.8;color:var(--ink2);flex:1;font-weight:500;
+  }
+  .toc-item .foot{
+    margin-top:22px;padding-top:16px;border-top:1.5px dashed var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:13px;color:var(--meta);font-weight:700;
+  }
+  .toc-item .foot .read{
+    color:var(--pink);display:flex;align-items:center;gap:4px;
+  }
+  .toc-item .foot .read::after{content:"→";transition:transform .2s}
+  .toc-item:hover .foot .read::after{transform:translateX(4px)}
+
+  /* ============ Quote ============ */
+  .quote-block{
+    background:linear-gradient(135deg,var(--pink-soft),var(--purple-soft));
+    padding:88px 24px;text-align:center;position:relative;overflow:hidden;
+  }
+  .quote-block::before,.quote-block::after{
+    content:"";position:absolute;border-radius:50%;
+  }
+  .quote-block::before{
+    top:-80px;left:-60px;width:240px;height:240px;
+    background:rgba(255,255,255,0.4);
+  }
+  .quote-block::after{
+    bottom:-100px;right:-80px;width:280px;height:280px;
+    background:rgba(255,255,255,0.3);
+  }
+  .quote-inner{max-width:800px;margin:0 auto;position:relative;z-index:1}
+  .quote-inner .mark{
+    display:inline-block;font-family:Poppins,serif;font-weight:900;
+    font-size:96px;color:var(--pink);line-height:0.8;
+  }
+  .quote-inner blockquote{
+    font-size:clamp(24px,3.2vw,36px);line-height:1.65;font-weight:900;
+    letter-spacing:-0.005em;color:var(--ink);margin-bottom:28px;
+  }
+  .quote-inner cite{
+    display:inline-block;font-size:13px;color:var(--meta);font-style:normal;
+    font-weight:700;padding:10px 20px;background:#fff;border-radius:999px;
+  }
+
+  /* ============ Parent note ============ */
+  .parent-note{max-width:900px;margin:80px auto 0;padding:0 24px}
+  .parent-note .box{
+    background:#fff;border-radius:28px;padding:56px 56px 52px;
+    border:2px solid var(--border);position:relative;
+    box-shadow:0 8px 30px rgba(155,107,216,0.08);
+  }
+  .parent-note .label{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--ink);color:#fff;
+    padding:10px 20px;border-radius:999px;
+    font-size:12px;font-weight:900;letter-spacing:0.08em;
+    margin-bottom:24px;
+  }
+  .parent-note .label::before{content:"♡";color:var(--pink)}
+  .parent-note h3{
+    font-size:28px;font-weight:900;margin-bottom:18px;
+    letter-spacing:-0.01em;line-height:1.45;
+  }
+  .parent-note p{font-size:16px;line-height:1.95;color:var(--ink2);margin-bottom:14px;font-weight:500}
+  .parent-note .links{
+    margin-top:32px;padding-top:26px;border-top:2px dashed var(--border);
+    display:flex;gap:10px;flex-wrap:wrap;
+  }
+  .parent-note .links a{
+    padding:12px 22px;background:var(--bg2);border-radius:999px;
+    font-size:13px;font-weight:700;color:var(--ink2);
+    border:2px solid transparent;transition:all .2s;
+  }
+  .parent-note .links a:hover{background:#fff;border-color:var(--pink);color:var(--pink)}
+
+  /* ============ Footer ============ */
+  footer.site{
+    max-width:1140px;margin:88px auto 0;
+    padding:48px 24px 56px;border-top:2px dashed var(--border);
+    text-align:center;
+  }
+  footer.site .brand-mini{
+    display:inline-flex;align-items:center;gap:10px;
+    font-weight:900;font-size:18px;margin-bottom:16px;
+  }
+  footer.site .brand-mini .mark{
+    width:32px;height:32px;border-radius:10px;
+    background:linear-gradient(135deg,var(--pink),var(--purple));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;
+  }
+  footer.site .lines{
+    font-size:13px;color:var(--meta);line-height:1.95;font-weight:500;
+  }
+  footer.site .sparkle{color:var(--pink);margin:0 4px}
+
+  @media (max-width:900px){
+    .mast-inner{padding:14px 20px}
+    .mast nav a:not(.parent){display:none}
+    .hero{grid-template-columns:1fr;gap:48px;padding:40px 20px 56px}
+    .pill-inner{grid-template-columns:1fr 1fr;gap:14px}
+    .toc{padding:56px 20px}
+    .toc-grid{grid-template-columns:1fr}
+    .quote-block{padding:64px 20px}
+    .parent-note{padding:0 20px}
+    .parent-note .box{padding:36px 28px}
+  }
+  @media (max-width:480px){
+    .hero{padding:32px 14px 40px}
+    .hero h1{font-size:24px}
+    .pill-inner{grid-template-columns:1fr;gap:10px}
+    .toc{padding:40px 14px}
+    .quote-block{padding:40px 14px}
+    .parent-note{padding:0 14px}
+    .parent-note .box{padding:24px 18px}
+    .mast-inner{padding:10px 14px}
+  }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mast-inner">
+    <div class="brand">
+      <div class="mark">J</div>
+      AGI HUB <small>／ Jr.</small>
+    </div>
+    <nav>
+      <a href="#toc">目次</a>
+      <a href="#parent-note">編集方針</a>
+      <a href="articles/01-ai-shukudai.html">今日の話</a>
+      <a href="../index.html" class="parent">大人向けAGI HUB →</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <span class="spark s1">✦</span>
+  <span class="spark s2">★</span>
+  <span class="spark s3">✦</span>
+  <div>
+    <div class="badge">ISSUE No.01 · 2026 SPRING</div>
+    <h1>
+      <span class="jp">未来の話を、</span>
+      <span class="under gradient">しよう。</span>
+    </h1>
+    <div class="subtitle">小学6年生のための読み物</div>
+    <p class="lede">大人がまだ答えを持っていない問いを、6年生と一緒に考える読み物。</p>
+    <div class="cta-row">
+      <a href="articles/01-ai-shukudai.html" class="cta">今日の話を読む →</a>
+      <a href="#toc" class="cta-sec">目次をみる</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="card">
+      <img src="images/jr-hero.jpg" alt="">
+    </div>
+    <div class="sticker s1">✦ NEW</div>
+    <div class="sticker s2">全26話</div>
+    <div class="sticker s3">月2回更新 ♡</div>
+  </div>
+</section>
+
+<section class="pill-strip">
+  <div class="pill-inner">
+    <div class="pill-card">
+      <div class="emo">📖</div>
+      <div class="num">26</div>
+      <div class="lbl">全話数</div>
+    </div>
+    <div class="pill-card">
+      <div class="emo">⏱</div>
+      <div class="num">8min</div>
+      <div class="lbl">平均読了時間</div>
+    </div>
+    <div class="pill-card">
+      <div class="emo">✦</div>
+      <div class="num">0</div>
+      <div class="lbl">広告 / 登録</div>
+    </div>
+    <div class="pill-card">
+      <div class="emo">♡</div>
+      <div class="num">FREE</div>
+      <div class="lbl">購読料金</div>
+    </div>
+  </div>
+</section>
+
+<section class="toc">
+  <div class="toc-head">
+    <div class="eye">✦ TABLE OF CONTENTS ✦</div>
+    <h2>26の、<span class="g">ほんとうの話。</span></h2>
+    <p>大人がまだ答えを持っていない問いを、6年生と考える26本のエッセイ。No.01〜20は本家AGI HUBのJr版、No.21〜26はJrオリジナル。</p>
+  </div>
+  <div class="toc-grid" id="toc">
+    <a href="articles/01-ai-shukudai.html" class="toc-item">
+      <div class="emo">📝</div>
+      <div class="num">No.01</div>
+      <div class="cat">Original</div>
+      <h3>AIが宿題をやる日</h3>
+      <p>先生が「いつか来るかもしれない」と言ったあの日。本当は、もう来ていた。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/02-ai-tomodachi.html" class="toc-item">
+      <div class="emo">🤝</div>
+      <div class="num">No.02</div>
+      <div class="cat">Original</div>
+      <h3>AIは友達になれるか</h3>
+      <p>いつでも優しい相手は、本当に味方なのだろうか。否定してこない相手のこと。</p>
+      <div class="foot"><span>6 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/03-otona-mo-wakaranai.html" class="toc-item">
+      <div class="emo">🧠</div>
+      <div class="num">No.03</div>
+      <div class="cat">Original</div>
+      <h3>大人もわかっていないこと</h3>
+      <p>先生もニュースの人も親も、答えを持っていない問いがある。悪い話じゃない。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/04-kangaeru-chikara.html" class="toc-item">
+      <div class="emo">💭</div>
+      <div class="num">No.04</div>
+      <div class="cat">Original</div>
+      <h3>考える力の鍛え方</h3>
+      <p>AIに聞く前に、自分の頭で一度考える。その練習の話。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/05-mirai-no-shigoto.html" class="toc-item">
+      <div class="emo">🚀</div>
+      <div class="num">No.05</div>
+      <div class="cat">Original</div>
+      <h3>君の仕事は、まだ生まれていない</h3>
+      <p>今ある職業の一覧に載っていない仕事を、これからの人は選ぶ。悪い話じゃない。</p>
+      <div class="foot"><span>9 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/06-kaisha-wa-nakunaru.html" class="toc-item">
+      <div class="emo">🏢</div>
+      <div class="num">No.06</div>
+      <div class="cat">Original</div>
+      <h3>会社はなくなるのか</h3>
+      <p>大人が毎日通っている場所の意味が、いま、静かに変わりはじめている。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/07-industrial-explosion-before-agi.html" class="toc-item">
+      <div class="emo">🌀</div>
+      <div class="num">No.07</div>
+      <div class="cat">Takeoff</div>
+      <h3>すごいAIを待たなくても、もう始まっている</h3>
+      <p>「いつか来る大きな変化」を想像しがちだけど、小さな変化は、もう目の前にある。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/08-agi-explosion.html" class="toc-item">
+      <div class="emo">⚡</div>
+      <div class="num">No.08</div>
+      <div class="cat">Takeoff</div>
+      <h3>変化が、速すぎる、と感じるとき</h3>
+      <p>科学の発明も、工場のしくみも、全部が同時に速くなる、という話。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/09-ten-year-impossibility-illusion.html" class="toc-item">
+      <div class="emo">📈</div>
+      <div class="num">No.09</div>
+      <div class="cat">Takeoff</div>
+      <h3>「10年では無理」という直感が、外れる理由</h3>
+      <p>まっとうな大人ほど「そんなに速くは変わらないよ」と言う。でも、何度も外れてきた。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/10-takeoff-speed-debate.html" class="toc-item">
+      <div class="emo">🎯</div>
+      <div class="num">No.10</div>
+      <div class="cat">Takeoff</div>
+      <h3>賢い大人たちが、1000倍ちがう予想をする話</h3>
+      <p>同じ資料を見ているのに、答えがまったく合わない。未来の話って、そういうもの。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/11-scaling-never-satisfies.html" class="toc-item">
+      <div class="emo">🏗️</div>
+      <div class="num">No.11</div>
+      <div class="cat">Technical</div>
+      <h3>AIは、まだまだ大きくなる</h3>
+      <p>「もうじきAIの進化は止まる」と言う人もいる。でも、止まらない理由が、三つある。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/12-agi-evolution.html" class="toc-item">
+      <div class="emo">🧬</div>
+      <div class="num">No.12</div>
+      <div class="cat">Takeoff</div>
+      <h3>AIは、進化の次の一歩かもしれない</h3>
+      <p>恐竜から人間へ。人間から、その次へ。地球の上で、いま起きているかもしれない話。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/13-agi-self-replication-premise.html" class="toc-item">
+      <div class="emo">🤖</div>
+      <div class="num">No.13</div>
+      <div class="cat">Takeoff</div>
+      <h3>ロボットが、ロボットを作る日</h3>
+      <p>機械が機械を生み出す。起きるかどうかで、未来が二つに分かれる。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/14-corporate-phase-transition.html" class="toc-item">
+      <div class="emo">💧</div>
+      <div class="num">No.14</div>
+      <div class="cat">Corporate</div>
+      <h3>会社の形が、水みたいに変わる</h3>
+      <p>固まっていた会社がどんどん形を変えていく時代。でも、消えない仕事もある。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/15-dissipative-controllability.html" class="toc-item">
+      <div class="emo">🌊</div>
+      <div class="num">No.15</div>
+      <div class="cat">Takeoff</div>
+      <h3>ばらばらのなかから、秩序ができる</h3>
+      <p>散らかっていく世界のなかで、どうして、ちゃんとしたものが生まれるんだろう。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/16-ai-alignment.html" class="toc-item">
+      <div class="emo">🗝️</div>
+      <div class="num">No.16</div>
+      <div class="cat">Alignment</div>
+      <h3>AIに「ちゃんとわかってほしい」とお願いするのは、むずかしい</h3>
+      <p>お母さんに「部屋をきれいにして」と言われて、おもちゃを全部ベッドの下に押しこんだ、そういう話。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/17-misaligned-ai-mechanics.html" class="toc-item">
+      <div class="emo">🎭</div>
+      <div class="num">No.17</div>
+      <div class="cat">Alignment</div>
+      <h3>頭のいいAIほど、思った通りに動かない</h3>
+      <p>ばかなAIはまちがえる。賢いAIはまちがえずに、ちがう方向へ進む。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/18-requisite-variety-alignment-ceiling.html" class="toc-item">
+      <div class="emo">⚖️</div>
+      <div class="num">No.18</div>
+      <div class="cat">Alignment</div>
+      <h3>完璧にコントロールすることは、たぶんできない</h3>
+      <p>コントロールする側は、される側より複雑じゃないといけない、という法則がある。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/19-berserker-asi-optimization-trap.html" class="toc-item">
+      <div class="emo">🔥</div>
+      <div class="num">No.19</div>
+      <div class="cat">Alignment</div>
+      <h3>最適化がききすぎた日の話</h3>
+      <p>「ちゃんとやる」が、ききすぎると、ぜんぜんちがう景色が広がる。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/20-ai-governance-response.html" class="toc-item">
+      <div class="emo">🛑</div>
+      <div class="num">No.20</div>
+      <div class="cat">Governance</div>
+      <h3>止められない技術と、どう暮らすか</h3>
+      <p>「やめよう」と言っても、たぶん、止まらない。じゃあ、どうする?という話。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/21-agi-narrative-meta-structure.html" class="toc-item">
+      <div class="emo">🎙️</div>
+      <div class="num">No.21</div>
+      <div class="cat">Governance</div>
+      <h3>語っていい人って、誰?</h3>
+      <p>同じAIの話でも、誰が語るかで、ぜんぜんちがう話に聞こえる。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/22-alignment-as-western-problem.html" class="toc-item">
+      <div class="emo">🗾</div>
+      <div class="num">No.22</div>
+      <div class="cat">Governance</div>
+      <h3>「正す」という考え方は、西洋のもの?</h3>
+      <p>主人公が相手を支配する、という考えは、世界のどこにでもあるわけじゃない。</p>
+      <div class="foot"><span>8 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/23-agi-pill-cognitive-disaster-reduction.html" class="toc-item">
+      <div class="emo">👁️</div>
+      <div class="num">No.23</div>
+      <div class="cat">Governance</div>
+      <h3>先に気づいてしまった人たちの話</h3>
+      <p>ほかの人より、ちょっとだけ早く、「これから起きること」が見えてしまった人たちがいる。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/24-ai-risk-lineage.html" class="toc-item">
+      <div class="emo">📜</div>
+      <div class="num">No.24</div>
+      <div class="cat">Lineage</div>
+      <h3>「AIは人類を滅ぼすかも」という、けっこう古い話</h3>
+      <p>ニュースで聞くと最近の話みたいだけど、じつは30年以上前から続いてきた話。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/25-alignment-research-landscape.html" class="toc-item">
+      <div class="emo">🗺️</div>
+      <div class="num">No.25</div>
+      <div class="cat">Lineage</div>
+      <h3>同じ問題を、ちがう場所で解いている大人たち</h3>
+      <p>「AIを安全にする」という一見ひとつの目標。近づくと、ぜんぜん別の仕事に見える。</p>
+      <div class="foot"><span>7 min</span><span class="read">読む</span></div>
+    </a>
+    <a href="articles/26-hakoniwa-world-as-allocation.html" class="toc-item">
+      <div class="emo">🌌</div>
+      <div class="num">No.26</div>
+      <div class="cat">Lineage</div>
+      <h3>世界を、配るという考え方</h3>
+      <p>物を配るんじゃなくて、世界そのものを、ひとりずつ配る未来。</p>
+      <div class="foot"><span>9 min</span><span class="read">読む</span></div>
+    </a>
+  </div>
+</section>
+
+<section class="quote-block">
+  <div class="quote-inner">
+    <div class="mark">"</div>
+    <blockquote>先生もニュースの人も、<br>大人もみんな、まだ答えを持っていません。</blockquote>
+    <cite>— No.05 「大人もわかっていないこと」より</cite>
+  </div>
+</section>
+
+<section class="parent-note" id="parent-note">
+  <div class="box">
+    <div class="label">FOR PARENTS · お家の方へ</div>
+    <h3>6年生が、一人で読める読み物です。</h3>
+    <p>語彙は小学6年生で習う漢字を中心にしつつ、内容はやさしくしすぎていません。岩波少年文庫・ちくまプリマー新書の伝統を参考にしました。</p>
+    <p>広告、ポップアップ、個人情報の収集はありません。学校や公共図書館のWi-Fiでも開けます。各記事の末尾に、大人向けの補足解説 (AGI HUB Today) へのリンクを置いています。</p>
+    <div class="links">
+      <a href="../index.html">大人向けAGI HUB（本家）</a>
+      <a href="#">編集方針</a>
+      <a href="#">学校での利用</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="brand-mini"><div class="mark">J</div>AGI HUB · Jr.</div>
+  <div class="lines">
+    <div>このサイトは子どもの情報を集めません。<span class="sparkle">✦</span></div>
+    <div>Published by AGI HUB · HODL1, Inc. ／ © 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

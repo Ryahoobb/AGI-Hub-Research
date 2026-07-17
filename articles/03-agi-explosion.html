@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <title>技術爆発と産業爆発 — シンギュラリティが科学的蓋然性に変わった日</title>
+    <title>技術爆発と産業爆発 — シンギュラリティが定量モデルの検討対象になった日</title>
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
       :root {
@@ -190,6 +190,18 @@
         max-width: 22ch;
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 32px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -371,7 +383,7 @@
     </style>
   </head>
   <body class="pattern-monolith has-site-header" data-category="takeoff">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -384,7 +396,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 03 / 15 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 03 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="02-agi-evolution.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=takeoff" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -395,33 +407,33 @@
       <!-- ═══════════ Slide 1 ═══════════ -->
       <section class="slide" id="slide-1">
         <div class="eyebrow reveal">AGI HUB &nbsp;·&nbsp; No. 03 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; Framing The Singularity &nbsp;·&nbsp; 2026.04.10 &nbsp;·&nbsp; By Ryao</div>
-        <h1 class="reveal reveal-delay-1">シンギュラリティは「宗教」から「科学的蓋然性」へ変わった</h1>
+        <h1 class="reveal reveal-delay-1">シンギュラリティは「宗教」から「定量モデル上の検討対象」へ変わった</h1>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero" src="../images/agi-explosion/slide1.jpg" alt="Dark abstract field suggesting deep space">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead dropcap">
-            シンギュラリティという言葉は長らく、テクノ宗教の領域に押し込められていた。Ray Kurzweilが2005年に描いた「2045年に人工知能が人間の知性を超え、文明が根本的に変容する」という予言は、直感的な外挿と曲線のエクストラポレーションが中心で、なぜそれが起こるのかという経済学的・物理学的なメカニズムの説明は希薄だった。信じるか信じないかの問題として扱われてきた所以である。
+            シンギュラリティという言葉は長らく、テクノ宗教の領域に押し込められていた。Ray Kurzweilが2005年に描いた「2045年に人工知能が人間の知性を超え、文明が根本的に変容する」という予言は、直感的な外挿と曲線のエクストラポレーションが中心で、なぜそれが起こるかという経済学的メカニズムの説明がなかった。信仰の対象であって検証の対象ではなかった。
           </p>
           <p class="lead">
-            ここ数年でその扱いが変わりつつある。Forethought ResearchのTom DavidsonやWilliam MacAskill、Epoch AIのEge ErdilとTamay Besiroglu、Open PhilanthropyのCarl Shulmanといった研究者たちが、シンギュラリティに相当する現象を<strong>半内生的成長モデル</strong>という経済学の標準的フレームワークに落とし込み、定量的に分析を始めた。議論の核にあるのは二つの概念だ。AIがAIを改良するフィードバックループによる「技術爆発」、そしてロボットがロボットを作る自己複製のフィードバックループによる「産業爆発」である。
+            2023年以降、この状況が変わった。Forethought ResearchのTom Davidson、Epoch AIのEge ErdilとTamay Besiroglu、Open PhilanthropyのCarl Shulmanが、シンギュラリティに相当する現象を<strong>半内生的成長モデル</strong>という経済学のフレームワークに翻訳し、仮定を明示した上で定量的な結論を導いた。この翻訳によって変わったこと、変わらなかったことの両方が重要だ。変わったのは、議論の言語。「信じるか」から「仮定が正しいなら何が帰結するか」へ。変わらなかったのは、仮定そのものの不確実性。モデルは予測を出せるが、仮定の妥当性は別問題であり、方程式があるという事実は結論の正しさを保証しない。
           </p>
           <p class="lead">
-            彼らの主張は驚くほど具体的で、しかも保守的な前提を積み上げても結論が同じ方向に収束している。AGI開発から10年前後の時間スケールで、人類文明は地球上の一つの文明からカルダシェフ・スケールの宇宙文明へと押し上げられうる。水星が解体され、太陽の周囲にダイソンスウォームが構築され始め、数百年分の科学技術進歩が10年に圧縮される。Kurzweilが直感で描いたものに、Davidsonらは経済学の方程式を与え、Epoch AIは物理的な反論を一つずつ検討した。そうして浮かび上がったのは、「起こるかどうか」ではなく「いつ、どの速度で起こるか」を議論する段階である。
+            議論の核にあるのは二つの概念だ。AIがAIを改良するフィードバックループによる「技術爆発」と、ロボットがロボットを作る自己複製のフィードバックループによる「産業爆発」。どちらも半内生的成長モデルの素直な外挿として導かれる。モデルのパラメータを保守的に設定しても、結論は同じ方向に収束する。AGI開発から10年前後で文明の規模が桁違いに拡大しうる、と。ただし「保守的な前提でも結論が収束する」という表現には注意がいる。全てのモデルがRomerの内生的成長理論という共通のルーツを持つため、前提が独立していない。収束は独立した検証の結果ではなく、共通の仮定系から導かれた一貫性に過ぎない可能性がある。
           </p>
           <div class="grid-3">
             <div class="card">
               <span class="tag">01</span>
-              <p><strong>宗教から科学へ</strong><br>Kurzweilの直感的外挿に、半内生的成長モデルという実証的フレームワークが与えられた。信じるかどうかではなく、定量モデルの妥当性を問う段階に入った。</p>
+              <p><strong>翻訳されたが検証されていない</strong><br>Kurzweilの直感に半内生的成長モデルという言語が与えられた。議論が「信じるか」から「仮定が正しいか」へ移った。ただしモデルの仮定自体はまだ実証されていない。</p>
             </div>
             <div class="card">
               <span class="tag">02</span>
-              <p><strong>二重のループ</strong><br>AIがAIを改良する技術爆発と、ロボットがロボットを作る産業爆発。この二つは独立した現象ではなく、互いを加速し合う相互依存の関係にある。</p>
+              <p><strong>二重のループ</strong><br>AIがAIを改良する技術爆発と、ロボットがロボットを作る産業爆発。2つのループは互いを加速し合う。問題は、どちらのループにも未検証の物理的前提が含まれること。</p>
             </div>
             <div class="card">
               <span class="tag">03</span>
-              <p><strong>AGIピルを飲む</strong><br>AGI以後の世界は根本的に変わる、という前提を共有する研究者コミュニティが形成されている。彼らの間で争われているのは変化の有無ではなく、その速度である。</p>
+              <p><strong>合意と不確実性の共存</strong><br>「AGI以後に大きな変化が起こる」という方向性はDavidson、Shulman、EpochAIの間で共有されている。しかし変化の規模の見積もりは1000倍以上ずれている。</p>
             </div>
           </div>
         </div>
@@ -441,16 +453,16 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            技術爆発の出発点は、現在の科学技術進歩が抱える構造的なボトルネックにある。世界中の研究者は数百万人規模だが、年間数%しか増えていない。つまり技術進歩のスピードは、研究者の頭数と能力という人間的制約に縛られている。半内生的成長モデルに研究努力量を代入すれば、この制約こそが進歩率の上限を決める変数であることが示される。
+            技術爆発の論理を、仮定を一つずつ確認しながら追う。出発点は単純な観察だ。科学技術の進歩速度は研究者の数と能力に依存する。世界の研究者は数百万人規模で、年間数%しか増えない。半内生的成長モデル（Jones 1995）はこの制約を数式化した。研究努力量の増加率が進歩率の上限を決める。ここまでは実証データと整合しており、仮定としては堅い。
           </p>
           <p class="lead">
-            AGIが登場すると、この変数が崩れる。定義上AGIは人間の研究者ができることなら何でもできるため、<strong>AIの改良研究自体をAIが担えるようになる</strong>。より賢いAIが、さらに賢いAIを設計する。その上、AIの研究者はコピー可能だ。優秀なモデルをサーバー上でいくらでも複製できるため、人口増加率という制約は外れる。Forethoughtの推計では、AIによる研究努力量は年間25倍以上のペースで拡大しうる。
+            <strong>仮定1: AGIは人間の研究者と同等以上の能力を持つ。</strong> この仮定が成立すると、AIの改良研究自体をAIが担える。再帰的改善ループが回り始める。さらにAI研究者はコピー可能だから、研究努力量は人口増加率の制約を外れる。Forethoughtは年間25倍以上の拡大を推計している。ただし「AGIは人間の研究者と同等」という仮定は、AGIの定義に依存する。Narrow AIが特定ベンチマークで人間を超えることと、研究の全プロセス（仮説生成、実験設計、予期しない結果の解釈、学際的接続）を人間なしで回せることには、埋まっていない距離がある。
           </p>
           <p class="lead">
-            この拡大を半内生的成長モデルに入れると、結論は驚くほど直接的に出る。Forethought ResearchのTom Davidsonは「a century in a decade」——100年分の技術進歩が10年に圧縮される——という保守的な表現を用いている。1925年から2025年の100年で人類は原子爆弾、月着陸、DNA構造解明、インターネット、スマートフォン、そしてAIにたどり着いた。この100年分の変化が、AGI以後のわずか10年で、しかも2025年を出発点として再び起こる。
+            <strong>仮定2: AI研究の成果はスケーラブルに蓄積し、収穫逓減が緩やか。</strong> Davidson（Forethought）は「a century in a decade」と表現した。100年分の技術進歩が10年に圧縮される。1925-2025年の100年で人類は原子爆弾、月着陸、DNA解明、インターネット、AIにたどり着いた。その100年分が再び10年で。ただし、この推計の最も脆弱な前提がここにある。Jones自身が1995年の論文で指摘した「fishing out」効果だ。簡単な発見が先に尽き、後の研究はより困難になる。現に、Bloomら（2020年）は「同じ成長率を維持するのに必要な研究努力量が増加し続けている」ことを示した。半導体分野では年7%の研究生産性低下、経済全体では年4%前後と分野によって差がある。AI研究者を25倍に増やしても、必要な研究努力量が同じペースで増えれば、進歩率は加速しない。
           </p>
           <p class="lead">
-            その先には何があるか。実用的な核融合発電、汎用量子コンピュータ、老化を止める医療技術、分子レベルで物質を操作するナノテクノロジー、そして人間の脳を完全にスキャンしてデジタル化するマインドアップローディング。現時点では数十年から数百年先と見られている技術群が、技術爆発の射程に入る。重要なのはこれらが空想ではなく、Romer流の内生的成長理論という主流経済学のフレームから導かれる<strong>帰結</strong>として提示されていることだ。
+            <strong>仮定3: 計算資源がフィードバックループの速度に追いつく。</strong> AI研究者をコピーするにはサーバーが必要で、サーバーには半導体が必要で、半導体にはFab建設に3-5年かかる。TSMC Arizona Fabは2021年着工、稼働予定は2025年。Nvidiaの最新GPU供給はクラウドプロバイダの需要に追いついていない。計算資源の供給が研究努力量の拡大に線形的にしか追随できない場合、25倍という数字は物理的制約によって大幅に割り引かれる。その先に核融合、量子コンピュータ、先端材料といった技術領域の加速が続くとDavidsonは描く。ここから先は著者がモデルの射程を拡張した思弁的部分であり（原典ではナノテクノロジーやマインドアップロード等も列挙されるが、本文の論理チェーンからは切り離す）、実現可能性は仮定の正しさに完全に依存する。
           </p>
           <table class="compare">
             <thead>
@@ -484,7 +496,7 @@
               <tr>
                 <td><strong>技術の射程</strong></td>
                 <td>数十年先までがロードマップ上に見える</td>
-                <td>マインドアップローディング、ナノテクノロジーが視野に入る</td>
+                <td>核融合・量子計算・先端材料の加速が視野に入る（注: 原典ではナノテク・マインドアップロード等にも言及。本文の論理チェーンからは外す）</td>
               </tr>
             </tbody>
           </table>
@@ -495,28 +507,28 @@
               <div class="step">
                 <div class="n">Step 01</div>
                 <h4 class="title">人間研究者の制約</h4>
-                <p class="desc">現在の進歩率は研究者数と能力の線形関数。年間数%の人口増加が進歩率の天井を決めている。</p>
+                <p class="desc">進歩率は研究者数と能力の関数。年間数%の増加が天井を決める。実証データと整合する堅い仮定。</p>
               </div>
               <div class="step">
                 <div class="n">Step 02</div>
-                <h4 class="title">AIが研究者になる</h4>
-                <p class="desc">AGIが人間研究者の役割を担い、サーバー上で複製される。研究努力量は年間25倍以上で拡大する。</p>
+                <h4 class="title">AGIが研究者になる（仮定1）</h4>
+                <p class="desc">AGIが人間研究者の全機能を担い、複製される。25倍/年の拡大。仮説生成から実験設計まで全代替できるかは未実証。</p>
               </div>
               <div class="step">
                 <div class="n">Step 03</div>
-                <h4 class="title">AIがAIを改良する</h4>
-                <p class="desc">より賢いAIがさらに賢いAIを設計する。世代交代ごとに認知性能が跳ね上がる再帰的改善ループ。</p>
+                <h4 class="title">再帰的改善ループ（仮定2）</h4>
+                <p class="desc">AIがAIを改良する。収穫逓減（Bloom et al. 2020: 研究効率は年4%低下）がループの加速を上回らない前提。</p>
               </div>
               <div class="step">
                 <div class="n">Step 04</div>
-                <h4 class="title">100年分 / 10年</h4>
-                <p class="desc">Davidson (Forethought) の保守的表現。1925-2025年の100年分の変化が、2025年以後の10年で再演される。</p>
+                <h4 class="title">100年分 / 10年（帰結）</h4>
+                <p class="desc">仮定1-2と計算資源の供給弾力性が同時に成立した場合の帰結。パラメータ次第で100年にも延びる。</p>
               </div>
             </div>
             <p class="info-source">Forethought Research / Tom Davidson の枠組みを本文から図解化</p>
           </figure>
           <p class="lead">
-            懐疑的に読みたい人のために一点だけ付け加えると、<a href="04-takeoff-speed-debate.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">Epoch AI</a>はこのシナリオに対して「計算資源とデータの物理的ボトルネック」を根拠に慎重な立場を取っている。しかし彼らでさえ、<strong>技術・産業爆発そのものを否定しているわけではない</strong>。彼らが「今世紀中の爆発的成長の確率は五分五分」としているのは、規制や社会的摩擦を含めた総合評価であり、物理と技術の制約だけでは爆発を止められないというのが、彼ら自身の分析の含意でもある。速度の見積もりが異なるだけで、目的地は共有されている。
+            <a href="04-takeoff-speed-debate.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">Epoch AI</a>のErdilとBesirogluは、計算資源・データ・エネルギーの物理的ボトルネックと、規制・労働市場・資本配分といった社会摩擦を重く見積もる。同じ半内生的成長の枠組みを使いながらも、パラメータの読み方が違うため速度見積もりはForethoughtと桁で乖離する。ここを「Epoch AIも爆発を否定していない」と読み替えるのは雑だ。両者が共有しているのは語彙とモデル形式であって結論ではない。さらに両者はともにRomerの内生的成長理論の系譜にあり、フレームワーク外の反論（AI研究の収穫逓減の加速、AIの能力が「人間的な研究プロセスの全代替」に届かない可能性）には十分に答えていない。経済学モデルが教えてくれるのは「仮定が成立するなら何が起こるか」であり、「仮定が成立するかどうか」は物理学、工学、認知科学の管轄だ。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -535,16 +547,16 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            技術爆発が「知の世界」の爆発なら、産業爆発は「モノの世界」の爆発である。いくら設計図が進歩しても、工場が製品を作り、発電所が電力を送り、鉱山が原材料を掘り出さなければ物理世界は変わらない。そして現在のこのプロセスはすべて人間労働者に依存している。物理的な変化が遅いのは、知恵が足りないからではなく、人手がボトルネックだからだ。
+            技術爆発が「知の世界」の爆発なら、産業爆発は「モノの世界」の爆発だ。設計図がいくら進歩しても、工場が製品を作り、発電所が電力を送り、鉱山が原材料を掘り出さなければ物理世界は変わらない。このプロセスの律速段階は人間労働にある。物理的な変化が遅いのは、知恵ではなく手足がボトルネックだからだ。
           </p>
           <p class="lead">
-            AGIがロボットを操作できるようになった瞬間、この制約は外れる。ロボットが原材料を採掘し、部品を製造し、新しいロボットを組み立て、工場を建設し、発電所を作る。そのロボットたちがさらに多くのロボットを作る。人間のボトルネックが消えた産業システムは、指数関数的な成長を始める。1年で倍増するなら100万台は10年で10億台になる。しかも倍増時間そのものが経験曲線によって短縮されていくため、実際にはそれよりずっと速い。
+            AGIがロボットを操作できるようになった瞬間、このボトルネックが外れる――というのがForethoughtのシナリオだ。ロボットが原材料を採掘し、部品を製造し、新しいロボットを組み立てる自己複製ループ。ただし「ボトルネックが外れる」という表現は、閉ループ成立の工学的困難を過小評価している。<a href="08-agi-self-replication-premise.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">No.08</a>で詳述するが、採掘・精錬・半導体製造の完全無人化は2026年現在未達であり、自己複製ループの最も弱い環は半導体製造にある。TSMCのFab建設には1,000以上の工程と3-5年の期間を要する。この環が閉じない限り、指数関数的増殖は始まらない。
           </p>
           <p class="lead">
-            Forethoughtの分析では、ロボットの累積生産量が倍増するたびに製造コストが経験曲線に沿って下落し、倍増時間が1年→数ヶ月→数週間→数日へと加速する。経験曲線のコスト低下率を80%と仮定するだけで、数学的には約5年で倍増時間がゼロに発散する。もちろん物理的制約があるため実際にゼロにはならないが、生物の自己複製という現実の参照点を見れば<strong>1日で倍増する自己複製工場は物理法則に反していない</strong>。そしてその場合、水星を半年以内に解体し、数年で文明はタイプ2に到達しうる。
+            閉ループが成立したと仮定した場合のForethoughtの推計はこうだ。初期条件は汎用ロボット100万台、倍増時間1年。経験曲線のコスト低下率80%を仮定すると、累積生産量の倍増ごとにコストが下落し、倍増時間が1年→数ヶ月→数週間→数日へと加速する。数学的には約5年で倍増時間がゼロに発散する。物理的制約で実際にはゼロにならないが、生物の自己複製（大腸菌は20分で1回分裂する）が参照点として存在する以上、<strong>1日で倍増する自己複製工場は物理法則に反しない</strong>。
           </p>
           <p class="lead">
-            スケールの感覚を合わせておきたい。カルダシェフ・スケールは知的文明のレベルをエネルギー利用量で分類する指標で、地球に降り注ぐ太陽光エネルギーを全て使える文明をタイプ1、恒星が放つエネルギーの全てを使える文明をタイプ2とする。現在の人類はタイプ1にすら程遠い。だが産業爆発のフィードバックループが始まれば、数年から数十年でタイプ1を超え、タイプ2に向かって駆け上がる可能性がある。砂漠と海洋に敷き詰められた太陽光パネル、水星や小惑星帯で稼働する自己複製ロボット、太陽の周囲のダイソンスウォーム。ガンダムやスターウォーズの宇宙文明の風景は、物理法則上は否定できない。
+            スケールの感覚を合わせる。カルダシェフ・スケールは文明のレベルをエネルギー利用量で分類する。地球に降り注ぐ太陽光エネルギーを全て使える文明をタイプ1、恒星が放つエネルギーの全てを使える文明をタイプ2とする。現在の人類はタイプ1にすら程遠い（タイプ0.7程度）。産業爆発のフィードバックループが始まれば、数年から数十年でタイプ2に向かう可能性がある。ただし、このシナリオにはエネルギー供給、資源調達、廃熱処理の物理的制約が残る。「物理法則に反しない」と「実現可能」の間には工学の全領域が横たわっている。
           </p>
           <figure class="chart chart-wide">
             <div class="chart-title">カルダシェフ・スケール — エネルギー利用量で測る文明の階層</div>
@@ -636,15 +648,15 @@
           <div class="grid-3">
             <div class="card">
               <span class="tag">Phase 01</span>
-              <p><strong>初期 — 倍増時間1年</strong><br>AGI開発直後。既存のロボット工場をAGIが設計・運用し、人間ブルーカラーと混成で最初の数十億台を作り上げる。戦時体制に近い産業動員が起こる。</p>
+              <p><strong>初期 — 倍増時間1年</strong><br>既存の製造インフラをAGIが最適化。人間ブルーカラーとの混成で最初の量産。ボトルネックは半導体供給とFab建設のリードタイム。</p>
             </div>
             <div class="card">
               <span class="tag">Phase 02</span>
-              <p><strong>中期 — 倍増時間は数ヶ月</strong><br>ロボットがロボットを製造し始める。経験曲線によるコスト低下と技術爆発からの設計改善が重なり、倍増時間が急速に短縮される。</p>
+              <p><strong>中期 — 倍増時間は数ヶ月</strong><br>経験曲線と技術爆発からの設計改善が重なり、倍増時間が短縮される。ただしエネルギー供給が線形的にしか拡大しない場合、ここで減速する。</p>
             </div>
             <div class="card">
               <span class="tag">Phase 03</span>
-              <p><strong>後期 — 倍増時間は数日</strong><br>超指数関数的成長の極値。水星や小惑星帯で現地資源採掘を始めたロボット群が、太陽周囲にダイソンスウォームを築き始める。</p>
+              <p><strong>後期 — 倍増時間は数日</strong><br>Forethoughtの理論的上限。宇宙資源の活用が前提。「物理法則に反しない」と「10年以内に実現する」の距離は未検証。</p>
             </div>
           </div>
         </div>
@@ -664,10 +676,10 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            技術爆発と産業爆発を分けて記述すると理解しやすいが、現実には二つのループは独立していない。技術爆発によってロボット工学や材料科学が進歩すれば、ロボットはより安く、より速く、より高性能になり、産業爆発が加速する。逆に産業爆発によって膨大なエネルギーとコンピューティング資源が供給されれば、AIの訓練と推論に使える計算量が桁違いに増え、技術爆発がさらに加速する。<strong>加速が加速を生む、超指数関数的な成長</strong>である。
+            技術爆発と産業爆発を分けて記述したが、現実には2つのループは連動する。技術爆発がロボット工学と材料科学を進歩させ、ロボットの性能とコストが改善し、産業爆発が加速する。逆に産業爆発がエネルギーとコンピューティング資源を大量供給し、AIの訓練と推論に使える計算量が桁違いに増え、技術爆発がさらに加速する。<strong>加速が加速を生む正のフィードバック</strong>。ただし正のフィードバックには必ず減衰要因がある。半導体の物理限界（トランジスタサイズの原子スケール接近）、電力需要の急増に対するグリッドの制約、希少金属の採掘速度。フィードバックの強度はこれらの減衰要因との綱引きで決まる。
           </p>
           <p class="lead">
-            この相互加速を時間軸に沿って素描すると、以下のような段階を経る。AGI開発直後の1〜3年目、安全保障の圧力と産業転換が同時に走る。大国は慎重な規制よりも急速な拡大を選ばざるを得なくなる。3〜5年目、ロボットがロボットを作るループが成立し、人間労働のボトルネックが外れる。医療・エネルギー・材料科学で数十年分の進歩が毎年起こる。5〜10年目、産業爆発は地球を超えて宇宙に拡大し、同時に数百年分の科学技術進歩が達成される。マインドアップローディングやナノテクノロジーが射程に入り、カルダシェフ・スケールのタイプ2文明への移行が始まる。
+            Forethoughtが描く時間軸を、仮定の脆弱性と合わせて見る。AGI開発直後の1-3年目、安全保障の圧力と産業転換が同時に走る。ここでの最大の仮定は「大国が規制より拡大を選ぶ」。歴史的には核技術の拡散速度（米→ソ連で4年、米→中国で16年）が参照点になるが、AIのコピー可能性は核とは質的に異なる。3-5年目にロボット自己複製ループが成立するかどうかは、半導体供給チェーンの無人化に依存する。5-10年目のタイプ2文明への接近は、全ての前段階が最良のケースで進行した場合の理論的上限であり、各段階で減速が入れば時間軸は桁で延びる。
           </p>
           <div class="timeline">
             <div class="timeline-step">
@@ -688,7 +700,7 @@
             </div>
             <div class="timeline-step">
               <div class="num">Year 8-10</div>
-              <p><strong>宇宙への拡大</strong><br>水星・小惑星帯で自己複製ロボットが現地採掘を開始。ダイソンスウォームの初期建設。カルダシェフ・タイプ2への接近。</p>
+              <p><strong>地球外資源への延長</strong><br>地球上の資源・廃熱制約に突き当たった場合の外挿として、宇宙資源利用がモデル内で検討される段階。カルダシェフ・タイプ2への接近は理論的上限で、ここから先はSF的飛躍と見分けがつきにくい（原典では水星解体やダイソンスウォームの初期建設まで言及されるが、本文の論理チェーンには載せない）。</p>
             </div>
           </div>
           <figure class="chart chart-wide">
@@ -792,10 +804,10 @@
             </figcaption>
           </figure>
           <p class="lead">
-            経験曲線のコスト低下率を80%とする計算では、倍増時間は生産規模の拡大とともにどんどん短くなり、数学的には約5年で発散する。Forethoughtの議論で重要なのは、この計算が<strong>どれか一つの仮定を落としても結論が大きく崩れない</strong>という点だ。倍増時間の上限を1日ではなく1週間に置いても、数年でタイプ2文明に到達するシナリオは成立する。加速効果は人間の直感よりもはるかに強力であり、ここに私たちは反直感的だが論理的には堅い帰結を突きつけられている。
+            経験曲線のコスト低下率80%という仮定は太陽光パネルや半導体の歴史データと整合する。この仮定の下で倍増時間は生産規模の拡大とともに短くなり、数学的には約5年で発散する。Forethoughtは「どれか一つの仮定を落としても結論の方向は変わらない」とするが、ここに注意点がある。仮定を一つ緩めるテストはロバスト性の証拠にはなるが、複数の仮定が同時に外れるケースは検討されていない。計算資源の制約と収穫逓減の加速と規制の強化が同時に作用した場合、時間軸は10年ではなく100年になりうる。
           </p>
           <div class="note">
-            シンギュラリティという言葉から宗教性を剥がすと、残るのはこれだ。<strong>経済成長理論と物理法則を素直に積み上げた結果として、AGI開発から10年以内に人類文明がタイプ2に接近しうる</strong>。一つ一つのステップは魔法ではなく、経験曲線と半内生的成長モデルとロボティクスの当然の帰結である。Kurzweilが直感で語っていたものに、Forethoughtは方程式を与えた。方程式は信じるかどうかの対象ではない。検証するかどうかの対象である。
+            シンギュラリティという言葉から宗教性を剥がすと何が残るか。<strong>経済成長理論の標準的なフレームワークに仮定を入れると、AGI開発から10年以内にタイプ2文明に接近しうるという帰結が出る</strong>。帰結は論理的に堅い。問題は仮定が実世界で成立するかどうかだ。Kurzweilが直感で語っていたものにForethoughtは方程式を与えた。方程式は「信じるか」ではなく「仮定を検証できるか」を問う。そして現時点では、最も重要な仮定（AGIの研究能力、収穫逓減の速度、計算資源の供給弾力性）は実証されていない。モデルが教えてくれること: 仮定が成立すれば文明規模の変化が10年で起こり得る。モデルが教えてくれないこと: 仮定が成立するかどうか、いつ成立するか、どの仮定が最初に破れるか。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -814,7 +826,7 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            議論の筋を追うほど、「それでも起こらない理由はあるはずだ」という反射が働く。実際、Epoch AIのErdilとBesirogluは爆発的成長に対する反論を体系的に整理し、一つずつ検討している。ここでは主要な反論を四つに絞って紹介する。需要ボトルネック、物理法則、規制摩擦、そして安全保障の圧力である。いずれもシナリオを止めうる壁だが、Forethoughtらの応答を読むと、<strong>どれも決定打にはなっていない</strong>ことが見えてくる。
+            議論の筋を追うほど、「それでも起こらない理由はあるはずだ」という反射が働く。健全な反応だ。Epoch AIのErdilとBesirogluは爆発的成長に対する反論を体系的に整理した。主要な反論を4つに絞って紹介する。需要ボトルネック、物理法則、規制摩擦、安全保障の圧力。それぞれについて、Forethoughtの応答と応答の限界の両方を示す。
           </p>
           <div class="grid-2">
             <div class="card">
@@ -847,10 +859,13 @@
             </div>
           </div>
           <p class="lead">
-            この四つの反論を並べると、議論の構造が浮かび上がる。需要と物理はForethoughtの応答でほぼ解消される。残るのは規制と安全保障という人間社会側の変数であり、Epoch AIが確率を五分五分に置いているのはここが原因だ。しかし規制と安全保障はトレードオフ関係にある。片方を強めれば他方が弱まる。結果として<strong>規制による減速シナリオは安全保障によって自壊する圧力</strong>を常に受け続けることになる。
+            4つの反論を並べると構造が見える。需要と物理に対するForethoughtの応答は論理的に筋が通っている。ただし物理法則への応答が「太陽光だけで数千倍のエネルギーが利用可能」とする点は、太陽光パネルの製造・設置・グリッド統合にかかる時間を省略している。残るのは規制と安全保障という人間社会側の変数で、EpochAIが確率を五分五分に置く理由もここにある。規制と安全保障はトレードオフ関係にあり、<strong>規制による減速は安全保障によって自壊する圧力</strong>を受け続ける。
           </p>
           <p class="lead">
-            議論の穴がないと主張するつもりはない。この記事が紹介した論述のどこかに致命的な飛躍がある可能性は残っている。Epoch AIが指摘する計算資源のボトルネックは実際に深刻であり、代替の弾力性についての経済学的議論にはまだ収束していない論点が多い。それでも、AGIを「ChatGPTがもう少し賢くなる程度の技術革新」と位置付ける見方は、現在の定量分析とは明らかに整合しない。冒頭でシンギュラリティを「テクノ宗教」と呼んだ。Kurzweilの直感的な外挿は確かに科学ではなかった。だがDavidsonらが経済学の方程式を与えた今、同じ結論を「宗教」と呼び続けることの方が、知的に不誠実になりつつある。AGIピルを飲んだ研究者たちの間では、変化の有無ではなく変化の速度だけが争点になっている。
+            ここで共通前提そのものに反証の刃を入れておく。Davidson型のスケーリング仮説、Forethought型の自己改善仮説、Epoch型の制度追随仮説——3モデル群は前提が異なって見えるが、一つの仮定を共有している。<strong>学習データと有効計算の供給が、モデルが要求する速度に追随可能である</strong>、という仮定だ。この共通前提が崩れると3モデル群は同時に時間軸を失う。Villalobos et al. (Epoch AI, 2024) "Will we run out of data?" は高品質テキストデータの枯渇を2026–2032年に置き、合成データへの移行が性能劣化を招く場合、スケーリング則の継続自体が保証されないと示した。計算側も同様で、Sevilla et al. (2024) の更新推計ではフロンティア訓練の電力需要が2030年に数十GW級へ向かい、米国の原子力・送電網増設ペースでは賄えない領域に入る。つまり3モデル群の共通前提「データと計算は尽きない」は、2020年代末に同時に試される。共通前提が外れれば、産業爆発は起きないのではなく、起きる時期がモデル予測から大きく後ろへずれる。3モデルが方向性では収束していても、時間軸は共通前提に張り付いている——この点を忘れると定量モデルを過信する。
+          </p>
+          <p class="lead">
+            最後に、この記事全体の論述が抱える限界を明示する。第一に、ここで紹介したモデル群はすべてRomerの内生的成長理論の系譜にあり、「独立した複数の研究が同じ結論に収束している」という表現は正確ではない。共通の仮定系から一貫した結論が出ているだけだ。第二に、「定量化された」という事実はモデルの正しさを保証しない。精密な数式はパラメータの不確実性を隠蔽しうる。モデルが「10年でタイプ2」と出力するとき、その10年はパラメータの選び方で100年にも1000年にもなる。第三に、Epoch AIが指摘する計算資源のボトルネックと代替弾力性の議論にはまだ収束していない論点が多い。それでも、AGIを「ChatGPTの改良版」程度に位置づける見方は、現在の定量分析の射程と整合しない。Kurzweilの直感的外挿は科学ではなかった。Davidsonらが方程式を与えた今、同じ結論を「宗教」と呼ぶのは雑だ。ただし方程式があることを「科学的に証明された」と読み替えるのも同じくらい雑になる。正しい態度は、仮定を一つずつ検証可能な形に分解し、どれが最初に破れるかを見極めること。
           </p>
           <figure class="chart" style="margin: 40px 0 32px;">
             <div class="chart-title">技術爆発の数字</div>
@@ -880,7 +895,7 @@
           </figure>
 
           <div class="note">
-            多くの人はAGIのインパクトを過小評価している可能性が高い。AGIとは、人類文明を地球上の一つの文明からカルダシェフ・スケールの宇宙文明へと短期間で押し上げる転換点になりうるものだ。そしてそれは、Kurzweilの直感的外挿ではなく、<strong>経済学と物理学に基づく科学的蓋然性として眼前に迫っている</strong>。数百年分の技術進歩が10年に圧縮されるということは、数百年分のリスクもまた10年に圧縮されるということでもある。希望とリスクは同じ速度で近づいてくる。
+            経済学モデルが教えてくれること: 仮定が成立するなら、AGIは文明規模の変化を短期間で引き起こしうる。モデルが教えてくれないこと: 仮定がいつ、どの順序で成立するか。最も脆弱な仮定は3つ。(1) AGIが研究の全プロセスを人間なしで回せるか、(2) AI研究の収穫逓減がフィードバックループの加速を上回らないか、(3) 計算資源と物理インフラがループの速度に追いつくか。この3つのうち1つでも破れれば、時間軸は10年から100年以上に延びる。<strong>数百年分の技術進歩が10年に圧縮されるなら、数百年分のリスクもまた10年に圧縮される。</strong> 仮定を検証する時間的余裕があるかどうかが、この議論の本当の賭け金だ。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -926,6 +941,128 @@
         Ray Kurzweil "The Singularity Is Near" (Viking, 2005).
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -990,5 +1127,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

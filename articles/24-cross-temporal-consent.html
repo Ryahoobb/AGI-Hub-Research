@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <title>越境的同意は成立しない — パラメータ書換と、もうそこにいない私 — AGI HUB</title>
+    <meta name="revised" content="2026.04.14" />
     <meta name="description" content="痛みを削り、嫉妬を消し、郷愁を除く。A-2象限への扉を開けるのは「書き換え前の自分」だが、その決定を引き受けるのは「書き換え後の別人」である。lobotomy、SSRIs、DBSの歴史は、A-2がすでに連続体の一点で始まっていることを示す。Ulysses pactの非対称逆転と、越境的同意という不可能性をめぐる四部作の第三章。" />
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
@@ -171,6 +172,18 @@
         padding-bottom: 14px;
         border-bottom: 1px solid var(--black);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 36px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -292,6 +305,18 @@
         .credits { padding: 32px 24px 64px; }
       }
 
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media print {
         .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
         .nav, .progress { display: none; }
@@ -313,7 +338,7 @@
     </aside>
 
     <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 24 / 25 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 24 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="23-ethics-beyond-allocation.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -362,7 +387,7 @@
             </tbody>
           </table>
           <p class="lead">
-            A-2 象限が特異な位置にあるのは、<strong>身体の連続性があるからこそ、魂の不連続性が鋭く立ち上がる</strong>からである。B-1 の箱庭住民は、身体を捨てるときに連続性の問いを一度正面から受ける。B-2 の別存在は、そもそも人格という概念ごと別座標系に移す。だが A-2 の住民は、朝も夜も同じ顔で鏡に映る。家族も職場も騙される。本人さえ騙される。書換前の自分と書換後の自分をつなぐ法的・社会的な糸は切れない。にもかかわらず、倫理的主体として同一人物かどうかの問いは、身体の連続性ではどうにも保証されない。
+            A-2 象限が特異な位置にあるのは、<strong>身体の連続性があるからこそ、魂の不連続性が鋭く浮き彫りになる</strong>からである。B-1 の箱庭住民は、身体を捨てるときに連続性の問いを一度正面から受ける。B-2 の別存在は、そもそも人格という概念ごと別座標系に移す。だが A-2 の住民は、朝も夜も同じ顔で鏡に映る。家族も職場も騙される。本人さえ騙される。書換前の自分と書換後の自分をつなぐ法的・社会的な糸は切れない。にもかかわらず、倫理的主体として同一人物かどうかの問いは、身体の連続性ではどうにも保証されない。
           </p>
           <div class="note">
             本稿の核となる主張を一段落で先に置く。<strong>慈悲を消すという決定に、慈悲を消した後の自分の同意は存在しない</strong>。A-2 への扉は、開けた後の自分に許可を取れない唯一の種類の扉である。開けたのは、もうそこにいない私だ。この一文の意味するところを、Derek Parfit の人格同一性論、Jon Elster の Ulysses pact 論、そして lobotomy・SSRIs・DBS という20世紀後半からの医学史を通じて、段階的に掘り下げる。両義性は最後まで維持する。本稿は A-2 を悪と断定しない。ただし A-2 の扉が、扉としてどのような非対称性を抱えているかを、隠さずに並べる。
@@ -470,6 +495,58 @@
           <div class="note">
             ここで Ulysses pact と A-2 の非対称を並べる。<strong>Ulysses pact では、縛る側(現在の理性的自己)と縛られる側(未来の誘惑に屈する自己)の時間関係は不可逆である</strong>。縛る側は決定を下し、縛られる側はその決定を引き受ける。しかし縛る側は、航海が終われば戻ってくる。セイレーンの海域を抜けたあと、マストの縄は解かれ、縛る側のオデュッセウスが再び主導権を取り戻す。A-2 は、この戻りの経路を消す。パラメータ書換を承認した現在の自分は、書換後の自分の中に<strong>残らない</strong>。嫉妬を消す決定を下した「嫉妬を持っていた自分」は、薬の効き目が最大化した朝には、もう意思決定能力を持たない亡霊になっている。
           </div>
+
+          <!-- SVG: Cross-Temporal Identity Discontinuity -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowR24" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#b23a2f"/>
+                </marker>
+              </defs>
+              <!-- Time axis -->
+              <line x1="40" y1="240" x2="640" y2="240" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="340" y="268" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#757575" letter-spacing="0.06em">TIME</text>
+              <!-- Tick marks -->
+              <line x1="140" y1="236" x2="140" y2="244" stroke="#1a1a1a" stroke-width="1.5"/>
+              <line x1="340" y1="236" x2="340" y2="244" stroke="#b23a2f" stroke-width="2"/>
+              <line x1="540" y1="236" x2="540" y2="244" stroke="#1a1a1a" stroke-width="1.5"/>
+              <!-- Ulysses Pact: top row -->
+              <text x="60" y="30" font-family="'SF Mono',monospace" font-size="11" fill="#757575" letter-spacing="0.06em">ULYSSES PACT</text>
+              <!-- Person A before -->
+              <rect x="80" y="44" width="120" height="40" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="140" y="60" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">理性的な自己</text>
+              <text x="140" y="76" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575">BINDS</text>
+              <!-- Arrow forward -->
+              <line x1="200" y1="64" x2="280" y2="64" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowR24)"/>
+              <!-- Person A tempted -->
+              <rect x="280" y="44" width="120" height="40" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="340" y="60" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">誘惑される自己</text>
+              <text x="340" y="76" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575">BOUND</text>
+              <!-- Arrow return (dashed) -->
+              <path d="M400,64 Q440,20 480,64 Q520,108 400,108 L200,108 Q140,108 140,84" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="5,3"/>
+              <text x="440" y="110" font-family="sans-serif" font-size="10" fill="#757575">戻る</text>
+              <!-- A-2: bottom row -->
+              <text x="60" y="148" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" letter-spacing="0.06em" font-weight="700">A-2 REWRITE</text>
+              <!-- Person B before -->
+              <rect x="80" y="162" width="120" height="40" rx="3" fill="none" stroke="#b23a2f" stroke-width="2"/>
+              <text x="140" y="178" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">書換前の私</text>
+              <text x="140" y="194" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f">CONSENTS</text>
+              <!--断切 line -->
+              <line x1="340" y1="150" x2="340" y2="210" stroke="#b23a2f" stroke-width="2" stroke-dasharray="6,4"/>
+              <text x="340" y="222" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">DISCONTINUITY</text>
+              <!-- Arrow forward -->
+              <line x1="200" y1="182" x2="280" y2="182" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowR24)"/>
+              <!-- Person B after (different) -->
+              <rect x="400" y="162" width="140" height="40" rx="3" fill="#b23a2f" fill-opacity="0.06" stroke="#b23a2f" stroke-width="2"/>
+              <text x="470" y="178" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">書換後の別人</text>
+              <text x="470" y="194" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f">CANNOT REVOKE</text>
+              <!-- X mark on return path -->
+              <line x1="310" y1="170" x2="330" y2="190" stroke="#b23a2f" stroke-width="2"/>
+              <line x1="330" y1="170" x2="310" y2="190" stroke="#b23a2f" stroke-width="2"/>
+            </svg>
+          </div>
+
           <p class="lead">
             この非対称性をもう一段掘ると、越境的同意の不可能性が見える。通常の同意は「同じ主体が、自分の身に起きることに対して承認を与える」構造を持つ。医療同意、契約同意、性的同意、いずれもそうである。Ulysses pact は少しだけこの構造を緩める。現在の自分が未来の自分に対して事前拘束を与えるが、未来の自分は理論上、縛りを解く能力を残している(実際にオデュッセウスは叫び続けた)。A-2 はこの緩みすら消す。<strong>書換後の自分は、書換前の自分と連続していない</strong>。だから書換前の自分の決定を、書換後の自分が追認することも、撤回することもできない。追認しようとした瞬間、追認する主体は書換後の別人であり、書換前の決定内容を内側から理解する資格を失っている。撤回しようとしても同じである。書換前の自分はもう存在せず、書換後の自分に拒否する根拠がない。同意の連鎖が、時間の切断面で断ち切れる。
           </p>
@@ -527,10 +604,13 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            A-2 の扉を開けるという決定は、決定する主体と、決定の結果を引き受ける主体が一致しない。ここまでの論証が正しければ、この一文は単なる修辞ではなく、心理的連続性の切断としての文字通りの事実を指している。すると素朴な問いが立ち上がる。<strong>これは自殺と何が違うのか</strong>。書換前の自分は、書換後の別人に場所を明け渡して退場する。家族も職場も気づかない形で、だが Parfit の基準では確かに退場する。退場の事実を埋める何かがあるとすれば、それは身体の物理的連続性しかない。
+            A-2 の扉を開けるという決定は、決定する主体と、決定の結果を引き受ける主体が一致しない。ここまでの論証が正しければ、この一文は単なる修辞ではなく、心理的連続性の切断としての文字通りの事実を指している。すると素朴な問いが現れる。<strong>これは自殺と何が違うのか</strong>。書換前の自分は、書換後の別人に場所を明け渡して退場する。家族も職場も気づかない形で、だが Parfit の基準では確かに退場する。退場の事実を埋める何かがあるとすれば、それは身体の物理的連続性しかない。
           </p>
           <p class="lead">
             身体の連続性は、ある種の安心を与える。同じ顔、同じ声、同じ筋肉の記憶。しかし安心の根拠としては薄い。lobotomy を受けた患者の身体も連続していた。SSRIs で "better than well" の状態に移った患者の身体も連続していた。DBS 後に衝動的な賭博に走った患者の身体も連続していた。身体の連続性は、倫理的主体の連続性のための必要条件ですらないかもしれない。そしてもし十分条件でもないなら、A-2 と自殺を分ける線は、外側から見た物理的な残存だけに頼ることになる。これは倫理学が拠りどころにするには、あまりに薄い根拠である。
+          </p>
+          <p class="lead">
+            ここで想定される反論を先回りする。<strong>記憶が連続していれば同一人物だ</strong>、という素朴な直観である。書換後も自伝的記憶は残る。子供の顔、結婚式、初めて書いた論文。それらを思い出せる以上、同じ人間ではないか。しかしこの直観は、記憶の「保存」と記憶の「重みづけ」を混同している。DBS 後の Parkinson 患者は、病気以前の人生の記憶を失っていない。妻の名前も、子供の誕生日も、職業上の成功も覚えている。しかし、その記憶が引き起こす情動の重みが、書換後は同じ配置ではない。妻の葬儀の記憶が、以前は涙を引き起こし、書換後はデータとしてしか参照されない。これは記憶の消失ではなく、<strong>記憶への情動アクセス経路の再配線</strong>である。Parfit の心理的連続性論は、記憶の単なる保存ではなく、記憶が未来の自分の意図・欲求・性格を形成し続ける因果連鎖を指していた(Parfit 1984, §78-80)。書換はこの因果連鎖を切断する。写真は残るが、写真を見て泣く主体は入れ替わる。したがって、記憶連続性の素朴な直観では、A-2 の人格断絶を反駁できない。医学的連続体と人格断絶のあいだに横たわるのは物質の連続か断絶かではなく、<strong>情動の因果配線が同じ形で保たれているか否か</strong>である。
           </p>
           <p class="lead">
             Ulysses pact の逆転構造を、最後にもう一度掲げる。マストに縛られたオデュッセウスは、セイレーンの海域を抜けたあと、必ず戻ってくる。航海が終われば縄は解かれ、縛った側の理性的自己が主導権を取り戻す。物語の時間は円環を閉じる。A-2 は、この円環を閉じない。嫉妬を消す決定を下したあとの朝、嫉妬を持っていた自分はもう存在せず、嫉妬のない自分が朝食をとり、鏡を見て、決定を下したはずの自分を理解せずに一日を始める。<strong>どちらが本来の自分かを決める審級は、どこにもない</strong>。書換前の自分が本物で、書換後の自分が偽物だという主張には根拠がない。逆もない。二人の間に上下関係を置く第三の視点が不在であり、不在であるがゆえに、どちらかを優先して救う倫理は建たない。
@@ -598,6 +678,128 @@
       </p>
     </section>
 
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
     <script>
       const progress = document.getElementById('progress');
       window.addEventListener('scroll', () => {
@@ -628,6 +830,21 @@
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
       }, { threshold: 0.1 });
       document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+    </script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
     </script>
   </body>
 </html>

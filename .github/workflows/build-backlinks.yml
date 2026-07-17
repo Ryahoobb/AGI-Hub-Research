@@ -1,0 +1,46 @@
+name: Build backlinks
+
+# Rebuilds backlinks.json from articles/*.html and auto-commits if changed.
+# Runs on push when articles or the builder script change. Can also be triggered manually.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'articles/**.html'
+      - 'scripts/build-backlinks.py'
+      - '.github/workflows/build-backlinks.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install beautifulsoup4
+
+      - name: Run builder
+        run: python3 scripts/build-backlinks.py
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet backlinks.json; then
+            echo "No changes in backlinks.json"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backlinks.json
+          git commit -m "data: rebuild backlinks.json ($(date -u +%Y-%m-%d))"
+          git push

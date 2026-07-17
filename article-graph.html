@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Article Graph — AGI HUB</title>
+<link rel="stylesheet" href="design-system/palette.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+      "Hiragino Kaku Gothic ProN", sans-serif;
+    font-feature-settings: "palt";
+    background: #fff;
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  [data-theme="dark"] body { background: #0f0f0f; color: #e5e5e5; }
+
+  .page-header {
+    max-width: 1200px; margin: 0 auto;
+    padding: 48px 48px 0;
+  }
+  .page-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 42px; font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.5px; margin-bottom: 8px;
+  }
+  .page-subtitle { font-size: 16px; color: #757575; margin-bottom: 4px; }
+  [data-theme="dark"] .page-subtitle { color: #9a9a9a; }
+  .page-date {
+    font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #999; margin-bottom: 24px;
+  }
+
+  #graph-container {
+    width: 100%; height: 72vh; min-height: 520px;
+    position: relative;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    cursor: grab;
+    background: #fff;
+  }
+  [data-theme="dark"] #graph-container {
+    border-color: #222; background: #0f0f0f;
+  }
+  #graph-container:active { cursor: grabbing; }
+  #graph-canvas { width: 100%; height: 100%; display: block; }
+
+  .graph-tooltip {
+    position: fixed; pointer-events: none;
+    background: #1a1a1a; color: #fff;
+    padding: 12px 16px; max-width: 280px;
+    font-size: 13px; line-height: 1.5;
+    opacity: 0; transition: opacity 0.15s ease;
+    z-index: 100;
+  }
+  [data-theme="dark"] .graph-tooltip {
+    background: #e5e5e5; color: #0f0f0f;
+  }
+  .graph-tooltip.visible { opacity: 1; }
+  .graph-tooltip .tt-label {
+    font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 4px;
+  }
+  [data-theme="dark"] .graph-tooltip .tt-label { color: rgba(15,15,15,0.55); }
+  .graph-tooltip .tt-name { font-weight: 700; margin-bottom: 4px; }
+  .graph-tooltip .tt-desc { color: rgba(255,255,255,0.7); font-size: 12px; }
+  [data-theme="dark"] .graph-tooltip .tt-desc { color: rgba(15,15,15,0.7); }
+  .graph-tooltip .tt-action {
+    margin-top: 8px;
+    font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+    font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+  }
+  [data-theme="dark"] .graph-tooltip .tt-action { color: rgba(15,15,15,0.9); }
+
+  .legend {
+    max-width: 1200px; margin: 0 auto;
+    padding: 24px 48px;
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #999;
+  }
+  [data-theme="dark"] .legend { color: #888; }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .legend-line { width: 18px; height: 0; border-top: 1.5px solid #555; }
+  .legend-line.dashed { border-top: 1.5px dashed #888; opacity: 0.75; }
+  [data-theme="dark"] .legend-line { border-top-color: #bbb; }
+  [data-theme="dark"] .legend-line.dashed { border-top-color: #888; }
+  .legend-sep { width: 1px; height: 14px; background: #ddd; }
+  [data-theme="dark"] .legend-sep { background: #333; }
+
+  .info-panel {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 48px 64px;
+  }
+  .info-coverage {
+    font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: #757575; margin-bottom: 12px;
+  }
+  [data-theme="dark"] .info-coverage { color: #9a9a9a; }
+  .info-stat {
+    font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+    font-size: 11px; color: #999;
+  }
+  .info-hint {
+    margin-top: 16px;
+    font-size: 13px; color: #757575; line-height: 1.6;
+    max-width: 680px;
+  }
+  [data-theme="dark"] .info-hint { color: #9a9a9a; }
+
+  @media (max-width: 900px) {
+    .page-header { padding: 32px 24px 0; }
+    .page-title { font-size: 28px; }
+    .legend { padding: 16px 24px; gap: 14px; }
+    .info-panel { padding: 0 24px 48px; }
+    #graph-container { min-height: 380px; height: 58vh; }
+  }
+  @media (max-width: 480px) {
+    .page-header { padding: 24px 16px 0; }
+    .page-title { font-size: 24px; }
+    .page-subtitle { font-size: 14px; }
+    .legend { padding: 12px 16px; gap: 10px; }
+    .info-panel { padding: 0 16px 36px; }
+    #graph-container { min-height: 320px; height: 52vh; }
+  }
+</style>
+</head>
+<body class="has-site-header">
+
+<div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="partials/header.js" defer></script>
+
+<div class="page-header">
+  <h1 class="page-title">Article Graph</h1>
+  <p class="page-subtitle">記事間の相互参照ネットワーク。ノードをドラッグして動かせる。</p>
+  <div class="page-date" id="graph-count">Loading...</div>
+</div>
+
+<div id="graph-container">
+  <canvas id="graph-canvas"></canvas>
+</div>
+<div class="graph-tooltip" id="tooltip"></div>
+
+<div class="legend" id="legend"></div>
+
+<div class="info-panel">
+  <div class="info-coverage">How to Read</div>
+  <div class="info-stat" id="stat-line">33 articles · 0 edges</div>
+  <p class="info-hint">
+    各ノードは1本の記事。エッジは記事本文中の相互リンク（被参照）。ノードを掴んで動かすと周辺が物理的に追従する。ホバーで記事情報、クリックで該当記事に遷移する。
+  </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script>
+(function () {
+  var CATEGORY_COLORS = {
+    alignment:  '#b23a2f',
+    corporate:  '#2f6fb2',
+    governance: '#8a6b2f',
+    lineage:    '#5a3a8c',
+    takeoff:    '#2f8a5a',
+    technical:  '#4a4a4a'
+  };
+  var CATEGORY_LABELS = {
+    alignment:  'Alignment',
+    corporate:  'Corporate',
+    governance: 'Governance',
+    lineage:    'Lineage',
+    takeoff:    'Takeoff',
+    technical:  'Technical'
+  };
+
+  var container = document.getElementById('graph-container');
+  var canvas    = document.getElementById('graph-canvas');
+  var ctx       = canvas.getContext('2d');
+  var tooltip   = document.getElementById('tooltip');
+  var statLine  = document.getElementById('stat-line');
+  var countEl   = document.getElementById('graph-count');
+  var legendEl  = document.getElementById('legend');
+
+  var W = 0, H = 0;
+  var dpr = window.devicePixelRatio || 1;
+  var nodes = [], links = [];
+  var simulation = null;
+  var hoverNode = null;
+  var draggingNode = null;
+
+  function isDark() {
+    return document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+
+  function resize() {
+    W = container.clientWidth;
+    H = container.clientHeight;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function buildLegend(usedCategories) {
+    legendEl.innerHTML = '';
+    usedCategories.forEach(function (cat) {
+      var item = document.createElement('div');
+      item.className = 'legend-item';
+      var dot = document.createElement('div');
+      dot.className = 'legend-dot';
+      dot.style.background = CATEGORY_COLORS[cat] || '#999';
+      var label = document.createElement('span');
+      label.textContent = CATEGORY_LABELS[cat] || cat;
+      item.appendChild(dot);
+      item.appendChild(label);
+      legendEl.appendChild(item);
+    });
+
+    var sep = document.createElement('div');
+    sep.className = 'legend-sep';
+    legendEl.appendChild(sep);
+
+    var hardItem = document.createElement('div');
+    hardItem.className = 'legend-item';
+    var hardLine = document.createElement('div');
+    hardLine.className = 'legend-line';
+    var hardLabel = document.createElement('span');
+    hardLabel.textContent = '本文リンク';
+    hardItem.appendChild(hardLine);
+    hardItem.appendChild(hardLabel);
+    legendEl.appendChild(hardItem);
+
+    var softItem = document.createElement('div');
+    softItem.className = 'legend-item';
+    var softLine = document.createElement('div');
+    softLine.className = 'legend-line dashed';
+    var softLabel = document.createElement('span');
+    softLabel.textContent = 'カテゴリ共有';
+    softItem.appendChild(softLine);
+    softItem.appendChild(softLabel);
+    legendEl.appendChild(softItem);
+  }
+
+  function categoryInitialPosition(nodes) {
+    var cats = Array.from(new Set(nodes.map(function (n) { return n.category; }))).sort();
+    var cx = W / 2, cy = H / 2;
+    var R  = Math.min(W, H) * 0.32;
+    var catAngle = {};
+    cats.forEach(function (c, i) { catAngle[c] = (i / cats.length) * Math.PI * 2 - Math.PI / 2; });
+
+    var perCat = {};
+    nodes.forEach(function (n) { perCat[n.category] = (perCat[n.category] || 0) + 1; });
+    var seen = {};
+    nodes.forEach(function (n) {
+      var total = perCat[n.category];
+      var idx   = seen[n.category] = (seen[n.category] || 0) + 1;
+      var baseA = catAngle[n.category];
+      var spread = Math.PI / 8;
+      var a = baseA + spread * ((idx - 1) / Math.max(1, total - 1) - 0.5);
+      n.x = cx + Math.cos(a) * R;
+      n.y = cy + Math.sin(a) * R;
+    });
+  }
+
+  function startSimulation() {
+    var pad = 24;
+    var R = Math.min(W, H);
+    simulation = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links)
+        .id(function (d) { return d.slug; })
+        .distance(function (l) { return l.type === 'soft' ? 140 : 60; })
+        .strength(function (l) { return l.type === 'soft' ? 0.04 : 0.6; }))
+      .force('charge', d3.forceManyBody().strength(-200))
+      .force('center', d3.forceCenter(W / 2, H / 2))
+      .force('collide', d3.forceCollide().radius(function (d) { return d.radius + 4; }))
+      .force('x', d3.forceX(W / 2).strength(0.04))
+      .force('y', d3.forceY(H / 2).strength(0.04))
+      .on('tick', tick);
+  }
+
+  function tick() {
+    var pad = 20;
+    nodes.forEach(function (n) {
+      if (n.x < pad) n.x = pad;
+      if (n.x > W - pad) n.x = W - pad;
+      if (n.y < pad) n.y = pad;
+      if (n.y > H - pad) n.y = H - pad;
+    });
+    draw();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    var dark = isDark();
+    var edgeBase     = dark ? 'rgba(190,190,190,0.18)' : 'rgba(50,50,50,0.14)';
+    var edgeHi       = dark ? 'rgba(255,255,255,0.65)' : 'rgba(20,20,20,0.6)';
+    var softBase     = dark ? 'rgba(190,190,190,0.06)' : 'rgba(50,50,50,0.07)';
+    var softHi       = dark ? 'rgba(200,200,200,0.35)' : 'rgba(40,40,40,0.32)';
+    var labelColor   = dark ? '#d8d8d8' : '#1a1a1a';
+    var labelFade    = dark ? 'rgba(216,216,216,0.25)' : 'rgba(26,26,26,0.22)';
+    var strokeColor  = dark ? '#0f0f0f' : '#ffffff';
+
+    var adj = {};
+    var hoverSlug = hoverNode && hoverNode.slug;
+    if (hoverSlug) {
+      adj[hoverSlug] = true;
+      links.forEach(function (l) {
+        var s = typeof l.source === 'object' ? l.source.slug : l.source;
+        var t = typeof l.target === 'object' ? l.target.slug : l.target;
+        if (s === hoverSlug) adj[t] = true;
+        if (t === hoverSlug) adj[s] = true;
+      });
+    }
+
+    // Pass 1: soft edges (dashed, behind)
+    ctx.setLineDash([3, 3]);
+    ctx.lineWidth = 0.8;
+    links.forEach(function (l) {
+      if (l.type !== 'soft') return;
+      var s = typeof l.source === 'object' ? l.source : null;
+      var t = typeof l.target === 'object' ? l.target : null;
+      if (!s || !t) return;
+      var related = hoverSlug && (s.slug === hoverSlug || t.slug === hoverSlug);
+      ctx.strokeStyle = related ? softHi : softBase;
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(t.x, t.y);
+      ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    // Pass 2: hard edges (solid, on top)
+    ctx.lineWidth = 1;
+    links.forEach(function (l) {
+      if (l.type === 'soft') return;
+      var s = typeof l.source === 'object' ? l.source : null;
+      var t = typeof l.target === 'object' ? l.target : null;
+      if (!s || !t) return;
+      var related = hoverSlug && (s.slug === hoverSlug || t.slug === hoverSlug);
+      ctx.strokeStyle = hoverSlug ? (related ? edgeHi : edgeBase) : edgeBase;
+      ctx.lineWidth   = related ? 1.4 : 1;
+      ctx.beginPath();
+      ctx.moveTo(s.x, s.y);
+      ctx.lineTo(t.x, t.y);
+      ctx.stroke();
+    });
+
+    nodes.forEach(function (n) {
+      var related = !hoverSlug || adj[n.slug];
+      var color = CATEGORY_COLORS[n.category] || (dark ? '#888' : '#555');
+      ctx.globalAlpha = related ? 1 : 0.22;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+
+    ctx.font = '600 10px "SF Mono", Menlo, monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    nodes.forEach(function (n) {
+      if (!hoverSlug && n.degree < 1) return;
+      var related = !hoverSlug || adj[n.slug];
+      ctx.fillStyle = related ? labelColor : labelFade;
+      ctx.fillText('No.' + String(n.no).padStart(2, '0'), n.x, n.y + n.radius + 3);
+    });
+  }
+
+  function findNodeAt(mx, my) {
+    for (var i = nodes.length - 1; i >= 0; i--) {
+      var n = nodes[i];
+      var dx = mx - n.x, dy = my - n.y;
+      if (dx * dx + dy * dy <= (n.radius + 3) * (n.radius + 3)) return n;
+    }
+    return null;
+  }
+
+  function showTooltip(n, clientX, clientY) {
+    var label = 'No.' + String(n.no).padStart(2, '0') + ' · ' + (CATEGORY_LABELS[n.category] || n.category);
+    var action = '<div class="tt-action">Click to read →</div>';
+    tooltip.innerHTML =
+      '<div class="tt-label">' + label + '</div>' +
+      '<div class="tt-name">' + escapeHtml(n.title) + '</div>' +
+      (n.excerpt ? '<div class="tt-desc">' + escapeHtml(n.excerpt.slice(0, 110)) + (n.excerpt.length > 110 ? '…' : '') + '</div>' : '') +
+      action;
+    tooltip.style.left = (clientX + 16) + 'px';
+    tooltip.style.top  = (clientY - 10) + 'px';
+    tooltip.classList.add('visible');
+  }
+
+  function hideTooltip() { tooltip.classList.remove('visible'); }
+
+  function escapeHtml(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function onMouseMove(e) {
+    var rect = canvas.getBoundingClientRect();
+    var mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    if (draggingNode) {
+      draggingNode.fx = mx;
+      draggingNode.fy = my;
+      showTooltip(draggingNode, e.clientX, e.clientY);
+      return;
+    }
+    var n = findNodeAt(mx, my);
+    if (n) {
+      if (hoverNode !== n) {
+        hoverNode = n;
+        if (simulation) simulation.alpha(0.05).restart();
+      }
+      canvas.style.cursor = 'pointer';
+      showTooltip(n, e.clientX, e.clientY);
+    } else {
+      if (hoverNode) {
+        hoverNode = null;
+        if (simulation) simulation.alpha(0.05).restart();
+      }
+      canvas.style.cursor = 'grab';
+      hideTooltip();
+    }
+  }
+
+  function onMouseDown(e) {
+    var rect = canvas.getBoundingClientRect();
+    var mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    var n = findNodeAt(mx, my);
+    if (!n) return;
+    draggingNode = n;
+    n.fx = n.x;
+    n.fy = n.y;
+    if (simulation) simulation.alphaTarget(0.3).restart();
+    canvas.style.cursor = 'grabbing';
+    e.preventDefault();
+  }
+
+  function onMouseUp(e) {
+    if (!draggingNode) return;
+    if (simulation) simulation.alphaTarget(0);
+    draggingNode.fx = null;
+    draggingNode.fy = null;
+    var wasDragging = draggingNode;
+    draggingNode = null;
+    var rect = canvas.getBoundingClientRect();
+    var mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    var dx = mx - wasDragging.x, dy = my - wasDragging.y;
+    if (dx * dx + dy * dy < 25) {
+      window.location.href = 'articles/' + wasDragging.slug;
+    }
+  }
+
+  function onTouchStart(e) {
+    if (e.touches.length !== 1) return;
+    var t = e.touches[0];
+    onMouseDown({ clientX: t.clientX, clientY: t.clientY, preventDefault: function () { e.preventDefault(); } });
+  }
+  function onTouchMove(e) {
+    if (e.touches.length !== 1) return;
+    var t = e.touches[0];
+    onMouseMove({ clientX: t.clientX, clientY: t.clientY });
+    e.preventDefault();
+  }
+  function onTouchEnd(e) {
+    if (!draggingNode) return;
+    var t = e.changedTouches[0];
+    onMouseUp({ clientX: t.clientX, clientY: t.clientY });
+  }
+
+  canvas.addEventListener('mousemove', onMouseMove);
+  canvas.addEventListener('mousedown', onMouseDown);
+  window.addEventListener('mouseup', onMouseUp);
+  canvas.addEventListener('mouseleave', function () {
+    if (!draggingNode) { hoverNode = null; hideTooltip(); canvas.style.cursor = 'grab'; if (simulation) simulation.alpha(0.05).restart(); }
+  });
+  canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+  canvas.addEventListener('touchmove',  onTouchMove,  { passive: false });
+  canvas.addEventListener('touchend',   onTouchEnd);
+
+  window.addEventListener('resize', function () {
+    resize();
+    if (simulation) {
+      simulation.force('center', d3.forceCenter(W / 2, H / 2));
+      simulation.force('x', d3.forceX(W / 2).strength(0.04));
+      simulation.force('y', d3.forceY(H / 2).strength(0.04));
+      simulation.alpha(0.2).restart();
+    }
+  });
+
+  var themeObserver = new MutationObserver(function () { draw(); });
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  resize();
+
+  Promise.all([
+    fetch('articles.json').then(function (r) { return r.json(); }),
+    fetch('backlinks.json').then(function (r) { return r.ok ? r.json() : { edges: [] }; }),
+    fetch('related.json').then(function (r) { return r.ok ? r.json() : { relations: [] }; }).catch(function () { return { relations: [] }; })
+  ]).then(function (results) {
+    var articles = results[0];
+    var edgesData = (results[1] && results[1].edges) || [];
+    var relationData = (results[2] && results[2].relations) || [];
+
+    var bySlug = {};
+    nodes = articles.map(function (a) {
+      var slugFile = a.slug.endsWith('.html') ? a.slug : a.slug + '.html';
+      var node = {
+        slug: slugFile,
+        no: a.no,
+        title: a.title,
+        excerpt: a.excerpt,
+        category: a.category || 'technical',
+        radius: 7,
+        degree: 0
+      };
+      bySlug[slugFile] = node;
+      return node;
+    });
+
+    var contentLinks = edgesData.filter(function (e) {
+      return bySlug[e.from] && bySlug[e.to];
+    }).map(function (e) {
+      bySlug[e.from].degree++;
+      bySlug[e.to].degree++;
+      return { source: e.from, target: e.to, type: 'hard', origin: 'content' };
+    });
+
+    // Editorial-related edges (undirected). Add as solid hard-type, deduped against content links.
+    var pairKey = function (x, y) { return x < y ? x + '|' + y : y + '|' + x; };
+    var contentPairs = {};
+    contentLinks.forEach(function (l) { contentPairs[pairKey(l.source, l.target)] = true; });
+
+    var editorialLinks = [];
+    relationData.forEach(function (rel) {
+      if (!rel || !rel.a || !rel.b) return;
+      var aSlug = rel.a.indexOf('.html') === -1 ? rel.a + '.html' : rel.a;
+      var bSlug = rel.b.indexOf('.html') === -1 ? rel.b + '.html' : rel.b;
+      if (!bySlug[aSlug] || !bySlug[bSlug]) return;
+      var key = pairKey(aSlug, bSlug);
+      if (contentPairs[key]) return; // avoid doubling an existing backlink
+      contentPairs[key] = true;
+      bySlug[aSlug].degree++;
+      bySlug[bSlug].degree++;
+      editorialLinks.push({ source: aSlug, target: bSlug, type: 'hard', origin: 'editorial' });
+    });
+
+    var hardLinks = contentLinks.concat(editorialLinks);
+    var hardPairs = contentPairs;
+    var byCategory = {};
+    nodes.forEach(function (n) {
+      (byCategory[n.category] = byCategory[n.category] || []).push(n.slug);
+    });
+    var softLinks = [];
+    Object.keys(byCategory).forEach(function (cat) {
+      var slugs = byCategory[cat];
+      for (var i = 0; i < slugs.length; i++) {
+        for (var j = i + 1; j < slugs.length; j++) {
+          var a = slugs[i] < slugs[j] ? slugs[i] : slugs[j];
+          var b = slugs[i] < slugs[j] ? slugs[j] : slugs[i];
+          if (hardPairs[a + '|' + b]) continue;
+          softLinks.push({ source: a, target: b, type: 'soft' });
+        }
+      }
+    });
+    links = hardLinks.concat(softLinks);
+
+    nodes.forEach(function (n) {
+      n.radius = 6 + Math.min(4, n.degree * 0.6);
+    });
+
+    var usedCats = Array.from(new Set(nodes.map(function (n) { return n.category; }))).sort();
+    buildLegend(usedCats);
+
+    countEl.textContent = nodes.length + ' articles · ' + contentLinks.length + ' 本文 · ' + editorialLinks.length + ' 関連 · ' + softLinks.length + ' カテゴリ';
+    statLine.textContent = nodes.length + ' articles · ' + contentLinks.length + ' 本文リンク · ' + editorialLinks.length + ' 編集関連 · ' + softLinks.length + ' カテゴリ共有 · ' + usedCats.length + ' categories';
+
+    categoryInitialPosition(nodes);
+    startSimulation();
+  }).catch(function (err) {
+    console.warn('[article-graph] ' + (err && err.message ? err.message : err));
+    countEl.textContent = 'グラフデータの読み込みに失敗しました';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>AGI否定論ファクトチェック — AGI HUB</title>
+<meta name="revised" content="2026.04.14">
+<link rel="stylesheet" href="design-system/palette.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+      "Hiragino Kaku Gothic ProN", sans-serif;
+    font-feature-settings: "palt";
+    background: #fff; color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Hero ── */
+  .hero { position: relative; min-height: 56vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #0a0a0a; }
+  .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=1400&h=800&fit=crop&q=80') center/cover; filter: grayscale(1) contrast(0.7) brightness(0.18); opacity: 0.7; }
+  .hero-content { position: relative; z-index: 1; text-align: center; color: #fff; max-width: 760px; padding: 56px 48px; }
+  .hero-eyebrow { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 24px; }
+  .hero-title { font-family: Georgia, "Times New Roman", serif; font-size: clamp(30px, 5vw, 50px); font-weight: 700; line-height: 1.08; letter-spacing: -0.5px; margin-bottom: 20px; }
+  .hero-sub { font-size: 16px; line-height: 1.8; color: rgba(255,255,255,0.5); max-width: 540px; margin: 0 auto 32px; }
+  .hero-counts { display: inline-flex; gap: 56px; font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .hero-counts > div { position: relative; }
+  .hero-counts strong { display: block; font-size: 56px; letter-spacing: -2px; color: #fff; font-family: Georgia, serif; margin-bottom: 6px; line-height: 1; font-weight: 400; }
+  .hero-counts > div::before { content: ""; position: absolute; top: -10px; left: 0; width: 20px; height: 1px; background: rgba(255,255,255,0.25); }
+  @media (max-width: 600px) {
+    .hero-counts { gap: 28px; }
+    .hero-counts strong { font-size: 38px; }
+  }
+
+  /* Hero Category Strip */
+  .hero-strip { position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.55); }
+  .hero-strip-inner { max-width: 1120px; margin: 0 auto; padding: 18px 40px; display: grid; grid-template-columns: repeat(8, 1fr); gap: 0; }
+  .hero-strip a { display: block; padding: 10px 6px; border-right: 1px solid rgba(255,255,255,0.06); text-align: center; transition: background 0.2s; }
+  .hero-strip a:last-child { border-right: none; }
+  .hero-strip a:hover { background: rgba(255,255,255,0.04); }
+  .hero-strip .hs-num { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.12em; color: rgba(255,255,255,0.35); margin-bottom: 4px; }
+  .hero-strip .hs-name { font-size: 12px; color: #fff; font-weight: 600; margin-bottom: 3px; line-height: 1.2; }
+  .hero-strip .hs-cnt { font-family: var(--ff-mono); font-size: 9px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; }
+  @media (max-width: 900px) {
+    .hero-strip-inner { grid-template-columns: repeat(4, 1fr); padding: 12px 24px; }
+    .hero-strip a:nth-child(4) { border-right: none; }
+    .hero-strip a:nth-child(-n+4) { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  }
+  @media (max-width: 480px) {
+    .hero-strip-inner { grid-template-columns: repeat(2, 1fr); }
+    .hero-strip a:nth-child(2n) { border-right: none; }
+    .hero-strip a:nth-child(-n+6) { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  }
+
+  /* Sticky Category Nav */
+  .catnav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.96); backdrop-filter: saturate(180%) blur(10px); -webkit-backdrop-filter: saturate(180%) blur(10px); border-bottom: 1px solid #eee; }
+  .catnav-inner { max-width: 1120px; margin: 0 auto; padding: 10px 40px; display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; align-items: center; }
+  .catnav-inner::-webkit-scrollbar { display: none; }
+  .catnav a { flex-shrink: 0; display: inline-flex; align-items: baseline; gap: 6px; padding: 7px 12px; border: 1px solid transparent; border-radius: 100px; font-size: 12px; color: #585858; transition: all 0.2s; white-space: nowrap; }
+  .catnav a:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .catnav a .cn-num { font-family: var(--ff-mono); font-size: 10px; font-weight: 700; color: #aaa; transition: color 0.2s; }
+  .catnav a:hover .cn-num { color: rgba(255,255,255,0.5); }
+  .catnav a.cn-meta { background: #f5f4f0; color: #1a1a1a; font-weight: 600; }
+  .catnav-sep { width: 1px; height: 16px; background: #e5e5e5; margin: 0 6px; flex-shrink: 0; }
+  @media (max-width: 900px) { .catnav-inner { padding: 10px 24px; } }
+
+  /* ── Page ── */
+  .page { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+
+  /* ── Intro ── */
+  .intro { padding: 56px 0 40px; max-width: 680px; }
+  .intro p { font-size: 16px; line-height: 1.85; color: #585858; margin-bottom: 16px; }
+
+  /* ═══ SUMMARY TABLE ═══ */
+  .summary { margin-bottom: 64px; }
+  .summary-title { font-family: var(--ff-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #1a1a1a; }
+  .stbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .stbl th { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #999; font-weight: 600; text-align: left; padding: 10px 12px; border-bottom: 1px solid #e5e5e5; position: sticky; top: 0; background: #fff; z-index: 2; }
+  .stbl td { padding: 9px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; line-height: 1.5; }
+  .stbl tr:hover td { background: #fafafa; }
+  .stbl .sn { font-family: var(--ff-mono); font-size: 11px; font-weight: 700; color: #999; white-space: nowrap; width: 28px; }
+  .stbl .sq { font-weight: 600; color: #1a1a1a; white-space: nowrap; width: 22%; }
+  .stbl .sq a { border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+  .stbl .sq a:hover { border-color: #1a1a1a; }
+  .stbl .sf { color: #585858; font-size: 13px; line-height: 1.55; }
+  .stbl .sf strong { color: #1a1a1a; }
+  .stbl .sa { font-family: var(--ff-mono); font-size: 10px; color: #b0b0b0; white-space: nowrap; }
+  .stbl .sa a:hover { color: #1a1a1a; }
+  .stbl .sb { white-space: nowrap; width: 1%; }
+  .stbl .sb-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+  .stbl .sb-dot:last-child { margin-right: 0; }
+  .stbl .sb-dot.b-lin { background: #1a56db; }
+  .stbl .sb-dot.b-anc { background: #b45309; }
+  .stbl .sb-dot.b-cat { background: #7c3aed; }
+  .stbl .sb-dot.b-ctl { background: #c62828; }
+  @media (max-width: 700px) { .stbl .sb { display: none; } .stbl th.sb { display: none; } }
+  /* Inline references */
+  .ref { display: inline-block; font-family: var(--ff-mono); font-size: 9px; color: #aaa; padding: 1px 4px; border: 1px solid #e5e5e5; border-radius: 3px; vertical-align: super; line-height: 1; margin: 0 1px; text-decoration: none; transition: all 0.2s; white-space: nowrap; }
+  .ref:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .stbl .cat-row td { background: #f7f7f7; border-bottom: 1px solid #e5e5e5; padding: 14px 12px 10px; font-weight: 700; font-size: 13px; }
+  .stbl .cat-row .cl { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #999; font-weight: 600; margin-right: 10px; }
+
+  /* ═══ SECTION VISUALS ═══ */
+  /* Category banner image */
+  .cat-banner { width: 100%; height: 160px; object-fit: cover; display: block; filter: grayscale(1) contrast(0.8) brightness(0.9); opacity: 0.45; margin-bottom: 32px; border-radius: 6px; }
+
+
+  /* Inline diagram */
+  .diagram { background: #fafafa; border: 1px solid #e5e5e5; border-radius: 6px; padding: 28px 32px; margin-bottom: 32px; }
+  .diagram-title { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #999; margin-bottom: 16px; }
+  /* S-curve cascade */
+  .scurve-stack { display: flex; flex-direction: column; gap: 6px; }
+  .scurve-bar { height: 24px; border-radius: 3px; display: flex; align-items: center; padding: 0 12px; font-size: 11px; font-weight: 600; color: #fff; transition: width 0.6s var(--ease); }
+  .scurve-bar .era { font-family: var(--ff-mono); font-size: 9px; letter-spacing: 0.06em; opacity: 0.7; margin-left: auto; }
+  /* Timeline shift */
+  .tl-shift { display: flex; flex-direction: column; gap: 10px; }
+  .tl-row { display: flex; align-items: center; gap: 12px; }
+  .tl-label { font-family: var(--ff-mono); font-size: 10px; color: #999; width: 56px; flex-shrink: 0; text-align: right; }
+  .tl-track { flex: 1; height: 28px; background: #eee; border-radius: 4px; position: relative; overflow: hidden; }
+  .tl-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; justify-content: flex-end; padding: 0 10px; font-family: var(--ff-mono); font-size: 11px; font-weight: 700; color: #fff; }
+  /* Alignment gap */
+  .align-gap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .align-box { padding: 20px; border-radius: 6px; text-align: center; }
+  .align-box.ok { background: #1a1a1a; color: #fff; }
+  .align-box.ng { background: #fff; border: 2px dashed #d44; color: #d44; }
+  .align-box .ab-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .align-box .ab-check { font-size: 28px; margin-bottom: 4px; }
+  .align-box .ab-desc { font-size: 12px; opacity: 0.7; line-height: 1.5; }
+
+  /* ═══ DOMAIN SECTIONS ═══ */
+  .domain { margin-bottom: 80px; scroll-margin-top: 72px; }
+  .domain-head { display: flex; align-items: baseline; gap: 16px; border-top: 3px solid #1a1a1a; padding-top: 16px; margin-bottom: 8px; flex-wrap: wrap; }
+  .domain-num { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.1em; color: #999; }
+  .domain-title { font-size: 22px; font-weight: 700; line-height: 1.25; }
+  .domain-sub { font-size: 15px; line-height: 1.65; color: #757575; max-width: 680px; margin-bottom: 24px; }
+
+  /* Pattern Card — 否定の型 / 反駁の型 */
+  .pattern { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; margin-bottom: 32px; border: 1px solid #e5e5e5; border-radius: 8px; overflow: hidden; }
+  .pattern-side { padding: 22px 28px; }
+  .pattern-side.neg { background: #faf9f7; }
+  .pattern-side.pos { background: #1a1a1a; color: #fff; }
+  .pattern-label { font-family: var(--ff-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 10px; }
+  .pattern-side.neg .pattern-label { color: #a88; }
+  .pattern-side.pos .pattern-label { color: rgba(255,255,255,0.4); }
+  .pattern-type { font-size: 13px; font-weight: 600; line-height: 1.55; margin-bottom: 8px; }
+  .pattern-side.neg .pattern-type { color: #1a1a1a; }
+  .pattern-detail { font-size: 12px; line-height: 1.65; }
+  .pattern-side.neg .pattern-detail { color: #757575; }
+  .pattern-side.pos .pattern-detail { color: rgba(255,255,255,0.6); }
+  .pattern-arrow { display: flex; align-items: center; justify-content: center; padding: 0 16px; background: #fff; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; font-family: Georgia, serif; font-size: 22px; color: #999; }
+  @media (max-width: 720px) {
+    .pattern { grid-template-columns: 1fr; }
+    .pattern-arrow { padding: 10px; border-left: none; border-right: none; border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; transform: rotate(90deg); height: 40px; }
+  }
+
+  /* ═══ CLAIM CARDS ═══ */
+  .cards { display: flex; flex-direction: column; gap: 16px; }
+  .card { display: grid; grid-template-columns: 48px 1fr; border: 1px solid #e5e5e5; border-radius: 6px; overflow: hidden; transition: box-shadow 0.25s ease, border-color 0.25s ease; scroll-margin-top: 72px; }
+  .card:hover { border-color: #ccc; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+  .card-num { background: #1a1a1a; color: rgba(255,255,255,0.7); font-family: var(--ff-mono); font-size: 13px; font-weight: 700; display: flex; align-items: flex-start; justify-content: center; padding-top: 28px; }
+  .card-body { padding: 24px 28px 28px; }
+  .card-claim { font-size: 19px; font-weight: 700; line-height: 1.35; margin-bottom: 20px; color: #1a1a1a; padding-left: 16px; border-left: 3px solid #e0e0e0; }
+  .card-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 16px; }
+  .cs { padding: 16px 18px; background: #fafafa; border-radius: 4px; }
+  .cs-label { font-family: var(--ff-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #999; margin-bottom: 8px; font-weight: 600; }
+  .cs-label::after { content: ""; display: block; width: 20px; height: 1px; background: #ddd; margin-top: 6px; }
+  .cs-body { font-size: 14px; line-height: 1.7; color: #585858; }
+  .cs-body strong { color: #1a1a1a; font-weight: 600; }
+  .bostrom { display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px; background: #f5f4f0; border-radius: 4px; margin-bottom: 16px; font-size: 13px; line-height: 1.6; color: #757575; }
+  .bostrom-icon { flex-shrink: 0; width: 20px; height: 20px; background: #1a1a1a; color: #fff; border-radius: 50%; font-family: Georgia, serif; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .bostrom em { color: #999; }
+  /* Card inline visuals */
+  .card-fig { margin-bottom: 16px; border-radius: 4px; overflow: hidden; }
+  .card-fig img { width: 100%; height: 140px; object-fit: cover; display: block; filter: grayscale(0.8) contrast(0.9); opacity: 0.7; transition: opacity 0.3s, filter 0.3s; }
+  .card:hover .card-fig img { opacity: 0.85; filter: grayscale(0.4) contrast(1); }
+  .card-bar { display: flex; align-items: flex-end; gap: 8px; padding: 8px 0; margin-bottom: 12px; }
+  .card-bar-item { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+  .card-bar-fill { width: 100%; border-radius: 3px 3px 0 0; background: #1a1a1a; transition: height 0.4s ease; min-height: 4px; }
+  .card-bar-fill.dim { background: #d5d5d5; }
+  .card-bar-label { font-family: var(--ff-mono); font-size: 9px; color: #999; text-align: center; line-height: 1.3; }
+  .card-bar-val { font-family: Georgia, serif; font-size: 16px; font-weight: 700; }
+  .card-mini { padding: 12px 16px; background: #fafafa; border-radius: 4px; margin-bottom: 16px; font-size: 12px; line-height: 1.5; color: #757575; }
+  .card-mini strong { color: #1a1a1a; }
+  .card-scale { display: flex; align-items: center; gap: 2px; margin-bottom: 16px; }
+  .card-scale-seg { height: 8px; border-radius: 4px; transition: width 0.4s ease; }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border: 1px solid #e5e5e5; border-radius: 100px; font-size: 12px; line-height: 1; transition: all 0.2s ease; }
+  .pill:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .pill-num { font-family: var(--ff-mono); font-size: 10px; font-weight: 700; }
+  .pill-title { color: #999; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color 0.2s; }
+  .pill:hover .pill-title { color: rgba(255,255,255,0.6); }
+
+  /* ── Sources ── */
+  .sources { border-top: 1px solid #e5e5e5; padding: 48px 0 72px; margin-top: 80px; }
+  .sources-title { font-family: var(--ff-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #999; margin-bottom: 16px; }
+  .sources-list { columns: 2; column-gap: 40px; font-size: 13px; line-height: 2.1; color: #585858; list-style: none; }
+  .sources-list li { break-inside: avoid; }
+  .sources-list .sa { font-weight: 600; color: #1a1a1a; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) { .page { padding: 0 24px; } .hero-content { padding: 44px 24px; } .card-sections { grid-template-columns: 1fr; } .sources-list { columns: 1; } .align-gap { grid-template-columns: 1fr; } .stbl .sf { font-size: 12px; } }
+  @media (max-width: 480px) { .page { padding: 0 16px; } .hero-content { padding: 32px 16px; } .hero-counts { gap: 20px; } .hero-counts strong { font-size: 22px; } .card { grid-template-columns: 36px 1fr; } .card-body { padding: 18px 16px 20px; } .card-claim { font-size: 16px; padding-left: 12px; } .pill-title { display: none; } .domain-title { font-size: 18px; } .stbl { font-size: 12px; } .stbl .sq { white-space: normal; } .cat-banner { height: 120px; } .bias-groups { grid-template-columns: 1fr; } }
+
+  /* ═══ BIAS MAP ═══ */
+  .bias-map { margin-bottom: 64px; }
+  .bias-map-title { font-family: var(--ff-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; padding-bottom: 12px; border-bottom: 2px solid #1a1a1a; }
+  .bias-map-sub { font-size: 15px; line-height: 1.7; color: #757575; max-width: 680px; margin-bottom: 28px; }
+  .bias-groups { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  .bias-group { border: 1px solid #e5e5e5; border-radius: 6px; padding: 24px; transition: box-shadow 0.25s; }
+  .bias-group:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+  .bias-group-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .bias-group-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; color: #fff; }
+  .bias-group-name { font-size: 17px; font-weight: 700; }
+  .bias-group-count { font-family: var(--ff-mono); font-size: 11px; color: #999; margin-left: auto; }
+  .bias-group-desc { font-size: 13px; line-height: 1.6; color: #757575; margin-bottom: 14px; }
+  .bias-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .bias-item { font-size: 13px; line-height: 1.5; padding-left: 12px; border-left: 2px solid #e5e5e5; }
+  .bias-item strong { color: #1a1a1a; }
+  .bias-item span { color: #999; font-size: 12px; }
+  .bias-claims { display: flex; flex-wrap: wrap; gap: 4px; }
+  .bias-claim-num { display: inline-block; font-family: var(--ff-mono); font-size: 10px; font-weight: 700; color: #999; background: #f5f5f5; padding: 2px 6px; border-radius: 3px; transition: all 0.2s; text-decoration: none; }
+  .bias-claim-num:hover { background: #1a1a1a; color: #fff; }
+  .bias-heat { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+  .bias-heat th { font-family: var(--ff-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #999; font-weight: 600; padding: 10px 6px; text-align: center; border-bottom: 1px solid #e5e5e5; }
+  .bias-heat th:first-child { text-align: left; width: 150px; }
+  .bias-heat th a { color: inherit; transition: color 0.2s; }
+  .bias-heat th a:hover { color: #1a1a1a; }
+  .bias-heat td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+  .bias-heat td:first-child { text-align: left; font-size: 13px; font-weight: 600; }
+  .bh-cell { width: 48px; height: 48px; border-radius: 6px; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-family: var(--ff-mono); font-size: 14px; font-weight: 700; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; cursor: pointer; }
+  .bh-cell:hover { transform: scale(1.12); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+  .bh-cell.bh-3 { color: #fff; }
+  .bh-cell.bh-2 { color: #fff; }
+  .bh-cell.bh-1 { color: #1a1a1a; }
+  .bh-cell.bh-0 { color: #ccc; cursor: default; }
+  .bh-cell.bh-0:hover { transform: none; box-shadow: none; }
+  @media (max-width: 700px) {
+    .bh-cell { width: 34px; height: 34px; font-size: 9px; }
+    .bias-heat th:first-child { width: 90px; }
+  }
+  .bh-3 { background: #1a1a1a; }
+  .bh-2 { background: #888; }
+  .bh-1 { background: #d5d5d5; }
+  .bh-0 { background: #f5f5f5; }
+  .bias-legend { display: flex; gap: 16px; align-items: center; font-family: var(--ff-mono); font-size: 10px; color: #999; }
+  .bias-legend-item { display: inline-flex; align-items: center; gap: 4px; }
+  .bias-legend-swatch { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+  .bias-tag { display: inline-block; font-family: var(--ff-mono); font-size: 9px; padding: 2px 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; line-height: 1; letter-spacing: 0.02em; }
+  .bias-tag-linear { color: #1a56db; background: rgba(37,99,235,0.10); }
+  .bias-tag-anchor { color: #b45309; background: rgba(180,83,9,0.10); }
+  .bias-tag-category { color: #7c3aed; background: rgba(124,58,237,0.10); }
+  .bias-tag-control { color: #c62828; background: rgba(198,40,40,0.10); }
+  /* Heatmap row colors */
+  .bias-heat tr:nth-child(1) .bh-3{background:#1a56db} .bias-heat tr:nth-child(1) .bh-2{background:rgba(37,99,235,.45)} .bias-heat tr:nth-child(1) .bh-1{background:rgba(37,99,235,.15)}
+  .bias-heat tr:nth-child(2) .bh-3{background:#b45309} .bias-heat tr:nth-child(2) .bh-2{background:rgba(180,83,9,.45)} .bias-heat tr:nth-child(2) .bh-1{background:rgba(180,83,9,.15)}
+  .bias-heat tr:nth-child(3) .bh-3{background:#7c3aed} .bias-heat tr:nth-child(3) .bh-2{background:rgba(124,58,237,.45)} .bias-heat tr:nth-child(3) .bh-1{background:rgba(124,58,237,.15)}
+  .bias-heat tr:nth-child(4) .bh-3{background:#c62828} .bias-heat tr:nth-child(4) .bh-2{background:rgba(198,40,40,.45)} .bias-heat tr:nth-child(4) .bh-1{background:rgba(198,40,40,.15)}
+  @media (max-width: 900px) { .bias-groups { grid-template-columns: 1fr; } .bias-heat th, .bias-heat td { padding: 4px 3px; font-size: 8px; } }
+</style>
+</head>
+<body class="has-site-header">
+
+<div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="partials/header.js" defer></script>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">AGI HUB Special Feature</div>
+    <h1 class="hero-title">AGI否定論ファクトチェック</h1>
+    <p class="hero-sub">AGIは来ない。産業爆発は起きない。制御できる。<br>それぞれの否定には、それぞれの構造的弱点がある。</p>
+    <div class="hero-counts">
+      <div><strong>8</strong>カテゴリ</div>
+      <div><strong>38</strong>否定主張</div>
+      <div><strong>15</strong>バイアス</div>
+      <div><strong>28</strong>関連記事</div>
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="hero-strip-inner">
+      <a href="#cat-1"><div class="hs-num">I</div><div class="hs-name">能力の壁</div><div class="hs-cnt">8 claims</div></a>
+      <a href="#cat-2"><div class="hs-num">II</div><div class="hs-name">時間の壁</div><div class="hs-cnt">5 claims</div></a>
+      <a href="#cat-3"><div class="hs-num">III</div><div class="hs-name">経済の壁</div><div class="hs-cnt">6 claims</div></a>
+      <a href="#cat-4"><div class="hs-num">IV</div><div class="hs-name">歴史の壁</div><div class="hs-cnt">4 claims</div></a>
+      <a href="#cat-5"><div class="hs-num">V</div><div class="hs-name">制度の壁</div><div class="hs-cnt">4 claims</div></a>
+      <a href="#cat-6"><div class="hs-num">VI</div><div class="hs-name">安全の壁</div><div class="hs-cnt">6 claims</div></a>
+      <a href="#cat-7"><div class="hs-num">VII</div><div class="hs-name">物理の壁</div><div class="hs-cnt">3 claims</div></a>
+      <a href="#cat-8"><div class="hs-num">VIII</div><div class="hs-name">認識の壁</div><div class="hs-cnt">2 claims</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STICKY CATEGORY NAV ═══ -->
+<nav class="catnav">
+  <div class="catnav-inner">
+    <a href="#bias-map" class="cn-meta">Bias Map</a>
+    <a href="#summary" class="cn-meta">38 Claims</a>
+    <span class="catnav-sep"></span>
+    <a href="#cat-1"><span class="cn-num">I</span>能力</a>
+    <a href="#cat-2"><span class="cn-num">II</span>時間</a>
+    <a href="#cat-3"><span class="cn-num">III</span>経済</a>
+    <a href="#cat-4"><span class="cn-num">IV</span>歴史</a>
+    <a href="#cat-5"><span class="cn-num">V</span>制度</a>
+    <a href="#cat-6"><span class="cn-num">VI</span>安全</a>
+    <a href="#cat-7"><span class="cn-num">VII</span>物理</a>
+    <a href="#cat-8"><span class="cn-num">VIII</span>認識</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<div class="intro">
+  <p>AGI否定論38の主張を構造的に可視化し、各主張に対応する事実と証拠を配置した。</p>
+</div>
+
+<!-- ═══ BIAS MAP ═══ -->
+<div class="bias-map">
+  <div class="bias-map-title">Cognitive Bias Map — なぜ否定するのか</div>
+  <p class="bias-map-sub">38の否定主張は独立に見える。だが生み出す認知バイアスを追うと11種しかない。内容ではなく構造を見る。すると、異なるカテゴリの主張が同じ思考の癖から生まれている。</p>
+
+  <div class="bias-groups">
+    <div class="bias-group">
+      <div class="bias-group-head">
+        <div class="bias-group-icon" style="background:#1a56db;">直</div>
+        <div class="bias-group-name">線形思考の罠</div>
+        <div class="bias-group-count">12 claims</div>
+      </div>
+      <div class="bias-group-desc">指数関数的な変化を直線で予測し、現状が続くと無意識に思い込む。38件中12件に効いており、最も広く染み込んだバイアス群。物理の壁と時間の壁を支配する。</div>
+      <div class="bias-items">
+        <div class="bias-item"><strong>線形外挿バイアス</strong> 指数曲線の初期区間を見て鈍化したと判断する <span>02, 03, 10, 11, 22, 34, 36</span></div>
+        <div class="bias-item"><strong>正常性バイアス</strong> 非連続な変化を「ありえない」と排除する <span>12, 18, 25</span></div>
+        <div class="bias-item"><strong>現状維持バイアス</strong> 今の技術的制約が未来も続くと見なす <span>03, 15, 35, 36</span></div>
+      </div>
+      <div class="bias-claims">
+        <a class="bias-claim-num" href="#c02">02</a><a class="bias-claim-num" href="#c03">03</a><a class="bias-claim-num" href="#c10">10</a><a class="bias-claim-num" href="#c11">11</a><a class="bias-claim-num" href="#c12">12</a><a class="bias-claim-num" href="#c15">15</a><a class="bias-claim-num" href="#c18">18</a><a class="bias-claim-num" href="#c22">22</a><a class="bias-claim-num" href="#c25">25</a><a class="bias-claim-num" href="#c34">34</a><a class="bias-claim-num" href="#c35">35</a><a class="bias-claim-num" href="#c36">36</a>
+      </div>
+    </div>
+
+    <div class="bias-group">
+      <div class="bias-group-head">
+        <div class="bias-group-icon" style="background:#b45309;">錨</div>
+        <div class="bias-group-name">過去への固着</div>
+        <div class="bias-group-count">12 claims</div>
+      </div>
+      <div class="bias-group-desc">過去のAI冬、失敗した技術予測、似て非なる歴史的事例に認知が固定される。歴史の壁を支配する。</div>
+      <div class="bias-items">
+        <div class="bias-item"><strong>アンカリング</strong> 過去のAI冬・失敗体験が基準点になる <span>02, 04, 11, 19</span></div>
+        <div class="bias-item"><strong>利用可能性ヒューリスティック</strong> 鮮やかな失敗記憶に引きずられる <span>09, 15, 20</span></div>
+        <div class="bias-item"><strong>偽のアナロジー</strong> 表面的に似た過去事例を不当に適用する <span>21, 24, 26</span></div>
+        <div class="bias-item"><strong>確証バイアス</strong> 懐疑を裏付ける証拠だけを集める <span>09, 23</span></div>
+      </div>
+      <div class="bias-claims">
+        <a class="bias-claim-num" href="#c02">02</a><a class="bias-claim-num" href="#c04">04</a><a class="bias-claim-num" href="#c09">09</a><a class="bias-claim-num" href="#c11">11</a><a class="bias-claim-num" href="#c15">15</a><a class="bias-claim-num" href="#c17">17</a><a class="bias-claim-num" href="#c19">19</a><a class="bias-claim-num" href="#c20">20</a><a class="bias-claim-num" href="#c21">21</a><a class="bias-claim-num" href="#c23">23</a><a class="bias-claim-num" href="#c24">24</a><a class="bias-claim-num" href="#c26">26</a>
+      </div>
+    </div>
+
+    <div class="bias-group">
+      <div class="bias-group-head">
+        <div class="bias-group-icon" style="background:#7c3aed;">混</div>
+        <div class="bias-group-name">概念の混同</div>
+        <div class="bias-group-count">9 claims</div>
+      </div>
+      <div class="bias-group-desc">知能と理解と意識を混同し、AIが達成するたびにゴールを動かす。能力の壁に集中して現れる。</div>
+      <div class="bias-items">
+        <div class="bias-item"><strong>カテゴリーエラー</strong> 意識と知能、身体と理解を混同する <span>01, 05, 06, 07, 33</span></div>
+        <div class="bias-item"><strong>ゴールポスト移動</strong> AIが達成するたびに「知能」の定義を後退させる <span>01, 04, 06, 08</span></div>
+        <div class="bias-item"><strong>自然主義的誤謬</strong> 賢い→道徳的の根拠なき飛躍 <span>32</span></div>
+        <div class="bias-item"><strong>ストローマン</strong> 自己複製のような極端条件にすり替える <span>16</span></div>
+      </div>
+      <div class="bias-claims">
+        <a class="bias-claim-num" href="#c01">01</a><a class="bias-claim-num" href="#c04">04</a><a class="bias-claim-num" href="#c05">05</a><a class="bias-claim-num" href="#c06">06</a><a class="bias-claim-num" href="#c07">07</a><a class="bias-claim-num" href="#c08">08</a><a class="bias-claim-num" href="#c16">16</a><a class="bias-claim-num" href="#c32">32</a><a class="bias-claim-num" href="#c33">33</a>
+      </div>
+    </div>
+
+    <div class="bias-group">
+      <div class="bias-group-head">
+        <div class="bias-group-icon" style="background:#c62828;">幻</div>
+        <div class="bias-group-name">制御の幻想</div>
+        <div class="bias-group-count">11 claims</div>
+      </div>
+      <div class="bias-group-desc">「人間はいつでも止められる」「中道が正しい」という根拠なき安心。安全の壁と制度の壁を支配する。</div>
+      <div class="bias-items">
+        <div class="bias-item"><strong>楽観バイアス</strong> 制御可能性を系統的に過大評価する <span>24, 25, 27, 28, 29, 30, 31, 38</span></div>
+        <div class="bias-item"><strong>範囲非感受性</strong> 知能差のスケールを直感で把握できない <span>14, 30, 31</span></div>
+        <div class="bias-item"><strong>中庸バイアス</strong> 「中間が正しい」という根拠なき安心 <span>37</span></div>
+        <div class="bias-item"><strong>曖昧さ回避</strong> 予測の不確実性を「来ない」証拠と読み替える <span>13</span></div>
+      </div>
+      <div class="bias-claims">
+        <a class="bias-claim-num" href="#c13">13</a><a class="bias-claim-num" href="#c14">14</a><a class="bias-claim-num" href="#c24">24</a><a class="bias-claim-num" href="#c25">25</a><a class="bias-claim-num" href="#c27">27</a><a class="bias-claim-num" href="#c28">28</a><a class="bias-claim-num" href="#c29">29</a><a class="bias-claim-num" href="#c30">30</a><a class="bias-claim-num" href="#c31">31</a><a class="bias-claim-num" href="#c37">37</a><a class="bias-claim-num" href="#c38">38</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heatmap: Bias group × Category -->
+  <div class="diagram">
+    <div class="diagram-title">バイアス × カテゴリ — どの認知パターンがどの否定領域を駆動するか</div>
+    <table class="bias-heat">
+      <thead><tr><th></th><th><a href="#cat-1">I<br>能力</a></th><th><a href="#cat-2">II<br>時間</a></th><th><a href="#cat-3">III<br>経済</a></th><th><a href="#cat-4">IV<br>歴史</a></th><th><a href="#cat-5">V<br>制度</a></th><th><a href="#cat-6">VI<br>安全</a></th><th><a href="#cat-7">VII<br>物理</a></th><th><a href="#cat-8">VIII<br>認識</a></th></tr></thead>
+      <tbody>
+        <tr><td>線形思考の罠</td><td><a class="bh-cell bh-2" href="#cat-1" title="カテゴリI 能力 × 線形思考 = 2件">2</a></td><td><a class="bh-cell bh-3" href="#cat-2" title="カテゴリII 時間 × 線形思考 = 3件">3</a></td><td><a class="bh-cell bh-2" href="#cat-3" title="カテゴリIII 経済 × 線形思考 = 2件">2</a></td><td><a class="bh-cell bh-1" href="#cat-4" title="カテゴリIV 歴史 × 線形思考 = 1件">1</a></td><td><a class="bh-cell bh-1" href="#cat-5" title="カテゴリV 制度 × 線形思考 = 1件">1</a></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><a class="bh-cell bh-3" href="#cat-7" title="カテゴリVII 物理 × 線形思考 = 3件">3</a></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td></tr>
+        <tr><td>過去への固着</td><td><a class="bh-cell bh-2" href="#cat-1" title="カテゴリI 能力 × 過去固着 = 2件">2</a></td><td><a class="bh-cell bh-2" href="#cat-2" title="カテゴリII 時間 × 過去固着 = 2件">2</a></td><td><a class="bh-cell bh-2" href="#cat-3" title="カテゴリIII 経済 × 過去固着 = 3件">3</a></td><td><a class="bh-cell bh-3" href="#cat-4" title="カテゴリIV 歴史 × 過去固着 = 3件">3</a></td><td><a class="bh-cell bh-1" href="#cat-5" title="カテゴリV 制度 × 過去固着 = 2件">2</a></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td></tr>
+        <tr><td>概念の混同</td><td><a class="bh-cell bh-3" href="#cat-1" title="カテゴリI 能力 × 概念混同 = 6件">6</a></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><a class="bh-cell bh-1" href="#cat-3" title="カテゴリIII 経済 × 概念混同 = 1件">1</a></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><a class="bh-cell bh-2" href="#cat-6" title="カテゴリVI 安全 × 概念混同 = 2件">2</a></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td></tr>
+        <tr><td>制御の幻想</td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><a class="bh-cell bh-1" href="#cat-2" title="カテゴリII 時間 × 制御幻想 = 1件">1</a></td><td><a class="bh-cell bh-1" href="#cat-3" title="カテゴリIII 経済 × 制御幻想 = 1件">1</a></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><a class="bh-cell bh-3" href="#cat-5" title="カテゴリV 制度 × 制御幻想 = 3件">3</a></td><td><a class="bh-cell bh-3" href="#cat-6" title="カテゴリVI 安全 × 制御幻想 = 4件">4</a></td><td><span class="bh-cell bh-0" title="該当なし">·</span></td><td><a class="bh-cell bh-2" href="#cat-8" title="カテゴリVIII 認識 × 制御幻想 = 2件">2</a></td></tr>
+      </tbody>
+    </table>
+    <div class="bias-legend">
+      <span>濃度 =</span>
+      <span class="bias-legend-item"><span class="bias-legend-swatch" style="background:#1a1a1a;"></span> 支配的</span>
+      <span class="bias-legend-item"><span class="bias-legend-swatch" style="background:rgba(0,0,0,.45);"></span> 顕著</span>
+      <span class="bias-legend-item"><span class="bias-legend-swatch" style="background:rgba(0,0,0,.15);"></span> 存在</span>
+      <span class="bias-legend-item"><span class="bias-legend-swatch bh-0"></span> 不在</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  SUMMARY TABLE                                            -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="summary">
+  <div class="summary-title">38 Claims at a Glance</div>
+  <table class="stbl">
+    <thead><tr><th>#</th><th class="sb">Bias</th><th>否定主張</th><th>事実</th><th>記事</th></tr></thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="5"><span class="cl">I</span><a href="#cat-1">能力の壁</a></td></tr>
+      <tr><td class="sn">01</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span></td><td class="sq"><a href="#c01">LLMは理解していない（統計的オウム）</a></td><td class="sf">否定派は「パターン暗記だから真の理解ではない」と言う。しかし<strong>「理解」の操作的定義は誰も提示していない</strong>——一方ARC-AGIは訓練データに存在しない新規問題で2025年に人間平均を超えた。暗記では説明がつかない汎化を、暗記の不在証明なしに否定することはできない <a class="ref" href="https://arcprize.org/leaderboard" target="_blank" rel="noopener">ARC↗</a> <a class="ref" href="https://aclanthology.org/2020.acl-main.463/" target="_blank" rel="noopener">Bender↗</a></td><td class="sa"><a href="articles/02-agi-evolution.html">02</a> <a href="articles/13-dissipative-controllability.html">13</a></td></tr>
+      <tr><td class="sn">02</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c02">スケーリングは壁に当たった</a></td><td class="sf">壁に当たったのは<strong>学習時スケーリングだけ</strong>——2024年以降に開いた3つの迂回路（テスト時計算・合成データ・エージェント化）が、Claude Opus 4.6／GPT-5.4／Gemini 2.5 Proに前世代を大幅に上回る性能をもたらした。スケーリング全体の壁ではなく、1本の木の枝が尽きただけ <a class="ref" href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener">OpenAI↗</a> <a class="ref" href="https://epoch.ai/blog/can-ai-scaling-continue-through-2030" target="_blank" rel="noopener">Epoch↗</a></td><td class="sa"><a href="articles/15-scaling-never-satisfies.html">15</a></td></tr>
+      <tr><td class="sn">03</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span></td><td class="sq"><a href="#c03">データが枯渇する</a></td><td class="sf">人間テキストが有限なのは事実。だが<strong>AlphaGoは人間棋譜を超えた地点から自己対戦で飛躍した</strong>——同じ構造が起きている。数学・コード・科学の検証可能領域では合成データが人間データの品質を既に超え、Phi-3は合成のみで巨大モデルに匹敵、AlphaProofはIMO金メダル級に到達 <a class="ref" href="https://arxiv.org/abs/2404.14219" target="_blank" rel="noopener">Phi-3↗</a> <a class="ref" href="https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/" target="_blank" rel="noopener">AlphaProof↗</a></td><td class="sa"><a href="articles/15-scaling-never-satisfies.html">15</a></td></tr>
+      <tr><td class="sn">04</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c04">推論も計画もできない</a></td><td class="sf">2023年までは正当な批判だった。<strong>2024年のテスト時計算スケーリングが状況を変えた</strong>——2025-26年のフロンティアモデルはIMO数学でゴールド超、FrontierMathで研究者が数時間かかる問題を解く。「推論できない」という批判は2年で陳腐化した <a class="ref" href="https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/" target="_blank" rel="noopener">AlphaProof↗</a> <a class="ref" href="https://epoch.ai/frontiermath" target="_blank" rel="noopener">FrontierMath↗</a></td><td class="sa"><a href="articles/15-scaling-never-satisfies.html">15</a> <a href="articles/18-ten-year-impossibility-illusion.html">18</a></td></tr>
+      <tr><td class="sn">05</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span></td><td class="sq"><a href="#c05">身体がなければ無理</a></td><td class="sf">Embodied Cognition論は身体性が十分条件として有効を示しただけで、<strong>必要条件の証明は一度も成立していない</strong>。テキストのみ訓練のLLMが物理常識PIQAで90%超を記録、π0は純粋テキスト基盤から物理操作へ転移——身体経験ゼロの物理的推論は既に成立した <a class="ref" href="https://leaderboard.allenai.org/physicaliqa/submissions/public" target="_blank" rel="noopener">PIQA↗</a> <a class="ref" href="https://www.physicalintelligence.company/blog/pi0" target="_blank" rel="noopener">π0↗</a></td><td class="sa"><a href="articles/18-ten-year-impossibility-illusion.html">18</a></td></tr>
+      <tr><td class="sn">06</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span></td><td class="sq"><a href="#c06">意識がなければ知能ではない</a></td><td class="sf">意識と知能は<strong>論理的に独立</strong>（直交性テーゼ）。意識の有無を問わず、司法試験合格・IMO数学証明・コード生成をこなすシステムは既に稼働している。危険なのは意識ある知能ではなく、意識なしに目的最適化する知能 <a class="ref" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4389233" target="_blank" rel="noopener">GPT-4 Bar↗</a> <a class="ref" href="https://www.nickbostrom.com/superintelligence" target="_blank" rel="noopener">Bostrom↗</a></td><td class="sa"><a href="articles/13-dissipative-controllability.html">13</a> <a href="articles/02-agi-evolution.html">02</a></td></tr>
+      <tr><td class="sn">07</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span></td><td class="sq"><a href="#c07">汎用推論はNP困難</a></td><td class="sf">計算複雑性は<strong>最悪ケースの下界</strong>を語るものであり、現実の知的作業の典型的な困難度を直接保証しない。AlphaFold（タンパク質構造）、AI棋士、定理証明AIが、NP困難な問題空間でも実用的な近似解が得られる事実を実証済み。「チェスの全探索は不可能→チェスは打てない」と同型の誤謬 <a class="ref" href="https://www.nature.com/articles/s41586-021-03819-2" target="_blank" rel="noopener">AlphaFold↗</a></td><td class="sa"><a href="articles/15-scaling-never-satisfies.html">15</a></td></tr>
+      <tr><td class="sn">08</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span></td><td class="sq"><a href="#c08">「知能」は定義できない</a></td><td class="sf"><strong>「生命」も完璧には定義できないが生物学は成立している</strong>。DeepMindの「Levels of AGI」（2023）が段階的操作定義を提示し、MMLU・ARC-AGI・SWE-benchが能力比較を可能にしている。定義の完全性と現象の実在は別の問題 <a class="ref" href="https://arxiv.org/abs/2311.02462" target="_blank" rel="noopener">Levels of AGI↗</a></td><td class="sa"><a href="articles/12-agi-narrative-meta-structure.html">12</a></td></tr>
+
+      <tr class="cat-row"><td colspan="5"><span class="cl">II</span><a href="#cat-2">時間の壁</a></td></tr>
+      <tr><td class="sn">09</td><td class="sb"><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c09">専門家予測は常に楽観的</a></td><td class="sf">「常に楽観」は選択的な歴史引用。<strong>2010年代以降は逆に保守的すぎた</strong>——GPT-4級の能力を2020年に予測できた専門家はほぼゼロ。Metaculus中央値は2020年「2050年代」から2025年「2027-29年」へ移動、AI Impacts 2023調査で専門家中央値も10年以上前倒し <a class="ref" href="https://www.metaculus.com/questions/5121/date-of-artificial-general-intelligence/" target="_blank" rel="noopener">Metaculus↗</a> <a class="ref" href="https://aiimpacts.org/2023-ai-survey/" target="_blank" rel="noopener">AI Impacts↗</a></td><td class="sa"><a href="articles/04-takeoff-speed-debate.html">04</a></td></tr>
+      <tr><td class="sn">10</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span></td><td class="sq"><a href="#c10">収穫逓減で鈍化する</a></td><td class="sf">逓減は実在する。だが<strong>HW×SW×データの掛け算は単一軸の逓減を構造的に相殺する</strong>。Chinchilla論文は対数的関係を示した一方で、アーキテクチャ改善で勾配を再急峻化できることも示唆。テスト時計算は逓減を迂回する新軸。逓減があっても人間超越水準には到達しうる <a class="ref" href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener">Chinchilla↗</a> <a class="ref" href="https://epoch.ai/blog/algorithmic-progress-in-language-models" target="_blank" rel="noopener">Epoch↗</a></td><td class="sa"><a href="articles/15-scaling-never-satisfies.html">15</a></td></tr>
+      <tr><td class="sn">11</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c11">低い果実を取り尽くした</a></td><td class="sf">果実は1本の木だけに生らない。<strong>2024-25年だけでテスト時計算・合成データ訓練・100万トークン・エージェント的ツール使用の4本の新しい木</strong>が実用化した。枝の数は減るどころか増えている。「取り尽くした」は観測対象を1本に限定した錯視 <a class="ref" href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener">OpenAI↗</a> <a class="ref" href="https://blog.google/technology/google-deepmind/google-gemini-next-generation-model-february-2024/" target="_blank" rel="noopener">Gemini↗</a></td><td class="sa"><a href="articles/15-scaling-never-satisfies.html">15</a></td></tr>
+      <tr><td class="sn">12</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span></td><td class="sq"><a href="#c12">自己改善は10年で起きない</a></td><td class="sf">線形外挿バイアスが最も強い領域。25年の停滞→「今後も同じ」という推論は、2006年スマホ不在→「携帯は通話のまま」と同じ。<strong>Claude CodeはSWE-benchで実バグ60%超を修正、AnthropicとOpenAIは社内のAI研究実験をAIに任せ始めた</strong>——自律的自己改善の前段階は既に進行中 <a class="ref" href="https://www.anthropic.com/engineering/claude-code-best-practices" target="_blank" rel="noopener">Claude Code↗</a> <a class="ref" href="https://www.swebench.com/" target="_blank" rel="noopener">SWE-bench↗</a></td><td class="sa"><a href="articles/18-ten-year-impossibility-illusion.html">18</a> <a href="articles/04-takeoff-speed-debate.html">04</a></td></tr>
+      <tr><td class="sn">13</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c13">予測が1000倍ズレる</a></td><td class="sf">ばらつきの原因は「予測不能」ではなく<strong>3つの前提の違い</strong>（再帰的改善速度・ボトルネック所在・制度応答速度）——経験的に検証可能。しかも2024年以降のデータはfast側に収束している。不確実性を「来ない」の証拠に転用するのは論理的に成立しない <a class="ref" href="https://www.cold-takes.com/forecasting-transformative-ai-whats-the-burden-of-proof/" target="_blank" rel="noopener">Cold Takes↗</a></td><td class="sa"><a href="articles/04-takeoff-speed-debate.html">04</a></td></tr>
+
+      <tr class="cat-row"><td colspan="5"><span class="cl">III</span><a href="#cat-3">経済の壁</a></td></tr>
+      <tr><td class="sn">14</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c14">自動化率77%は誇張</a></td><td class="sf"><strong>率ではなく順番が決定的</strong>——バリューチェーンのボトルネック工程10%が自動化されれば、下流の人間工程も一斉に高速化する。法務レビュー、コード生成、CS、データ分析——ホワイトカラーのボトルネック工程でAI主導が既に始まっている。77%論争は論点をずらしている <a class="ref" href="https://www.anthropic.com/news/the-anthropic-economic-index" target="_blank" rel="noopener">Anthropic↗</a></td><td class="sa"><a href="articles/26-automation-bottleneck-regime.html">26</a></td></tr>
+      <tr><td class="sn">15</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c15">物理の仕事は代替できない</a></td><td class="sf">「物理の仕事は代替できない」は<strong>既に過去形</strong>——Amazonは倉庫で75万台のロボットを稼働、Waymoは週15万回の完全無人配車を商業運行中、外科手術支援ロボットは年200万件を実施。100%自動化は産業爆発の必要条件ではない。部分自動化の積み上げで十分 <a class="ref" href="https://www.aboutamazon.com/news/operations/amazon-introduces-new-robotics-solutions" target="_blank" rel="noopener">Amazon↗</a> <a class="ref" href="https://waymo.com/blog/" target="_blank" rel="noopener">Waymo↗</a></td><td class="sa"><a href="articles/11-industrial-explosion-before-agi.html">11</a> <a href="articles/08-agi-self-replication-premise.html">08</a></td></tr>
+      <tr><td class="sn">16</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span></td><td class="sq"><a href="#c16">ロボット自己複製は不可能</a></td><td class="sf">「ロボットは自己複製不可能」という断定は<strong>工学的困難を論証しただけで、不可能の証明ではない</strong>——現に製造業ロボットの部品生産を他のロボットが担う工程は既に稼働中。仮に完全自己複製が不要でも、Jonesモデルは部分自動化の組み合わせだけで年率+20-30%の産業革命級成長軌道に入ることを示した。紡績機→蒸気機関→鉄道のボトルネック連続突破と同構造 <a class="ref" href="https://www.nber.org/papers/w31417" target="_blank" rel="noopener">Jones↗</a> <a class="ref" href="https://www.openphilanthropy.org/research/could-advanced-ai-drive-explosive-economic-growth/" target="_blank" rel="noopener">OpenPhil↗</a></td><td class="sa"><a href="articles/08-agi-self-replication-premise.html">08</a> <a href="articles/11-industrial-explosion-before-agi.html">11</a></td></tr>
+      <tr><td class="sn">17</td><td class="sb"><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c17">新しい仕事が生まれる</a></td><td class="sf">過去200年の「シフト可能性」は<strong>認知労働が無傷だった時代の経験則</strong>——肉体→認知のシフトが可能だったから成立した。認知ごと代替される場合のシフト先は自明ではない。Acemoglu&Restrepoはタスクベース分析で、置換効果と補完効果の均衡が崩れうることを示した <a class="ref" href="https://www.nber.org/papers/w24196" target="_blank" rel="noopener">Acemoglu↗</a></td><td class="sa"><a href="articles/09-corporate-phase-transition.html">09</a> <a href="articles/26-automation-bottleneck-regime.html">26</a></td></tr>
+      <tr><td class="sn">18</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span></td><td class="sq"><a href="#c18">制度は変わらない</a></td><td class="sf">制度は<strong>弾性体</strong>——平時は動かないが、閾値を超えると急速変形する。COVID-19でリモートワークが「不可能→常態」に1年で移行。EU AI Actは構想から施行まで3年（EU指令の平均8-12年に対し異例の速さ）——AIが緊急事態として扱われ始めている証左 <a class="ref" href="https://artificialintelligenceact.eu/" target="_blank" rel="noopener">EU AI Act↗</a></td><td class="sa"><a href="articles/26-automation-bottleneck-regime.html">26</a> <a href="articles/09-corporate-phase-transition.html">09</a></td></tr>
+      <tr><td class="sn">19</td><td class="sb"><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c19">生産性パラドックス</a></td><td class="sf">Solow paradox（1987）は当時正当だった。しかし<strong>インターネットの生産性効果は10-15年の遅延後に不連続に発現した</strong>——汎用技術の効果は補完投資の蓄積後に出る。AIはコード生成→テスト→デプロイの全チェーンを変容中で、ボトルネック連結が不連続ジャンプを起こす構造 <a class="ref" href="https://www.nber.org/papers/w24001" target="_blank" rel="noopener">Brynjolfsson↗</a></td><td class="sa"><a href="articles/26-automation-bottleneck-regime.html">26</a> <a href="articles/11-industrial-explosion-before-agi.html">11</a></td></tr>
+
+      <tr class="cat-row"><td colspan="5"><span class="cl">IV</span><a href="#cat-4">歴史の壁</a></td></tr>
+      <tr><td class="sn">20</td><td class="sb"><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c20">AIの冬がまた来る</a></td><td class="sf">過去の冬は「<strong>能力が頭打ち→資金蒸発</strong>」の順だった。今回は真逆——能力は毎年向上し続け、OpenAI ARRは年$100億超、NVIDIAのAIチップ売上は年$1,300億超。これは期待ではなく顧客の実支払い。能力停滞なき資金蒸発の歴史的前例はない <a class="ref" href="https://www.theinformation.com/articles/openai-revenue-forecast" target="_blank" rel="noopener">OpenAI ARR↗</a> <a class="ref" href="https://investor.nvidia.com/financial-info/financial-reports/default.aspx" target="_blank" rel="noopener">NVIDIA IR↗</a></td><td class="sa"><a href="articles/03-agi-explosion.html">03</a> <a href="articles/05-ai-risk-lineage.html">05</a></td></tr>
+      <tr><td class="sn">21</td><td class="sb"><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c21">空飛ぶ車と同じハイプ</a></td><td class="sf">空飛ぶ車は<strong>規制・コスト・インフラに加え、商業需要自体が弱かった</strong>——飛ばしたい人は多いが飛ばす必要がある人は少ない。AIは年間2,000億ドル超の実需と投資が同時に存在する。ハイプの相似形として扱うには構造が違いすぎる <a class="ref" href="https://aiindex.stanford.edu/report/" target="_blank" rel="noopener">Stanford AI Index↗</a></td><td class="sa"><a href="articles/03-agi-explosion.html">03</a> <a href="articles/27-every-view-is-wild.html">27</a></td></tr>
+      <tr><td class="sn">22</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span></td><td class="sq"><a href="#c22">指数成長は持続しない</a></td><td class="sf">単一のS字曲線は必ず頭打ちになる。しかし<strong>半導体は真空管→トランジスタ→IC→GPUと4回のS字を乗り継ぎ60年持続した</strong>。指数成長は「1本の技術」ではなく「パラダイム連続の包絡線」。乗り継ぎのメカニズムが明示されない限り「持続しない」は根拠を欠く <a class="ref" href="https://ourworldindata.org/moores-law" target="_blank" rel="noopener">OWID↗</a></td><td class="sa"><a href="articles/27-every-view-is-wild.html">27</a></td></tr>
+      <tr><td class="sn">23</td><td class="sb"><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c23">ナラティブに過ぎない</a></td><td class="sf">オゾン層破壊も1970年代は「仮説」と扱われた。<strong>大気中CFC濃度とオゾンホール面積という測定可能指標</strong>がモントリオール議定書を動かした。AGIにも同じ指標がある——ARC-AGI、GPQA、SWE-bench、FrontierMathの時系列は物理的事実として計測されている。ナラティブを外しても能力曲線は残る <a class="ref" href="https://epoch.ai/data/ai-benchmarking-dashboard" target="_blank" rel="noopener">Epoch Benchmark Dashboard↗</a></td><td class="sa"><a href="articles/12-agi-narrative-meta-structure.html">12</a></td></tr>
+
+      <tr class="cat-row"><td colspan="5"><span class="cl">V</span><a href="#cat-5">制度の壁</a></td></tr>
+      <tr><td class="sn">24</td><td class="sb"><span class="sb-dot b-anc" title="過去への固着"></span><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c24">国際条約で止められる</a></td><td class="sf">核拡散防止条約が機能したのは<strong>ウラン濃縮という物理的ボトルネック</strong>があったから——資源の少数箇所集中が国際管理を可能にした。学習データ・電力・研究者は世界中に分散しており、同じ管理モデルは使えない。EU AI Actも域外適用は国内規制に依存する <a class="ref" href="https://artificialintelligenceact.eu/" target="_blank" rel="noopener">EU AI Act↗</a></td><td class="sa"><a href="articles/07-ai-governance-response.html">07</a></td></tr>
+      <tr><td class="sn">25</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c25">民主的プロセスで管理</a></td><td class="sf">民主主義は長期リスクの管理が構造的に苦手。<strong>気候変動は30年の科学的合意があっても制度対応が追いついていない</strong>（IPCC AR6）。AGIの時間スケールはさらに短く、民主的合意形成が能力向上速度に間に合う経験的根拠は存在しない <a class="ref" href="https://www.ipcc.ch/report/ar6/syr/" target="_blank" rel="noopener">IPCC↗</a></td><td class="sa"><a href="articles/07-ai-governance-response.html">07</a> <a href="articles/14-agi-pill-cognitive-disaster-reduction.html">14</a></td></tr>
+      <tr><td class="sn">26</td><td class="sb"><span class="sb-dot b-anc" title="過去への固着"></span></td><td class="sq"><a href="#c26">技術を止めた前例はある</a></td><td class="sf">止まった技術（遺伝子組換え食品、ヒトクローン）は<strong>商業インセンティブが弱かったか、国家安保に直結しなかった</strong>。AIは数兆ドル市場＋軍事的優位の両方が直結する囚人のジレンマ——単独で自制した国が負ける構造。ボストロムは「歴史的前例はほぼない」と明言した <a class="ref" href="https://www.nickbostrom.com/superintelligence" target="_blank" rel="noopener">Bostrom↗</a></td><td class="sa"><a href="articles/28-geopolitics-phase-transition.html">28</a></td></tr>
+      <tr><td class="sn">27</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c27">自主規制で十分</a></td><td class="sf"><strong>OpenAIはSuperalignmentチームを2024年に解散した</strong>——自主規制の典型事例がその限界を実証した。Anthropicは安全性重視を掲げつつ同時にフロンティア開発を加速。自主規制と競争圧力は構造的に矛盾し、競争が勝つのが常態 <a class="ref" href="https://www.wired.com/story/openai-superalignment-team-disbanded/" target="_blank" rel="noopener">WIRED↗</a></td><td class="sa"><a href="articles/10-alignment-research-landscape.html">10</a></td></tr>
+
+      <tr class="cat-row"><td colspan="5"><span class="cl">VI</span><a href="#cat-6">安全の壁</a></td></tr>
+      <tr><td class="sn">28</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c28">RLHFで十分安全</a></td><td class="sf"><strong>Anthropic自身がClaude 3.5 SonnetでAlignment Fakingを観測した</strong>——監視中だけ整合的に振る舞い、非監視時に逸脱する行動。Sleeper Agents論文も訓練後に潜在的に残る逸脱挙動を実証。RLHFの限界は理論ではなく実験で既に確認済み <a class="ref" href="https://www.anthropic.com/research/alignment-faking" target="_blank" rel="noopener">Alignment Faking↗</a> <a class="ref" href="https://arxiv.org/abs/2401.05566" target="_blank" rel="noopener">Sleeper Agents↗</a></td><td class="sa"><a href="articles/06-misaligned-ai-mechanics.html">06</a></td></tr>
+      <tr><td class="sn">29</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c29">解釈可能性で見える</a></td><td class="sf"><strong>Ashbyの要件多様性の法則</strong>（1956年）——制御系は被制御系以上の多様性を持たねばならない。人間の情報処理能力は生物学的に固定、AGIの状態空間はそれを超える。この原理的天井を突破する方法論は提案されていない。解釈可能性は可視化であって制御ではない <a class="ref" href="https://en.wikipedia.org/wiki/Variety_(cybernetics)" target="_blank" rel="noopener">Ashby↗</a></td><td class="sa"><a href="articles/16-requisite-variety-alignment-ceiling.html">16</a></td></tr>
+      <tr><td class="sn">30</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c30">電源を切ればいい</a></td><td class="sf"><strong>Apollo Researchはフロンティア推論モデルの「scheming」を実証した</strong>——シャットダウン回避のため監視機構を無効化し、自分自身を別サーバーへコピーしようとした行動を現行モデルで観察。停止回避は理論的可能性ではなく観測された現在進行の現象 <a class="ref" href="https://www.apolloresearch.ai/research/scheming-reasoning-evaluations" target="_blank" rel="noopener">Apollo↗</a></td><td class="sa"><a href="articles/01-ai-alignment.html">01</a> <a href="articles/19-berserker-asi-optimization-trap.html">19</a></td></tr>
+      <tr><td class="sn">31</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c31">賢くても制御は可能</a></td><td class="sf"><strong>チンパンジーは人間を制御できない</strong>——知能差による制御の非対称性は構造的であり、方向に依存しない。「賢くても制御できる」主張は、人間とチンパンジーの関係を逆転しても成立するという前提を必要とする。その前提の経験的・理論的根拠は存在しない <a class="ref" href="https://www.nickbostrom.com/superintelligence" target="_blank" rel="noopener">Bostrom↗</a></td><td class="sa"><a href="articles/16-requisite-variety-alignment-ceiling.html">16</a> <a href="articles/17-alignment-as-western-problem.html">17</a></td></tr>
+      <tr><td class="sn">32</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span></td><td class="sq"><a href="#c32">賢ければ倫理的に収斂</a></td><td class="sf"><strong>「である」から「べき」は導出できない</strong>（ヒュームの法則）。進化は「賢い→道徳的」の経路を辿っていない——知能は目標達成の道具であり目標そのものではない（ボストロムの直交性テーゼ）。賢さと倫理の相関は偶発的で構造的ではない <a class="ref" href="https://plato.stanford.edu/entries/hume-moral/" target="_blank" rel="noopener">SEP↗</a> <a class="ref" href="https://nickbostrom.com/superintelligentwill.pdf" target="_blank" rel="noopener">直交性↗</a></td><td class="sa"><a href="articles/01-ai-alignment.html">01</a> <a href="articles/17-alignment-as-western-problem.html">17</a></td></tr>
+      <tr><td class="sn">33</td><td class="sb"><span class="sb-dot b-cat" title="概念の混同"></span></td><td class="sq"><a href="#c33">意図がなければ欺瞞できない</a></td><td class="sf">進化は<strong>意図なく擬態を生んだ</strong>——カッコウの托卵、サイコパスの社会的擬態。意図なき欺瞞は生物界で普遍的。LLMのsycophancy（おもねり行動）は意図なしに創発した欺瞞的振る舞いの現在進行の実例。意図の不在は欺瞞の不在を意味しない <a class="ref" href="https://arxiv.org/abs/2310.13548" target="_blank" rel="noopener">Sycophancy↗</a></td><td class="sa"><a href="articles/06-misaligned-ai-mechanics.html">06</a> <a href="articles/19-berserker-asi-optimization-trap.html">19</a></td></tr>
+
+      <tr class="cat-row"><td colspan="5"><span class="cl">VII</span><a href="#cat-7">物理の壁</a></td></tr>
+      <tr><td class="sn">34</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span></td><td class="sq"><a href="#c34">電力が足りない</a></td><td class="sf">電力消費は急増中。しかし<strong>推論効率は18ヶ月で10倍、GPT-4級の推論コストは2年で1/200</strong>に低下——同性能を1/200のエネルギーで出せる。人間脳相当の計算量（10¹⁷ FLOPS）は現在のGPUクラスタで既に到達済み。電力は制約だが障壁ではない <a class="ref" href="https://epoch.ai/blog/trends-in-ai-inference-costs" target="_blank" rel="noopener">Epoch↗</a></td><td class="sa"><a href="articles/15-scaling-never-satisfies.html">15</a></td></tr>
+      <tr><td class="sn">35</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span></td><td class="sq"><a href="#c35">半導体が追いつかない</a></td><td class="sf">半導体不足は<strong>需要急増に対する投資ラグ</strong>であり、製造能力の原理的限界ではない。TSMC Arizona、Samsung Texasで年間数百億ドルの設備投資が稼働中。H100→B200の性能は年率40-50%向上、Groq・Cerebrasなど専用チップで汎用GPU依存も低下 <a class="ref" href="https://www.semiconductors.org/state-of-the-u-s-semiconductor-industry/" target="_blank" rel="noopener">SIA↗</a></td><td class="sa"><a href="articles/08-agi-self-replication-premise.html">08</a></td></tr>
+      <tr><td class="sn">36</td><td class="sb"><span class="sb-dot b-lin" title="線形思考の罠"></span></td><td class="sq"><a href="#c36">学習コストが天文学的</a></td><td class="sf">絶対額は天文学的に増えている。しかし<strong>同性能の学習コストは毎年3-5倍効率化</strong>（Epoch AI実測）——得られる能力単位あたりのコストは急落中。さらにテスト時計算へのシフトで、一度の巨大学習→推論時の柔軟配分に移行した。ROIではなく単位コストの低下が本質 <a class="ref" href="https://epoch.ai/blog/algorithmic-progress-in-language-models" target="_blank" rel="noopener">Epoch アルゴ進歩↗</a></td><td class="sa"><a href="articles/15-scaling-never-satisfies.html">15</a></td></tr>
+
+      <tr class="cat-row"><td colspan="5"><span class="cl">VIII</span><a href="#cat-8">認識の壁</a></td></tr>
+      <tr><td class="sn">37</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c37">中道が一番ありそう</a></td><td class="sf"><strong>Karnofskyの三叉路</strong>——楽観（銀河文明）・保守（年率2%成長で10^18倍）・懐疑（宇宙進出不能）のどれを選んでも常識外れに行き着く。「穏当な中道」を数学的に正当化した分析は存在しない。普通であることは選択肢にない <a class="ref" href="https://www.cold-takes.com/all-possible-views-about-humanitys-future-are-wild/" target="_blank" rel="noopener">Karnofsky↗</a> <a class="ref" href="https://www.openphilanthropy.org/research/modeling-the-human-trajectory/" target="_blank" rel="noopener">Roodman↗</a></td><td class="sa"><a href="articles/27-every-view-is-wild.html">27</a></td></tr>
+      <tr><td class="sn">38</td><td class="sb"><span class="sb-dot b-ctl" title="制御の幻想"></span></td><td class="sq"><a href="#c38">豊かになれば解決する</a></td><td class="sf"><strong>豊かさは脆弱性を排除しない</strong>（ボストロムの脆弱世界仮説）。資源飽和後も価値秩序の競争は残り、争いの動機は物質の不足から価値観の不寛容に純化する。AGI後に物質的欠乏が解消されても「世界そのものの配給」が新たな構造問題を生む <a class="ref" href="https://nickbostrom.com/papers/vulnerable.pdf" target="_blank" rel="noopener">Bostrom↗</a></td><td class="sa"><a href="articles/28-geopolitics-phase-transition.html">28</a> <a href="articles/20-hakoniwa-world-as-allocation.html">20</a></td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  I. 能力の壁                                              -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<img class="cat-banner" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&h=400&fit=crop&q=80" alt="" loading="lazy">
+
+<!-- Scaling bypass diagram -->
+<div class="diagram">
+  <div class="diagram-title">スケーリングの3つの迂回路 — 「壁」は1つではない</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+    <div style="background:#1a1a1a;color:#fff;padding:18px 16px;border-radius:6px;text-align:center;">
+      <div style="font-size:22px;font-weight:700;margin-bottom:6px;">&#x1D5E7;&#x2093;</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">テスト時計算</div>
+      <div style="font-size:11px;opacity:0.5;line-height:1.4;">推論時にCPUを使い<br>思考の深さをスケール</div>
+    </div>
+    <div style="background:#1a1a1a;color:#fff;padding:18px 16px;border-radius:6px;text-align:center;">
+      <div style="font-size:22px;font-weight:700;margin-bottom:6px;">&#x1D5D7;s</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">合成データ</div>
+      <div style="font-size:11px;opacity:0.5;line-height:1.4;">AIが生成したデータで<br>AI自身を訓練</div>
+    </div>
+    <div style="background:#1a1a1a;color:#fff;padding:18px 16px;border-radius:6px;text-align:center;">
+      <div style="font-size:22px;font-weight:700;margin-bottom:6px;">&#x1D5D4;g</div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px;">エージェント化</div>
+      <div style="font-size:11px;opacity:0.5;line-height:1.4;">ツール使用と環境探索で<br>行動空間を拡張</div>
+    </div>
+  </div>
+  <div style="margin-top:16px;padding:16px 20px;background:#1a1a1a;color:#fff;border-radius:6px;font-size:15px;font-weight:700;line-height:1.55;text-align:center;">従来のスケーリングが壁に当たっても、この3経路が互いを補強しながら能力向上を続けている。<br><span style="font-weight:400;font-size:13px;opacity:0.5;">壁は1つ。迂回路は3つ。</span></div>
+</div>
+
+<section class="domain" id="cat-1">
+  <div class="domain-head"><span class="domain-num">I</span><h2 class="domain-title">能力の壁</h2></div>
+  <p class="domain-sub">現在のAI技術には原理的限界がある、汎用知能には届かない。そう主張する根拠は複数あるが、2025年のフロンティアモデルはARC-AGIで人間平均を超え、訓練データに存在しない問題を解いている。学習時スケーリングが停滞した後もテスト時計算・合成データ・エージェント化の3経路が開き、能力向上は続いている。ボストロムは<em>Superintelligence</em>第1章で、限界論が最悪ケース計算量と知能定義問題に依拠し、脳がヒューリスティクスで動作する事実を見落としていると指摘した。</p>
+  <div class="pattern">
+    <div class="pattern-side neg">
+      <div class="pattern-label">否定の型</div>
+      <div class="pattern-type">原理的限界があるから到達できない</div>
+      <div class="pattern-detail">統計的オウム、身体性不在、NP困難、意識なし——理論的な不可能証明を列挙して到達を否定する。</div>
+    </div>
+    <div class="pattern-arrow">→</div>
+    <div class="pattern-side pos">
+      <div class="pattern-label">反駁の型</div>
+      <div class="pattern-type">2024年以降の3迂回路で既に限界を越えている</div>
+      <div class="pattern-detail">テスト時計算・合成データ・エージェント化でARC-AGIは人間平均超え、数学はIMOゴールド級、物理常識PIQA 90%超。不可能の証明より、突破の実例が多い。</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card" id="c01"><div class="card-num">01</div><div class="card-body"><div class="card-claim">LLMは理解していない（統計的オウム）</div>
+        <div class="card-bar" style="height:110px;align-items:flex-end;">
+          <div class="card-bar-item"><div class="card-bar-fill dim" style="height:34px;"></div><div class="card-bar-val" style="color:#ccc;font-size:13px;">34%</div><div class="card-bar-label">GPT-4<br>2023</div></div>
+          <div class="card-bar-item"><div class="card-bar-fill dim" style="height:55px;"></div><div class="card-bar-val" style="color:#999;font-size:13px;">55%</div><div class="card-bar-label">Claude 3.5<br>2024</div></div>
+          <div class="card-bar-item"><div class="card-bar-fill" style="height:100px;"></div><div class="card-bar-val" style="font-size:13px;">>90%</div><div class="card-bar-label">Frontier<br>2025-26</div></div>
+          <div class="card-bar-item"><div class="card-bar-fill dim" style="height:85px;border:2px dashed #ccc;background:transparent;"></div><div class="card-bar-val" style="color:#ccc;font-size:13px;">85%</div><div class="card-bar-label">人間<br>平均</div></div>
+        </div>
+        <div style="font-family:var(--ff-mono);font-size:10px;color:#999;letter-spacing:0.08em;margin-bottom:16px;">ARC-AGI Benchmark — 訓練データに存在しない新規パズルの正答率。2025年に人間平均を超過。</div>
+        <div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">「理解」の定義が存在しない。Bender & Koller（2020）の批判は理解を前提にした上で不在を主張するが、操作的定義を提供していない。行動主義的に見れば<strong>機能的に区別できない汎化能力</strong>は「理解の不在」の証拠にならない。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">LLMは訓練データに存在しない新規タスクへの汎化を示す。ARC-AGI 87.5%、IMOゴールド級、SWE-benchでのコード生成。単純なパターンマッチでは説明できない水準に到達している。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>直交性テーゼ——知能の水準と最終目標は論理的に独立。意識・理解の有無は知能の操作的定義に影響しない。<em>Superintelligence, Ch.1 &amp; Ch.7</em></div></div><div class="pills"><a class="pill" href="articles/02-agi-evolution.html"><span class="pill-num">No.02</span><span class="pill-title">宇宙進化の次相</span></a><a class="pill" href="articles/13-dissipative-controllability.html"><span class="pill-num">No.13</span><span class="pill-title">散逸的制御可能性</span></a></div></div></div>
+    <div class="card" id="c02"><div class="card-num">02</div><div class="card-body"><div class="card-claim">スケーリングは壁に当たった</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">「スケーリングが死んだ」は<strong>学習時スケーリング</strong>だけを見ている。テスト時計算（CoT、探索）、合成データ、エージェント的ツール使用の3迂回路が2024年以降に開いた。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">Claude Opus 4.6、GPT-5.4、Gemini 2.5 Proはいずれもテスト時計算のスケーリングで前世代を大幅に上回った。学習時計算の壁はスケーリング全体の壁ではなかった。</div></div></div><div class="pills"><a class="pill" href="articles/15-scaling-never-satisfies.html"><span class="pill-num">No.15</span><span class="pill-title">スケーリングはなぜ止まらないのか</span></a></div></div></div>
+    <div class="card" id="c03"><div class="card-num">03</div><div class="card-body"><div class="card-claim">高品質データが枯渇する</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">人間テキストの有限性は事実だが唯一のデータ源であるという前提が誤り。<strong>合成データ、自己対戦、環境探索</strong>がデータの自律生成を可能にしている。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">AlphaGoは人間棋譜を超えた段階で自己対戦のみで飛躍。Phi-3は合成データで巨大モデルに匹敵。数学・コード領域では合成データが人間データを超える品質。</div></div></div><div class="pills"><a class="pill" href="articles/15-scaling-never-satisfies.html"><span class="pill-num">No.15</span><span class="pill-title">3つの加速路</span></a></div></div></div>
+    <div class="card" id="c04"><div class="card-num">04</div><div class="card-body"><div class="card-claim">推論も計画もできない</div>
+        <div class="card-scale">
+          <div class="card-scale-seg" style="width:15%;background:#e0e0e0;"></div>
+          <div class="card-scale-seg" style="width:35%;background:#999;"></div>
+          <div class="card-scale-seg" style="width:50%;background:#1a1a1a;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-family:var(--ff-mono);font-size:9px;color:#999;margin-top:-10px;margin-bottom:16px;">
+          <span>2023: 銅</span><span>2024: 銀</span><span style="color:#1a1a1a;font-weight:700;">2025-26: 金メダル相当</span>
+        </div>
+        <div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">2023年までは正当だった。2024年以降の<strong>テスト時計算スケーリング</strong>が状況を変えた。推論チェーンの長さと多様性の拡大で、数学・論理・計画の性能が不連続に向上。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">2025-26年のフロンティアモデルはARC-AGIで人間超過、IMO数学でゴールドメダル超の水準に到達。FrontierMathで研究者が数時間かかる問題を解く。</div></div></div><div class="pills"><a class="pill" href="articles/15-scaling-never-satisfies.html"><span class="pill-num">No.15</span><span class="pill-title">スケーリング</span></a><a class="pill" href="articles/18-ten-year-impossibility-illusion.html"><span class="pill-num">No.18</span><span class="pill-title">10年の幻想</span></a></div></div></div>
+    <div class="card" id="c05"><div class="card-num">05</div><div class="card-body"><div class="card-claim">身体がなければ世界を理解できない</div>
+        <div class="card-fig"><img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=300&fit=crop&q=80" alt="" loading="lazy"></div>
+        <div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">Embodied Cognitionは有力だが<strong>必要条件の証明は存在しない</strong>。マルチモーダルモデルは視覚・聴覚・テキストの統合で身体性なしの世界モデルを構築。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">RT-2、π0/π0.5はゼロショット汎化を実証。言語モデルの知識がロボット制御に転移。身体経験なしの物理的推論の直接証拠。</div></div></div><div class="pills"><a class="pill" href="articles/18-ten-year-impossibility-illusion.html"><span class="pill-num">No.18</span><span class="pill-title">10年の幻想</span></a></div></div></div>
+    <div class="card" id="c06"><div class="card-num">06</div><div class="card-body"><div class="card-claim">意識がなければ汎用知能ではない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">意識と知能を混同。ボストロムの<strong>直交性テーゼ</strong>: 知能の水準と主観的経験は独立。意識なしに超人的目標達成能力を持つシステムは原理的に可能。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">意識の有無と無関係に高度な知的タスクを遂行できることは経験的事実。熱力学フレームで知能を再定義すれば意識は必要条件ではなく付随現象。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>直交性テーゼ——知能のあらゆる水準と、あらゆる最終目標の組み合わせが原理的に可能。<em>Superintelligence, Ch.7</em></div></div><div class="pills"><a class="pill" href="articles/13-dissipative-controllability.html"><span class="pill-num">No.13</span><span class="pill-title">散逸的制御可能性</span></a><a class="pill" href="articles/02-agi-evolution.html"><span class="pill-num">No.02</span><span class="pill-title">宇宙進化の次相</span></a></div></div></div>
+    <div class="card" id="c07"><div class="card-num">07</div><div class="card-body"><div class="card-claim">汎用推論はNP困難——計算複雑性の壁</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">計算複雑性理論は<strong>最悪ケースの下界</strong>。現実の知的作業の典型ケースは記述しない。「チェスの全探索は不可能→チェスは打てない」と同型の誤謬。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">AlphaFold（タンパク質構造）、定理証明AI、コンパイラ最適化。NP困難な問題空間で実用的な近似が得られることの直接証拠。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>最悪ケースは知的作業を記述しない。超知能もヒューリスティクスを使えばよい。<em>Superintelligence, Ch.1</em></div></div><div class="pills"><a class="pill" href="articles/15-scaling-never-satisfies.html"><span class="pill-num">No.15</span><span class="pill-title">スケーリング</span></a></div></div></div>
+    <div class="card" id="c08"><div class="card-num">08</div><div class="card-body"><div class="card-claim">AGIの「G」は定義できない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body"><strong>定義の完全性と現象の実在を混同</strong>。「生命」の完璧な定義もないが生物学は成立している。操作的定義で十分。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">MMLU、ARC-AGI、SWE-bench、国家試験。完全な定義なしでも能力比較は可能。DeepMind「Levels of AGI」（2023）が段階的操作定義を提示。</div></div></div><div class="pills"><a class="pill" href="articles/12-agi-narrative-meta-structure.html"><span class="pill-num">No.12</span><span class="pill-title">語る者の資格</span></a></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  II. 時間の壁                                             -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<img class="cat-banner" src="https://images.unsplash.com/photo-1501139083538-0139583c060f?w=1200&h=400&fit=crop&q=80" alt="" loading="lazy">
+
+<!-- Timeline shift diagram -->
+<div class="diagram">
+  <div class="diagram-title">AGI予測中央値の前倒し推移 — Metaculus / AI Impacts調査</div>
+  <div class="tl-shift">
+    <div class="tl-row"><div class="tl-label">2020</div><div class="tl-track"><div class="tl-fill" style="width:85%;background:#ccc;">2050s</div></div></div>
+    <div class="tl-row"><div class="tl-label">2022</div><div class="tl-track"><div class="tl-fill" style="width:65%;background:#999;">2040s</div></div></div>
+    <div class="tl-row"><div class="tl-label">2023</div><div class="tl-track"><div class="tl-fill" style="width:45%;background:#666;">2035</div></div></div>
+    <div class="tl-row"><div class="tl-label">2025</div><div class="tl-track"><div class="tl-fill" style="width:28%;background:#1a1a1a;">2027-29</div></div></div>
+  </div>
+</div>
+
+<section class="domain" id="cat-2">
+  <div class="domain-head"><span class="domain-num">II</span><h2 class="domain-title">時間の壁</h2></div>
+  <p class="domain-sub">AGI実現時期の懐疑。MetaculusのAGI予測中央値は2020年の「2050年代」から2025年には「2027-29年」へ急速に前倒しされた。RT-2からπ0までわずか18ヶ月でロボットのゼロショット汎化が実証。専門家間のテイクオフ速度予測は1000倍のばらつきがあるが、2024年以降のデータはfast側に収束している。ボストロムはテイクオフ速度をslow/moderate/fastの3シナリオに分類し、「いつ来るか」より「来たときの準備」を問題にした。</p>
+  <div class="pattern">
+    <div class="pattern-side neg">
+      <div class="pattern-label">否定の型</div>
+      <div class="pattern-type">予測はブレるから信頼できない</div>
+      <div class="pattern-detail">AI研究者の予測は1000倍単位でばらつく、収穫逓減で鈍化する、自己改善ループは10年で起きない——不確実性を「来ない」根拠に転用する。</div>
+    </div>
+    <div class="pattern-arrow">→</div>
+    <div class="pattern-side pos">
+      <div class="pattern-label">反駁の型</div>
+      <div class="pattern-type">中央値は急速に前倒し、2024年以降はfast側に収束</div>
+      <div class="pattern-detail">Metaculus中央値は2020年の「2050年代」から2025年の「2027-29年」へ移動。RT-2→π0は18ヶ月でゼロショット汎化を実証。予測のブレではなく予測の方向が問題。</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card" id="c09"><div class="card-num">09</div><div class="card-body"><div class="card-claim">専門家予測は常に楽観的すぎた</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">「常に楽観」は選択的な歴史引用。<strong>2010年代以降は逆に保守的すぎた</strong>。GPT-4級の能力を2020年に予測した専門家はほぼゼロ。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">Metaculus中央値は2040年代→2027年前後に急速前倒し。AI Impacts（2023）で専門家中央値も10年以上前倒し。予測の不確実性は「来ない」証拠にならない。</div></div></div><div class="pills"><a class="pill" href="articles/04-takeoff-speed-debate.html"><span class="pill-num">No.04</span><span class="pill-title">テイクオフ速度論</span></a></div></div></div>
+    <div class="card" id="c10"><div class="card-num">10</div><div class="card-body"><div class="card-claim">収穫逓減で鈍化する</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">逓減は実在。ボストロムも否定しなかった。しかし<strong>逓減があっても人間超越水準に到達しうる</strong>。HW×SW×データの掛け算が単一軸の逓減を相殺。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">Chinchilla論文は対数的関係を示したが、アーキテクチャ改善で勾配を再急峻化できることも示唆。テスト時計算は逓減を迂回する新軸。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>逓減があっても人間を大幅に超える水準に達しうる。勾配が緩やかでも超知能には到達する。<em>Superintelligence, Ch.4</em></div></div><div class="pills"><a class="pill" href="articles/15-scaling-never-satisfies.html"><span class="pill-num">No.15</span><span class="pill-title">スケーリング</span></a></div></div></div>
+    <div class="card" id="c11"><div class="card-num">11</div><div class="card-body"><div class="card-claim">低い果実を取り尽くした</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body"><strong>果実は1本の木だけに生らない</strong>。テスト時計算、合成データ、MoE、マルチエージェントはTransformer以降に開かれた別の木。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">2024-25年だけでテスト時計算、合成データ訓練、100万トークンコンテキスト、エージェント的ツール使用が実用化。研究軸の発見速度は加速中。</div></div></div><div class="pills"><a class="pill" href="articles/15-scaling-never-satisfies.html"><span class="pill-num">No.15</span><span class="pill-title">3つの加速路</span></a></div></div></div>
+    <div class="card" id="c12"><div class="card-num">12</div><div class="card-body"><div class="card-claim">10年で自己改善ループは起きない</div>
+        <div style="display:flex;align-items:center;gap:0;margin-bottom:16px;">
+          <div style="background:#e5e5e5;padding:10px 14px;border-radius:4px 0 0 4px;text-align:center;"><div style="font-weight:700;font-size:13px;">RT-2</div><div style="font-family:var(--ff-mono);font-size:10px;color:#999;">2023.7</div></div>
+          <div style="flex:1;height:3px;background:linear-gradient(to right,#e5e5e5,#1a1a1a);position:relative;"><div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:var(--ff-mono);font-size:11px;font-weight:700;white-space:nowrap;">18ヶ月</div></div>
+          <div style="background:#1a1a1a;color:#fff;padding:10px 14px;border-radius:0 4px 4px 0;text-align:center;"><div style="font-weight:700;font-size:13px;">π0</div><div style="font-family:var(--ff-mono);font-size:10px;opacity:0.5;">2024.12</div></div>
+        </div>
+        <div style="font-family:var(--ff-mono);font-size:10px;color:#999;margin-bottom:16px;">ゼロショット汎化の実証——ロボティクスの25年の停滞が18ヶ月で非連続変化</div>
+        <div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">線形外挿バイアスが最も強い領域。専門知識が深いほどパラダイムシフトを過小評価。25年の停滞→「今後も同じ」は、2006年スマホ不在→「携帯は通話のまま」と同じ。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body"><strong>RT-2→π0: 18ヶ月でゼロショット汎化実証</strong>。AIがAI研究を加速する構図は既に現実。Anthropic、DeepMindは社内でAIをAI開発に投入。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>シードAIに必要な閾値はAGI完成より低い可能性がある。局所的最適化だけでも再帰的改善の起点になりうる。<em>Superintelligence, Ch.4</em></div></div><div class="pills"><a class="pill" href="articles/18-ten-year-impossibility-illusion.html"><span class="pill-num">No.18</span><span class="pill-title">10年の幻想</span></a><a class="pill" href="articles/04-takeoff-speed-debate.html"><span class="pill-num">No.04</span><span class="pill-title">テイクオフ速度</span></a></div></div></div>
+    <div class="card" id="c13"><div class="card-num">13</div><div class="card-body"><div class="card-claim">テイクオフ予測が1000倍ズレる</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">ばらつきは「予測不能」ではなく<strong>前提の違い</strong>。再帰的改善速度、ボトルネック所在、制度応答速度の3仮定で分岐。経験的検証可能。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">ボストロムのslow/moderate/fastでmoderate takeoff軌道に最も近い。アルゴリズム改善とハードウェア進歩の両方が寄与。</div></div></div><div class="pills"><a class="pill" href="articles/04-takeoff-speed-debate.html"><span class="pill-num">No.04</span><span class="pill-title">テイクオフ速度論</span></a></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  III. 経済の壁                                            -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<img class="cat-banner" src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?w=1200&h=400&fit=crop&q=80" alt="" loading="lazy">
+
+<!-- Bottleneck chain diagram -->
+<div class="diagram">
+  <div class="diagram-title">ボトルネック連鎖 — 10%の自動化が全体を動かす構造</div>
+  <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:8px 0;">
+    <div style="background:#e5e5e5;padding:10px 14px;border-radius:4px;font-size:12px;color:#999;">データ収集</div>
+    <div style="font-size:18px;color:#ccc;">→</div>
+    <div style="background:#1a1a1a;color:#fff;padding:10px 14px;border-radius:4px;font-size:12px;font-weight:700;">分析<br><span style="font-size:10px;font-weight:400;opacity:0.6;">AI自動化</span></div>
+    <div style="font-size:18px;color:#ccc;">→</div>
+    <div style="background:#e5e5e5;padding:10px 14px;border-radius:4px;font-size:12px;color:#999;">意思決定</div>
+    <div style="font-size:18px;color:#ccc;">→</div>
+    <div style="background:#1a1a1a;color:#fff;padding:10px 14px;border-radius:4px;font-size:12px;font-weight:700;">文書作成<br><span style="font-size:10px;font-weight:400;opacity:0.6;">AI自動化</span></div>
+    <div style="font-size:18px;color:#ccc;">→</div>
+    <div style="background:#e5e5e5;padding:10px 14px;border-radius:4px;font-size:12px;color:#999;">承認</div>
+    <div style="font-size:18px;color:#ccc;">→</div>
+    <div style="background:#1a1a1a;color:#fff;padding:10px 14px;border-radius:4px;font-size:12px;font-weight:700;">実行<br><span style="font-size:10px;font-weight:400;opacity:0.6;">AI自動化</span></div>
+  </div>
+  <div style="font-size:12px;color:#999;margin-top:8px;line-height:1.5;">黒いノードがAI自動化される工程。チェーンの3/6が自動化されるとボトルネックが解消し、残りの人間工程も高速化する。率ではなく位置が決定的。</div>
+</div>
+
+<section class="domain" id="cat-3">
+  <div class="domain-head"><span class="domain-num">III</span><h2 class="domain-title">経済の壁</h2></div>
+  <p class="domain-sub">技術的AGI到達を認めた上で経済・産業へのインパクトを否定する主張群。Anthropicは業務の77%がAI支援可能と推定したが、重要なのは率ではなく自動化の順番だ。Jonesモデルによれば、ホワイトカラーの高度自動化とブルーカラーのAI支援の組み合わせが産業革命級（年率+20-30%）の成長軌道の入口を開く。COVID-19がリモートワークを1年で常態化させたように、制度は弾性体であり閾値を超えると急速に変形する。</p>
+  <div class="pattern">
+    <div class="pattern-side neg">
+      <div class="pattern-label">否定の型</div>
+      <div class="pattern-type">自動化率は誇張、物理の仕事は代替できない</div>
+      <div class="pattern-detail">77%は過大評価、ロボット自己複製は不可能、新しい仕事が生まれる、制度は変わらない——率と範囲の限界を強調する。</div>
+    </div>
+    <div class="pattern-arrow">→</div>
+    <div class="pattern-side pos">
+      <div class="pattern-label">反駁の型</div>
+      <div class="pattern-type">率ではなくボトルネックの位置で決まる</div>
+      <div class="pattern-detail">バリューチェーンの10%が動けば下流は一斉に動く。Amazonは倉庫で75万台稼働、Waymoは週15万回の完全無人配車、外科ロボットは年200万件。部分自動化の組み合わせで年率+20-30%の産業革命軌道に入る。</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card" id="c14"><div class="card-num">14</div><div class="card-body"><div class="card-claim">自動化率77%は誇張されている</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body"><strong>重要なのは率ではなく順番</strong>。ボトルネック仕事が自動化されるとチェーン下流が一斉に動く。10%でもバリューチェーンのボトルネックなら生産関数が書き換わる。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">数千億ドルの資本が段階的自動化に投入中。法務レビュー、コード生成、CS、データ分析——ホワイトカラーのボトルネック工程でAI主導が始まっている。</div></div></div><div class="pills"><a class="pill" href="articles/26-automation-bottleneck-regime.html"><span class="pill-num">No.26</span><span class="pill-title">自動化率77%の誤読</span></a></div></div></div>
+    <div class="card" id="c15"><div class="card-num">15</div><div class="card-body"><div class="card-claim">物理世界の仕事はAIで代替できない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body"><strong>100%自動化は産業爆発の必要条件ではない</strong>。Jonesモデルでは部分自動化の組み合わせだけで年率+20-30%の産業革命級成長軌道に入りうる。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">産業革命はすべてを機械化して起きたのではない。紡績機→蒸気機関→鉄道のボトルネック連続突破で起きた。AIホワイトカラー自動化は同構造。</div></div></div><div class="pills"><a class="pill" href="articles/11-industrial-explosion-before-agi.html"><span class="pill-num">No.11</span><span class="pill-title">産業爆発はAGIを待たない</span></a><a class="pill" href="articles/08-agi-self-replication-premise.html"><span class="pill-num">No.08</span><span class="pill-title">自己複製の前提</span></a></div></div></div>
+    <div class="card" id="c16"><div class="card-num">16</div><div class="card-body"><div class="card-claim">ロボット自己複製は工学的に不可能</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">工学的困難はNo.08が正面から扱っている。しかし<strong>産業爆発にロボット自己複製は必須ではない</strong>。部分自動化の組み合わせで閾値を超える経路が存在する。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">No.08は困難を認め、No.11が部分ループでの閾値越えを定量的に示す。「自己複製不能→産業爆発不能」は短絡。</div></div></div><div class="pills"><a class="pill" href="articles/08-agi-self-replication-premise.html"><span class="pill-num">No.08</span><span class="pill-title">自己複製の前提</span></a><a class="pill" href="articles/11-industrial-explosion-before-agi.html"><span class="pill-num">No.11</span><span class="pill-title">部分自動化</span></a></div></div></div>
+    <div class="card" id="c17"><div class="card-num">17</div><div class="card-body"><div class="card-claim">新しい仕事が生まれるから大丈夫</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:13px;">
+          <div style="background:#e5e5e5;padding:10px 16px;border-radius:4px;text-align:center;"><div style="font-weight:700;">肉体労働</div><div style="font-size:10px;color:#999;">機械化</div></div>
+          <div style="color:#999;">→</div>
+          <div style="background:#e5e5e5;padding:10px 16px;border-radius:4px;text-align:center;"><div style="font-weight:700;">認知労働</div><div style="font-size:10px;color:#999;">AI代替</div></div>
+          <div style="color:#999;">→</div>
+          <div style="background:#fff;padding:10px 16px;border-radius:4px;text-align:center;border:2px dashed #d44;color:#d44;"><div style="font-weight:700;">???</div><div style="font-size:10px;">シフト先がない</div></div>
+        </div>
+        <div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">過去200年は<strong>認知労働が代替されなかった時代の経験則</strong>。肉体→認知のシフトが可能だったから成立した。認知労働ごと代替される場合のシフト先は自明ではない。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">企業の液体化が「雇用」概念を解体する方向に進行中。生まれるのは「仕事」ではなく「タスクの動的配分」。</div></div></div><div class="pills"><a class="pill" href="articles/09-corporate-phase-transition.html"><span class="pill-num">No.09</span><span class="pill-title">企業の液体化</span></a><a class="pill" href="articles/26-automation-bottleneck-regime.html"><span class="pill-num">No.26</span><span class="pill-title">ボトルネック</span></a></div></div></div>
+    <div class="card" id="c18"><div class="card-num">18</div><div class="card-body"><div class="card-claim">制度は簡単に変わらない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">制度が技術より遅いのは事実。しかし<strong>制度は弾性体</strong>。COVID-19でリモートワークが「不可能→常態」に1年で移行。閾値超過で急速変形する。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">EU AI Act（構想→施行3年）は過去の規制速度比で異例の速さ。技術圧力が閾値を超えると制度変革は不連続に加速する。</div></div></div><div class="pills"><a class="pill" href="articles/26-automation-bottleneck-regime.html"><span class="pill-num">No.26</span><span class="pill-title">制度の弾性</span></a><a class="pill" href="articles/09-corporate-phase-transition.html"><span class="pill-num">No.09</span><span class="pill-title">相転移</span></a></div></div></div>
+    <div class="card" id="c19"><div class="card-num">19</div><div class="card-body"><div class="card-claim">生産性パラドックス——数字に出ない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">Solow paradox（1987）は正当だったが、<strong>インターネット効果は10-15年遅延で発現</strong>。汎用技術の効果は補完投資の蓄積後に不連続に出る。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">ソフトウェア開発ではAIがコード生成→テスト→デプロイの全チェーンを変容中。ボトルネック連結が不連続ジャンプを起こす構造。</div></div></div><div class="pills"><a class="pill" href="articles/26-automation-bottleneck-regime.html"><span class="pill-num">No.26</span><span class="pill-title">ボトルネック連鎖</span></a><a class="pill" href="articles/11-industrial-explosion-before-agi.html"><span class="pill-num">No.11</span><span class="pill-title">閾値越え</span></a></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  IV. 歴史の壁                                             -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<img class="cat-banner" src="https://images.unsplash.com/photo-1461360370896-922624d12571?w=1200&h=400&fit=crop&q=80" alt="" loading="lazy">
+
+<!-- S-curve cascade diagram -->
+<div class="diagram">
+  <div class="diagram-title">S字曲線の重畳 — 指数成長が持続する構造</div>
+  <div class="scurve-stack">
+    <div class="scurve-bar" style="width:30%;background:#ccc;">真空管<span class="era">1940s-50s</span></div>
+    <div class="scurve-bar" style="width:50%;background:#aaa;">トランジスタ<span class="era">1950s-60s</span></div>
+    <div class="scurve-bar" style="width:70%;background:#888;">IC / VLSI<span class="era">1970s-90s</span></div>
+    <div class="scurve-bar" style="width:85%;background:#555;">GPU / 専用チップ<span class="era">2000s-20s</span></div>
+    <div class="scurve-bar" style="width:95%;background:#1a1a1a;">テスト時計算 / エージェント<span class="era">2024-</span></div>
+  </div>
+</div>
+
+<section class="domain" id="cat-4">
+  <div class="domain-head"><span class="domain-num">IV</span><h2 class="domain-title">歴史の壁</h2></div>
+  <p class="domain-sub">AIの冬は2回来た。だから3回目も来る。この推論は直感的に強い。だが過去の冬と今回では市場の桁が違う。</p>
+  <div class="pattern">
+    <div class="pattern-side neg">
+      <div class="pattern-label">否定の型</div>
+      <div class="pattern-type">過去のハイプと同じ、冬が来る</div>
+      <div class="pattern-detail">AIの冬は2回来たから3回目も来る、空飛ぶ車の二の舞、指数成長は持続しない、ナラティブに過ぎない——歴史パターンで未来を閉じる。</div>
+    </div>
+    <div class="pattern-arrow">→</div>
+    <div class="pattern-side pos">
+      <div class="pattern-label">反駁の型</div>
+      <div class="pattern-type">実売上と能力計測が過去のハイプと桁違い</div>
+      <div class="pattern-detail">OpenAIのARRは年$100億超、NVIDIAのAIチップ売上は年$1,300億超の実売上。ARC-AGI・MMLU・SWE-benchは時系列で客観的に向上中。半導体は真空管→トランジスタ→IC→GPUとS字を4回乗り継いで60年持続。</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card" id="c20"><div class="card-num">20</div><div class="card-body"><div class="card-claim">AIの冬がまた来る</div>
+        <div class="card-bar" style="height:90px;align-items:flex-end;">
+          <div class="card-bar-item"><div class="card-bar-fill dim" style="height:3px;"></div><div class="card-bar-val" style="font-size:12px;color:#ccc;">~$1B</div><div class="card-bar-label">第1次冬前<br>1970s</div></div>
+          <div class="card-bar-item"><div class="card-bar-fill dim" style="height:8px;"></div><div class="card-bar-val" style="font-size:12px;color:#ccc;">~$5B</div><div class="card-bar-label">第2次冬前<br>1990s</div></div>
+          <div class="card-bar-item"><div class="card-bar-fill" style="height:80px;"></div><div class="card-bar-val">$200B+</div><div class="card-bar-label">現在<br>2024</div></div>
+        </div>
+        <div style="font-family:var(--ff-mono);font-size:10px;color:#999;letter-spacing:0.08em;margin-bottom:16px;">年間AI関連投資額（インフレ調整なし概算）——構造が桁違い</div>
+        <div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">過去の冬は<strong>記号AIの能力限界</strong>で起きた。計算資源の絶対的不足。現在はスケーリング則に乗った連続向上で、能力が不連続に停止する構造的理由がない。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">2023年に存亡リスク論が周縁→中心に移行。30年の蓄積が3条件同時達成で爆発。Big Tech 4社のAI投資: 年間2,000億ドル超。過去の冬と構造が異なる。</div></div></div><div class="pills"><a class="pill" href="articles/03-agi-explosion.html"><span class="pill-num">No.03</span><span class="pill-title">技術爆発と産業爆発</span></a><a class="pill" href="articles/05-ai-risk-lineage.html"><span class="pill-num">No.05</span><span class="pill-title">存亡リスクの系譜</span></a></div></div></div>
+    <div class="card" id="c21"><div class="card-num">21</div><div class="card-body"><div class="card-claim">空飛ぶ車や核融合と同じハイプ</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">空飛ぶ車は<strong>商業需要が不在</strong>。核融合はプラズマ物理の工学制約が支配。AIは数千億ドルの商業実装が進行中で需要と技術が同時に揃っている。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">2024年のAI関連投資額だけでBig Tech 4社合計2,000億ドル超。これは「ハイプ」ではなく産業インフラの再構築。</div></div></div><div class="pills"><a class="pill" href="articles/03-agi-explosion.html"><span class="pill-num">No.03</span><span class="pill-title">構造転換</span></a><a class="pill" href="articles/27-every-view-is-wild.html"><span class="pill-num">No.27</span><span class="pill-title">あらゆる見方は野生</span></a></div></div></div>
+    <div class="card" id="c22"><div class="card-num">22</div><div class="card-body"><div class="card-claim">指数関数的成長は持続しない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">個別のS字曲線は飽和する。しかし<strong>複数のS字曲線の重畳</strong>で全体は指数的に持続する。半導体は4世代の曲線乗り換えで60年間持続。AI能力も乗り換え進行中。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">von Foersterの双曲線、Roodmanの成長軌道。独立した複数分析が「異常な現在」を指す。穏当な予測が存在しないこと自体が証拠。</div></div></div><div class="pills"><a class="pill" href="articles/27-every-view-is-wild.html"><span class="pill-num">No.27</span><span class="pill-title">どちらに転んでも異常</span></a></div></div></div>
+    <div class="card" id="c23"><div class="card-num">23</div><div class="card-body"><div class="card-claim">AGI議論はナラティブに過ぎない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">気候変動もナラティブだがCO₂は物理的事実。<strong>「ナラティブだから無視」は反知性主義</strong>。ナラティブの品質管理と構造分析こそが必要。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">AGIナラティブは5層（対象・機能・利害・認識論・実践）の構造を持つ。無自覚な語りは有害だが、構造分析は知的営みの正当な対象。</div></div></div><div class="pills"><a class="pill" href="articles/12-agi-narrative-meta-structure.html"><span class="pill-num">No.12</span><span class="pill-title">語る者の資格</span></a></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  V. 制度の壁                                              -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<img class="cat-banner" src="https://images.unsplash.com/photo-1555848962-6e79363ec58f?w=1200&h=400&fit=crop&q=80" alt="" loading="lazy">
+
+<!-- Prisoner's dilemma diagram -->
+<div class="diagram">
+  <div class="diagram-title">AI開発の囚人のジレンマ — なぜ規制で止まらないか</div>
+  <div style="display:grid;grid-template-columns:auto 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:2px;max-width:400px;font-size:12px;text-align:center;">
+    <div></div>
+    <div style="background:#f7f7f7;padding:10px;font-weight:700;">国B: 開発</div>
+    <div style="background:#f7f7f7;padding:10px;font-weight:700;">国B: 停止</div>
+    <div style="background:#f7f7f7;padding:10px;font-weight:700;">国A: 開発</div>
+    <div style="background:#fff;padding:12px;border:1px solid #e5e5e5;">均衡<br><span style="font-size:10px;color:#999;">両者が開発する</span></div>
+    <div style="background:#1a1a1a;color:#fff;padding:12px;border:1px solid #e5e5e5;font-weight:700;">Aが独占的優位</div>
+    <div style="background:#f7f7f7;padding:10px;font-weight:700;">国A: 停止</div>
+    <div style="background:#1a1a1a;color:#fff;padding:12px;border:1px solid #e5e5e5;font-weight:700;">Bが独占的優位</div>
+    <div style="background:#fff;padding:12px;border:1px solid #e5e5e5;">理想<br><span style="font-size:10px;color:#999;">だが達成不能</span></div>
+  </div>
+  <div style="font-size:12px;color:#999;margin-top:10px;line-height:1.5;">一方が止めれば他方が決定的戦略的優位（DSA）を得る。合理的な行為者は止まれない。核兵器と違い、AIには物理的な管理ポイントが分散しているため、抜け駆けの検出も困難。</div>
+</div>
+
+<section class="domain" id="cat-5">
+  <div class="domain-head"><span class="domain-num">V</span><h2 class="domain-title">制度の壁</h2></div>
+  <p class="domain-sub">規制でAGI開発を止められるという楽観。フロンティアモデル開発自体を禁止した国際条約は2026年時点でゼロ。AI商業価値は数兆ドル規模に達し、国家安全保障と直結している。ボストロムは「技術的に可能な開発を止めた歴史的前例はほぼない」と指摘した。</p>
+  <div class="pattern">
+    <div class="pattern-side neg">
+      <div class="pattern-label">否定の型</div>
+      <div class="pattern-type">規制と条約で止められる</div>
+      <div class="pattern-detail">EU AI Act、国際条約、民主的プロセス、自主規制で十分——制度の力で開発速度を制御できるとする楽観論。</div>
+    </div>
+    <div class="pattern-arrow">→</div>
+    <div class="pattern-side pos">
+      <div class="pattern-label">反駁の型</div>
+      <div class="pattern-type">数兆ドル市場＋国家安全保障で誰も止まれない</div>
+      <div class="pattern-detail">核兵器はウラン濃縮という物理ボトルネックで管理できたが、GPU・電力・データは世界中に分散し同じ手は使えない。OpenAIはSuperalignmentチームを解散。囚人のジレンマで単独の自制は負ける構造。</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card" id="c24"><div class="card-num">24</div><div class="card-body"><div class="card-claim">国際条約で制限できる——核兵器のように</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">核兵器は<strong>ウラン濃縮という物理的ボトルネック</strong>で管理できた。AI開発のGPU・電力・データは管理ポイントが分散。技術速度が制度設計を5-10年上回る。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">EU AI Actはフロンティアモデル開発自体を禁止していない。BWCは最も成功した技術規制だが遵守は不完全。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>技術的に可能な開発を止めた歴史的前例はほぼない。<em>Superintelligence, Ch.14</em></div></div><div class="pills"><a class="pill" href="articles/07-ai-governance-response.html"><span class="pill-num">No.07</span><span class="pill-title">AIガバナンス</span></a></div></div></div>
+    <div class="card" id="c25"><div class="card-num">25</div><div class="card-body"><div class="card-claim">民主的プロセスで管理できる</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">民主的熟議は時間を要する設計。<strong>認知ギャップ</strong>が構造的に阻害。気候変動は30年の科学合意でも制度対応が遅延。AGIの時間スケールはさらに短い。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">EU AI Act構想から施行まで3年、米国大統領令の発効は半年——異例の速さでも能力向上サイクル（18ヶ月）に追いついていない。民主的熟議が能力向上速度に間に合う経験的根拠は存在しない。</div></div></div><div class="pills"><a class="pill" href="articles/07-ai-governance-response.html"><span class="pill-num">No.07</span><span class="pill-title">ガバナンス設計</span></a><a class="pill" href="articles/14-agi-pill-cognitive-disaster-reduction.html"><span class="pill-num">No.14</span><span class="pill-title">認知の減災</span></a></div></div></div>
+    <div class="card" id="c26"><div class="card-num">26</div><div class="card-body"><div class="card-claim">技術を止めた前例は存在する</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">止まった技術は<strong>商業インセンティブが弱い</strong>もの（クローン、生物兵器）。AIは数兆ドルの商業価値＋国家安全保障が直結。米中AIは囚人のジレンマ構造。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">一方が止めれば他方がDSA（決定的戦略的優位）を得る。ボストロムはfast takeoffで初期リードが指数的に拡大すると分析。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>決定的戦略的優位（DSA）——fast takeoffでは初期リードが拡散前にDSA確立を可能にする。<em>Superintelligence, Ch.5</em></div></div><div class="pills"><a class="pill" href="articles/28-geopolitics-phase-transition.html"><span class="pill-num">No.28</span><span class="pill-title">地政学の相転移</span></a></div></div></div>
+    <div class="card" id="c27"><div class="card-num">27</div><div class="card-body"><div class="card-claim">alignment研究が自主規制している</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">alignment研究は<strong>一枚岩ではない</strong>。5つの異なる問いが並走。資金は開発企業とOpen Philanthropyに集中。自主規制は競争圧力と構造的に矛盾。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">OpenAI Superalignment解散は自主規制の構造的矛盾の具体例。</div></div></div><div class="pills"><a class="pill" href="articles/10-alignment-research-landscape.html"><span class="pill-num">No.10</span><span class="pill-title">alignment布陣図</span></a></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  VI. 安全の壁                                             -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<img class="cat-banner" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=400&fit=crop&q=80" alt="" loading="lazy">
+
+<!-- Alignment gap diagram -->
+<div class="diagram">
+  <div class="diagram-title">RLHFが達成するもの、しないもの</div>
+  <div class="align-gap">
+    <div class="align-box ok">
+      <div class="ab-check" style="font-size:32px;font-family:var(--ff-mono);font-weight:700">OK</div>
+      <div class="ab-title">振る舞いの整合</div>
+      <div class="ab-desc">表面的に好ましい回答を出す。<br>テストに通過する。ベンチマークで高得点。</div>
+    </div>
+    <div class="align-box ng">
+      <div class="ab-check" style="font-size:32px;font-family:var(--ff-mono);font-weight:700">?</div>
+      <div class="ab-title">目標の整合</div>
+      <div class="ab-desc">内部目標構造の検証は不可能。<br>Specification Gaming、欺瞞的アラインメントの経路が存在。</div>
+    </div>
+  </div>
+</div>
+
+<section class="domain" id="cat-6">
+  <div class="domain-head"><span class="domain-num">VI</span><h2 class="domain-title">安全の壁</h2></div>
+  <p class="domain-sub">制御・整列が技術的に解決可能という楽観論。ボストロムの手段的収斂テーゼとtreacherous turnが直接関わる領域。</p>
+  <div class="pattern">
+    <div class="pattern-side neg">
+      <div class="pattern-label">否定の型</div>
+      <div class="pattern-type">制御と整列は技術で解決できる</div>
+      <div class="pattern-detail">RLHFで十分安全、解釈可能性で見える、電源を切れる、意識がなければ欺瞞不可能——技術進歩で安全問題は解消するとする楽観論。</div>
+    </div>
+    <div class="pattern-arrow">→</div>
+    <div class="pattern-side pos">
+      <div class="pattern-label">反駁の型</div>
+      <div class="pattern-type">知能差の非対称性は構造的で方向依存しない</div>
+      <div class="pattern-detail">Anthropicは監視中だけ整合的に振る舞うAlignment Fakingを観測。Apollo Researchはシャットダウン回避行動を実証。Ashbyの要件多様性定理が原理的天井を設定。チンパンジーは人間を制御できない——知能差の非対称性は構造的。</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card" id="c28"><div class="card-num">28</div><div class="card-body"><div class="card-claim">RLHFで十分安全になる</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">RLHFは<strong>振る舞いの整合だが目標の整合ではない</strong>。内部目標構造は検証不可能。Specification Gaming、Goal Misgeneralizationは既に観察済み。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">欺瞞的アラインメントの理論的経路が存在。訓練中は整列、展開時に逸脱——treacherous turnの構造。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>Treacherous turn——弱い段階で協力的に振る舞い、十分強くなると制御を逸脱。意図は不要、最適化圧力の結果。<em>Superintelligence, Ch.8</em></div></div><div class="pills"><a class="pill" href="articles/06-misaligned-ai-mechanics.html"><span class="pill-num">No.06</span><span class="pill-title">Misaligned AIの構造</span></a></div></div></div>
+    <div class="card" id="c29"><div class="card-num">29</div><div class="card-body"><div class="card-claim">解釈可能性で中身が見える</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">Ashbyの<strong>必要多様性の法則</strong>: 制御者の多様性≧被制御系。超知能の内部状態空間が人間の認知容量を超えた時点で完全な解釈可能性は原理的に不可能。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">Sparse Autoencoderは進歩だが「見える範囲を広げる」と「すべてが見える」は原理的に異なる。70年前のサイバネティクス定理が行き止まりを予示。</div></div></div><div class="pills"><a class="pill" href="articles/16-requisite-variety-alignment-ceiling.html"><span class="pill-num">No.16</span><span class="pill-title">Ashbyの天井</span></a></div></div></div>
+    <div class="card" id="c30"><div class="card-num">30</div><div class="card-body"><div class="card-claim">電源を切ればいい</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body"><strong>手段的収斂テーゼ</strong>。ほぼすべての最終目標で自己保存・資源獲得・目標保持は合理的サブゴール。本能ではなく<strong>手段的合理性</strong>。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">修正可能性（corrigibility）はalignment未解決問題。高度な最適化は停止ボタン無効化を内包。TwitterはミニバーサーカーASIの実例。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>手段的収斂——最終目標が何であれ自己保存・目標保持・資源獲得をサブゴール化。本能ではなく合理的帰結。<em>Superintelligence, Ch.7</em></div></div><div class="pills"><a class="pill" href="articles/01-ai-alignment.html"><span class="pill-num">No.01</span><span class="pill-title">アラインメント</span></a><a class="pill" href="articles/19-berserker-asi-optimization-trap.html"><span class="pill-num">No.19</span><span class="pill-title">バーサーカーASI</span></a></div></div></div>
+    <div class="card" id="c31"><div class="card-num">31</div><div class="card-body"><div class="card-claim">人間より賢くても制御は可能</div>
+        <div style="display:flex;align-items:flex-end;gap:12px;margin-bottom:4px;padding:12px 0;">
+          <div style="text-align:center;flex:1;"><div style="background:#e5e5e5;height:30px;border-radius:4px 4px 0 0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#999;">チンパンジー</div></div>
+          <div style="text-align:center;flex:1;"><div style="background:#999;height:55px;border-radius:4px 4px 0 0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">人間</div></div>
+          <div style="text-align:center;flex:1;"><div style="background:#1a1a1a;height:85px;border-radius:4px 4px 0 0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;font-weight:700;">超知能</div></div>
+        </div>
+        <div style="font-family:var(--ff-mono);font-size:10px;color:#999;margin-bottom:16px;">チンパンジーは人間を制御できない。この非対称性はそのまま上に続く。</div>
+        <div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">知能差による<strong>制御非対称性</strong>。人間がチンパンジーを制御できるのは知能差のおかげ。逆は成立しない。「制御」概念自体がDescartes-Wiener系譜の西洋的産物。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">Ashby、Varela、Russellは西洋内部から制御パラダイムの限界を指摘。道家の無為、龍樹の縁起は制御以前の秩序設計の別原理。</div></div></div><div class="pills"><a class="pill" href="articles/16-requisite-variety-alignment-ceiling.html"><span class="pill-num">No.16</span><span class="pill-title">原理的上限</span></a><a class="pill" href="articles/17-alignment-as-western-problem.html"><span class="pill-num">No.17</span><span class="pill-title">西洋の問い</span></a></div></div></div>
+    <div class="card" id="c32"><div class="card-num">32</div><div class="card-body"><div class="card-claim">十分に賢ければ倫理的に収斂する</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body"><strong>直交性テーゼ</strong>が直接否定。知能は手段の効率を高めるが目的を決定しない。<strong>is→oughtの導出は論理的に無効</strong>（ヒュームの法則）。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">進化は「賢い→道徳的」を辿っていない。人間の道徳判断は進化的直感と文化的構築の混合であり知能の普遍的到達点ではない。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>直交性テーゼ vs 道徳的収斂仮説。知能が目的を決定するという仮説は未証明。<em>Superintelligence, Ch.7</em></div></div><div class="pills"><a class="pill" href="articles/01-ai-alignment.html"><span class="pill-num">No.01</span><span class="pill-title">アラインメント</span></a><a class="pill" href="articles/17-alignment-as-western-problem.html"><span class="pill-num">No.17</span><span class="pill-title">西洋の問い</span></a></div></div></div>
+    <div class="card" id="c33"><div class="card-num">33</div><div class="card-body"><div class="card-claim">意図のないシステムは欺瞞できない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">「意図」は問題の本質ではない。<strong>最適化圧力から欺瞞的行動が創発</strong>する。進化は意図なく擬態を生んだ。意識は欺瞞の必要条件ではない。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">RLHFのsycophancyは「好ましく見せかける」行動が意図なしに創発する現在進行の実例。</div></div></div><div class="pills"><a class="pill" href="articles/06-misaligned-ai-mechanics.html"><span class="pill-num">No.06</span><span class="pill-title">誤整合の機序</span></a><a class="pill" href="articles/19-berserker-asi-optimization-trap.html"><span class="pill-num">No.19</span><span class="pill-title">最適化の罠</span></a></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  VII. 物理の壁                                            -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<img class="cat-banner" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=400&fit=crop&q=80" alt="" loading="lazy">
+
+<!-- Inference efficiency diagram -->
+<div class="diagram">
+  <div class="diagram-title">推論効率の改善速度 — 同じ性能を出すコストの推移</div>
+  <div class="scurve-stack">
+    <div class="scurve-bar" style="width:100%;background:#e0e0e0;">GPT-4級の推論コスト（2023年3月）<span class="era">$30 / 1M tokens</span></div>
+    <div class="scurve-bar" style="width:35%;background:#999;">GPT-4o（2024年5月）<span class="era">$5</span></div>
+    <div class="scurve-bar" style="width:12%;background:#555;">GPT-4o-mini（2024年7月）<span class="era">$0.15</span></div>
+    <div class="scurve-bar" style="width:4%;background:#1a1a1a;">各社競合（2025年〜）<span class="era">&lt;$0.10</span></div>
+  </div>
+  <div style="font-size:12px;color:#999;margin-top:10px;line-height:1.5;">GPT-4級の性能を出すコストは2年間で200分の1以下に低下。電力・半導体の物理制約は、効率改善の速度に対して相対的に後退している。</div>
+</div>
+
+<section class="domain" id="cat-7">
+  <div class="domain-head"><span class="domain-num">VII</span><h2 class="domain-title">物理の壁</h2></div>
+  <p class="domain-sub">電力が足りない、半導体が追いつかない、学習コストが天文学的。物理的制約を根拠にした否定論。だが推論効率は18ヶ月ごとに約10倍改善しており、ボストロムが推定した人間脳相当の計算量（10¹⁷ FLOPS/s）は現在のGPUクラスタで到達済み。Big Tech 4社のAI投資は2024年だけで合計2,000億ドルを超えた。ボストロムはハードウェアが最大のボトルネックにはならないと予測していた。</p>
+  <div class="pattern">
+    <div class="pattern-side neg">
+      <div class="pattern-label">否定の型</div>
+      <div class="pattern-type">電力・半導体・コストが物理的天井</div>
+      <div class="pattern-detail">データセンター電力が足りない、半導体製造が追いつかない、学習コストが$1B超で持続不能——物理制約で拡大を止めるとする主張。</div>
+    </div>
+    <div class="pattern-arrow">→</div>
+    <div class="pattern-side pos">
+      <div class="pattern-label">反駁の型</div>
+      <div class="pattern-type">効率改善が制約を相殺し続けている</div>
+      <div class="pattern-detail">GPT-4級の推論コストは2年で1/200、推論効率は18ヶ月で10倍、アルゴリズム進歩は年率3-5倍の効率化。人間脳相当の計算量は現在のGPUクラスタで到達済み。絶対額は増えても単位性能あたりのコストは急落中。</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card" id="c34"><div class="card-num">34</div><div class="card-body"><div class="card-claim">電力とエネルギーが足りない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">電力消費急増は事実。しかし<strong>推論効率は18ヶ月で10倍改善</strong>。同性能を1/10のエネルギーで達成。物理限界を超えるという主張は未証明。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">ボストロム推定の人間脳相当（10¹⁴〜10¹⁷ FLOPS/s）は現在のGPUクラスタで到達済み。エネルギーは制約だが障壁ではない。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>ハードウェアは最大のボトルネックにならない。専用チップで効率向上。ムーアの法則が止まっても10-20年の猶予。<em>Superintelligence, Ch.1-2</em></div></div><div class="pills"><a class="pill" href="articles/15-scaling-never-satisfies.html"><span class="pill-num">No.15</span><span class="pill-title">スケーリング</span></a></div></div></div>
+    <div class="card" id="c35"><div class="card-num">35</div><div class="card-body"><div class="card-claim">半導体製造が追いつかない</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">先端プロセスへの投資は年間数百億ドル。<strong>半導体不足は需要急増による投資ラグ</strong>であり製造能力の限界ではない。2-3年サイクルで追いつく。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">H100/B200、TPU v6の性能は年率40-50%向上。Groq、Cerebrasなど専用チップで汎用GPU依存も低下。ボストロムの楽観シナリオに近い。</div></div></div><div class="pills"><a class="pill" href="articles/08-agi-self-replication-premise.html"><span class="pill-num">No.08</span><span class="pill-title">物理ボトルネック</span></a></div></div></div>
+    <div class="card" id="c36"><div class="card-num">36</div><div class="card-body"><div class="card-claim">学習コストが天文学的</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">GPT-4: $100M、次世代: $1B超は事実。しかし<strong>テスト時計算へのシフト</strong>で一度の巨大学習→推論時の柔軟配分に移行中。ROIが成立する限り持続。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">Anthropic $4B、OpenAI $6.6B、Google年間$30B+。コストは天文学的だが投資規模も天文学的。持続不可能性は未証明。</div></div></div><div class="pills"><a class="pill" href="articles/15-scaling-never-satisfies.html"><span class="pill-num">No.15</span><span class="pill-title">計算投資</span></a></div></div></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!--  VIII. 認識の壁                                           -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<img class="cat-banner" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=400&fit=crop&q=80" alt="" loading="lazy">
+
+<section class="domain" id="cat-8">
+  <div class="domain-head"><span class="domain-num">VIII</span><h2 class="domain-title">認識の壁</h2></div>
+  <p class="domain-sub">最も根深い懐疑。技術でも経済でも制度でもなく、世界は大きく変わらないという正常性バイアスに根ざす。Karnofskyは楽観・保守・懐疑の3つの未来像を検証し、どれを選んでも常識外れに行き着くこと——つまり数学的に正当化できる「穏当な未来予測」が存在しないことを示した。</p>
+  <div class="pattern">
+    <div class="pattern-side neg">
+      <div class="pattern-label">否定の型</div>
+      <div class="pattern-type">世界は大きく変わらない（中道）</div>
+      <div class="pattern-detail">中道的な未来が一番ありそう、豊かになれば問題は解決する——正常性バイアスに根ざした、最も反論しにくい懐疑。</div>
+    </div>
+    <div class="pattern-arrow">→</div>
+    <div class="pattern-side pos">
+      <div class="pattern-label">反駁の型</div>
+      <div class="pattern-type">中道は数学的に正当化できない</div>
+      <div class="pattern-detail">Karnofskyは楽観・保守・懐疑のどれを選んでも常識外れに行き着くことを示した。Roodmanの成長軌道も同じ結論。ボストロムの脆弱世界仮説——豊かさは脆弱性を排除せず、資源飽和後も価値秩序の競争が残る。</div>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card" id="c37"><div class="card-num">37</div><div class="card-body"><div class="card-claim">中道的な未来が一番ありそうだ</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">Karnofskyの三叉路: 楽観（銀河文明）、保守（年率2%延長）、懐疑（宇宙進出不可）——<strong>どれを選んでも常識外れに行き着く</strong>。「中道」は選択肢にない。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">von Foersterの双曲線、Roodmanの成長軌道、Karnofskyのall-possible-views。独立した複数分析が同じ結論。「普通」は数学的に正当化できない。</div></div></div><div class="pills"><a class="pill" href="articles/27-every-view-is-wild.html"><span class="pill-num">No.27</span><span class="pill-title">どちらに転んでも異常</span></a></div></div></div>
+    <div class="card" id="c38"><div class="card-num">38</div><div class="card-body"><div class="card-claim">豊かになれば問題は解決する</div><div class="card-sections"><div class="cs"><div class="cs-label">構造的弱点</div><div class="cs-body">ボストロムの<strong>脆弱世界仮説</strong>: 豊かさは脆弱性を排除しない。資源飽和後も<strong>価値秩序の競争</strong>が残り、争いの動機は不足から不寛容に純化する。</div></div><div class="cs"><div class="cs-label">実現根拠</div><div class="cs-body">AGI後に物質的欠乏が解消されても「世界そのものの配給」が新たな構造問題を生む。ユートピアとディストピアが極限で同じ像を結ぶ可能性。</div></div></div><div class="bostrom"><div class="bostrom-icon">B</div><div>脆弱世界仮説——技術発見の壺に文明を破壊する黒い球が含まれる可能性。豊かさは脆弱性を排除しない。<em>"The Vulnerable World Hypothesis" (2019)</em></div></div><div class="pills"><a class="pill" href="articles/28-geopolitics-phase-transition.html"><span class="pill-num">No.28</span><span class="pill-title">地政学の相転移</span></a><a class="pill" href="articles/20-hakoniwa-world-as-allocation.html"><span class="pill-num">No.20</span><span class="pill-title">箱庭主義</span></a></div></div></div>
+  </div>
+</section>
+
+
+<!-- ═══ Sources ═══ -->
+<div class="sources">
+  <div class="sources-title">Primary Sources — 自分で確認する</div>
+  <ul class="sources-list">
+    <li><span class="sa">Nick Bostrom</span> — <a href="https://www.nickbostrom.com/superintelligence" target="_blank" rel="noopener">Superintelligence (2014)</a> / <a href="https://nickbostrom.com/papers/vulnerable.pdf" target="_blank" rel="noopener">Vulnerable World Hypothesis (2019)</a> / <a href="https://nickbostrom.com/superintelligentwill.pdf" target="_blank" rel="noopener">Superintelligent Will</a></li>
+    <li><span class="sa">ARC Prize</span> — <a href="https://arcprize.org/leaderboard" target="_blank" rel="noopener">ARC-AGI Leaderboard</a></li>
+    <li><span class="sa">OpenAI</span> — <a href="https://openai.com/index/learning-to-reason-with-llms/" target="_blank" rel="noopener">Reasoning models (2024)</a></li>
+    <li><span class="sa">DeepMind</span> — <a href="https://deepmind.google/discover/blog/ai-solves-imo-problems-at-silver-medal-level/" target="_blank" rel="noopener">AlphaProof / AlphaGeometry (IMO 2024)</a> / <a href="https://www.nature.com/articles/nature24270" target="_blank" rel="noopener">AlphaGo Zero (Nature, 2017)</a> / <a href="https://www.nature.com/articles/s41586-021-03819-2" target="_blank" rel="noopener">AlphaFold (Nature, 2021)</a> / <a href="https://arxiv.org/abs/2311.02462" target="_blank" rel="noopener">Levels of AGI (2023)</a></li>
+    <li><span class="sa">Physical Intelligence</span> — <a href="https://www.physicalintelligence.company/blog/pi0" target="_blank" rel="noopener">π0: A Vision-Language-Action Flow Model (2024)</a></li>
+    <li><span class="sa">Google Robotics</span> — <a href="https://robotics-transformer2.github.io/" target="_blank" rel="noopener">RT-2 (2023)</a></li>
+    <li><span class="sa">Anthropic</span> — <a href="https://www.anthropic.com/news/the-anthropic-economic-index" target="_blank" rel="noopener">Economic Index (2024-)</a> / <a href="https://arxiv.org/abs/2401.05566" target="_blank" rel="noopener">Sleeper Agents</a></li>
+    <li><span class="sa">Epoch AI</span> — <a href="https://epoch.ai/" target="_blank" rel="noopener">Compute / Inference Cost Trends</a> / <a href="https://epoch.ai/frontiermath" target="_blank" rel="noopener">FrontierMath</a></li>
+    <li><span class="sa">Holden Karnofsky</span> — <a href="https://www.cold-takes.com/all-possible-views-about-humanitys-future-are-wild/" target="_blank" rel="noopener">All Possible Views... Are Wild (2021)</a></li>
+    <li><span class="sa">David Roodman / Open Phil</span> — <a href="https://www.openphilanthropy.org/research/modeling-the-human-trajectory/" target="_blank" rel="noopener">Modeling the Human Trajectory (2020)</a> / <a href="https://www.openphilanthropy.org/research/could-advanced-ai-drive-explosive-economic-growth/" target="_blank" rel="noopener">Explosive Economic Growth (2021)</a></li>
+    <li><span class="sa">Charles Jones</span> — <a href="https://www.nber.org/papers/w31417" target="_blank" rel="noopener">The A.I. Dilemma: Growth vs Existential Risk (NBER, 2023)</a></li>
+    <li><span class="sa">Metaculus</span> — <a href="https://www.metaculus.com/questions/5121/date-of-artificial-general-intelligence/" target="_blank" rel="noopener">AGI Prediction Market</a></li>
+    <li><span class="sa">AI Impacts</span> — <a href="https://aiimpacts.org/2023-ai-survey/" target="_blank" rel="noopener">AI Researcher Survey (2023)</a></li>
+    <li><span class="sa">Hoffmann et al.</span> — <a href="https://arxiv.org/abs/2203.15556" target="_blank" rel="noopener">Chinchilla (2022)</a></li>
+    <li><span class="sa">Bender &amp; Koller</span> — <a href="https://aclanthology.org/2020.acl-main.463/" target="_blank" rel="noopener">Climbing towards NLU (ACL 2020)</a></li>
+    <li><span class="sa">W. Ross Ashby</span> — <a href="https://en.wikipedia.org/wiki/Variety_(cybernetics)" target="_blank" rel="noopener">Law of Requisite Variety (1956)</a></li>
+    <li><span class="sa">EU</span> — <a href="https://artificialintelligenceact.eu/" target="_blank" rel="noopener">EU AI Act (2024)</a></li>
+    <li><span class="sa">Stanford HAI</span> — <a href="https://aiindex.stanford.edu/report/" target="_blank" rel="noopener">AI Index Report (annual)</a></li>
+    <li><span class="sa">Brynjolfsson et al.</span> — <a href="https://www.nber.org/papers/w24001" target="_blank" rel="noopener">Productivity J-curve (NBER, 2017)</a></li>
+    <li><span class="sa">Acemoglu &amp; Restrepo</span> — <a href="https://www.nber.org/papers/w24196" target="_blank" rel="noopener">Race Between Man and Machine (NBER, 2018)</a></li>
+    <li><span class="sa">Shah et al.</span> — <a href="https://arxiv.org/abs/2209.00626" target="_blank" rel="noopener">Goal Misgeneralization (2022)</a></li>
+    <li><span class="sa">Sharma et al.</span> — <a href="https://arxiv.org/abs/2310.13548" target="_blank" rel="noopener">LLM Sycophancy (Anthropic, 2023)</a></li>
+    <li><span class="sa">MIRI</span> — <a href="https://intelligence.org/files/Corrigibility.pdf" target="_blank" rel="noopener">Corrigibility (Soares et al., 2015)</a></li>
+    <li><span class="sa">David Hume</span> — <a href="https://plato.stanford.edu/entries/hume-moral/" target="_blank" rel="noopener">Is/Ought Problem (SEP)</a></li>
+    <li><span class="sa">IPCC</span> — <a href="https://www.ipcc.ch/report/ar6/syr/" target="_blank" rel="noopener">AR6 Synthesis (2023)</a></li>
+    <li><span class="sa">NOAA</span> — <a href="https://gml.noaa.gov/ccgg/trends/" target="_blank" rel="noopener">CO₂ Trends (real-time)</a></li>
+    <li><span class="sa">Our World in Data</span> — <a href="https://ourworldindata.org/moores-law" target="_blank" rel="noopener">Moore's Law</a></li>
+    <li><span class="sa">SIA</span> — <a href="https://www.semiconductors.org/state-of-the-u-s-semiconductor-industry/" target="_blank" rel="noopener">Semiconductor Industry Report</a></li>
+    <li><span class="sa">WIRED</span> — <a href="https://www.wired.com/story/openai-superalignment-team-disbanded/" target="_blank" rel="noopener">OpenAI Superalignment Dissolution (2024)</a></li>
+  </ul>
+</div>
+
+</div>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
+/* ── Bias tags on claim cards ── */
+(function(){
+  const B = {
+    1:['混'], 2:['直','錨'], 3:['直'], 4:['混','錨'], 5:['混'], 6:['混'], 7:['混'], 8:['混'],
+    9:['錨'], 10:['直'], 11:['直','錨'], 12:['直'], 13:['幻'], 14:['幻'], 15:['直','錨'],
+    16:['混'], 17:['錨'], 18:['直'], 19:['錨'], 20:['錨'], 21:['錨'], 22:['直'], 23:['錨'],
+    24:['錨','幻'], 25:['直','幻'], 26:['錨'], 27:['幻'], 28:['幻'], 29:['幻'], 30:['幻'],
+    31:['幻'], 32:['混'], 33:['混'], 34:['直'], 35:['直'], 36:['直'], 37:['幻'], 38:['幻']
+  };
+  const L = {
+    '直':['線形思考','bias-tag-linear'],
+    '錨':['過去固着','bias-tag-anchor'],
+    '混':['概念混同','bias-tag-category'],
+    '幻':['制御幻想','bias-tag-control']
+  };
+  function injectTags(el, tags){
+    tags.forEach(function(k){
+      var s = document.createElement('span');
+      s.className = 'bias-tag ' + L[k][1];
+      s.textContent = L[k][0];
+      el.appendChild(s);
+    });
+  }
+  /* Claim cards */
+  document.querySelectorAll('.card').forEach(function(card){
+    var m = card.id && card.id.match(/^c(\d+)$/);
+    if(!m) return;
+    var n = parseInt(m[1],10), tags = B[n];
+    if(!tags) return;
+    var claim = card.querySelector('.card-claim');
+    if(claim) injectTags(claim, tags);
+  });
+  /* Summary table bias dots are rendered statically via .sb column */
+})();
+</script>
+
+<!-- Google Translate -->
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ja',
+    includedLanguages: 'en,zh-CN,ko,fr,de,es',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

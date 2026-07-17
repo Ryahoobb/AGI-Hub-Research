@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <title>AGI Pill Engine MVP</title>
+    <style>
+      :root {
+        --black: #050505;
+        --ink: #171717;
+        --muted: #6c6c6c;
+        --faint: #9a9a9a;
+        --line: #dedede;
+        --paper: #ffffff;
+        --wash: #f6f5ef;
+        --panel: #fbfaf5;
+        --accent: #2d7758;
+        --alert: #b34832;
+        --amber: #c6922f;
+        --mono: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        --sans: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, "Yu Gothic", YuGothic,
+          "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--wash);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-feature-settings: "palt";
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+
+      button {
+        color: inherit;
+      }
+
+      .app {
+        min-height: 100dvh;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        background: rgba(5, 5, 5, 0.96);
+        color: var(--paper);
+        border-bottom: 1px solid var(--black);
+        z-index: 4;
+      }
+
+      .topbar-inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 18px 32px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+      }
+
+      .brand > div {
+        min-width: 0;
+      }
+
+      .brand-mark {
+        width: 12px;
+        height: 12px;
+        background: var(--paper);
+        display: inline-block;
+        flex: 0 0 auto;
+      }
+
+      .brand-title {
+        font-family: var(--mono);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .brand-sub {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.58);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .status-strip {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+        white-space: nowrap;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--accent);
+        animation: breathe 2.8s var(--ease) infinite;
+      }
+
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: scale(0.76);
+          opacity: 0.55;
+        }
+        50% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      main {
+        max-width: 1440px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 34px 32px 56px;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.82fr) minmax(420px, 1.42fr) minmax(300px, 0.94fr);
+        gap: 22px;
+        align-items: start;
+      }
+
+      .rail,
+      .factory,
+      .side {
+        min-width: 0;
+      }
+
+      .block {
+        background: var(--paper);
+        border: 1px solid var(--line);
+      }
+
+      .block + .block {
+        margin-top: 22px;
+      }
+
+      .block-head {
+        padding: 18px 20px 14px;
+        border-bottom: 2px solid var(--black);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 16px;
+      }
+
+      .block-head h1,
+      .block-head h2,
+      .block-head h3 {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.25;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .meta {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 10px;
+        line-height: 1.35;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .section-body {
+        padding: 20px;
+      }
+
+      .scoreboard {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr 0.85fr;
+        border: 1px solid var(--black);
+        margin-bottom: 22px;
+        background: var(--black);
+        gap: 1px;
+      }
+
+      .score {
+        background: var(--paper);
+        padding: 16px;
+        min-height: 94px;
+      }
+
+      .score-label {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .score-value {
+        margin-top: 10px;
+        font-family: var(--mono);
+        font-size: clamp(24px, 4vw, 42px);
+        line-height: 1;
+        color: var(--black);
+        letter-spacing: -0.02em;
+      }
+
+      .score-note {
+        margin-top: 10px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .question-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .question-btn {
+        width: 100%;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        padding: 14px;
+        text-align: left;
+        cursor: pointer;
+        transition: transform 220ms var(--ease), border-color 220ms var(--ease), background 220ms var(--ease);
+      }
+
+      .question-btn:hover {
+        transform: translateY(-1px);
+        border-color: var(--black);
+      }
+
+      .question-btn:active {
+        transform: translateY(1px);
+      }
+
+      .question-btn.active {
+        border-color: var(--black);
+        background: var(--panel);
+        box-shadow: inset 4px 0 0 var(--accent);
+      }
+
+      .question-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 8px;
+      }
+
+      .question-tag {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .heat {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--alert);
+        white-space: nowrap;
+      }
+
+      .question-title {
+        font-size: 15px;
+        line-height: 1.55;
+        font-weight: 700;
+      }
+
+      .question-source {
+        margin-top: 10px;
+        font-family: var(--mono);
+        color: var(--faint);
+        font-size: 10px;
+        line-height: 1.5;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .factory-hero {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        margin-bottom: 22px;
+      }
+
+      .factory-top {
+        padding: 28px;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 22px;
+        align-items: start;
+      }
+
+      .factory-title {
+        margin: 0;
+        max-width: 13ch;
+        color: var(--black);
+        font-size: clamp(36px, 5vw, 68px);
+        line-height: 0.98;
+        letter-spacing: -0.018em;
+      }
+
+      .factory-copy {
+        margin: 20px 0 0;
+        max-width: 62ch;
+        color: var(--ink);
+        font-size: 16px;
+        line-height: 1.85;
+        overflow-wrap: anywhere;
+      }
+
+      .signal-card {
+        width: min(250px, 100%);
+        border-left: 2px solid var(--black);
+        padding-left: 18px;
+      }
+
+      .signal-number {
+        font-family: var(--mono);
+        font-size: 42px;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .signal-caption {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .controls {
+        padding: 20px 28px;
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 16px;
+        align-items: end;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      label {
+        display: block;
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .segmented {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border: 1px solid var(--black);
+      }
+
+      .segment {
+        border: 0;
+        border-right: 1px solid var(--black);
+        background: var(--paper);
+        min-height: 42px;
+        padding: 8px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background 180ms var(--ease), color 180ms var(--ease);
+      }
+
+      .segment:last-child {
+        border-right: 0;
+      }
+
+      .segment.active {
+        background: var(--black);
+        color: var(--paper);
+      }
+
+      .primary {
+        border: 1px solid var(--black);
+        background: var(--black);
+        color: var(--paper);
+        min-height: 42px;
+        padding: 0 18px;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: transform 180ms var(--ease), background 180ms var(--ease);
+        white-space: nowrap;
+      }
+
+      .primary:hover {
+        background: #2a2a2a;
+      }
+
+      .primary:active {
+        transform: translateY(1px);
+      }
+
+      .answer-grid {
+        display: grid;
+        grid-template-columns: 1fr 0.74fr;
+        gap: 22px;
+      }
+
+      .answer-card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+      }
+
+      .answer-card .section-body {
+        min-height: 320px;
+      }
+
+      .answer-text {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.85;
+        overflow-wrap: anywhere;
+      }
+
+      .answer-text strong {
+        color: var(--black);
+        background-image: linear-gradient(var(--amber), var(--amber));
+        background-repeat: no-repeat;
+        background-size: 100% 2px;
+        background-position: 0 100%;
+        padding-bottom: 3px;
+      }
+
+      .claim-box {
+        margin-top: 22px;
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .claim-row {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 16px;
+        font-size: 13px;
+        line-height: 1.65;
+        overflow-wrap: anywhere;
+      }
+
+      .claim-key {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .channels {
+        display: grid;
+        gap: 12px;
+      }
+
+      .channel {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 12px;
+      }
+
+      .channel:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .channel-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+        margin-bottom: 7px;
+      }
+
+      .channel-name {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .channel-fit {
+        font-family: var(--mono);
+        font-size: 10px;
+        color: var(--accent);
+      }
+
+      .channel p {
+        margin: 0;
+        color: var(--ink);
+        font-size: 13px;
+        line-height: 1.65;
+        overflow-wrap: anywhere;
+      }
+
+      .quest-track {
+        display: grid;
+        gap: 14px;
+      }
+
+      .quest-step {
+        display: grid;
+        grid-template-columns: 34px 1fr auto;
+        gap: 12px;
+        align-items: start;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .quest-step:last-child {
+        border-bottom: 0;
+      }
+
+      .step-index {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--black);
+        display: grid;
+        place-items: center;
+        font-family: var(--mono);
+        font-size: 10px;
+      }
+
+      .quest-step.done .step-index {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--paper);
+      }
+
+      .step-title {
+        font-size: 14px;
+        line-height: 1.45;
+        font-weight: 700;
+      }
+
+      .step-note {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.45;
+        overflow-wrap: anywhere;
+      }
+
+      .mini {
+        border: 1px solid var(--black);
+        background: var(--paper);
+        height: 30px;
+        padding: 0 10px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .mini:active {
+        transform: translateY(1px);
+      }
+
+      .distribution {
+        display: grid;
+        gap: 14px;
+      }
+
+      .queue-item {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        gap: 12px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .queue-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .queue-time {
+        font-family: var(--mono);
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .queue-title {
+        font-size: 13px;
+        line-height: 1.55;
+        font-weight: 700;
+      }
+
+      .queue-note {
+        margin-top: 4px;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+
+      .input-row {
+        display: grid;
+        gap: 12px;
+      }
+
+      .input-row textarea {
+        min-height: 116px;
+        resize: vertical;
+        border: 1px solid var(--black);
+        background: var(--panel);
+        padding: 14px;
+        color: var(--ink);
+        line-height: 1.65;
+        outline: none;
+      }
+
+      .input-row textarea:focus {
+        box-shadow: inset 0 0 0 2px var(--accent);
+      }
+
+      .pill-output {
+        margin-top: 16px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        padding: 14px;
+        min-height: 82px;
+        font-size: 13px;
+        line-height: 1.65;
+        overflow-wrap: anywhere;
+      }
+
+      .diagnostic {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin-top: 22px;
+      }
+
+      .meter {
+        height: 10px;
+        background: #e8e6dd;
+        overflow: hidden;
+        border: 1px solid var(--line);
+      }
+
+      .meter-fill {
+        height: 100%;
+        width: 48%;
+        background: var(--accent);
+        transition: width 360ms var(--ease);
+      }
+
+      .diagnostic-copy {
+        margin: 12px 0 0;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .source-stack {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        background: var(--black);
+        border: 1px solid var(--black);
+        gap: 1px;
+      }
+
+      .source {
+        background: var(--paper);
+        padding: 14px;
+      }
+
+      .source-num {
+        font-family: var(--mono);
+        font-size: 22px;
+        line-height: 1;
+      }
+
+      .source-label {
+        margin-top: 8px;
+        font-family: var(--mono);
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .toast {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        max-width: 360px;
+        background: var(--black);
+        color: var(--paper);
+        padding: 14px 16px;
+        font-size: 13px;
+        line-height: 1.55;
+        opacity: 0;
+        transform: translateY(12px);
+        pointer-events: none;
+        transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 1180px) {
+        .workspace {
+          grid-template-columns: 320px 1fr;
+        }
+
+        .side {
+          grid-column: 1 / -1;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 22px;
+        }
+
+        .side .block + .block {
+          margin-top: 0;
+        }
+      }
+
+      @media (max-width: 880px) {
+        .topbar-inner,
+        main {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .topbar-inner {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .status-strip {
+          white-space: normal;
+        }
+
+        .workspace,
+        .side,
+        .answer-grid,
+        .diagnostic {
+          grid-template-columns: 1fr;
+        }
+
+        .factory-top,
+        .controls {
+          grid-template-columns: 1fr;
+          padding: 22px;
+        }
+
+        .scoreboard,
+        .source-stack {
+          grid-template-columns: 1fr;
+        }
+
+        .signal-card {
+          width: 100%;
+          border-left: 0;
+          border-top: 2px solid var(--black);
+          padding-left: 0;
+          padding-top: 16px;
+        }
+
+        .factory-title {
+          max-width: 100%;
+        }
+
+        .claim-row {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        html,
+        body {
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+
+        main {
+          padding-top: 18px;
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+
+        .workspace,
+        .rail,
+        .factory,
+        .side,
+        .factory-hero,
+        .block {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+        }
+
+        .brand {
+          align-items: flex-start;
+        }
+
+        .brand-title {
+          white-space: normal;
+        }
+
+        .brand-sub {
+          display: none;
+        }
+
+        .factory-title {
+          max-width: 9.5ch;
+          font-size: 34px;
+          line-height: 1.04;
+        }
+
+        .factory-copy,
+        .answer-text,
+        .claim-row,
+        .channel p,
+        .step-note,
+        .queue-note,
+        .pill-output,
+        .diagnostic-copy {
+          word-break: break-all;
+        }
+
+        .factory-copy {
+          max-width: calc(100vw - 84px);
+        }
+
+        .block-head {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .meta {
+          white-space: normal;
+        }
+
+        .segmented {
+          grid-template-columns: 1fr;
+        }
+
+        .segment {
+          border-right: 0;
+          border-bottom: 1px solid var(--black);
+        }
+
+        .segment:last-child {
+          border-bottom: 0;
+        }
+
+        .quest-step {
+          grid-template-columns: 30px 1fr;
+        }
+
+        .quest-step .mini {
+          grid-column: 2;
+          width: fit-content;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="brand">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <div>
+              <div class="brand-title">AGI Pill Engine</div>
+              <div class="brand-sub">Question Radar / Claim-Safe Answer / Quest / Distribution</div>
+            </div>
+          </div>
+          <div class="status-strip">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="statusText">Live draft: 4 signals / 3 layers / 5 channels</span>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="scoreboard" aria-label="MVP metrics">
+          <div class="score">
+            <div class="score-label">Demand Signals</div>
+            <div class="score-value" id="metricSignals">47</div>
+            <div class="score-note">検索・Reddit・AI回答面で観測する問い</div>
+          </div>
+          <div class="score">
+            <div class="score-label">Answer Assets</div>
+            <div class="score-value" id="metricAssets">12</div>
+            <div class="score-note">AGI HUB記事から切り出す出典付き回答</div>
+          </div>
+          <div class="score">
+            <div class="score-label">Quest Starts</div>
+            <div class="score-value" id="metricQuest">31</div>
+            <div class="score-note">診断から学習体験へ進んだ人</div>
+          </div>
+        </section>
+
+        <section class="workspace">
+          <aside class="rail">
+            <div class="block">
+              <div class="block-head">
+                <h2>Question Radar</h2>
+                <span class="meta">Seed queries</span>
+              </div>
+              <div class="section-body">
+                <div class="question-list" id="questionList"></div>
+              </div>
+            </div>
+
+            <div class="block">
+              <div class="block-head">
+                <h3>Source Mix</h3>
+                <span class="meta">Current batch</span>
+              </div>
+              <div class="section-body">
+                <div class="source-stack">
+                  <div class="source">
+                    <div class="source-num">18</div>
+                    <div class="source-label">Search</div>
+                  </div>
+                  <div class="source">
+                    <div class="source-num">21</div>
+                    <div class="source-label">Reddit</div>
+                  </div>
+                  <div class="source">
+                    <div class="source-num">08</div>
+                    <div class="source-label">AI Answers</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <section class="factory">
+            <div class="factory-hero">
+              <div class="factory-top">
+                <div>
+                  <h1 class="factory-title">Cognitive Gap to Useful Action</h1>
+                  <p class="factory-copy" id="heroCopy">
+                    AGIピルは恐怖を売るのではなく、暗黙の前提を見える形にする。問いを拾い、事実命題と規範命題を分け、生活上の判断へ翻訳する。
+                  </p>
+                </div>
+                <div class="signal-card">
+                  <div class="signal-number" id="signalScore">82</div>
+                  <div class="signal-caption" id="signalCaption">生活翻訳層に寄せるとCVRが上がる見込み。制度アジェンダは後段で扱う。</div>
+                </div>
+              </div>
+
+              <div class="controls">
+                <div class="field">
+                  <label>Audience</label>
+                  <div class="segmented" id="audienceControls">
+                    <button class="segment active" data-audience="worker">会社員</button>
+                    <button class="segment" data-audience="parent">親・学生</button>
+                    <button class="segment" data-audience="executive">経営層</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Layer</label>
+                  <div class="segmented" id="layerControls">
+                    <button class="segment" data-layer="world">世界モデル</button>
+                    <button class="segment active" data-layer="life">生活翻訳</button>
+                    <button class="segment" data-layer="institution">制度</button>
+                  </div>
+                </div>
+                <button class="primary" id="generateBtn">Generate</button>
+              </div>
+            </div>
+
+            <div class="answer-grid">
+              <article class="answer-card">
+                <div class="block-head">
+                  <h2>Claim-Safe Answer</h2>
+                  <span class="meta" id="answerMeta">Life translation</span>
+                </div>
+                <div class="section-body">
+                  <p class="answer-text" id="answerText"></p>
+                  <div class="claim-box">
+                    <div class="claim-row">
+                      <div class="claim-key">Fact claim</div>
+                      <div id="factClaim"></div>
+                    </div>
+                    <div class="claim-row">
+                      <div class="claim-key">Norm claim</div>
+                      <div id="normClaim"></div>
+                    </div>
+                    <div class="claim-row">
+                      <div class="claim-key">Source</div>
+                      <div>AGI HUB No.14「AGIピル — 認知の減災と先行共同体の構造」</div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <aside class="answer-card">
+                <div class="block-head">
+                  <h2>Channel Drafts</h2>
+                  <span class="meta">Manual gate</span>
+                </div>
+                <div class="section-body">
+                  <div class="channels" id="channelDrafts"></div>
+                </div>
+              </aside>
+            </div>
+
+            <div class="diagnostic">
+              <div class="block">
+                <div class="block-head">
+                  <h2>AGI Pill Quest</h2>
+                  <span class="meta" id="questMeta">2 / 5 done</span>
+                </div>
+                <div class="section-body">
+                  <div class="quest-track" id="questTrack"></div>
+                </div>
+              </div>
+
+              <div class="block">
+                <div class="block-head">
+                  <h2>Reader Intake</h2>
+                  <span class="meta">Free diagnosis</span>
+                </div>
+                <div class="section-body">
+                  <div class="input-row">
+                    <label for="readerInput">Reader assumption</label>
+                    <textarea id="readerInput">AIは便利だけど、仕事や教育制度の前提まで変えるほどではないと思っている。</textarea>
+                    <button class="primary" id="diagnoseBtn">Diagnose</button>
+                  </div>
+                  <div class="pill-output" id="diagnosisOutput"></div>
+                  <div style="margin-top: 16px">
+                    <div class="meter" aria-label="diagnosis score">
+                      <div class="meter-fill" id="meterFill"></div>
+                    </div>
+                    <p class="diagnostic-copy" id="meterCopy">認知ギャップ: 中。前提の可視化から始める。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="side">
+            <div class="block">
+              <div class="block-head">
+                <h2>Distribution Queue</h2>
+                <span class="meta">Next 48h</span>
+              </div>
+              <div class="section-body">
+                <div class="distribution" id="distributionQueue"></div>
+              </div>
+            </div>
+
+            <div class="block">
+              <div class="block-head">
+                <h2>Better Version</h2>
+                <span class="meta">TrustMRR pattern</span>
+              </div>
+              <div class="section-body">
+                <div class="claim-box" style="margin-top: 0; padding-top: 0; border-top: 0">
+                  <div class="claim-row">
+                    <div class="claim-key">Launch Club</div>
+                    <div>既に読まれている問いを拾い、回答資産へ変換する。</div>
+                  </div>
+                  <div class="claim-row">
+                    <div class="claim-key">AEO Engine</div>
+                    <div>LLM回答面に引用される、短く強い出典付き回答を作る。</div>
+                  </div>
+                  <div class="claim-row">
+                    <div class="claim-key">Codédex</div>
+                    <div>記事を読了で終わらせず、診断とクエストへ変える。</div>
+                  </div>
+                  <div class="claim-row">
+                    <div class="claim-key">Postiz</div>
+                    <div>承認済み素材だけを複数チャネルへ配信する。</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      const questions = [
+        {
+          tag: "Career",
+          heat: 82,
+          title: "AIで仕事は本当に置き換わるのか",
+          source: "Reddit / Google AI Overview / X",
+          premise: "同じ職種が35年続くという前提がどこまで耐えるか。",
+          fact: "AGIの到達時期は不確実だが、AI能力と導入速度の前提は従来のキャリア設計より速く変化している。",
+          norm: "今すぐ職を捨てるのではなく、自分の収入前提がどの技術条件に依存しているかを棚卸しする。",
+          channels: ["LinkedIn", "Reddit", "Newsletter"],
+        },
+        {
+          tag: "Education",
+          heat: 76,
+          title: "子どもに何を学ばせるべきか",
+          source: "Search / Parent forums",
+          premise: "18歳時点の知識が40年通用するという前提の脆さ。",
+          fact: "教育制度は長い改訂リードタイムを持つため、技術変化の前提が変わっても即座には追いつかない。",
+          norm: "知識分野を当てに行くより、前提を更新する力、AIと共同で試す力、判断の言語化を厚くする。",
+          channels: ["Newsletter", "YouTube", "Discord"],
+        },
+        {
+          tag: "Finance",
+          heat: 69,
+          title: "35年ローンはまだ合理的なのか",
+          source: "Search / Perplexity",
+          premise: "収入安定と職種安定を長期固定してよいか。",
+          fact: "ローン自体が問題なのではなく、返済期間中に収入構造が変化する可能性を未検証にすることが問題になる。",
+          norm: "住宅購入の是非ではなく、収入源、固定費、学習投資、職能転換オプションを同時に見る。",
+          channels: ["X", "Newsletter", "LinkedIn"],
+        },
+        {
+          tag: "Governance",
+          heat: 88,
+          title: "AGIは規制で止められるのか",
+          source: "Reddit / AI answer surfaces",
+          premise: "制御、緩和、同期、証言を混同していないか。",
+          fact: "技術の進路そのものを社会的合意で制御する難度は高いが、認知ショックや制度不適合の被害は減らせる。",
+          norm: "止める議論だけでなく、緩和、同期、証言の独立価値を分けて評価する。",
+          channels: ["Reddit", "LinkedIn", "Discord"],
+        },
+      ];
+
+      const copyByAudience = {
+        worker: {
+          hero: "会社員向けには、AGIを予言ではなくキャリア前提の棚卸しとして出す。怖がらせるより、依存条件を見える化する。",
+          normPrefix: "キャリア判断では",
+        },
+        parent: {
+          hero: "親・学生向けには、職業名ではなく学習の耐用年数を扱う。教育投資の前提を、条件文で見直せる形にする。",
+          normPrefix: "教育判断では",
+        },
+        executive: {
+          hero: "経営層向けには、AI導入論ではなく制度改訂リードタイムを扱う。事業、採用、教育、IR説明の時間差を可視化する。",
+          normPrefix: "経営判断では",
+        },
+      };
+
+      const layerCopy = {
+        world: {
+          label: "World model",
+          lead: "まず事実命題だけを置く。",
+          scoreDelta: -4,
+        },
+        life: {
+          label: "Life translation",
+          lead: "生活上の意思決定に翻訳する。",
+          scoreDelta: 6,
+        },
+        institution: {
+          label: "Institutional agenda",
+          lead: "制度変更の順番へ落とす。",
+          scoreDelta: 1,
+        },
+      };
+
+      const channelTone = {
+        LinkedIn: "事業・キャリア前提の更新として短く提示する。",
+        Reddit: "断定を避け、反論可能な条件文として投げる。",
+        Newsletter: "診断結果から7日間クエストへ接続する。",
+        YouTube: "1つの生活例から入り、最後に出典へ戻す。",
+        Discord: "読解、翻訳、試行の分業テーマとして置く。",
+        X: "問いを1つに絞り、記事本文へ送る。",
+      };
+
+      const queueBase = [
+        ["D0", "Reddit高意図スレッドへ回答", "事実命題と規範命題を分離して投稿"],
+        ["D1", "AGI前提診断LPを公開", "メール登録後に7日間クエストへ接続"],
+        ["D1", "LinkedIn長文を1本配信", "会社員向けにキャリア前提の棚卸しを提示"],
+        ["D2", "Newsletter第1通を送信", "世界モデル層から生活翻訳層へ橋渡し"],
+      ];
+
+      const quest = [
+        ["前提の棚卸し", "収入・教育・制度が依存する条件を書く", true],
+        ["時間感覚の校正", "10年後を制度変更リードタイムに変換する", true],
+        ["反対仮説", "AGIが遅い場合でも価値が残る行動だけ残す", false],
+        ["小さな試行", "今週変えられる仕事・学習・発信を1つ選ぶ", false],
+        ["共同体接続", "読解、翻訳、試行のどれで貢献するか決める", false],
+      ];
+
+      let selectedQuestion = 0;
+      let selectedAudience = "worker";
+      let selectedLayer = "life";
+      let questDone = 2;
+
+      const questionList = document.getElementById("questionList");
+      const answerText = document.getElementById("answerText");
+      const factClaim = document.getElementById("factClaim");
+      const normClaim = document.getElementById("normClaim");
+      const channelDrafts = document.getElementById("channelDrafts");
+      const distributionQueue = document.getElementById("distributionQueue");
+      const questTrack = document.getElementById("questTrack");
+      const questMeta = document.getElementById("questMeta");
+      const heroCopy = document.getElementById("heroCopy");
+      const signalScore = document.getElementById("signalScore");
+      const signalCaption = document.getElementById("signalCaption");
+      const answerMeta = document.getElementById("answerMeta");
+      const toast = document.getElementById("toast");
+
+      function renderQuestions() {
+        questionList.innerHTML = questions
+          .map(
+            (q, index) => `
+              <button class="question-btn ${index === selectedQuestion ? "active" : ""}" data-index="${index}">
+                <div class="question-top">
+                  <span class="question-tag">${q.tag}</span>
+                  <span class="heat">${q.heat}</span>
+                </div>
+                <div class="question-title">${q.title}</div>
+                <div class="question-source">${q.source}</div>
+              </button>
+            `
+          )
+          .join("");
+
+        document.querySelectorAll(".question-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            selectedQuestion = Number(button.dataset.index);
+            render();
+            showToast("Question Radarを更新しました。");
+          });
+        });
+      }
+
+      function renderAnswer() {
+        const q = questions[selectedQuestion];
+        const audience = copyByAudience[selectedAudience];
+        const layer = layerCopy[selectedLayer];
+        const score = Math.max(54, Math.min(94, q.heat + layer.scoreDelta));
+
+        heroCopy.textContent = audience.hero;
+        signalScore.textContent = score;
+        signalCaption.textContent =
+          selectedLayer === "world"
+            ? "強い理解者には刺さるが、一般向けCVRは生活翻訳より下がる。"
+            : selectedLayer === "life"
+            ? "生活翻訳層に寄せると、読者の自分ごと化が最も速い。"
+            : "制度論点は強いが、前段の理解資産がないと空転しやすい。";
+        answerMeta.textContent = layer.label;
+
+        answerText.innerHTML = `${layer.lead} <strong>${q.title}</strong> という問いの芯は「${q.premise}」にある。AGIピルは恐怖を煽る話ではなく、いまの判断がどの前提に乗っているかを可視化するための道具である。`;
+        factClaim.textContent = q.fact;
+        normClaim.textContent = `${audience.normPrefix}、${q.norm}`;
+
+        channelDrafts.innerHTML = q.channels
+          .map(
+            (channel, index) => `
+              <div class="channel" style="--index:${index}">
+                <div class="channel-head">
+                  <div class="channel-name">${channel}</div>
+                  <div class="channel-fit">${score - index * 7}% fit</div>
+                </div>
+                <p>${channelTone[channel]}</p>
+              </div>
+            `
+          )
+          .join("");
+      }
+
+      function renderQueue() {
+        const q = questions[selectedQuestion];
+        distributionQueue.innerHTML = queueBase
+          .map(
+            ([time, title, note], index) => `
+              <div class="queue-item">
+                <div class="queue-time">${time}</div>
+                <div>
+                  <div class="queue-title">${index === 0 ? q.title : title}</div>
+                  <div class="queue-note">${note}</div>
+                </div>
+              </div>
+            `
+          )
+          .join("");
+      }
+
+      function renderQuest() {
+        questTrack.innerHTML = quest
+          .map((item, index) => {
+            const done = index < questDone;
+            return `
+              <div class="quest-step ${done ? "done" : ""}">
+                <div class="step-index">${String(index + 1).padStart(2, "0")}</div>
+                <div>
+                  <div class="step-title">${item[0]}</div>
+                  <div class="step-note">${item[1]}</div>
+                </div>
+                <button class="mini" data-step="${index}">${done ? "Done" : "Mark"}</button>
+              </div>
+            `;
+          })
+          .join("");
+        questMeta.textContent = `${questDone} / ${quest.length} done`;
+
+        document.querySelectorAll(".mini[data-step]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const step = Number(button.dataset.step);
+            questDone = Math.max(questDone, step + 1);
+            renderQuest();
+            document.getElementById("metricQuest").textContent = String(31 + questDone * 3);
+            showToast("Questの進捗を更新しました。");
+          });
+        });
+      }
+
+      function render() {
+        renderQuestions();
+        renderAnswer();
+        renderQueue();
+        renderQuest();
+        document.getElementById("metricSignals").textContent = String(47 + selectedQuestion * 4);
+        document.getElementById("metricAssets").textContent = String(12 + selectedQuestion);
+        document.getElementById("statusText").textContent = `Live draft: ${questions[selectedQuestion].tag} / ${layerCopy[selectedLayer].label} / ${selectedAudience}`;
+      }
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        window.clearTimeout(showToast.timer);
+        showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1800);
+      }
+
+      document.querySelectorAll("#audienceControls .segment").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("#audienceControls .segment").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          selectedAudience = button.dataset.audience;
+          renderAnswer();
+          showToast("Audienceを切り替えました。");
+        });
+      });
+
+      document.querySelectorAll("#layerControls .segment").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("#layerControls .segment").forEach((item) => item.classList.remove("active"));
+          button.classList.add("active");
+          selectedLayer = button.dataset.layer;
+          renderAnswer();
+          document.getElementById("statusText").textContent = `Live draft: ${questions[selectedQuestion].tag} / ${layerCopy[selectedLayer].label} / ${selectedAudience}`;
+          showToast("Layerを切り替えました。");
+        });
+      });
+
+      document.getElementById("generateBtn").addEventListener("click", () => {
+        const q = questions[selectedQuestion];
+        document.getElementById("metricAssets").textContent = String(Number(document.getElementById("metricAssets").textContent) + 1);
+        showToast(`「${q.title}」の回答資産を生成しました。`);
+      });
+
+      function runDiagnosis(showNotice = true) {
+        const input = document.getElementById("readerInput").value.trim();
+        const lengthScore = Math.min(34, Math.floor(input.length / 4));
+        const aiWord = /AI|AGI|仕事|教育|制度|前提/.test(input) ? 28 : 12;
+        const doubt = /思っている|ではない|まだ|怖い|分からない|便利/.test(input) ? 22 : 10;
+        const score = Math.min(92, 24 + lengthScore + aiWord + doubt);
+        document.getElementById("meterFill").style.width = `${score}%`;
+        document.getElementById("meterCopy").textContent =
+          score > 72 ? "認知ギャップ: 高。世界モデルより先に生活翻訳を出す。" : score > 48 ? "認知ギャップ: 中。前提の可視化から始める。" : "認知ギャップ: 低。制度アジェンダへ進める。";
+        document.getElementById("diagnosisOutput").textContent =
+          score > 72
+            ? "この読者には、AGIの到達時期を論じる前に、仕事・教育・住宅ローンなどの暗黙前提を1つずつ見せる。"
+            : score > 48
+            ? "この読者には、反論可能な条件文で前提を提示し、7日間クエストへ送る。"
+            : "この読者には、制度変更や組織運用の論点を渡しても理解が進みやすい。";
+        if (showNotice) showToast("診断を更新しました。");
+      }
+
+      document.getElementById("diagnoseBtn").addEventListener("click", () => runDiagnosis(true));
+
+      render();
+      runDiagnosis(false);
+    </script>
+  </body>
+</html>

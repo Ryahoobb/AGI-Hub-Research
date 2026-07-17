@@ -2,6 +2,7 @@
 <html lang="ja">
   <head>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="revised" content="2026.04.14">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -178,6 +179,18 @@
         max-width: 22ch;
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 32px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -401,7 +414,7 @@
     </style>
   </head>
   <body class="pattern-monolith has-site-header" data-category="takeoff">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -416,7 +429,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 11 / 15 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 7 Slides</span>
+      <span>No. 11 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 7 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="10-alignment-research-landscape.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=takeoff" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -434,34 +447,34 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead dropcap">
-            ある工場を想像してほしい。溶接工がARゴーグル越しにAIの指示を受けながら、従来の倍の速度で作業を進めている。隣のオフィスでは、AIエージェントが契約書のドラフトを人間の50倍の速度で書き上げている。どちらも「ロボットの自己複製」とは無関係だ。だが、この2つの光景が同時に起きたとき、経済に何が起こるか。
+            2024年、Klarna（スウェーデンのフィンテック企業）はカスタマーサポートの3分の2をAIに置き換えた。700人分の仕事を消し、応答時間を11分から2分に縮め、年間4,000万ドルのコスト削減を報告した（ただし2025年にはKlarnaが人間エージェントの再雇用を開始しており、完全なAI置換の持続可能性には留保が付く）。同じ年、Boeingの工場では溶接工がARゴーグル越しにAIの指示を受けながら作業していた。生産性は上がった。だが上がり方が違う。前者は特定タスクで大幅な差が観測される水準、後者は1.25倍程度。この桁の差が、本記事の論点の全てだ。なお前者の「大幅な差」は応答時間・処理件数といったタスク指標の改善であり、一般労働生産性（GDP/労働時間）の倍率ではない。両者を同じスケールで単純に合算してはならない。
           </p>
           <p class="lead">
             産業爆発はロボットの自己複製が成立した後に来る。大半の議論はこの順序を前提にしている。Forethought Foundationの産業爆発モデル、<a href="08-agi-self-replication-premise.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">No.08で論じた閉ループの工学的困難</a>、EpochAIのGATEモデル。いずれも物理的な生産手段の自己増殖を起点に置く。
           </p>
           <p class="lead">
-            bioshokはこの前提を疑う。Charles Jonesの経済成長モデルに基づけば、産業革命級の成長はタスクの100%自動化を必要としない。部分的な自動化でも、AIによる生産性の倍率が十分に高ければ閾値を超える。本記事が検証する命題はこうだ。<strong>Jonesモデルの閾値は、ロボット閉ループの成立を待たずに到達し得る。ホワイトカラーのAI完全代替と、ブルーカラーのAI支援拡張の組み合わせによって。</strong>
+            bioshokはこの前提を疑う。Charles Jonesが2023年の論文 "The A.I. Dilemma" で示した半内生的成長モデルに基づけば、劇的な成長はタスクの100%自動化を必要としない。部分的な自動化でも、AI生産性の倍率と自動化の範囲の積が十分に大きければ、成長率が非連続的に跳ねる。<strong>ホワイトカラーの完全代替（高倍率）とブルーカラーのAI支援（低倍率だが広範囲）を合算すれば、仮定が成立した場合に限りロボット閉ループなしでもJonesモデルの閾値に届き得る。</strong> ただしこの合算は粗いレンジの試算であり、タスク定義・倍率・波及速度のいずれも未検証である点を先に断っておく。成立の最小条件と、それを阻む現実的なボトルネックを順に見ていく。
           </p>
           <p class="lead">
-            この命題を検証するために、「タスク自動化率」を操作的に定義しておく。経済全体のタスクのうち、AIまたはAI支援により生産性が非連続的に向上したタスクの比率だ。2つの形態がある。第一に<strong>完全代替</strong>。AIがタスクを人間なしで遂行する。コード生成、文書作成、データ分析。生産性倍率は50-100倍級。冒頭のオフィスの光景がこれにあたる。第二に<strong>人間拡張</strong>。AIが人間の作業をガイドし、精度と速度を向上させる。ARゴーグル、音声指示、Manufacturing Copilot。倍率は1.5-2倍。冒頭の溶接工の光景だ。倍率こそ小さいが、これまで自動化の対象外だったタスクを自動化率の分母に加える効果を持つ。
+            検証に先立ち、「タスク自動化率」を操作的に定義する。経済全体のタスクのうち、AIまたはAI支援により生産性が非連続的に向上したタスクの比率だ。2つの形態がある。第一に<strong>完全代替</strong>。AIがタスクを人間なしで遂行する。コード生成、文書ドラフト、定型データ分析。タスク限定のベンチマーク上は50-100倍級の差が観測されることがあるが、これは応答時間や処理件数など特定指標の話であり、一般労働生産性（GDP/労働時間）の倍率ではない。Klarnaのカスタマーサポート置換がこれにあたる。第二に<strong>人間拡張</strong>。AIが人間の作業をガイドし、精度と速度を向上させる。ARゴーグル、音声指示、Manufacturing Copilot。倍率は1.25-2倍。Boeingの溶接工がこれだ。倍率こそ小さいが、これまで自動化の対象外だったタスクを自動化率の分母に加える効果を持つ。ただし「完全代替」と「人間拡張」の境界は実際には曖昧で、多くのタスクが両者のグラデーション上にある。
           </p>
           <div class="grid-3">
             <div class="card">
               <span class="tag">01</span>
-              <p><strong>100%不要</strong><br>Jonesの半内生的成長モデルでは、タスク自動化率20-30%+高い生産性倍率で、高度成長級の追加成長率が理論上導かれる。全タスクの自動化を待つ必要がない。</p>
+              <p><strong>100%不要だが条件付き</strong><br>Jonesの半内生的成長モデルでは、代替弾力性等のパラメータ設定が成立した場合に限り、自動化率20-30%+高い生産性倍率で高度成長級の追加成長率が導かれる。パラメータ設定によって閾値の位置は大きく動き、「条件が揃えばそうなる」以上の主張はできない。</p>
             </div>
             <div class="card">
               <span class="tag">02</span>
-              <p><strong>2つの経路</strong><br>ホワイトカラー完全代替は高倍率で閾値を押し上げ、ブルーカラー人間拡張は自動化率の分母を広げる。異なるメカニズムが合流し、閾値到達の蓋然性を高める。</p>
+              <p><strong>2つの経路、異なる成熟度</strong><br>ホワイトカラー完全代替は既にKlarna等で実証段階。ブルーカラーのAI支援はBoeing、Sandvik等の個別事例に留まり、産業横断的な波及は未達。2経路の合流にはまだ距離がある。</p>
             </div>
             <div class="card">
               <span class="tag">03</span>
-              <p><strong>産業爆発ではなく高度成長</strong><br>人間+AIハイブリッドで到達し得るのは年率+3.5-4%の追加成長。Forethought定義の産業爆発（GWP年率30%+）とは桁が違う。区別は維持する。</p>
+              <p><strong>産業爆発ではなく高度成長</strong><br>仮にJonesモデルの前提群が現実で成立した場合に限り、人間+AIハイブリッドで年率+3.5-4%の追加成長に届き得る。Forethought定義の産業爆発（GWP年率30%+）とは桁が違う。この区別を崩さない。</p>
             </div>
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>閉ループ成立前に、高度成長級の変化が始まる経路を検証する</span>
+          <span>閉ループ成立前に、高度成長級の変化が始まる経路</span>
           <span class="slide-count">1 / 7</span>
         </div>
       </section>
@@ -476,10 +489,10 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            経済成長論の常識では、すべての仕事をAIに置き換えなければ劇的な成長は起きない。スタンフォード大学のCharles Jonesは2023年の論文 "The A.I. Dilemma" で、この常識を覆す数式を示した。生産関数において、労働がAIに代替されるとき、資本蓄積のボトルネックが消え、成長率が非連続的に上昇する。ここまでは他の経済学者も論じてきた。Jonesの発見が重要なのは、「代替」の閾値が100%ではなく、はるかに低い水準で成長の非連続的ジャンプが起きることを示した点にある。Paul Romerの内生的成長論を受け継ぐJonesの準内生的モデルは主流経済学であり、仮定が正しければ結論は堅い。
+            経済成長論の常識では、すべての仕事をAIに置き換えなければ劇的な成長は起きない。スタンフォード大学のCharles Jonesは2023年の論文 "The A.I. Dilemma" で、この常識に挑む数式を示した。生産関数において労働がAIに代替されるとき、資本蓄積のボトルネックが消え、成長率が非連続的に上昇する。Jonesの発見が重要なのは、「代替」の閾値が100%より低い水準でも成長の非連続的ジャンプが起きうることを示した点にある。Paul Romerの内生的成長論を受け継ぐ準内生的モデルであり、フレームワーク自体は主流経済学で受け入れられている。
           </p>
           <p class="lead">
-            では、仮定は正しいのか。鍵は「AI生産性倍率」の解釈にある。Jonesモデルの50-100倍は、AIがタスクを<strong>完全代替</strong>した場合の生産性を指す。絵空事ではない。コード生成やデータ分析のような知的作業では、AIが人間の50-100倍の速度で同等品質のアウトプットを出すことが既に部分的に観察されている。SWE-benchでのコード生成ベンチマーク、Devin等のAIコーディングエージェントの実測データが、特定タスクでの人間の数十倍の処理速度を示す。一方で、物理作業でのAR支援は倍率1.5-2倍程度。オフィスでは50倍、工場では2倍。<strong>倍率の桁が異なる2種の自動化を、どう合算するかが論点になる。</strong>
+            ただし、モデルの堅さと結論の堅さは別物だ。Jonesモデルの結論は3つの仮定に依存する。第一に、AIと人間労働の<strong>代替弾力性</strong>。AIが人間の代わりにどれだけ滑らかにタスクを引き受けられるか。弾力性が低ければ、自動化率が上がっても成長への寄与は鈍い。第二に、<strong>資本蓄積の速度</strong>。AIによる生産拡大が投資に回り、さらなるAI導入を促す好循環が成り立つか。第三に、<strong>AI生産性倍率の持続性</strong>。特定タスクのベンチマーク上では大幅な差（桁違いの高速化）が観測されるが、それが実際の業務環境で再現され、かつ経済全体の生産性指標に転写されるかは別問題だ。SWE-benchのコード生成やDevin等のAIエージェントは特定タスクで人間の数十倍の速度を示す。だがこれはベンチマーク条件下のタスク指標であり、実務環境では要件の曖昧さ、レビューコスト、統合テストの負担が倍率を大幅に下げる。Anthropic Economic Indexのようなホワイトカラー利用率の観測値も、利用の広がりを示すに留まり、GDP統計上の生産性ジャンプを直接裏付けてはいない。一方、物理作業でのAR支援は1.25-2倍。<strong>タスク限定のベンチマーク倍率と、経済全体の労働生産性倍率を混同しないまま、どう合算するかが論点になる。</strong>
           </p>
           <table class="compare">
             <thead>
@@ -526,7 +539,7 @@
             上記の数値はJones (2023) "The A.I. Dilemma" のモデルに基づく試算。Jonesの論文自体がこの表を提示しているのではなく、モデルのパラメータに値を代入して算出したもの。bioshokのGoogle Document <a href="https://docs.google.com/document/d/1fqxXmaT-_ryk3cqA_ykH2au8oM8faIE_JI14H4dyTE8" target="_blank" rel="noopener">「AGIがもたらす産業爆発とは何か」</a> がパラメータ設定と試算過程を詳述している。
           </div>
           <p class="lead">
-            表の上2行に注目してほしい。自動化率わずか20-30%でも、倍率が50倍を超えれば、戦後日本の高度成長期に匹敵する追加成長率が出る。100%なんて待つ必要がない。ただし、Anthropic Economic Index（2026年1月）はホワイトカラー業務での生成AI利用率を報告しているが、Anthropicは自社製品の市場拡大に利害関係がある。この利害相反を踏まえたうえで、複数の独立した指標を突合する必要がある。
+            表の上2行に注目してほしい。Jonesモデルのパラメータ仮定が現実で成立した場合に限り、自動化率わずか20-30%でも倍率が50倍を超えれば戦後日本の高度成長期に匹敵する追加成長率が導かれる。100%自動化を待つ必要はない、というのがモデル上の含意だ。ただし、この試算には隠れた前提がある。50倍という倍率はタスク限定ベンチマークの最良値であり、実務環境での中央値でも、経済全体の労働生産性倍率でもない。自動化率20%という数字も「経済全体のタスクの20%」を指すが、タスクの定義と計測方法に標準はない。McKinsey（2023年）は「現在の技術で自動化可能な業務活動」を60-70%と見積もるが、ILO（2024年）は「完全に自動化されるリスクのある雇用」を5.5%と算定した。両者の差は「自動化可能」と「実際に自動化される」の距離を物語る。Anthropic Economic Index（2026年1月）はホワイトカラー業務での生成AI利用率を報告しているが、Anthropicは自社製品の市場拡大に利害関係がある。単一の指標を鵜呑みにせず、複数の独立した推計を突合する姿勢が要る。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -620,7 +633,7 @@
             </svg>
           </div>
           <p class="lead">
-            (a)は閉ループの漸進的拡張。(b)は発想の転換だ。ロボットを待つ必要があるのか? 物理的な手足なら、80億人分がすでに地球上に存在している。問題は「頭脳」だった。人間の判断力がボトルネックとなり、物理作業の自動化率が上がらなかった。AIがその頭脳を担えるなら、ロボットを待たずに物理世界へ知能を注入できる。次のスライドでは、この(b)の経路が既に萌芽として現れている証拠を見る。
+            (a)は閉ループの漸進的拡張。(b)は発想の転換だ。ロボットを待つ必要があるのか? 物理的な手足なら、80億人分がすでに地球上に存在している。問題は「頭脳」だった。人間の判断力がボトルネックとなり、物理作業の自動化率が上がらなかった。AIがその頭脳を担えるなら、ロボットを待たずに物理世界へ知能を注入できる。次のセクションでは、この(b)の経路が既に兆しとして現れている証拠を見る。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -632,7 +645,7 @@
       <!-- ═══════════ Slide 4 ═══════════ -->
       <section class="slide" id="slide-4">
         <div class="eyebrow reveal">The Cold Start</div>
-        <h2 class="reveal reveal-delay-1">AIが頭脳、人間が手足 — コールドスタートの萌芽</h2>
+        <h2 class="reveal reveal-delay-1">AIが頭脳、人間が手足 — コールドスタートの兆し</h2>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero" src="../images/industrial-explosion-before-agi/slide4.jpg" alt="Grey and black industrial machine">
@@ -642,7 +655,7 @@
             bioshokはXで明確に述べている。「AIが頭脳になり数十億人の人間が手足になる時代が来るかもしれない。産業爆発のコールドスタートにもなる」（@bioshok3）。Note記事「AGIは人間10億人をMCPサーバーとして使い、産業爆発のコールドスタートを成功させる」がこのシナリオを詳述する。
           </p>
           <p class="lead">
-            SFめいた構想に聞こえるかもしれない。だが、このシナリオの断片は既に工場の現場に現れている。AR/AI支援を導入した企業の事例を見てみよう。以下の比較表は技術導入に成功した企業として公表されたもので、<strong>成功バイアスがかかっている</strong>。導入に失敗した事例や効果が限定的だった事例は報告されにくい。数字を中央値として受け取るべきではない。それでも、起きていることの方向性を読み取ることはできる。
+            このシナリオの断片は既に工場の現場に現れている。ただし、現れ方は均一ではない。AR/AI支援は特定の条件下で劇的に効くが、条件が揃わないと効果は限定的か、導入自体が頓挫する。以下の比較表は技術導入に成功した企業として公表されたもので、<strong>成功バイアスがかかっている</strong>。数字を中央値として受け取るべきではない。成功事例の後に、ボトルネック事例も示す。
           </p>
           <table class="compare">
             <thead>
@@ -710,16 +723,19 @@
             Boeing/GEのHBR 2017データは8年前の初期事例。AR技術は当時と比べて大幅に進歩している。2023-2025年のSandvik/Cornell等のより新しい事例は、AIとの統合でさらに高い効果を示すが、初期事例との直接比較には世代差の注意が必要。
           </div>
           <p class="lead">
-            ここで数字の桁に注意してほしい。これらの倍率（1.25〜1.93倍）はJonesモデルのAI生産性倍率（50-100倍）とは<strong>2桁異なる</strong>。Volkswagen整備士の+93%でさえ、AIコーディングエージェントの50倍には遠く及ばない。だが、人間拡張の本当の貢献は「倍率を上げる」ことではない。<strong>自動化率の分母を広げる</strong>ことにある。これまで「自動化不可能」とされていたブルーカラータスクの10-20%が、AI支援によって初めて自動化率のカウント対象に入る。
+            成功事例だけでは片手落ちだ。自動化が遅延、もしくは期待を大幅に下回った領域も見る必要がある。自動運転は2016年にUberやGMが「数年以内の実用化」を宣言したが、2026年現在も限定エリアでのロボタクシーに留まる。Waymoはサンフランシスコとフェニックスで商用運行しているが、悪天候・工事現場・予測不能な歩行者行動への対応は未解決。ロボティクスのデクスタリティ問題はさらに根深い。Amazonは2012年にKivaを買収して倉庫自動化を進めたが、ピッキング作業の完全自動化は2026年時点でも実現していない。柔らかい食品、不定形の荷物、壊れやすい商品の把持は、人間の手に匹敵するロボットハンドがない限り人手に依存する。製造業のAI品質検査も、導入率は高いが「AIが見逃したエラーを人間が後工程で発見する」ケースが報告されており、完全代替には至っていない。
           </p>
           <p class="lead">
-            2つの経路を合算してみよう。ホワイトカラー領域でAIが完全代替するタスク群が経済全体の20-30%を占め、ここでの倍率は50-100倍級。ブルーカラー領域でAR/AI支援による人間の生産性が1.5-2倍になるタスク群が追加で10-20%。合算すると全経済のタスク自動化率が30-50%に到達する可能性がある。加重平均の倍率はホワイトカラー主導で30-60倍程度。Slide 2のJones閾値表と突き合わせれば、高度成長級のゾーンに入る数字だ。
+            数字の桁に注意してほしい。成功事例の倍率（1.25〜1.93倍）はJonesモデルのAI生産性倍率（50-100倍）とは<strong>2桁異なる</strong>。Volkswagen整備士の+93%でさえ、AIコーディングエージェントのベンチマーク値には遠く及ばない。人間拡張の本当の貢献は「倍率を上げる」ことではなく、<strong>自動化率の分母を広げる</strong>ことにある。これまで「自動化不可能」とされていたブルーカラータスクの一部が、AI支援によって初めて自動化率のカウント対象に入る。ただし上述の失敗事例が示すように、物理世界のタスクは認知タスクより自動化が格段に難しい。「AIが頭脳を担えば手足は人間で足りる」という図式は、頭脳だけでは解決しない物理的制約（デクスタリティ、環境の不確実性、安全規制）を過小評価している可能性がある。
+          </p>
+          <p class="lead">
+            それでも2つの経路を合算してみる。以下はあくまで粗いレンジの試算で、前提の一つが崩れれば結論は大きくずれる。ホワイトカラー領域でAIが完全代替するタスク群が経済全体の15-25%を占めると仮定し、倍率はベンチマーク値ではなく実務環境での推定値10-30倍を採用する。ブルーカラー領域でAR/AI支援による人間の生産性が1.25-2倍になるタスク群が追加で5-15%。合算すると全経済のタスク自動化率は20-40%、加重平均の倍率は8-25倍程度。この「30-50%」に近い自動化率は願望的合算の色合いが強く、タスク定義・セクター構成・実務倍率のいずれにも独立した検証はない。Slide 2のJones閾値表と突き合わせると、楽観的なケースでは高度成長級のゾーンに届くが、保守的なケースでは閾値に達しない。差を分けるのは「実務環境での倍率がベンチマーク値の何割を維持できるか」と「ブルーカラー領域への波及速度」の2変数だ。
           </p>
           <div class="source-note">
-            この合算はセクター別GDP比率による加重平均ではなく概算。精密な推計には産業構造の詳細な分析が必要であり、ここでは閾値到達の蓋然性を論じるに留める。AR/AI支援デバイスの市場はCAGR 59%で成長中（Markets and Markets推計: 2025年$0.98B → 2030年$9.98B）。
+            この合算はセクター別GDP比率による加重平均ではなく概算。精密な推計には産業構造の詳細な分析が必要であり、ここでは閾値到達の蓋然性の幅を示すに留める。AR/AI支援デバイスの市場はCAGR 59%で成長中（Markets and Markets推計: 2025年$0.98B → 2030年$9.98B）。ただし2024年のMeta Quest Pro生産縮小、Magic Leapの法人市場ピボットなど、AR市場は既にハイプサイクルの調整局面を経ている。
           </div>
           <p class="lead">
-            不確実性は2つ。第一に、個別タスクの改善が産業全体に波及する経路は自明ではない。導入コスト、規制環境、サプライチェーンのボトルネックが波及速度を左右する。Amdahlの法則的制約として、自動化されないタスクが全体の律速段階になる。第二に、AR市場のCAGR 59%が2030年まで持続する保証はない。技術的ハイプサイクルの減速は歴史的に繰り返されている。
+            不確実性は3つ。第一に、<strong>波及経路の非自明性</strong>。個別タスクの改善が産業全体に波及するには、導入コスト、規制環境、サプライチェーンの整合が必要になる。Amdahlの法則の類推として、自動化されないタスクが全体の律速段階になる。Klarnaの成功がカスタマーサポート業界全体の成功を意味しない理由は、業務プロセスの標準化度合い、データの構造化度合い、規制要件が企業ごとに異なるからだ。第二に、<strong>CAGR予測の脆弱性</strong>。AR市場のCAGR 59%が2030年まで持続する保証はない。Google Glassは2013年の発表から2015年に消費者市場から撤退し、3Dテレビも2010年代前半のハイプから2017年に大手全社が撤退した。第三に、<strong>労働市場の反応速度</strong>。自動化が理論上可能であっても、労組の抵抗、再訓練のコスト、雇用規制が波及を遅らせる。EUのAI規制法は2024年に成立し、高リスクAIの展開に事前審査を義務付けた。規制環境は一方向に進まない。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -756,7 +772,7 @@
             </div>
           </div>
           <p class="lead">
-            3.15秒で現在の1年分のGDPを生み出す世界。この数字の前では言葉を失う。だが、<strong>この数字を結論の根拠にしてはならない。</strong> GATEモデルには複数の前提が埋め込まれている。AGI 2028年達成はモデルのプリセットであり予測ではない。物理的制約（エネルギー供給、資源調達、熱管理）のモデル化が不十分。社会的制約（規制、地政学、労組抵抗）が含まれていない。生産の指数関数的成長がエネルギー供給の線形的成長と両立するかは未検証。
+            3.15秒で現在の1年分のGDPを生み出す世界。この数字の前では言葉を失う。だが、<strong>この数字はシミュレーション上の理論的上限であり、本記事の主根拠ではない。</strong> GATEモデルには複数の前提が埋め込まれている。AGI 2028年達成はモデルのプリセットであり予測ではない。物理的制約（エネルギー供給、資源調達、熱管理）のモデル化が不十分。社会的制約（規制、地政学、労組抵抗）が含まれていない。生産の指数関数的成長がエネルギー供給の線形的成長と両立するかも未検証。本記事はGATEの数字を雰囲気の提示としてのみ扱い、閾値到達の議論には用いない。
           </p>
           <p class="lead">
             GATEモデルは「条件が揃った場合の理論的上限」を示すもので、「これが起きる」という予測ではない。この区別を混同すると議論が崩壊する。本記事が論じているのは、この上限に至るはるか手前の話だ。<a href="03-agi-explosion.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">No.03で扱った技術爆発と産業爆発</a>の前段階として、人間+AIハイブリッドによる高度成長が先行する可能性。GATEモデルの10<sup>7</sup>倍ではなく、年率+3.5-4%の追加成長。桁は違うが、私たちの生活を変えるには十分な数字だ。
@@ -797,10 +813,10 @@
             </div>
           </div>
           <p class="lead">
-            <strong>反論3: CEO発言やAI企業の予測はポジショントーク。</strong> bioshok自身が留保カテゴリで指摘している通り、「CEO発言はfrontier labsの内部期待と戦略姿勢の強い証拠だが独立した科学的証明ではない」。Anthropic Economic Indexも利害関係のある当事者の報告。本記事ではこれらを「証拠」ではなく「参考指標」として扱う。
+            <strong>反論3: CEO発言やAI企業の予測はポジショントーク。</strong> bioshok自身が留保カテゴリで指摘している通り、「CEO発言はfrontier labsの内部期待と戦略姿勢の強い証拠だが独立した科学的証明ではない」。Anthropic Economic Indexも利害関係のある当事者の報告だ。これらは「証拠」ではなく「参考指標」として扱う。
           </p>
           <p class="lead">
-            <strong>反論4: bioshokのJonesモデル解釈と人間拡張論の接続は自明ではない。</strong> bioshokの「AIが頭脳、人間が手足」構想は、Jonesモデルの労働代替とは異なるメカニズムかもしれない。Jonesモデルは「AIが労働を代替する」ことを前提にしており、「AIが人間を拡張する」こととは区別される。本記事ではこの2つを「タスク自動化率」の拡張定義で接続したが、この接続が経済学的に正当かどうかは、Jones自身やマクロ経済学者の検証を要する。
+            <strong>反論4: bioshokのJonesモデル解釈と人間拡張論の接続は自明ではない。</strong> bioshokの「AIが頭脳、人間が手足」構想は、Jonesモデルの労働代替とは異なるメカニズムかもしれない。Jonesモデルは「AIが労働を代替する」ことを前提にしており、「AIが人間を拡張する」こととは区別される。この記事は両者を「タスク自動化率」の拡張定義で接続したが、この接続が経済学的に正当かどうかは、Jones自身やマクロ経済学者の検証を要する。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -819,19 +835,19 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            ここまで6つのスライドで論じてきた内容を、ひとつの物語として束ねる。
+            AGI前の産業爆発が起きるために、最低限何が必要か。6つのセクションで検討した内容を、条件セットとして整理する。
           </p>
           <p class="lead">
-            <strong>第一に、Jonesモデルは100%自動化を要求しない。</strong> タスク自動化率30%+AI生産性倍率の加重平均30-60倍で、戦後日本の高度成長期に匹敵する追加成長率が概算として示される。この閾値はロボットの自己複製なしに到達し得る。
+            <strong>条件1: 実務環境でのAI生産性倍率がベンチマーク値の20%以上を維持すること。</strong> Jonesモデルの閾値はベンチマーク値（50-100倍）ではなく実務環境での倍率で計算する必要がある。SWE-benchのスコアが実務のコード生産性に翻訳されるとき、要件定義の曖昧さ、レビューコスト、統合テストが倍率を削る。実務倍率が10倍を維持できるなら閾値の射程内。5倍を下回ると高度成長級には届かない。
           </p>
           <p class="lead">
-            <strong>第二に、「タスク自動化率」の分母はAI支援による人間拡張で広がる。</strong> ホワイトカラー領域ではAIがタスクを完全代替し、倍率50-100倍を実現する。SWE-benchの<a href="04-takeoff-speed-debate.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">テイクオフ速度論</a>で論じた代替弾力性の議論とも整合する。ブルーカラー領域ではARゴーグル、音声ガイド、Manufacturing Copilotが個別タスクで+25〜93%の生産性向上を実証している（成功バイアスあり）。後者の貢献は倍率ではなく、自動化率の分母拡大にある。bioshokの「AIが頭脳、人間が手足」論は、この人間拡張を産業規模に拡張した構想。80億人の人間は既にいる。
+            <strong>条件2: ブルーカラー領域へのAI支援が、個別事例から産業横断的な波及に移行すること。</strong> BoeingやSandvikの成功事例は「特定工程・特定条件下」の改善であり、産業全体の自動化率を押し上げるには、デバイスコストの低下（現在のHoloLens 2は1台3,500ドル）、通信インフラの整備、安全認証の標準化が必要になる。自動運転の遅延が示す通り、物理世界での汎用化には認知タスクとは異なる時間軸がかかる。
           </p>
           <p class="lead">
-            <strong>第三に、人間拡張で到達できるのは「高度成長級」であって「産業爆発」ではない。</strong> Forethought定義の産業爆発（GWP年率30%+）の領域にはロボット閉ループの少なくとも部分的な成立が必要になる可能性がある。人間+AIハイブリッドは産業爆発の代替ではなく、産業爆発に至る<strong>前段階の加速装置</strong>。
+            <strong>条件3: 規制環境が波及を阻害しない、もしくは安全保障の圧力が規制を上回ること。</strong> EUのAI規制法、各国の労働保護法制、産業安全規格がAI支援の展開速度に直接影響する。規制は一方向に進まない。ただし<a href="04-takeoff-speed-debate.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">テイクオフ速度論</a>で論じた安全保障の圧力が規制緩和の方向に作用する可能性もある。
           </p>
           <div class="note">
-            <strong>結論。</strong> ロボット閉ループは産業爆発の十分条件かもしれないが、必要条件ではない。閉ループが成立しなくても、AI+人間のハイブリッドで高度成長級の変化は起こり得る。「産業爆発」の議論をロボットの自己複製に限定することは、足元で進行中の変化を見落とすリスクがある。Jonesモデルの臨界点に到達する正確な時期を予測することは、タスク自動化率の測定方法すら未確立の現在、知的誠実性を欠く。確かなのは、臨界点が「AGI達成」より先に来る可能性が、Jonesモデルとbioshokの人間拡張論によって理論的に開かれたということ。冒頭の工場に戻ろう。溶接工とAIエージェントが同時に働いているあの光景は、ロボットの自己複製を待っていない。AGIの後に全てが変わると構えていると、変化が始まったときに対応できない。産業革命は、蒸気機関が完成した日に始まったのではない。綿工場の片隅で、誰かが糸を手で紡ぐのをやめた日に始まった。
+            <strong>結論。</strong> 3条件のうち、条件1は楽観的シナリオでは既に射程内にあり、条件2は5-10年の時間軸、条件3は地政学次第で変動する。3条件がすべて揃った場合に限り、ロボット閉ループなしでの高度成長級の変化が起こり得る。ただし「高度成長級」（年率+3.5-4%の追加成長）であって、Forethought定義の「産業爆発」（GWP年率30%+）ではない。この区別は崩れない。Jonesモデルの臨界点に到達する正確な時期を予測することは、タスク自動化率の測定方法すら未確立の現在、不可能だ。確かなのは、臨界点が「AGI達成」より先に来る可能性が理論的に開かれたこと。Klarnaのオフィスで700人分の仕事が消えたとき、ロボットの自己複製は関係なかった。AGIの後に全てが変わると構えている間に、変化の前段階は既に始まっている。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -873,6 +889,128 @@
         References: Jones (2023) "The A.I. Dilemma"; Forethought Foundation (Davidson et al. 2025); EpochAI GATE Model; bioshok (@bioshok3); HBR (2017); DHL Press Release (2015); RealWear; Microsoft; Azure; Cornell University.
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -937,5 +1075,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

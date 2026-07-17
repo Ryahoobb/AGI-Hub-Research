@@ -2,7 +2,6 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -193,7 +192,7 @@
 <body class="has-site-header">
 
 <!-- ── Site header (AGI HUB shared) ── -->
-<div id="site-header-mount"></div>
+<div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="partials/header.js" defer></script>
 
 <div class="dashboard">
@@ -201,20 +200,20 @@
   <!-- ── Title ── -->
   <h1 class="dash-title">AI Job Displacement Tracker</h1>
   <p class="dash-subtitle">AIによる世界の雇用代替をリアルタイムで追跡する</p>
-  <div class="dash-date">Latest data: 2026-04-02</div>
+  <div class="dash-date">Latest data: 2026-04-08</div>
 
   <!-- ── KPI ── -->
   <div class="kpi-row">
     <div class="kpi-card">
-      <div class="kpi-value accent">1.2M</div>
+      <div class="kpi-value accent">1.3M</div>
       <div class="kpi-label">Jobs Affected</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-value">170</div>
+      <div class="kpi-value">182</div>
       <div class="kpi-label">News Stories</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-value">20</div>
+      <div class="kpi-value">18</div>
       <div class="kpi-label">Countries</div>
     </div>
     <div class="kpi-card">
@@ -275,10 +274,10 @@ function googleTranslateElementInit() {
 
 <script>
 // ── Data ────────────────────────────────────────────────────
-const MAP_DATA      = [{"country": "United States", "lat": 39.8, "lng": -98.5, "jobs": 811487, "count": 93, "top_industry": "Tech"}, {"country": "Spain", "lat": 40.5, "lng": -3.7, "jobs": 0, "count": 3, "top_industry": "Tech"}, {"country": "United Kingdom", "lat": 54.0, "lng": -2.0, "jobs": 44200, "count": 11, "top_industry": "Finance"}, {"country": "Singapore", "lat": 1.35, "lng": 103.8, "jobs": 17000, "count": 3, "top_industry": "Finance"}, {"country": "Australia", "lat": -25.3, "lng": 133.8, "jobs": 7889, "count": 15, "top_industry": "Finance"}, {"country": "India", "lat": 20.6, "lng": 78.9, "jobs": 65261, "count": 9, "top_industry": "Tech"}, {"country": "South Africa", "lat": -30.6, "lng": 22.9, "jobs": 0, "count": 3, "top_industry": "Tech"}, {"country": "China", "lat": 35.9, "lng": 104.2, "jobs": 64000, "count": 9, "top_industry": "Manufacturing"}, {"country": "Japan", "lat": 36.2, "lng": 138.3, "jobs": 171000, "count": 5, "top_industry": "Finance"}, {"country": "South Korea", "lat": 35.9, "lng": 127.8, "jobs": 0, "count": 1, "top_industry": "Manufacturing"}, {"country": "Brazil", "lat": -14.2, "lng": -51.9, "jobs": 0, "count": 1, "top_industry": "Retail"}, {"country": "Germany", "lat": 51.2, "lng": 10.4, "jobs": 3800, "count": 6, "top_industry": "Finance"}, {"country": "Canada", "lat": 56.1, "lng": -106.3, "jobs": 0, "count": 2, "top_industry": "Tech"}, {"country": "Ireland", "lat": 53.1, "lng": -7.7, "jobs": 11000, "count": 2, "top_industry": "Professional Services"}, {"country": "Netherlands", "lat": 52.1, "lng": 5.3, "jobs": 450, "count": 1, "top_industry": "Transport"}, {"country": "Chile", "lat": -35.7, "lng": -71.5, "jobs": 0, "count": 1, "top_industry": "Media"}, {"country": "France", "lat": 46.6, "lng": 2.2, "jobs": 800, "count": 2, "top_industry": "Media"}, {"country": "Switzerland", "lat": 46.8, "lng": 8.2, "jobs": 16000, "count": 1, "top_industry": "Manufacturing"}, {"country": "Argentina", "lat": -38.4, "lng": -63.6, "jobs": 0, "count": 1, "top_industry": "Tech"}];
-const COUNTRY_BARS  = [{"country": "United States", "jobs": 811487, "count": 93}, {"country": "Japan", "jobs": 171000, "count": 5}, {"country": "India", "jobs": 65261, "count": 9}, {"country": "China", "jobs": 64000, "count": 9}, {"country": "United Kingdom", "jobs": 44200, "count": 11}, {"country": "Singapore", "jobs": 17000, "count": 3}, {"country": "Switzerland", "jobs": 16000, "count": 1}, {"country": "Ireland", "jobs": 11000, "count": 2}, {"country": "Australia", "jobs": 7889, "count": 15}, {"country": "Germany", "jobs": 3800, "count": 6}];
-const CATEGORIES    = [{"label": "Tech", "count": 93, "color": "#1a1a1a"}, {"label": "Finance", "count": 27, "color": "#b23a2f"}, {"label": "Professional Services", "count": 13, "color": "#4a4a4a"}, {"label": "Manufacturing", "count": 13, "color": "#6b6b6b"}, {"label": "Retail", "count": 7, "color": "#8c8c8c"}, {"label": "Media", "count": 4, "color": "#a8a8a8"}, {"label": "Transport", "count": 4, "color": "#c4c4c4"}, {"label": "Other", "count": 3, "color": "#d9d9d9"}, {"label": "Education", "count": 3, "color": "#3d3d3d"}, {"label": "Healthcare", "count": 2, "color": "#585858"}, {"label": "Government", "count": 1, "color": "#e0e0e0"}];
-const TREND         = [{"month": "2024-12", "count": 2, "jobs": 0}, {"month": "2025-01", "count": 2, "jobs": 0}, {"month": "2025-02", "count": 8, "jobs": 20750}, {"month": "2025-03", "count": 9, "jobs": 18000}, {"month": "2025-04", "count": 8, "jobs": 600}, {"month": "2025-05", "count": 11, "jobs": 16000}, {"month": "2025-06", "count": 8, "jobs": 0}, {"month": "2025-07", "count": 15, "jobs": 31806}, {"month": "2025-08", "count": 10, "jobs": 200}, {"month": "2025-09", "count": 14, "jobs": 16322}, {"month": "2025-10", "count": 10, "jobs": 667234}, {"month": "2025-11", "count": 14, "jobs": 190800}, {"month": "2025-12", "count": 9, "jobs": 100}, {"month": "2026-01", "count": 13, "jobs": 36275}, {"month": "2026-02", "count": 13, "jobs": 12000}, {"month": "2026-03", "count": 14, "jobs": 86600}, {"month": "2026-04", "count": 2, "jobs": 30000}];
+const MAP_DATA      = [{"country": "United States", "lat": 39.8, "lng": -98.5, "jobs": 876975, "count": 106, "top_industry": "Tech"}, {"country": "Spain", "lat": 40.5, "lng": -3.7, "jobs": 0, "count": 3, "top_industry": "Tech"}, {"country": "United Kingdom", "lat": 54.0, "lng": -2.0, "jobs": 46000, "count": 13, "top_industry": "Finance"}, {"country": "Singapore", "lat": 1.35, "lng": 103.8, "jobs": 17000, "count": 3, "top_industry": "Finance"}, {"country": "Australia", "lat": -25.3, "lng": 133.8, "jobs": 5889, "count": 14, "top_industry": "Finance"}, {"country": "India", "lat": 20.6, "lng": 78.9, "jobs": 65261, "count": 9, "top_industry": "Tech"}, {"country": "South Africa", "lat": -30.6, "lng": 22.9, "jobs": 0, "count": 3, "top_industry": "Tech"}, {"country": "China", "lat": 35.9, "lng": 104.2, "jobs": 64000, "count": 9, "top_industry": "Manufacturing"}, {"country": "Japan", "lat": 36.2, "lng": 138.3, "jobs": 171000, "count": 5, "top_industry": "Finance"}, {"country": "South Korea", "lat": 35.9, "lng": 127.8, "jobs": 0, "count": 1, "top_industry": "Manufacturing"}, {"country": "Brazil", "lat": -14.2, "lng": -51.9, "jobs": 0, "count": 1, "top_industry": "Retail"}, {"country": "Germany", "lat": 51.2, "lng": 10.4, "jobs": 3800, "count": 6, "top_industry": "Finance"}, {"country": "Canada", "lat": 56.1, "lng": -106.3, "jobs": 0, "count": 2, "top_industry": "Tech"}, {"country": "Ireland", "lat": 53.1, "lng": -7.7, "jobs": 11000, "count": 2, "top_industry": "Professional Services"}, {"country": "Netherlands", "lat": 52.1, "lng": 5.3, "jobs": 450, "count": 1, "top_industry": "Transport"}, {"country": "Chile", "lat": -35.7, "lng": -71.5, "jobs": 0, "count": 1, "top_industry": "Media"}, {"country": "France", "lat": 46.6, "lng": 2.2, "jobs": 800, "count": 2, "top_industry": "Media"}, {"country": "Luxembourg", "lat": 49.8, "lng": 6.1, "jobs": 600, "count": 1, "top_industry": "Manufacturing"}];
+const COUNTRY_BARS  = [{"country": "United States", "jobs": 876975, "count": 106}, {"country": "Japan", "jobs": 171000, "count": 5}, {"country": "India", "jobs": 65261, "count": 9}, {"country": "China", "jobs": 64000, "count": 9}, {"country": "United Kingdom", "jobs": 46000, "count": 13}, {"country": "Singapore", "jobs": 17000, "count": 3}, {"country": "Ireland", "jobs": 11000, "count": 2}, {"country": "Australia", "jobs": 5889, "count": 14}, {"country": "Germany", "jobs": 3800, "count": 6}, {"country": "Spain", "jobs": 1500, "count": 3}];
+const CATEGORIES    = [{"label": "Tech", "count": 100, "color": "#1a1a1a"}, {"label": "Finance", "count": 28, "color": "#b23a2f"}, {"label": "Professional Services", "count": 14, "color": "#4a4a4a"}, {"label": "Manufacturing", "count": 12, "color": "#6b6b6b"}, {"label": "Retail", "count": 8, "color": "#8c8c8c"}, {"label": "Transport", "count": 5, "color": "#a8a8a8"}, {"label": "Media", "count": 4, "color": "#c4c4c4"}, {"label": "Education", "count": 4, "color": "#d9d9d9"}, {"label": "Other", "count": 3, "color": "#3d3d3d"}, {"label": "Healthcare", "count": 3, "color": "#585858"}, {"label": "Government", "count": 1, "color": "#e0e0e0"}];
+const TREND         = [{"month": "2024-12", "count": 2, "jobs": 0}, {"month": "2025-01", "count": 2, "jobs": 0}, {"month": "2025-02", "count": 8, "jobs": 20750}, {"month": "2025-03", "count": 9, "jobs": 18000}, {"month": "2025-04", "count": 8, "jobs": 600}, {"month": "2025-05", "count": 11, "jobs": 16000}, {"month": "2025-06", "count": 8, "jobs": 0}, {"month": "2025-07", "count": 15, "jobs": 31806}, {"month": "2025-08", "count": 10, "jobs": 200}, {"month": "2025-09", "count": 14, "jobs": 16322}, {"month": "2025-10", "count": 9, "jobs": 651234}, {"month": "2025-11", "count": 14, "jobs": 190800}, {"month": "2025-12", "count": 9, "jobs": 100}, {"month": "2026-01", "count": 16, "jobs": 84275}, {"month": "2026-02", "count": 16, "jobs": 15388}, {"month": "2026-03", "count": 17, "jobs": 99600}, {"month": "2026-04", "count": 6, "jobs": 30900}];
 
 // ── Colors ──────────────────────────────────────────────────
 const C_BLACK   = "#1a1a1a";

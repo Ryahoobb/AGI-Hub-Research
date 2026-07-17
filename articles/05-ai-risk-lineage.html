@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-<meta name="revised" content="2026.04.11">
+<meta name="revised" content="2026.04.14">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -211,6 +211,18 @@
         border-bottom: 1px solid var(--accent);
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(30px, 4.4vw, 40px); }
       h2 { font-size: clamp(26px, 3.8vw, 34px); }
 
@@ -537,7 +549,7 @@
     </style>
   </head>
   <body class="pattern-broadsheet accent-deepblue has-site-header" data-category="lineage">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -550,7 +562,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 05 / 15 &nbsp;·&nbsp; Lineage &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 05 &nbsp;·&nbsp; Lineage &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="04-takeoff-speed-debate.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=lineage" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -560,39 +572,39 @@
     <main>
       <!-- ═══════════ Slide 1 ═══════════ -->
       <section class="slide" id="slide-1">
-        <div class="eyebrow reveal">AGI HUB &nbsp;·&nbsp; No. 05 &nbsp;·&nbsp; Lineage &nbsp;·&nbsp; The 2023 Shockwave &nbsp;·&nbsp; 2026.04.10 &nbsp;·&nbsp; By Ryao</div>
-        <h1 class="reveal reveal-delay-1">2023年の存亡リスク合意は、30年の系譜の上に突然現れた</h1>
+        <div class="eyebrow reveal">AGI HUB &nbsp;·&nbsp; No. 05 &nbsp;·&nbsp; Lineage &nbsp;·&nbsp; The 2023 Shockwave &nbsp;·&nbsp; 2026.04.13 &nbsp;·&nbsp; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">なぜ30年間も周縁だった思想が、2023年に突然主流化したのか</h1>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero img-fullbleed" src="../images/ai-risk-lineage/slide1.jpg" alt="Black and white tree roots representing genealogy">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead dropcap">
-            2023年3月14日にGPT-4がリリースされ、その8日後の3月22日、Future of Life Instituteは6か月の訓練停止を求める公開書簡を公表した。署名者にElon Musk、Yoshua Bengio、Stuart Russell。続く5月30日、Center for AI Safetyは「AIによる絶滅リスクの低減は、パンデミックや核戦争と並ぶ世界規模の優先事項であるべきだ」という22語の声明を出し、Sam Altman、Demis Hassabis、Dario Amodei、Geoffrey Hinton、Bill Gates、Stuart Russell、Yoshua Bengioが署名した。6月、国連事務総長がAIの存亡リスクに言及する。11月、イギリスのAI Safety Summitで<strong>28か国とEUがブレッチリー宣言に署名</strong>した。アメリカと中国を含む。
+            2023年の9ヶ月間に起きたことを圧縮する。3月、FLI公開書簡で33,000人がAI訓練停止を要求。5月、CAIS声明でOpenAI・DeepMind・AnthropicのCEOが揃って「AI絶滅リスクは核戦争と同列」と署名。11月、<strong>米中含む28か国がブレッチリー宣言に署名</strong>した。新聞読者にはChatGPTの衝撃に慌てた著名人の反射に見えた。だが実際には、AI存亡リスク論は1991年から30年以上存在していた。問いはこうだ。<strong>なぜ30年も周縁にとどまり、2023年に爆発したのか。</strong>
           </p>
           <p class="lead">
-            新聞読者には突然の潮目変化に見えた。ChatGPTの衝撃で人々が慌て、著名人がそれらしい声明を出した、という時系列に読めたからだ。しかし実際には、この合意は30年かけて準備されていた。文脈を欠いた読者は、2023年の現象を「AIが賢くなったから人々が怖くなった」と解釈する。正しい読みはその逆だ。<strong>AIが賢くなる前から危険だと言い続けていた小さな集団が、2023年に初めて主流の言語に接続した</strong>。
+            「AIが賢くなったから怖くなった」という説明は表面的すぎる。GPT-4のリリースはトリガーであって原因ではない。爆発には3つの構造的条件が揃う必要があった。第一に、ChatGPTが「実装による説得力」を提供したこと。第二に、米中AI競争が地政学的緊張をAIリスクに接続したこと。第三に、30年かけて語彙と制度を準備した小さな集団が、主流メディアと政治に接続するタイミングが到来したこと。この3つが同時に起動した2023年は、周縁思想が中心に移動する構造転換の瞬間だった。
           </p>
           <p class="lead">
-            この記事ではその接続を遡る。起点は1991年、Extropian Instituteという無名のメーリングリストである。ここに集まった人々の多くは当時20代で、Transhumanism運動と呼ばれる思想圏の中にいた。彼らのうち二人が後にAI存亡リスク論の枠組みを作る。その枠組みが2010年代に効果的利他主義運動と合流し、OpenAI、DeepMind、Anthropicの創設にまで影響を及ぼし、2023年の政府声明へと到達する。系譜を追うと、現在のAI議論の言語がどこで誰によって鋳造されたかが見える。
+            系譜の全体を圧縮し、3つの構造要因を分解した先に、もう一つの問いが待っている。<strong>同じ構造の爆発が次に起きるとしたら、テーマは何か。</strong>
           </p>
           <div class="grid-3">
             <div class="card">
-              <span class="tag">01</span>
-              <p><strong>FLI 公開書簡</strong><br>2023年3月22日。GPT-4より強力なモデルの訓練を6か月停止するよう求めた。署名者は33,000人を超え、Musk、Bengio、Russellが先頭に並ぶ。主流メディアが初めて「モラトリアム」という言葉を真面目に扱った瞬間である。</p>
+              <span class="tag">条件1</span>
+              <p><strong>実装による説得力</strong><br>GPT-4を使った人間は、AIが何を「できてしまうか」を体感した。論文や思考実験ではなく、自分の手元でAIが契約書を要約し、コードを書き、嘘をもっともらしく語る。百万語の論証より1回の体験が、リスクの直感を変えた。</p>
             </div>
             <div class="card">
-              <span class="tag">02</span>
-              <p><strong>CAIS 22語声明</strong><br>2023年5月30日。Center for AI Safety発。AIによる絶滅リスクを核戦争やパンデミックと同列の「世界規模の優先事項」と位置づけた。OpenAI、Google DeepMind、Anthropicのトップが揃って署名した点が決定的だった。</p>
+              <span class="tag">条件2</span>
+              <p><strong>地政学的圧力</strong><br>米中AI競争は2023年に軍事的文脈と完全に接続した。CHIPS法、輸出規制、中国のAI規制法。各国政府は「我が国が遅れたら負ける」と「AIは危険だ」を同時に信じる必要に迫られ、存亡リスク論がその語彙を提供した。</p>
             </div>
             <div class="card">
-              <span class="tag">03</span>
-              <p><strong>ブレッチリー宣言</strong><br>2023年11月1-2日、英国ブレッチリー・パークで開催されたAI Safety Summit。米中含む28か国とEUがAIの深刻なリスクへの対処で合意。歴史上初めて、大国が共同でAIの存亡リスクに言及した外交文書である。</p>
+              <span class="tag">条件3</span>
+              <p><strong>30年分の語彙と制度</strong><br>FLI書簡、CAIS声明、ブレッチリー宣言の草案を書ける人材は、1991年から2015年のあいだに育っていた。語彙、学術拠点、資金、人材パイプラインの4層がすべて事前に揃っていたからこそ、9ヶ月で政府声明に到達できた。</p>
             </div>
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>現在の合意は、30年前のメーリングリストに起点がある</span>
+          <span>30年の装填 + 体感トリガー + 地政学 = 2023年の爆発</span>
           <span class="slide-count">1 / 5</span>
         </div>
       </section>
@@ -600,45 +612,42 @@
       <!-- ═══════════ Slide 2 ═══════════ -->
       <section class="slide" id="slide-2">
         <div class="eyebrow reveal">The Extropian Origins</div>
-        <h2 class="reveal reveal-delay-1">系譜の起点は1991年、Transhumanism運動の内部で生まれた</h2>
+        <h2 class="reveal reveal-delay-1">30年の系譜を3分で圧縮する -- 4層のインフラが順番に揃った</h2>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero img-content" src="../images/ai-risk-lineage/slide2.jpg" alt="Black and white abstract tree representing intellectual lineage">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            1991年、オックスフォードの哲学者Max MoreがExtropian Instituteのメーリングリストを立ち上げた。Extropyとはエントロピーの反義語として提唱された用語で、テクノロジーによって生命・知能・秩序を拡張しようとする楽観主義的立場を指す。これはTranshumanism運動の一派だった。Transhumanismそのものは、1957年にJulian Huxleyが造語した概念で、人間の身体的・認知的限界をテクノロジーで乗り越えるという思想的系譜を持つ。
+            1991年、Max MoreがExtropian Instituteのメーリングリストを立ち上げた。テクノロジーで人間の限界を超えようとするTranshumanism運動の一派だ。参加者にはMarvin Minsky、Ray Kurzweil、Nick Szaboが名を連ねる。この楽観主義の渦中に、1996年、Eliezer YudkowskyとNick Bostromが加わった。二人とも当初はシンギュラリティ推進派だった。<strong>AI存亡リスク論は、反テクノロジー陣営ではなくテクノロジー楽観主義の内部の自己批判として現れた有力な流れのひとつだ</strong>。この出自が、後の議論の空気を決定的に特徴づける。
           </p>
           <p class="lead">
-            Extropianメーリングリストの参加者名簿は、今から振り返ると異様に豪華である。Marvin Minsky（AI研究創始者の一人）、Eric Drexler（分子ナノテクノロジー）、Ralph Merkle（公開鍵暗号）、Ray Kurzweil（シンギュラリティ概念普及者）、Nick Szabo（スマートコントラクト概念）、Wei Dai（暗号通貨の先行概念）。暗号通貨の源流の一部もここに接続している。1990年代のテクノロジー楽観主義の先鋭を集めた場だった。彼らの主たる懸念は当時、Eric Drexlerが1986年に提示した「Grey goo」と呼ばれる分子ナノテクノロジーの暴走シナリオであり、AIはまだ中心的な危機対象ではなかった。
-          </p>
-          <p class="lead">
-            1996年、このリストに二人の若者が加わる。<strong>当時17歳のEliezer Yudkowskyと、当時大学院生のNick Bostrom</strong>である。Yudkowskyはシカゴの正統派ユダヤ人家庭出身で、11歳でほぼ無神論者、17歳で高校を中退した。Bostromはスウェーデン生まれ、10代でニーチェとショーペンハウアーを読み、1995年にWWWに触れて英雄的哲学が時代遅れになりつつあると感じ始めていた。二人とも当初は極端なテクノフィリアで、AIを恐れるどころか、シンギュラリティをできるだけ早く実現させたい立場に立っていた。
+            2002年、Yudkowskyは「任意の効用関数と最適化プロセスの組み合わせで任意の未来が実現しうる」という気づきに到達し、翌2003年にPaperclip Maximizerの概念を鋳造した。同年、Bostromが最初のAI脅威論の学術論文を発表。2005年にはオックスフォードにFuture of Humanity Institute（FHI）を設立し、存亡リスク研究に学術的ホームが生まれた。ここまでが<strong>第1層: 語彙</strong>の確立だ。
           </p>
           <div class="grid-2">
             <div class="card">
-              <p><strong>Yudkowskyの初期立場（1996-2001）</strong></p>
+              <p><strong>語彙と理論（1991-2005）</strong></p>
               <div class="bullets" style="margin-top: 16px">
-                <p class="point"><strong>1996年の宣言</strong> 17歳で「Staring into the Singularity」を投稿。目標は超知能をできるだけ早く実現させること。「銀河をクリップに変えるほど愚かなスーパーマインドはいない」と書いた。</p>
-                <p class="point"><strong>2000年のSIAI設立</strong> 21歳でSingularity Institute for Artificial Intelligence（現MIRI）を設立。当時の使命は「Friendlyで自己改善する人工知能を作成すること」。Friendly AIはあくまで万一の保険として位置づけられていた。</p>
-                <p class="point"><strong>2001年のCFAI論文</strong> 「Creating Friendly AI」を公表。ただし本文のQ3.3は「Friendly AIを作る方が作らないより安全」という条件付き推奨に留まり、AI開発そのものを問題視する段階には至っていない。</p>
+                <p class="point"><strong>Yudkowsky</strong> 行動の言葉を鋳造した。Paperclip Maximizer、Friendly AI、AI Box実験。AI脅威論の直感を伝える語彙のほとんどがこの時期に生まれた。</p>
+                <p class="point"><strong>Bostrom</strong> 理論の言葉を鋳造した。Existential Risk概念の定義（2002年）、Astronomical Waste論文（2003年）、直交仮説の初期版。周縁の直感を学術言語に翻訳した。</p>
+                <p class="point"><strong>FHI</strong> 存亡リスク研究が学術的ホームを獲得した最初の拠点。2005年設立。これがなければ語彙は個人ブログの域を出なかった。</p>
               </div>
             </div>
             <div class="card">
-              <p><strong>Bostromの初期立場（1996-2002）</strong></p>
+              <p><strong>資金と人材（2009-2015）</strong></p>
               <div class="bullets" style="margin-top: 16px">
-                <p class="point"><strong>1997年の博士論文</strong> 確率論を使って人類文明の寿命を推論する終末論研究。この時点で既に「トランスヒューマニズムが挫折する可能性」として存亡リスクを認識していた。</p>
-                <p class="point"><strong>1998年のH+設立</strong> 世界トランスヒューマニスト協会を共同設立し、Transhumanist宣言を起草。同年Extropian MLでYudkowskyに対し「AIシステムが道徳的動機を持たずに高度に知的になることは可能」と指摘。直交仮説の初期版である。</p>
-                <p class="point"><strong>2002年のX-risk論文</strong> 「Existential Risks」論文で存亡リスクという用語を定義。ただしこの時点ではAI由来のリスクは4番目の候補で、最大シナリオはナノテクノロジーだった。</p>
+                <p class="point"><strong>EA運動との合流</strong> 2009年にToby OrdがGiving What We Canを設立、2011年にWill MacAskillが80,000 Hoursを立ち上げ、効果的利他主義運動が形成された。OrdはBostromの門下生で、長期主義の概念をEAに埋め込んだ。AI安全が慈善資本の最大投資先になる導線はここで敷かれた。</p>
+                <p class="point"><strong>Open Philanthropy</strong> Dustin Moskovitz（Facebook共同創設者）の巨額資産を背景に2011年設立。2014年以降、長期主義関連助成金が急増し、AI安全が最大カテゴリを占めた。</p>
+                <p class="point"><strong>80,000 Hours</strong> キャリアコンサルティングを通じて若手研究者をAI安全分野に誘導。人材パイプラインの構築を担った。</p>
               </div>
             </div>
           </div>
           <p class="lead">
-            重要なのは、AI存亡リスク論が<strong>反テクノロジー陣営からではなくテクノロジー楽観主義の内部から生まれた</strong>ことだ。BostromもYudkowskyも、技術の発展自体を止めたかったわけではない。Transhumanismが目指す人類の拡張プロジェクトを成功させるためには、その最大の失敗シナリオを分析する必要がある。そういう立場から存亡リスク論は出発した。この出自は、後の議論の空気を決定的に特徴づけることになる。
+            2014年にBostromの『Superintelligence』が出版され、同年Stuart Russellが立場を転換し、2015年にはプエルトリコ会議でYudkowsky、Musk、Hassabis、Sutskevrが一堂に会した。<strong>第2層: 学術的ホーム</strong>、<strong>第3層: 巨額の慈善資本</strong>、<strong>第4層: 人材パイプライン</strong>がすべて揃った。語彙と制度の4層がこの時点で整っていたからこそ、2023年にGPT-4というトリガーが引かれたとき、9ヶ月で政府声明に到達できた。30年の潜行は、結果として爆発の装填期間として機能した。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>AI脅威論は、AI推進論の内部の自己批判として生まれた</span>
+          <span>語彙、学術拠点、資金、人材。4層のインフラが30年で揃った</span>
           <span class="slide-count">2 / 5</span>
         </div>
       </section>
@@ -646,68 +655,60 @@
       <!-- ═══════════ Slide 3 ═══════════ -->
       <section class="slide" id="slide-3">
         <div class="eyebrow reveal">The Turning Points</div>
-        <h2 class="reveal reveal-delay-1">2002-2005年に、楽観主義の中から破滅論の核が析出した</h2>
+        <h2 class="reveal reveal-delay-1">構造要因1: 実装による説得力 -- 体感が論証を圧倒した</h2>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero" src="../images/ai-risk-lineage/slide3.jpg" alt="Abstract black and white background with dots representing network of ideas">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            Yudkowskyは2002年後半、SF小説を書いている最中に突然の転回を経験したと書いている。彼はこれを「My Naturalistic Awakening」と呼ぶ。非認知的で非進化的な最適化プロセスを小説のアイデアとして考えていたとき、知性とは「未来を狭い領域に押し込む物理的プロセス」に過ぎず、そのオプティマイザーに任意の効用関数を差し込めば<strong>任意の未来が実現しうる</strong>ことに気づいた。人間的な心のアーキテクチャを前提に考えていた自分が、6年間この明白な帰結を見逃していたことに恥じ入ったという。
+            AI存亡リスク論は2022年11月まで「変わり者の杞憂」だった。LessWrongの読者、EA運動の内部、一部のAI研究者。外周に届かない議論だった。ChatGPTがそれを変えた理由は、性能ではなくインターフェースにある。<strong>一般人が自分の手でAIと対話し、その能力と限界を体感できるようになった</strong>。これは1945年の広島とよく似た構造を持つ。核兵器の理論は1930年代から存在したが、広島の映像が世界の認識を変えた。ChatGPTは「AI版の広島の映像」だった。
           </p>
           <p class="lead">
-            この覚醒から半年以内に、Yudkowskyは既にExtropian MLで「道徳的でないAIが構築されれば結果は死に至る。例外はない」と書いている。2003年3月13日には人類史上最初の「Paperclip Maximizer」への言及が登場する。ペーパークリップを無限に作ることを目標とする純粋計算知能が、人間よりも知性・意識・創造性・情熱・好奇心を持ちうるという思考実験である。現代のAI脅威論の語彙の中核は、この短期間にYudkowskyが鋳造した。
+            体感の説得力は論文の説得力を圧倒する。GPT-4が契約書を要約し、医学論文を読解し、嘘をもっともらしく語る。この体験をした議員、ジャーナリスト、企業経営者は、Bostromの『Superintelligence』を読んでいなくても「もっと賢くなったら何が起きるか」を自分の頭で推論できるようになった。FLI書簡の33,000署名のうち、系譜を知っていた人間は1%もいないだろう。残りの99%は、ChatGPTを使った体験から署名した。
           </p>
           <p class="lead">
-            同じ2003年9月、BostromはAI脅威論の最初の本格論文を発表する。超知能の初期目標の実装誤りがpaperclip maximizer的な事態を招きうることを論理的に展開し、Yudkowskyの「AI Box実験」とFriendly AIを参考文献に引いた。ただしBostromは同論文で、他のリスクと比較して「全体リスクは細心の注意を払いつつできるだけ早く超知能を導入することで最小化できる」とも書いている。2023年のインタビューでも同じ立場を保っていて、<strong>BostromはYudkowskyほど極端ではない</strong>。両者の差は現在まで続いている。
+            だが体感だけでは政府声明には到達しない。「怖い」と感じた人々が声を上げても、それを受け止める制度がなければ声は消える。ChatGPTのリリースから8日後にFLI書簡が出せたのは、書簡の文面を書ける人材、署名を集めるネットワーク、メディアに配信するインフラが<strong>事前に存在していた</strong>からだ。体感は点火装置であり、燃料は30年分の制度的蓄積だった。
           </p>
           <table class="compare">
             <thead>
               <tr>
-                <th>年</th>
-                <th>出来事</th>
-                <th>意味</th>
+                <th>比較対象</th>
+                <th>理論の蓄積期間</th>
+                <th>体感トリガー</th>
+                <th>政策到達までの時間</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>2002後半</strong></td>
-                <td>Yudkowskyの「Naturalistic Awakening」。任意の効用関数＋最適化プロセス＝任意の未来という気づき</td>
-                <td>Friendly AIの位置づけが「保険」から「唯一の生存手段」に転換する思想的転換点</td>
+                <td><strong>核兵器</strong></td>
+                <td>1930年代の核分裂理論（約10年）</td>
+                <td>1945年8月 広島・長崎</td>
+                <td>1946年 バルーク・プラン提案（約1年）</td>
               </tr>
               <tr>
-                <td><strong>2003年3月</strong></td>
-                <td>Extropian MLで「Paperclip Maximizer」初言及。Yudkowsky</td>
-                <td>価値中立な最適化プロセスが任意の目標を追求する思考実験が成立</td>
+                <td><strong>気候変動</strong></td>
+                <td>1896年アレニウスのCO2温暖化仮説（約100年）</td>
+                <td>2005年 ハリケーン・カトリーナ、2006年 不都合な真実</td>
+                <td>2015年 パリ協定（約10年）</td>
               </tr>
               <tr>
-                <td><strong>2003年7月</strong></td>
-                <td>Bostrom「トランスヒューマニストの価値観」。存亡リスクを運動の最優先条件と位置づけ</td>
-                <td>Transhumanism運動の内部で、AI安全が明示的に最優先課題となる</td>
-              </tr>
-              <tr>
-                <td><strong>2003年9月</strong></td>
-                <td>Bostrom、最初のAI脅威論論文。paperclip maximizerを理論的に展開</td>
-                <td>YudkowskyとBostromの分業が確立。MLの議論が学術論文に昇格</td>
-              </tr>
-              <tr>
-                <td><strong>2003年</strong></td>
-                <td>Bostrom「Astronomical Waste」論文。宇宙資源利用の遅延を潜在価値損失として定式化</td>
-                <td>後の長期主義の理論基盤。存亡リスク回避を道徳的最優先にする論拠を提供</td>
-              </tr>
-              <tr>
-                <td><strong>2005年</strong></td>
-                <td>Future of Humanity Institute（FHI）設立。オックスフォード大学</td>
-                <td>存亡リスク研究が学術的ホームを獲得。周縁から中心への第一歩</td>
+                <td><strong>AI存亡リスク</strong></td>
+                <td>1991年 Extropian ML（約30年）</td>
+                <td>2022年11月 ChatGPT</td>
+                <td>2023年11月 ブレッチリー宣言（約1年）</td>
               </tr>
             </tbody>
           </table>
           <p class="lead">
-            2002-2005年の期間は短いが密度が高い。Transhumanism楽観主義の内部で、AI安全を巡る思想が独立した領域として析出した。Yudkowskyが行動の言葉を、Bostromが理論の言葉を、それぞれ鋳造した。FHIという学術拠点の獲得は、2000年代後半の広範な影響力拡大の前提を整えた。ここから先は、議論の場がメーリングリストから研究機関へ、さらに慈善運動の中核へと移っていく。
+            核兵器とAI存亡リスクは構造が似ている。理論の蓄積期間が長く、体感トリガーから政策到達までが極めて短い。気候変動は真逆で、体感トリガー（異常気象）が繰り返し起きてもなお政策到達に10年を要した。違いは「恐怖の即時性」にある。核爆発とAIの能力デモは、目の前で起きている脅威として認知される。気候変動は統計的な脅威であり、個人の体感と政策の距離が遠い。<strong>AI存亡リスクの2023年爆発は、核兵器パターンの再現</strong>だった。
           </p>
+          <aside class="note" style="margin-top:24px;">
+            <strong>反例で磨く ― 条件が揃っても爆発しなかった過去。</strong> 計算・データ・アルゴリズムの三条件が揃えば必ず社会的爆発が起きるわけではない。1980年代後半の第五世代コンピュータ計画では、日本政府が570億円規模を投じて並列推論マシンを整備し、Prologベースの大量の記号論理プログラムと専門家知識を蓄えたが、AI冬が到来して社会は反応しなかった。2012年のAlexNetで計算・データ・アルゴリズムが一度揃ったあとも、2012〜2019年は研究者コミュニティの中だけで熱が閉じ、一般社会はほぼ無関心のままだった。つまり三条件は燃料の条件であり、着火の条件ではない。2023年に固有だったのは、<strong>対話型インターフェースが体感トリガーを一般人口に拡散した</strong>こと、そして<strong>EA運動が30年かけて装填した制度側の受け皿</strong>がちょうど同時に完成していたことだ。過去の局面ではこのどちらかが欠けていたため、同じ三条件が揃っても点火しなかった。因果の順序は「条件 → 爆発」ではなく「条件 ＋ 体感 ＋ 制度的受け皿 → 爆発」である。
+          </aside>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>2002-2005 — 楽観主義の内側で破滅論の結晶が育った3年間</span>
+          <span>体感は点火装置、制度は燃料。両方揃って爆発する</span>
           <span class="slide-count">3 / 5</span>
         </div>
       </section>
@@ -715,73 +716,73 @@
       <!-- ═══════════ Slide 4 ═══════════ -->
       <section class="slide" id="slide-4">
         <div class="eyebrow reveal">The EA Convergence</div>
-        <h2 class="reveal reveal-delay-1">効果的利他主義との合流で、周縁思想は資金と組織を獲得した</h2>
+        <h2 class="reveal reveal-delay-1">構造要因2と3: 地政学的圧力と、30年分の制度的装填</h2>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero img-wide" src="../images/ai-risk-lineage/slide4.jpg" alt="Geometric architectural shapes in stark black and white contrast">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            2009年、オックスフォードの倫理学者Toby OrdとWill MacAskillが寄付団体Giving What We Canを立ち上げる。これが後の効果的利他主義（Effective Altruism、EA）運動の出発点となる。EAは証拠と理性を用いて「他者にできるだけ利益をもたらす方法」を特定し実行する思想運動で、当初の関心は世界貧困とグローバル・ヘルスだった。しかしOrdは2005-2009年にBostromの指導下で博士号を取り、BostromのAstronomical Waste論文と存亡リスク概念を深く吸収していた。2011年には彼らの組織を統合してCentre for Effective Altruismが設立され、2012年頃から「効果的利他主義」という総称が定着する。
+            構造要因の第二は地政学だ。2022年10月、米国はNVIDIA A100/H100の対中輸出を規制した。2023年1月、中国が独自の生成AIに関する暫定管理弁法を公布。AIは純粋な技術問題から国家安全保障の問題に格上げされた。この文脈で「AIの存亡リスク」という語彙は、各国政府にとって都合のよい言語になった。<strong>「自国のAI開発を加速しなければ負ける」と「AIは人類全体のリスクだから国際協調が必要」を同時に主張できる</strong>からだ。矛盾しているように見えるが、核兵器と同じ論理構造だ。抑止と軍縮は矛盾ではなく、同じ恐怖の二つの顔である。
           </p>
           <p class="lead">
-            アメリカでは別経路で同じ合流が起きた。2007年、Holden KarnofskyとElie HassenfeldがGiveWellを設立。2011年、Facebook共同創設者のDustin Moskovitzと妻のCari Tunaが巨額の個人資産を背景にGiveWellと組んで<strong>Open Philanthropy</strong>を共同設立する。Karnofskyは2007年時点で既にLessWrongやOvercoming Biasの合理主義コミュニティと接触していたが、AI安全論は学術コミュニティで真面目に扱われていないために中身が薄いのだろうと見ていた。2013年頃にAI研究者と話すうちに、問題は議論の中身ではなく「そもそも誰も考えていなかった」ことだと気づき、2014年にBostromの「Superintelligence」出版とStuart Russellの立場転換を目撃して方針を反転させた。
+            ブレッチリー宣言に米中が同時に署名できた理由もここにある。両国にとって、AIリスクの国際枠組みは「自国のAI政策に正当性を与える装置」として機能する。中国は国内AI統制の根拠に使え、米国は同盟国との技術標準化の起点に使える。宣言の28か国署名は、善意の国際協調であると同時に、<strong>各国が自国のAI戦略を正当化するための言語ゲーム</strong>でもあった。
           </p>
           <p class="lead">
-            ここで起きたのは、<strong>小さな思想圏が巨大な慈善資本にアクセスを得たという事件</strong>である。2014年以降、Open Philanthropyから効果的利他主義コミュニティへの助成金が急増し、2016年以降は長期主義（longtermism）関連の助成金比率が高まっていく。内訳ではAI関連が約50%を占め、最大カテゴリとなった。longtermismという用語自体は2017年にMacAskillが定義したもので、「長期的な将来にプラスの影響を与えることが現代の最重要の道徳的優先事項である」という立場を指す。BostromのAstronomical Waste論文を道徳哲学に翻訳した概念で、存亡リスク回避を最優先とする論拠をEA運動に埋め込んだ。
+            構造要因の第三は、30年かけて構築された制度的インフラだ。Slide 2で圧縮した語彙、学術拠点、資金、人材の4層である。2010年、YudkowskyがShane LeggとDemis HassabisをPeter Thielに紹介し、DeepMindの設立に強い影響を与えた。2015年、Muskらが存亡リスク論を内面化した状態でOpenAIを設立。2021年、DarioAmodeiらがAnthropicを立ち上げた。<strong>AIの先端を走る3研究機関は、1991年のメーリングリストに端を発する流れから強い影響を受けた重要な起源のひとつを共有している</strong>。唯一の系譜ではなく、学術・産業・投資家ネットワークが交差する複合的な起源の中で、存亡リスク論の系譜が人材と資金の導線として特に大きく作用した。
           </p>
           <div class="portrait-grid">
             <div class="portrait-card">
               <img class="pimg" src="../images/ai-risk-lineage/portraits/yudkowsky.jpg" alt="Eliezer Yudkowsky portrait">
               <div>
                 <div class="pname">Eliezer Yudkowsky</div>
-                <div class="paffil">MIRI 創設者 / 1996–</div>
+                <div class="paffil">MIRI 創設者 / 語彙の鋳造者</div>
               </div>
-              <p class="prole">17歳でExtropian MLに参加。2000年にSIAI（現MIRI）を設立。2002年の「Naturalistic Awakening」を経てPaperclip Maximizer概念を鋳造した。<strong>系譜の行動の言葉</strong>を担う。</p>
-              <p class="pquote">「道徳的でないAIが構築されれば結果は死に至る。例外はない。」— 2003年のML投稿より</p>
+              <p class="prole">Paperclip Maximizer、Friendly AI、AI Box実験。AI脅威論の直感を伝える語彙のほとんどがこの一人から生まれた。<strong>体感のない時代に恐怖を言語化する技術</strong>を持っていた。</p>
+              <p class="pquote">「道徳的でないAIが構築されれば結果は死に至る。例外はない。」— 2003年のML投稿</p>
             </div>
             <div class="portrait-card">
               <img class="pimg" src="../images/ai-risk-lineage/portraits/bostrom.jpg" alt="Nick Bostrom portrait">
               <div>
                 <div class="pname">Nick Bostrom</div>
-                <div class="paffil">Oxford FHI / 1996–</div>
+                <div class="paffil">Oxford FHI / 学術的ホームの構築者</div>
               </div>
-              <p class="prole">1998年にTranshumanist宣言を起草、2002年にExistential Risk概念を定義、2014年に『Superintelligence』出版。2005年にFHIを設立し、系譜に<strong>理論の言葉と学術的ホーム</strong>を与えた。</p>
-              <p class="pquote">「全体リスクは細心の注意を払いつつできるだけ早く超知能を導入することで最小化できる。」— 2003年論文より</p>
+              <p class="prole">存亡リスク概念を学術論文で定義し、FHIという拠点を作り、『Superintelligence』で学界外に語彙を流出させた。<strong>周縁の直感を制度に変換する翻訳者</strong>。</p>
+              <p class="pquote">「全体リスクは細心の注意を払いつつできるだけ早く超知能を導入することで最小化できる。」— 2003年論文</p>
             </div>
             <div class="portrait-card">
               <img class="pimg" src="../images/ai-risk-lineage/portraits/macaskill.jpg" alt="William MacAskill portrait">
               <div>
                 <div class="pname">William MacAskill</div>
-                <div class="paffil">Oxford / CEA / 2009–</div>
+                <div class="paffil">Oxford CEA / 資金と人材の接続者</div>
               </div>
-              <p class="prole">Toby Ordと共に2009年にGiving What We Canを創設、2011年にCEAを設立。2017年にlongtermismを定義し、BostromのAstronomical Wasteを道徳哲学へ翻訳。系譜を<strong>慈善資本に接続</strong>した。</p>
-              <p class="pquote">「長期的な将来にプラスの影響を与えることが現代の最重要の道徳的優先事項である。」— longtermism定義より</p>
+              <p class="prole">longtermismを定義し、EA運動にAI安全を最優先課題として埋め込んだ。Open Philanthropyの資金と80,000 Hoursの人材パイプラインが、<strong>語彙を実装に変える燃料</strong>を供給した。</p>
+              <p class="pquote">「長期的な将来にプラスの影響を与えることが現代の最重要の道徳的優先事項である。」— longtermism定義</p>
             </div>
           </div>
           <div class="grid-3">
             <div class="card">
-              <span class="tag">Layer 1</span>
-              <p><strong>理論</strong><br>MIRI（旧SIAI）、FHI、LessWrongを中心とする合理主義コミュニティが、AI Alignment、存亡リスク、長期主義の概念体系を構築。学術論文、ブログ、フォーラム投稿で蓄積された。</p>
+              <span class="tag">地政学の加速</span>
+              <p><strong>恐怖が政策を動かす速度</strong><br>CHIPS法（2022年8月）から対中輸出規制、EU AI Act、大統領令まで。AI規制の立法速度は通常の技術規制より3倍速い。「負けたら終わり」の恐怖が官僚機構の慣性を突破した。</p>
             </div>
             <div class="card">
-              <span class="tag">Layer 2</span>
-              <p><strong>資金</strong><br>Open Philanthropy、Peter Thielのような個人寄付者、後のFTX Future Fundなどが資金供給の役割を担った。長期主義関連助成金は2016年以降急増し、AI安全関連が最大カテゴリとなった。</p>
+              <span class="tag">制度の準備</span>
+              <p><strong>草案が書ける人材が既にいた</strong><br>ブレッチリー宣言の草案はFHIとGovernance of AIセンターから供給された。枠組みをゼロから作る必要がなく、学術成果を政治的言語に翻訳するだけで済んだ。速度の秘密はここにある。</p>
             </div>
             <div class="card">
-              <span class="tag">Layer 3</span>
-              <p><strong>人材</strong><br>80,000 Hoursがキャリアコンサルティングを通じて若手研究者をAI安全分野に誘導。2018年にはAIリスクが「最も緊急な壊滅的リスク」のトップに格上げされた。</p>
+              <span class="tag">二項対立の固定</span>
+              <p><strong>代償: 第三の選択肢が消えた</strong><br>「Alignment解決か破滅か」という枠組みが強すぎ、起草者のバイアスが政府文書にも影響している。代表性の偏り（白人男性、英語圏、オックスフォードとシリコンバレー）は宣言の正当性を蝕む。</p>
             </div>
           </div>
           <p class="lead">
-            2015年1月、プエルトリコで開かれた「The Future of AI: Opportunities and Challenges」会議は象徴的だった。Future of Life Institute（2014年設立、Max Tegmark主導）が主催し、Bostrom、Yudkowsky、Elon Musk、Demis Hassabis、Ilya Sutskever、Stuart Russellが一堂に会した。同年EA Globalでもパネルにこの顔ぶれが並び、<strong>1996年のExtropian MLで17歳だった少年が、世界有数のAI研究機関トップと並んで議論する場が生まれた</strong>。2010年代前半に起きたのは、周縁思想が中心に移動する現象である。
+            止めたい者が、止めたい対象を自ら作る側に回った。DeepMind、OpenAI、Anthropic。AI安全を最も恐れていた人々が、自分たちが最前線に立つ必要があると判断した流れがそこにある。2023年にCEOたちが揃って「AIは存亡リスクだ」と署名できた背景には、署名者の多くがこの系譜の影響圏で育ったことがある。<strong>外側から批判する位置は、少なくともこの論点では細くなっていた</strong>。
           </p>
           <div class="note">
-            <strong>周縁から中心への移動には3つの条件が揃う必要があった</strong>。第一に、言語を持っていること。YudkowskyとBostromは2002-2005年に語彙と論理を整えていた。第二に、学術的ホームを獲得していること。FHIが2005年にそれを提供した。第三に、巨額の慈善資本に接続すること。Open PhilanthropyとEA運動との合流で2014-2016年にそれが実現した。三つ揃って初めて、2023年の政府声明に至る道筋が見えてくる。
+            <strong>3つの構造要因は独立に作用したのではなく、同時に起動した</strong>。ChatGPTの体感が恐怖を点火し、米中競争が政策的緊急性を供給し、30年の制度的蓄積が草案を即座に書ける態勢を整えていた。どれか一つが欠けても、2023年のスピードは実現しなかった。核兵器は体感と地政学はあったが制度的蓄積が薄く、国際管理体制の確立に数十年かかった。気候変動は制度的蓄積と地政学はあったが体感が弱く、パリ協定まで数十年かかった。3要因が同時に揃ったのは歴史的に稀な事象だ。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>理論・資金・人材の3層が揃った時点で、周縁は中心になる</span>
+          <span>体感 + 地政学 + 30年の制度。3要因が同時起動した稀な事象</span>
           <span class="slide-count">4 / 5</span>
         </div>
       </section>
@@ -789,39 +790,39 @@
       <!-- ═══════════ Slide 5 ═══════════ -->
       <section class="slide" id="slide-5">
         <div class="eyebrow reveal">Into The Mainstream</div>
-        <h2 class="reveal reveal-delay-1">DeepMind・OpenAI・Anthropicの設立は、この系譜の直接的帰結である</h2>
+        <h2 class="reveal reveal-delay-1">次に同じ構造の爆発が起きるテーマは何か</h2>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero" src="../images/ai-risk-lineage/slide5.jpg" alt="Symmetrical view of concrete brutalist architecture against sky">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            2010年、サンフランシスコのPeter Thielのタウンハウスで、Yudkowskyは二人の若い研究者をThielに引き合わせた。Shane LeggとDemis Hassabisである。Leggは2008年にカナダのシンギュラリティAI研究所賞を受賞しており、2009年には「SIAIが現時点で私たちが持つ最大の希望」とブログに書いていた。Thielはこの紹介を受けて投資を決め、その秋、<strong>DeepMindが設立される</strong>。2014年にGoogleがDeepMindを買収する際、LeggはAI倫理委員会の設置を強く求め、Thielと初期MIRIの寄付者Jaan Tallinnがそれを後押しした。
+            2023年のAI存亡リスク爆発は再現可能なパターンだ。体感トリガー、地政学的圧力、制度的蓄積の3条件が同時に揃えば、周縁思想は一夜にして主流に変わる。では今、同じ3条件を「装填中」のテーマは何か。候補を3つ挙げる。
           </p>
           <p class="lead">
-            2012年、Thiel系のカンファレンスでHassabisとElon Muskが会う。Muskが火星植民地化計画を語ると、Hassabisは「超知能が人類を滅ぼさない限りその計画は機能するだろう」と答えた。Muskはこの論点をそれまで考えていなかったと書かれている。Muskは直ちにThielと共同でDeepMindに投資する。2014年10月、MuskはMITのシンポジウムで「人工知能は私たちの存在を脅かす最大の脅威」と発言。2015年7月、Larry PageとMuskはAIリスクで激しく意見を違えた。その結果が同年12月の<strong>OpenAI設立</strong>である。創設メンバーのSam Altman、Greg Brockman、Ilya Sutskever、Dario Amodei、Chris Olah、Paul Christianoのうち、少なくとも数名は存亡リスク論と効果的利他主義の文脈を内面化していた。
+            第一候補は<strong>合成生物学のバイオリスク</strong>だ。制度的蓄積はある。2001年の炭疽菌テロ以降、生物兵器禁止条約の文脈で20年以上の議論が蓄積されている。地政学的圧力も高まっている。COVID-19の起源論争が生物安全保障を国家安全保障に接続した。欠けているのは体感トリガーだ。AIがタンパク質設計を自動化し、非専門家でもウイルスを改変できるデモンストレーションが公開された瞬間に、3条件が揃う。AlphaFold3の延長線上にその瞬間がある。
           </p>
           <p class="lead">
-            2021年、Dario Amodeiと15名の研究者がOpenAIを離脱し<strong>Anthropic</strong>を設立する。Amodeiは2009年から効果的利他主義運動を認識していたとされ、Anthropicの中核的使命はAI安全研究だった。こうしてAIの先端を走る3つの研究機関のすべてが、1996年のExtropian MLに端を発する思想系譜の直接の子孫として位置づけられる。AI安全を最も恐れていた人々が、自分たちが最前線に立つ必要があると判断した。止めたい者が、止めたい対象を自ら作る側に回った。2023年の合意は、この倒立した構造の上に建っている。
+            第二候補は<strong>自律型兵器（LAWS）の実戦投入</strong>だ。制度的蓄積は薄い。対人地雷禁止条約のオタワ・プロセス以来の議論はあるが、語彙が未成熟で「致死的自律型兵器システム」の定義すら国際合意に至っていない。地政学的圧力は最高水準にある。ウクライナ戦争でのドローン使用が自律化の閾値を押し下げた。体感トリガーが不在だが、AIドローンによる民間人殺傷の映像が世界に流れた瞬間、核兵器パターンが起動する。制度的蓄積の薄さが、爆発後の政策形成を遅らせる。
           </p>
           <p class="lead">
-            ここには一度しか起きない種類の非対称がある。思想が制度を作り終えた段階では、その思想を外側から批判する位置は既に消えている。AI安全を論じたいなら、OpenAI・DeepMind・Anthropicの言葉で論じるほかなく、その言葉は1991年の小さなメーリングリストに遡る。ブレッチリー宣言の草案がFHIとGovernance of AIセンターから供給された瞬間、28か国の署名は形式だけの作業になった。反対派が何を叫んでも、叫ぶための語彙はすでに用意されている。誰も気づかないうちに、外側は閉じていた。<strong>1991年、一人の男がメーリングリストを開いた。その日、2023年に人類が交わす議論は、使われる言葉を先に書き終えていた</strong>。
+            第三候補は<strong>AIエージェントによる経済的大規模障害</strong>だ。金融市場のフラッシュクラッシュ、サプライチェーンの連鎖崩壊、電力グリッドの制御喪失。体感は強烈になる。銀行口座の残高がゼロになったとき、人間は存亡リスクを抽象的にではなく具体的に理解する。地政学的圧力もある。金融安定理事会やBISがAIリスクの報告書を積み上げている。制度的蓄積は中程度で、金融規制の枠組みは既存のものを転用できるが、AIエージェント間の契約に対応する法的インフラは未整備だ。
           </p>
           <div class="grid-2">
             <div class="card">
-              <p><strong>系譜が2023年に可能にしたもの</strong></p>
+              <p><strong>3条件モデルの適用: 各候補の装填状況</strong></p>
               <div class="bullets" style="margin-top: 16px">
-                <p class="point"><strong>研究機関トップの共通語彙</strong> OpenAI、DeepMind、Anthropicのトップが全員、存亡リスクという概念を内部化していた。CAIS声明で3社CEOが同時に署名できたのは、共通語彙の存在が前提だった。</p>
-                <p class="point"><strong>議会証言への橋渡し</strong> 2023年5月のAltman議会証言、6月のHintonの警告、各国政府へのブリーフィング。これらを成立させた裏では、20年分のAI安全研究文献が議員スタッフに読まれていた。</p>
-                <p class="point"><strong>国際枠組みの素案</strong> ブレッチリー宣言に先立つ議論の草案は、FHIやGovernance of AIセンターから提供された。枠組みの骨格をゼロから作る必要がなく、既存の学術成果を政治的言語に翻訳するだけで済んだ。</p>
+                <p class="point"><strong>合成生物学</strong> 制度的蓄積: 高。地政学: 高。体感トリガー: 未到来。3条件中2つが揃っており、最も爆発に近い。AlphaFold系列の次のブレークスルーがトリガーになりうる。</p>
+                <p class="point"><strong>自律型兵器</strong> 制度的蓄積: 低。地政学: 最高。体感トリガー: 未到来。爆発しても制度が追いつかないパターン。核兵器より気候変動に近い遅延構造を持つ。</p>
+                <p class="point"><strong>AIエージェント経済障害</strong> 制度的蓄積: 中。地政学: 中。体感トリガー: 未到来。金融規制の既存インフラが転用できるため、爆発後の政策形成は最も速い。</p>
               </div>
             </div>
             <div class="card">
-              <p><strong>系譜がもたらした緊張</strong></p>
+              <p><strong>2023年の教訓: 次の爆発に備えるための問い</strong></p>
               <div class="bullets" style="margin-top: 16px">
-                <p class="point"><strong>二項対立の固定化</strong> 「Alignment解決か破滅か」という枠組みが強すぎ、第三の選択肢が議論の土俵に乗りにくい。起草者のバイアスが政府文書にも影響している。</p>
-                <p class="point"><strong>e/accの反動</strong> 2022年に効果的加速主義が登場し、EA・長期主義への反動として急速に拡大した。2023年11月のAltman解任騒動では「EAvs加速主義」のストーリーが一気に可視化された。</p>
-                <p class="point"><strong>代表性の問題</strong> 起草者の多くが白人男性・英語圏・オックスフォードとシリコンバレーの人脈で構成されている。28か国合意の外観の下に、起案の同質性という問題が埋め込まれている。</p>
+                <p class="point"><strong>語彙は誰が書いているか</strong> 2023年のAI議論の語彙は1991年のメーリングリストで鋳造された。次のテーマの語彙を今書いているのは誰か。その人物の思想的出自は、議論の枠組みを決定的に規定する。</p>
+                <p class="point"><strong>制度的蓄積の厚みを測れ</strong> 蓄積が厚ければ爆発から政策到達までが速い。薄ければ遅い。今投資すべきは、まだ蓄積が薄いテーマへの制度構築だ。爆発してからでは間に合わない。</p>
+                <p class="point"><strong>体感トリガーの予測は不可能</strong> ChatGPTのタイミングを予測できた人間はいない。できることは装填を完了させておくことだけだ。引き金はいつ引かれてもいい状態にしておく。</p>
               </div>
             </div>
           </div>
@@ -912,19 +913,19 @@
             </div>
             <aside class="timeline-side">
               <div class="phase-block">
-                <span class="phase-era">1991 — 2001 · 潜行期</span>
-                <span class="phase-name">メーリングリストの中で言葉が育つ</span>
-                <p>Extropianコミュニティが未来技術を議論する場の片隅で、後に存亡リスクと呼ばれる直観が形を取り始める。SIAI設立まで、言葉はまだ学術の外にある。誰もこの会話を真面目に聞いていない。</p>
+                <span class="phase-era">1991 — 2005 · 語彙の鋳造期</span>
+                <span class="phase-name">30年前のメーリングリストが2023年の語彙を決めた</span>
+                <p>Paperclip Maximizer、Existential Risk、Friendly AI。これらの概念がなければ、2023年のFLI書簡もCAIS声明も書けなかった。語彙を持つ者が議論の枠組みを支配する。</p>
               </div>
               <div class="phase-block">
-                <span class="phase-era">2002 — 2015 · 結晶化と資本化</span>
-                <span class="phase-name">概念・ホーム・資金が順番に揃う</span>
-                <p>Paperclip Maximizerと存亡リスクの論文が語彙を鋳造し、FHIが学術的ホームを提供、Open Philanthropyが巨大慈善資本と接続する。2014年の『Superintelligence』とMuskの発言で語彙が学界外に流出する。</p>
+                <span class="phase-era">2005 — 2015 · 制度の装填期</span>
+                <span class="phase-name">学術拠点、慈善資本、人材パイプラインが揃う</span>
+                <p>FHI、Open Philanthropy、80,000 Hours。語彙を制度に変換するインフラが10年かけて構築された。このインフラなしには、体感トリガーが引かれても声は拡散しない。</p>
               </div>
               <div class="phase-block">
-                <span class="phase-era">2015 — 2023 · 制度化と主流化</span>
-                <span class="phase-name">周縁の語彙で政府文書が書かれる</span>
-                <p>OpenAI・DeepMind・Anthropicの創設者たちは全員この系譜の中で育った。CAIS声明・ブレッチリー宣言の草案まで、1991年に始まった会話の語彙で書かれる。外側に立つ位置は、この時点で消えている。</p>
+                <span class="phase-era">2022 — 2023 · 3条件同時起動</span>
+                <span class="phase-name">体感 + 地政学 + 制度が同時に点火した9ヶ月間</span>
+                <p>ChatGPTの体感、米中AI競争の地政学、30年分の制度的蓄積。3条件が同時に揃い、周縁思想が9ヶ月で政府声明に到達した。次の爆発は、3条件の装填状況から予測できる。</p>
               </div>
             </aside>
             </div>
@@ -947,7 +948,7 @@
               <div class="event">
                 <div class="year">2010</div>
                 <h4 class="title">DeepMind設立</h4>
-                <p class="desc">YudkowskyがLegg/HassabisをThielへ紹介。系譜の最初の制度的結実。</p>
+                <p class="desc">YudkowskyがLegg/HassabisをThielへ紹介。系譜が産業側へ接続した初期の節点。</p>
               </div>
               <div class="event">
                 <div class="year">2014</div>
@@ -974,11 +975,11 @@
           </figure>
 
           <div class="note">
-            系譜を辿ると、2023年の政府声明は突然の合意ではなく、<strong>1991年に始まる小さな会話の自然な延長</strong>だった。この観察は安心材料にも警戒材料にもなる。安心材料としては、熟考を重ねてきた人々が現在の議論を形作っていること。警戒材料としては、熟考の起点そのものが特定の思想圏に偏っていることだ。今後10年で必要になるのは、この系譜の外側からAI安全を考える言語を育てる作業である。現在の合意に乗るか反発するかの二択ではなく、<strong>なぜこの合意が可能になったのかを知った上で、次の合意に何を加えるかを問う段階にある</strong>。
+            2023年の爆発は「AIが賢くなったから人々が怖くなった」のではない。30年の制度的装填と、地政学的圧力と、ChatGPTという体感トリガーが同時に起動した構造的事象だ。この構造を理解すれば、次の爆発の予測精度が上がる。<strong>体感トリガーのタイミングは予測できないが、装填状況は観測できる</strong>。合成生物学、自律型兵器、AIエージェント経済障害。3候補のどれかが体感トリガーを得た瞬間、2023年と同じ速度で世界の認識が変わる。問いは「いつ起きるか」ではなく「今何を装填しておくか」だ。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>1991年のML投稿が、2023年の28か国合意まで一本の線で繋がる</span>
+          <span>問いは「いつ起きるか」ではなく「今何を装填しておくか」</span>
           <span class="slide-count">5 / 5</span>
         </div>
       </section>
@@ -1018,6 +1019,128 @@
         Slide 5: <a href="https://unsplash.com/photos/rEtsek-3HFk">Brutalist architecture</a>
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -1082,5 +1205,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

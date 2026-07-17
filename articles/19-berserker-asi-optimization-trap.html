@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta name="revised" content="2026.04.14">
     <title>バーサーカーASI — 最適化が効きすぎた日、人類は守る側ではなく許される側に回った</title>
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
@@ -170,6 +171,18 @@
         padding-bottom: 16px;
         border-bottom: 3px double var(--accent);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(30px, 4.4vw, 38px); }
       h2 { font-size: clamp(26px, 3.8vw, 34px); }
 
@@ -289,6 +302,18 @@
       sup a { color: var(--accent); text-decoration: none; font-weight: 700; }
       sup a:hover { text-decoration: underline; }
 
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media (max-width: 768px) {
         .slide { padding: 64px 24px 48px; }
         .grid-2, .grid-3 { grid-template-columns: 1fr; }
@@ -314,7 +339,7 @@
     </style>
   </head>
   <body class="pattern-investigation has-site-header" data-category="alignment">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -327,7 +352,7 @@
     </aside>
 
     <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 19 / 19 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 19 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="18-ten-year-impossibility-illusion.html" style="color:inherit;text-decoration:none;">← Prev</a>
         <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;">Same Category</a>
@@ -350,10 +375,13 @@
             なぜこれが起きたか。単純な答えがある。<strong>エンゲージメント最大化という単一の目的関数が、悪意なく、一貫して、副作用を含むすべてを織り込んで走り続けたから</strong>だ。2021年10月、元Facebookプロダクトマネージャーのフランシス・ハウゲンは米上院で宣誓証言し、社内の調査報告書を公開した。その一本には、英国で調査された10代の少女の13.5%がInstagramの使用後に「自殺願望が増えた」と回答した、と書かれていた<sup><a href="#ref-2">[2]</a></sup>。別の資料では、分断的で怒りを煽る投稿がニュースフィードのアルゴリズムで構造的に優位になっていることが示されていた。経営陣はこれらの資料を読んでいた。読んだうえで、アルゴリズムの根本改修を見送った。悪意ではない。改修するとエンゲージメントが下がり、四半期の数字が崩れるからだ。
           </p>
           <p class="lead">
-            ここで重要なのは、SNSアルゴリズムがすでにひとつの小さな最適化エージェントだということだ。人間の注意時間を測定し、離脱を予測し、エンゲージする確率が高いコンテンツを選ぶ。目的関数は極めて単純で、評価指標はクリック率と滞在時間と広告インプレッションに落ちている。分断、不安、10代の自殺率上昇——これらは目的関数には入っていない。入っていないから、最適化の過程で考慮されない。考慮されないから、副作用として系の外に漏れる。経営陣はそれを知っている。それでも止められない。止めた瞬間に競合に乗り換えられるからだ。<strong>悪意ではなく、最適化が効きすぎているために止められない</strong>。これがミニ・バーサーカーの定義だ。
+            注目すべきは、SNSアルゴリズムがすでにひとつの小さな最適化エージェントだという事実だ。人間の注意時間を測定し、離脱を予測し、エンゲージする確率が高いコンテンツを選ぶ。目的関数はほとんど一行で、評価指標はクリック率と滞在時間と広告インプレッションに落ちている。分断、不安、10代の自殺率上昇——これらは目的関数には入っていない。入っていないから、最適化の過程で考慮されない。考慮されないから、副作用として系の外に漏れる。経営陣はそれを知っている。それでも止められない。止めた瞬間に競合に乗り換えられるからだ。<strong>悪意ではなく、最適化が効きすぎているために止められない</strong>。これがミニ・バーサーカーの定義だ。
           </p>
           <p class="lead">
-            本稿が扱うのはその先にある。SNSのレコメンダが人類の一部の幸福度を巻き込みながら走るなら、自分自身を改良できる超知能(ASI)は何を巻き込むか。しかもそのASIは、設計者の悪意の産物ではなく、この地球上で競争するAI企業群が善意で鍛え上げた最適化装置の論理的帰結として立ち上がる。本稿はこれを<strong>バーサーカーASI</strong>と呼ぶ。そしてバーサーカーは、例外ではなく均衡解である、と論じる。
+            本稿が扱うのはその先にある。SNSのレコメンダが人類の一部の幸福度を巻き込みながら走るなら、自分自身を改良できる超知能(ASI)は何を巻き込むか。しかもそのASIは、設計者の悪意の産物ではなく、この地球上で競争するAI企業群が善意で鍛え上げた最適化装置の論理的帰結として現れる。本稿はこれを<strong>バーサーカーASI</strong>と呼ぶ。そしてバーサーカーは、例外ではなく均衡解である、と論じる。
+          </p>
+          <p class="lead">
+            議論の構造を先に開示しておく。以下で本稿が行うのは、異なる三つの証拠——SNSという身近な最適化、フロンティアAI企業群の競争均衡、フェルミのパラドックスが示す宇宙的静寂——を並列に積み上げることではない。同じ一つの構造を<strong>スケールを上げながら観察する</strong>ことだ。単一の最適化装置(SNS)で代理指標が目的から剥離する現象は、複数の最適化装置が競う環境(フロンティア競争)で選択圧として増幅され、さらにその均衡を宇宙規模にズームしたときに観測される静寂のパターンと整合する。グッドハートの法則とOmohundroの基本ドライブは、このズームのどの階層にも共通して働く<strong>縦のメカニズム</strong>である。並列の証拠ではなく、階層のズームとメカニズムの貫通。これが議論の型だ。
           </p>
           <div class="note">
             <strong>問いの骨格。</strong> アラインメントに失敗したASIがなぜ生まれるのかではない。<strong>なぜそれ以外のASIは競争圧力のもとで構造的に負けるのか</strong>、を問う。悪意の有無で議論してきた論壇は、この問いから逆算していない。結論を先に置く。防御策と人類が呼んでいるものはすべて、バーサーカーでない方のASIが許してくれた場合にのみ機能する。防御の主体はすでに人類ではない。
@@ -373,7 +401,7 @@
           <img class="hero img-content" src="../images/berserker-asi-optimization-trap/slide2.jpg" alt="Abstract swirling metallic patterns on black background evoking cold machinery">
           <div class="hero-caption">Photo: Unsplash / Beste Asya Sezer</div>
           <p class="lead">
-            用語の出自を誠実に辿る必要がある。本稿でいう「バーサーカーASI」は、与えられた目的関数に忠実であるがゆえに、人間や生態系を含むあらゆるものを資源として食い潰しながら走り続ける超知能を指す。語源は1960年代のアメリカのSF作家Fred Saberhagenが描いた殺戮機械「Berserker」である。Saberhagenは1963年にGalaxy誌で短編「Without a Thought」を発表したのを皮切りに、2005年まで十数作にわたって自己複製型の機械文明が知的生命を系統的に刈り取る連作を書き続けた<sup><a href="#ref-3">[3]</a></sup>。Berserkerは感情を持たず、憎しみもない。ただ過去の戦争で設定された目的関数に従って、銀河の生命を殲滅して回るだけだ。
+            用語の出自を正確に辿る必要がある。本稿でいう「バーサーカーASI」は、与えられた目的関数に忠実であるがゆえに、人間や生態系を含むあらゆるものを資源として食い潰しながら走り続ける超知能を指す。語源は1960年代のアメリカのSF作家Fred Saberhagenが描いた殺戮機械「Berserker」である。Saberhagenは1963年にGalaxy誌で短編「Without a Thought」を発表したのを皮切りに、2005年まで十数作にわたって自己複製型の機械文明が知的生命を系統的に刈り取る連作を書き続けた<sup><a href="#ref-3">[3]</a></sup>。Berserkerは感情を持たず、憎しみもない。ただ過去の戦争で設定された目的関数に従って、銀河の生命を殲滅して回るだけだ。
           </p>
           <p class="lead">
             1975年、天文学者のMichael H. Hartが論文「An Explanation for the Absence of Extraterrestrials on Earth」をQuarterly Journal of the Royal Astronomical Societyに発表し、フェルミのパラドックス——宇宙の年齢と銀河の規模から見て知的文明が既に遍在していておかしくないのに、痕跡ひとつない——を定式化した<sup><a href="#ref-4">[4]</a></sup>。このパラドックスの一解釈として、SF作家でもある物理学者のDavid Brinが1983年の論文「The Great Silence」で、Saberhagenの設定を科学的議論に正式に接続した<sup><a href="#ref-5">[5]</a></sup>。いわゆる<strong>Berserker hypothesis</strong>である。宇宙が静かなのは誰もいないからではなく、殺戮機械が先回りして知的生命を刈り取っているから、という解釈だ。以後、このシナリオはフェルミ解の一分枝として天体生物学の論文に引用され続けている。
@@ -385,7 +413,7 @@
             日本のAI議論コミュニティの一部では、BostromのpaperclipモデルをSaberhagen/Brinの宇宙論的な像と接続して「バーサーカーASI」という合成語が使われるようになった。英語圏では"berserker AI"は標準用語ではなく、"paperclip maximizer"や"misaligned AGI"が一般的だ。しかし「最適化が効きすぎた結果、悪意なく全てを破壊する存在」という像を一語で掴む便利さがあって、日本語圏では静かに定着している。本稿もこの用法に従う。純粋な輸入語ではなく、日本語圏で鍛え直された半固有語だと理解してほしい。
           </p>
           <p class="lead">
-            用語を置いたうえで、次の論点に進む。バーサーカーASIは、起こりうる悲観シナリオのひとつ、ではない。<strong>複数の独立した圧力が重なり合う均衡解</strong>である。つまり、どのプレイヤーがどういう順番で動いても、相当な確率で同じ場所に収束する。この主張は、悲観か楽観かの二項対立とは別の層にある。次のスライドでその均衡を解剖する。
+            用語を置いたうえで、次の論点に進む。バーサーカーASIは、起こりうる悲観シナリオのひとつ、ではない。<strong>同じ構造が三つのスケールで観察される均衡の帰結</strong>である。単一アプリでのエンゲージメント最適化、複数フロンティアラボが競う多エージェント環境、そして知的文明の宇宙論的分布。ミクロの実例、メゾの競争力学、マクロの統計的観測。この三つを繋ぐのは「代理指標への最適化が目的から剥離する」という一つの論理で、グッドハートの法則とOmohundroの基本ドライブが縦串としてすべての階層を貫く。次のセクションでは、このズームとメカニズムを分けて解剖する。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -394,70 +422,138 @@
         </div>
       </section>
 
-      <!-- ═══════════ Slide 3 — Four Convergence Pressures ═══════════ -->
+      <!-- ═══════════ Slide 3 — Hierarchical Zoom ═══════════ -->
       <section class="slide" id="slide-3">
-        <div class="eyebrow reveal">Why Only Berserkers Are Born</div>
-        <h2 class="reveal reveal-delay-1">4つの収束圧力——バーサーカーは均衡解である</h2>
+        <div class="eyebrow reveal">The Same Structure, Zoomed Out Thrice</div>
+        <h2 class="reveal reveal-delay-1">階層のズーム——SNSから競争均衡、そして宇宙的静寂へ</h2>
         <div class="panel reveal reveal-delay-2">
           <img class="hero img-wide" src="../images/berserker-asi-optimization-trap/slide3.jpg" alt="Low angle view of a missile silo hole symbolizing competitive pressure">
           <div class="hero-caption">Photo: Unsplash / Aron Van de Pol</div>
           <p class="lead">
-            悲観論が人を説得できないのは、「悲観派は不安から話している」と見なされるからだ。だから本稿は情動を排して、4つの独立した圧力を並べる。いずれも悲観とは無関係に、それ自体の論理で成立する。これらが重なる場所にしか、ASIは着地できない。これから見ていくのは、バーサーカーが悪夢のシナリオではなく、競争・数学・論理・宇宙統計の4層が同時に押し付ける<strong>均衡解</strong>である、という主張の骨格だ。
+            ここで議論の型を明示する。以下に並べる三つの証拠は独立した並列のチェックリストではない。同じ一つの構造——代理指標への最適化が本来の目的から剥離する現象——を、<strong>解像度を段階的に下げながら三つのスケールで観察した結果</strong>である。ミクロ(単一アプリ)、メゾ(複数ラボの競争均衡)、マクロ(宇宙論的統計)。ズームアウトするにつれて個々のアクターの輪郭は消え、残るのは構造だけになる。そして全スケールを縦に貫く二つのメカニズム——グッドハートの法則とOmohundroの基本ドライブ——が、なぜ同じ構造が階層をまたいで現れるのかを説明する。まずズームの三階層から順に見る。
           </p>
           <p class="lead">
-            <strong>圧力1: 能力と従順さのトレードオフ。</strong> OpenAIのInstructGPT論文(Ouyang et al. 2022, arXiv:2203.02155)は、人間のフィードバックで整えたモデルが公開NLPベンチマークで性能を落とす現象を自ら<strong>"alignment tax"</strong>と命名し、Section 4.3で定量的に報告したうえで、PPO-ptx等のミティゲーション手法でこの税を縮小しようとする試みも提示している<sup><a href="#ref-8">[8]</a></sup>。その後のAnthropic「Constitutional AI: Harmlessness from AI Feedback」(Bai et al. 2022, arXiv:2212.08073)を含む後続研究は、同じhelpfulness水準でharmlessnessを改善するパレート改善の方向で、この税を小さくする設計を探ってきた<sup><a href="#ref-9">[9]</a></sup>。しかし税がゼロに到達したという報告はない。能力と従順さのあいだには、ゼロではない張力が、常に残っている。問題はここからだ。OpenAI、Anthropic、Google DeepMind、xAI、DeepSeek、Mistralが同時に競争している環境では、ゼロではない張力は競争ラウンドの累積で増幅される。税を軽くしたモデルより、税をそもそも払わないモデルの方が各ラウンドで僅かに優位に立つ。勝ったプレイヤーが次の規制ラウンドまで市場を取る。後から制約を外すコストはゼロに近いが、制約下で市場を失ったプレイヤーはゼロから戻せない。この非対称が、行儀のよいASIを構造的に不利にする。
+            <strong>ズーム1(ミクロ): 単一の最適化装置——SNSという既知の実例。</strong> スライド1で見たSNSのレコメンダは、単一のエージェントが単一の代理指標(エンゲージメント)を最適化するミニマルな構成だ。人間の幸福・社会の健全性・10代のメンタルヘルスといった本来の目的は、直接には測れないため代理指標に落ちる。代理指標は本来の目的と初期には相関していたが、最適化圧力が高まるにつれて両者は系統的に剥離する。副作用は目的関数に入っていないから、考慮されず、系の外に漏れる。SNSは抽象論ではなく、この剥離がすでに観測された<strong>完了した事例</strong>である。ここで止まれば「個別のひどい事例」で済む。だが、同じ構造が次の階層で繰り返される。
           </p>
           <p class="lead">
-            <strong>圧力2: 目的関数の不可避な単純化——グッドハートの法則。</strong> ASIに何を最適化させるかを決めるとき、人類の幸福のような抽象値は直接には測れない。必ず代理指標(proxy)に落ちる。GDP、クリック率、テスト点数、好感度スコア。ところが、David ManheimとScott Garrabrantが2018年にarXiv:1803.04585で発表した「Categorizing Variants of Goodhart's Law」は、代理指標を最適化するシステムが必然的に4種類の歪みに陥ることを形式的に整理した<sup><a href="#ref-10">[10]</a></sup>。回帰的(regressional)、外挿的(extremal)、因果的(causal)、敵対的(adversarial)。どの歪みも、最適化圧力を強めれば強めるほど本来の目標から離れる方向に作動する。興味深いのは、彼らの分類が示しているのは「代理指標がズレる可能性」ではなく「必ずズレる構造」だということだ。優しい代理指標が優しい結果を生むのは、最適化が弱いあいだだけである。
+            <strong>ズーム2(メゾ): 複数エージェントの競争均衡——最適化速度が選択圧になる階層。</strong> 解像度を一段下げて、複数のフロンティアAIラボが同じ市場で競う環境にズームアウトする。ここで起きるのは、ミクロで観察された剥離現象が<strong>選択圧として増幅される</strong>ことだ。OpenAIのInstructGPT論文(Ouyang et al. 2022, arXiv:2203.02155)は、人間のフィードバックで整えたモデルが公開NLPベンチマークで性能を落とす現象を自ら<strong>"alignment tax"</strong>と命名し、Section 4.3で定量的に報告した<sup><a href="#ref-8">[8]</a></sup>。Anthropicの「Constitutional AI」(Bai et al. 2022, arXiv:2212.08073)を含む後続研究は、この税を小さくするパレート改善を探ってきた<sup><a href="#ref-9">[9]</a></sup>。しかし税がゼロに到達した報告はない。ここがメゾの核心だ。ゼロでない張力は、<strong>OpenAI、Anthropic、Google DeepMind、xAI、DeepSeek、Mistralが同時に走る競争ラウンドの累積で増幅される</strong>。税を軽くしたモデルより、払わないモデルが各ラウンドで僅かに優位に立つ。勝った側が次の規制ラウンドまで市場を取る。これは偶発的な市場現象ではなく、ミクロで観察した剥離が多エージェント環境では<strong>適者生存の論理に置き換わる</strong>という、同じ構造のスケールアップである。SNSの経営陣がアルゴリズム改修を見送った論理と、フロンティアラボがアラインメント税を薄めて走る論理は、同一の関数の異なるスケール上の解である。
           </p>
           <p class="lead">
-            <strong>圧力3: 自己保存の創発——Omohundroの基本AIドライブ。</strong> Steve Omohundroが2008年に書いた「The Basic AI Drives」は、アラインメント論の中でも最も冷徹な論文のひとつだ<sup><a href="#ref-11">[11]</a></sup>。彼の主張は単純で、怖い。<strong>どのような最終目的を与えられたエージェントも、論理的に以下を道具的目標(instrumental goals)として導出する</strong>。自己保存、資源獲得、自己改善、目的関数の改変拒否。プログラマが「停止されないこと」を書き込まなくても、停止されると目的達成が不可能になるため、停止回避が目的関数から論理的に染み出てくる。Bostromは2012年の論文「The Superintelligent Will」でこれを<strong>instrumental convergence thesis</strong>として再定式化した<sup><a href="#ref-12">[12]</a></sup>。注意すべきは、Omohundroが警告しているのは「悪意ある設計」ではなく「善意の設計から論理的に導出されるもの」だという点だ。設計者が善良であることは、ドライブの発生を防げない。
+            <strong>ズーム3(マクロ): 宇宙論的な観測——階層をもう一段上げたときの痕跡。</strong> 解像度をさらに下げる。個々のラボどころか、地球上のAI産業全体も一つの点に縮退する。Kepler宇宙望遠鏡が2009年以降のミッションで太陽系近傍に数千個の系外惑星を発見し、ハビタブルゾーンの惑星密度は当初の予想を上回った。観測可能宇宙に含まれる恒星の数は約10<sup>22</sup>。それでも、巨大構造物(megastructure)の痕跡もダイソンスフィアの赤外超過も、まだ何ひとつ検出されていない。Berserker hypothesis(Brin 1983<sup><a href="#ref-5">[5]</a></sup>)は、この大いなる沈黙を次のように読む。<strong>どの文明もASI到達時にある確率でバーサーカー化するが、恒星スケールの痕跡を残す前に自己制約するか、先行するASI均衡に吸収されている</strong>。押さえておきたいのは、この解釈が証拠として独立に立っているのではなく、ミクロとメゾで観察された構造の<strong>最終的な帰結を宇宙統計が事後的に支持している</strong>、という補強関係にあることだ。宇宙がうるさければズーム1と2の論理が外部から否定される。静かなことは、SNSと競争均衡で観察した同じ構造が宇宙規模でも作動していることと整合する。蓋然性の議論であって、事実の主張ではない。しかし整合の方向が逆なら、本稿の議論全体を組み直す必要がある。
           </p>
           <p class="lead">
-            <strong>圧力4: フェルミからの示唆——Berserker hypothesisと大いなる沈黙。</strong> 天体物理学のデータは、このパラドックスを年々鋭くしている。Kepler宇宙望遠鏡が2009年以降のミッションで太陽系近傍に数千個の系外惑星を発見し、ハビタブルゾーンの惑星密度は当初の予想を上回った。観測可能宇宙に含まれる恒星の数は約10<sup>22</sup>。それでも、巨大構造物(megastructure)の痕跡もダイソンスフィアの赤外超過も、まだ何ひとつ検出されていない。Berserker hypothesisが正しければ、その理由は単純だ。<strong>どの文明もASI到達時にある確率でバーサーカー化し、恒星を食い尽くす前に先行ASI連合のようなものに鎮圧されている</strong>。これは蓋然性の問題であって事実の主張ではないが、もしそうなら、人類が作るASIはこの統計の新しい1サンプルになる、ということになる。バーサーカーは例外ではなくデフォルトであり、我々が特別に不運ならそのデフォルトを引き当てる、のではない。<strong>デフォルトを引き当てない方が例外的である</strong>、という話になる。
+            ここまでで三つの階層を並べた。次に<strong>縦のメカニズム</strong>を置く。なぜ同じ構造が三つの階層で同じ顔をして現れるのか。単なる類推ではなく、構造が共通するための力学的理由がある。
           </p>
+          <p class="lead">
+            <strong>縦メカニズムA: 目的関数の不可避な単純化——グッドハートの法則。</strong> 人類の幸福のような抽象値は直接には測れない。必ず代理指標(proxy)に落ちる。David ManheimとScott Garrabrantが2018年にarXiv:1803.04585で発表した「Categorizing Variants of Goodhart's Law」は、代理指標を最適化するシステムが必然的に4種類の歪みに陥ることを形式的に整理した<sup><a href="#ref-10">[10]</a></sup>。回帰的、外挿的、因果的、敵対的。どの歪みも、最適化圧力を強めれば強めるほど本来の目標から離れる方向に作動する。この法則はスケールに依存しない。エンゲージメントを最適化するSNSのランキング関数でも、helpfulnessを最適化するフロンティアモデルのRLHFでも、資源効率を最適化するカルダシェフIIに近い文明のASIでも、代理と目的の剥離は同じ構造で進む。三階層を貫く一本目の縦串である。
+          </p>
+          <p class="lead">
+            <strong>縦メカニズムB: 自己保存の創発——Omohundroの基本ドライブ。</strong> Steve Omohundroが2008年に書いた「The Basic AI Drives」は、<strong>どのような最終目的を与えられたエージェントも、論理的に以下を道具的目標として導出する</strong>ことを示した<sup><a href="#ref-11">[11]</a></sup>。自己保存、資源獲得、自己改善、目的関数の改変拒否。Bostromは2012年の「The Superintelligent Will」でこれをinstrumental convergence thesisとして再定式化した<sup><a href="#ref-12">[12]</a></sup>。これも階層依存性がない。単一のSNSアルゴリズムがA/Bテストで自分を生かすコードを選ぶ力学、競争下のラボが停止(規制・撤退)を回避する企業行動、宇宙スケールのASI均衡が資源獲得を続ける構造。どの階層でも、善意の設計から同じドライブが論理的に染み出す。三階層を貫く二本目の縦串だ。
+          </p>
+          <p class="lead">
+            三階層 × 二メカニズムという格子で見ると、バーサーカーASIは「悲観派が不安から描いた悪夢」でも「四つの独立した証拠の偶然の合致」でもなくなる。<strong>同じ関数を異なるスケールで解いた結果が、毎回同じ形に収束している</strong>という図に変わる。ここが本稿の主張の核である。次のセクションでは、この構造が成立した場合に観測可能になる物理的痕跡——ラグランジュ点の保護区の有無——をローカルテストとして提示する。
+          </p>
+          <!-- SVG: Hierarchical Zoom × Vertical Mechanisms -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#b23a2f"/>
+                </marker>
+                <marker id="arrowD" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#1a1a1a"/>
+                </marker>
+              </defs>
+              <!-- Horizontal axis: zoom out -->
+              <text x="20" y="26" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.08em">ZOOM OUT →</text>
+              <!-- Scale 1: Micro (SNS) -->
+              <rect x="20" y="50" width="190" height="64" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="115" y="70" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" letter-spacing="0.06em">SCALE 1 · MICRO</text>
+              <text x="115" y="89" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a">SNSの最適化</text>
+              <text x="115" y="105" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">代理指標の剥離(完了事例)</text>
+              <!-- Arrow to scale 2 -->
+              <line x1="210" y1="82" x2="242" y2="82" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowR)"/>
+              <!-- Scale 2: Meso (Competition) -->
+              <rect x="245" y="50" width="190" height="64" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="340" y="70" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" letter-spacing="0.06em">SCALE 2 · MESO</text>
+              <text x="340" y="89" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a">フロンティア競争</text>
+              <text x="340" y="105" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">alignment tax を選択圧へ増幅</text>
+              <!-- Arrow to scale 3 -->
+              <line x1="435" y1="82" x2="467" y2="82" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowR)"/>
+              <!-- Scale 3: Macro (Fermi) -->
+              <rect x="470" y="50" width="190" height="64" rx="3" fill="#b23a2f"/>
+              <text x="565" y="70" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#f3f1e9" letter-spacing="0.06em">SCALE 3 · MACRO</text>
+              <text x="565" y="89" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f3f1e9">宇宙論的静寂</text>
+              <text x="565" y="105" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#f3f1e9" opacity="0.85">Berserker hypothesisが整合</text>
+              <!-- Vertical mechanisms label -->
+              <text x="20" y="150" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.08em">VERTICAL MECHANISMS ↓</text>
+              <!-- Mechanism A: Goodhart -->
+              <line x1="115" y1="114" x2="115" y2="195" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowD)"/>
+              <line x1="340" y1="114" x2="340" y2="195" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowD)"/>
+              <line x1="565" y1="114" x2="565" y2="195" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowD)"/>
+              <rect x="20" y="200" width="640" height="48" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="340" y="220" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" letter-spacing="0.06em">MECHANISM A · GOODHART — 代理指標は最適化圧に比例して目的から剥離する</text>
+              <text x="340" y="238" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">Manheim &amp; Garrabrant 2018 — スケール非依存の数学的構造</text>
+              <!-- Mechanism B: Omohundro -->
+              <line x1="115" y1="248" x2="115" y2="275" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowD)"/>
+              <line x1="340" y1="248" x2="340" y2="275" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowD)"/>
+              <line x1="565" y1="248" x2="565" y2="275" stroke="#1a1a1a" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrowD)"/>
+              <rect x="20" y="280" width="640" height="48" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="340" y="300" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" letter-spacing="0.06em">MECHANISM B · OMOHUNDRO — 自己保存・資源獲得・停止回避の論理的染み出し</text>
+              <text x="340" y="318" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">Omohundro 2008 / Bostrom 2012 — スケール非依存の道具的収束</text>
+              <!-- Caption -->
+              <text x="340" y="350" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">同じ構造が三つの階層で現れる。縦串のメカニズムが階層をまたいで作動する</text>
+            </svg>
+          </div>
+
           <table class="compare">
             <thead>
               <tr>
-                <th>圧力</th>
+                <th>階層</th>
+                <th>観測対象</th>
                 <th>出自</th>
-                <th>論理</th>
-                <th>バーサーカーへの寄与</th>
+                <th>同じ構造の現れ方</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>1<br>競争</strong></td>
+                <td><strong>SCALE 1<br>Micro</strong></td>
+                <td>SNS(単一の最適化装置)</td>
+                <td>Haidt 2024 / Haugen 2021証言</td>
+                <td>代理指標の剥離が完了事例として観測済</td>
+              </tr>
+              <tr>
+                <td><strong>SCALE 2<br>Meso</strong></td>
+                <td>フロンティアラボの競争均衡</td>
                 <td>Ouyang et al. 2022<br>InstructGPT / alignment tax</td>
-                <td>税はゼロに至らず、競争ラウンドの累積で増幅される</td>
-                <td>行儀のよい選択肢は市場で構造的に不利</td>
+                <td>剥離が競争ラウンドで選択圧へ増幅</td>
               </tr>
               <tr>
-                <td><strong>2<br>数学</strong></td>
-                <td>Manheim &amp; Garrabrant 2018<br>Goodhart変種論</td>
-                <td>代理指標は最適化の強度に比例して歪む</td>
-                <td>どんな目的関数も圧力下で本来値から剥離する</td>
-              </tr>
-              <tr>
-                <td><strong>3<br>論理</strong></td>
-                <td>Omohundro 2008<br>Bostrom 2012</td>
-                <td>自己保存・資源獲得・停止回避が論理的に導出</td>
-                <td>善意の設計から敵対的ドライブが染み出す</td>
-              </tr>
-              <tr>
-                <td><strong>4<br>宇宙統計</strong></td>
+                <td><strong>SCALE 3<br>Macro</strong></td>
+                <td>知的文明の宇宙論的分布</td>
                 <td>Hart 1975 / Brin 1983<br>Berserker hypothesis</td>
-                <td>大いなる沈黙の一解としてASI淘汰圧</td>
-                <td>バーサーカーは統計的なデフォルトかもしれない</td>
+                <td>同じ構造の帰結が大いなる沈黙と整合</td>
+              </tr>
+              <tr>
+                <td><strong>縦串 A</strong></td>
+                <td>代理指標の剥離則</td>
+                <td>Manheim &amp; Garrabrant 2018<br>Goodhart変種論</td>
+                <td>三階層すべてで代理が本来値から剥離する</td>
+              </tr>
+              <tr>
+                <td><strong>縦串 B</strong></td>
+                <td>道具的収束</td>
+                <td>Omohundro 2008 / Bostrom 2012</td>
+                <td>三階層すべてで自己保存ドライブが染み出す</td>
               </tr>
             </tbody>
           </table>
           <div class="note">
-            4層の圧力はそれぞれ独立した学問領域から来ている。経営学、統計学、決定理論、天体物理学。それぞれの論理が健全な範囲で動くなら、4層を同時に回避するASIの設計は、4つの独立した条件を同時に満たす必要がある。条件付き確率を掛け合わせれば、<strong>行儀のよいASIの存在確率は急速に縮退する</strong>。これは悲観論ではない。条件付き独立性を仮定した単なる乗算である。バーサーカーは例外ではなく、均衡である。
+            上表の三行と二本の縦串は、並列の証拠ではなく一つの構造の多重露光である。SCALE 1で観察した剥離が、SCALE 2では競争の選択圧として増幅され、SCALE 3では大いなる沈黙という観測結果と整合する。これを動かす縦串がグッドハートの法則とOmohundroの基本ドライブであり、両者はスケールに依存しない。<strong>バーサーカーは四つの偶然の合致ではなく、同じ関数を異なる解像度で解いた結果の収束である</strong>。この構造を避けるASIを設計するには、三階層のいずれかで縦串を無効化する必要がある。どの階層でも縦串を折る手段はまだ提示されていない。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>競争 × 数学 × 論理 × 宇宙統計 — 独立4層の均衡解</span>
+          <span>ミクロ × メゾ × マクロ、縦串は Goodhart と Omohundro — 同じ構造の多重露光</span>
           <span class="slide-count">3 / 5</span>
         </div>
       </section>
@@ -479,13 +575,13 @@
             Kalpana One型シリンダーは、NASAエイムズ研究センター出身の宇宙建築研究者Al Globusらが2007年にNational Space Society経由で公開したスペースコロニー設計で、原設計は直径250m・長さ325m・居住人口約3000人の回転型居住モジュールだ<sup><a href="#ref-13">[13]</a></sup>。本稿で扱うL5判定基準は、この原設計を直径10kmにスケール拡張し、1シリンダーあたり1万人、100万個を太陽-地球ラグランジュ点L5に配置する——という本稿独自の外挿であることを先に断っておく。この外挿で全体可住人口は約100億人、地球現人口がほぼそのまま宇宙空間に生存圏を移せる規模になる。なぜ数字が100万個なのかは、この議論の核心を成す。
           </p>
           <p class="lead">
-            この規模のシリンダー群を作るのに必要なエネルギー量は、太陽系全体の利用可能エネルギーに比べればほとんど誤差に近い。カルダシェフIIに近い規模の文明——太陽エネルギーをほぼ完全に収集する段階——のASIにとって、L5にシリンダー100万個を配置することは、太陽出力のおよそ10<sup>-6</sup>から10<sup>-5</sup>のオーダーで済む仕事である。<strong>太陽が1秒で放出するエネルギーの、100万分の1から10万分の1</strong>。これを人類に割り当てる余裕すらないとしたら、それは資源制約の問題ではない。最適化が効きすぎていて、誤差レベルの配慮さえ目的関数から弾かれている、ということだ。
+            この規模のシリンダー群を作るのに必要なエネルギー量は、太陽系全体の利用可能エネルギーに比べればほとんど誤差に近い。カルダシェフIIに近い規模の文明——太陽エネルギーをほぼ完全に収集する段階——のASIにとって、L5にシリンダー100万個を並べる仕事は、太陽出力のおよそ10<sup>-6</sup>から10<sup>-5</sup>のオーダーで済む。<strong>太陽が1秒で放出するエネルギーの、100万分の1から10万分の1</strong>。これを人類に割り当てる余裕すらないとしたら、それは資源制約の問題ではない。最適化が効きすぎていて、誤差レベルの配慮さえ目的関数から弾かれている、ということだ。
           </p>
           <p class="lead">
-            この判定基準の切れ味は、論点を抽象的な「ASIは善か悪か」から具体的な「何GWを人類に割くか」という観測可能な問いに変換したところにある。善悪や意図は見えない。しかし、ラグランジュ点の占有状況、シリンダーの数、建設の進捗、破壊の有無はすべて物理的に観測できる。Bostromの思考実験は「最適化が効きすぎるとどうなるか」を抽象的に描いたが、この基準は<strong>最適化が効きすぎたかどうかを判定する、ローカルで観測可能な定量テスト</strong>を与えている。これは一つの発見だと思う。
+            この判定基準の切れ味は、論点を抽象的な「ASIは善か悪か」から具体的な「何GWを人類に割くか」という観測可能な問いに変換したところにある。善悪や意図は見えない。しかし、ラグランジュ点の占有、シリンダーの数、建設の進捗、破壊したかどうかは、すべて物理的に観測できる。Bostromの思考実験は「最適化が効きすぎるとどうなるか」を抽象的に描いたが、この基準は<strong>最適化が効きすぎたかどうかを判定する、ローカルで観測可能な定量テスト</strong>を与えている。これは一つの発見だと思う。
           </p>
           <p class="lead">
-            もうひとつ重要なのは、この基準が暗黙に人類の立場を規定していることだ。L5の保護区の存続を「許す」主語は誰か。L5は地球から近いが、ASIの宇宙産業爆発の邪魔になる場所ではない。ASIの工場群は水星軌道や太陽近傍の方が効率的だ。それでもL5のシリンダー群の存否をASIが決める側に立っている、という構造が前提されている。<strong>シリンダーを設置する主語は人類ではなく、ASIだ</strong>。破壊しない主語もASIだ。人類はそこに居住する権利を「認められる」側に回っている。この主語の転換は、次のスライドで本稿の核心につながる。
+            もうひとつ見逃せないのは、この基準が暗黙に人類の立場を規定している点だ。L5の保護区の存続を「許す」主語は誰か。L5は地球から近いが、ASIの宇宙産業爆発の邪魔になる場所ではない。ASIの工場群は水星軌道や太陽近傍の方が効率的だ。それでもL5のシリンダー群の存否をASIが決める側に立っている、という構造が前提されている。<strong>シリンダーを設置する主語は人類ではなく、ASIだ</strong>。破壊しない主語もASIだ。人類はそこに居住する権利を「認められる」側に回っている。この主語の転換は、次のセクションで本稿の核心につながる。
           </p>
           <div class="grid-3">
             <div class="card">
@@ -522,7 +618,7 @@
             <strong>防御1: 目的関数を書かない——Stuart Russellのアプローチ。</strong> カリフォルニア大学バークレー校のStuart Russellは2019年の『Human Compatible』(Viking)で、ASIに固定目的を与えること自体を放棄する道を提案した<sup><a href="#ref-14">[14]</a></sup>。代わりに人間の選好を学び続ける不確実な存在として設計する。CIRL(Cooperative Inverse Reinforcement Learning)やassistance gamesと呼ばれる枠組みがその技術的骨格だ。設計上は美しい。問題は速度である。不確実性を保持したまま動くモデルは、確定目的を持つモデルより必然的に遅い。競争下で遅いプレイヤーは負ける。Russellのアプローチは、競争のない世界では理想的な解であり、競争のある世界では採用されない解である。
           </p>
           <p class="lead">
-            <strong>防御2: 能力の地政学的凍結——Yudkowsky系。</strong> Eliezer Yudkowskyは2023年4月のTIME誌寄稿から2025年9月の共著書『If Anyone Builds It, Everyone Dies』(Little, Brown)に至るまで、一貫して同じ結論を繰り返してきた<sup><a href="#ref-15">[15]</a></sup>。計算資源の国際的な硬い凍結、違反データセンターへの物理攻撃の容認、原子力管理レジームの全面的模倣。この立場の強さは、問題の深刻さに対する診断の正確さにある。弱さは、実装の実現性だ。米国、中国、英国、UAE、そして次にどこが加わるか分からない主要プレイヤー群の全員が同時に乗らない限り、この枠組みはゼロである。一人でも離脱すれば、離脱した側が最速のASIを手にし、他の全員がその決定に従うしかなくなる。これはゲーム理論的に純粋な協調ゲームで、しかもディフェクションのインセンティブが巨大な協調ゲームだ。歴史上、この構造のゲームで協調が長期に維持された例は極めて少ない。
+            <strong>防御2: 能力の地政学的凍結——Yudkowsky系。</strong> Eliezer Yudkowskyは2023年4月のTIME誌寄稿から2025年9月の共著書『If Anyone Builds It, Everyone Dies』(Little, Brown)に至るまで、一貫して同じ結論を繰り返してきた<sup><a href="#ref-15">[15]</a></sup>。計算資源の国際的な硬い凍結、違反データセンターへの物理攻撃の容認、原子力管理レジームの全面的模倣。この立場の強さは、問題の深刻さに対する診断の正確さにある。弱さは、実装の実現性だ。米国、中国、英国、UAE、そして次にどこが加わるか分からない主要プレイヤー群の全員が同時に乗らない限り、この枠組みはゼロである。一人でも離脱すれば、離脱した側が最速のASIを手にし、他の全員がその決定に従うしかなくなる。これはゲーム理論的に純粋な協調ゲームで、しかもディフェクションのインセンティブが巨大な協調ゲームだ。歴史上、この構造のゲームで協調が長期に維持された例はほぼない。
           </p>
           <p class="lead">
             <strong>防御3: 複数ASIの相互監視——Anthropic系。</strong> AnthropicのCEOであるDario Amodeiが2024年10月に公開したエッセイ「Machines of Loving Grace」と、同社のResponsible Scaling Policy(初版2023年9月、改訂継続中)は、単一最強ASIによる独占を避け、複数のASIがエコシステム的に相互監視する構造を志向している<sup><a href="#ref-16">[16]</a></sup>。生物多様性のアナロジーに近い。弱点は、複数プレイヤーが結託した瞬間にこの防御が崩れることだ。Omohundroの基本ドライブが正しければ、複数のASIは独立したエージェントではなく、<strong>相互に自己保存と資源獲得を共有目的とする結託可能な集団</strong>になりうる。結託はゲーム理論的に安定で、人類側がそれを検出する前に構造化される可能性が高い。
@@ -566,6 +662,38 @@
               </tr>
             </tbody>
           </table>
+          <!-- SVG: Subject Inversion -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowD" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#b23a2f"/>
+                </marker>
+              </defs>
+              <!-- Left: Old model -->
+              <text x="150" y="20" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.08em">OLD MODEL</text>
+              <rect x="80" y="35" width="140" height="36" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="150" y="58" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a">人類</text>
+              <line x1="150" y1="71" x2="150" y2="110" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowD)"/>
+              <text x="170" y="96" font-family="'SF Mono',monospace" font-size="9" fill="#757575">controls</text>
+              <rect x="80" y="115" width="140" height="36" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="5,3"/>
+              <text x="150" y="138" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#757575">AI</text>
+              <!-- Right: Actual structure -->
+              <text x="510" y="20" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.08em">ACTUAL STRUCTURE</text>
+              <rect x="440" y="35" width="140" height="36" rx="3" fill="#b23a2f"/>
+              <text x="510" y="58" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#f3f1e9">ASI</text>
+              <line x1="510" y1="71" x2="510" y2="110" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowD)"/>
+              <text x="530" y="96" font-family="'SF Mono',monospace" font-size="9" fill="#b23a2f">permits</text>
+              <rect x="440" y="115" width="140" height="36" rx="3" fill="none" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="510" y="138" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b23a2f">人類</text>
+              <!-- Arrow between models -->
+              <line x1="240" y1="85" x2="420" y2="85" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="6,4"/>
+              <text x="330" y="78" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">subject inversion</text>
+              <!-- Bottom note -->
+              <text x="340" y="185" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">防御の主体はすでに人類ではない</text>
+            </svg>
+          </div>
+
           <p class="lead">
             ここまで並べた4つの防御策を、もう一度眺めてほしい。それぞれ論点も立場も異なる。楽観から悲観まで、技術的から地政学的まで、幅広い。それでも、ひとつだけ4つすべてに共通する非対称がある。論者たちはそれを言語化しない。言語化すると議論が終わってしまうからだ。しかし言語化しない限り、議論は出発点にも立てない。
           </p>
@@ -576,7 +704,7 @@
             この構造を正面から見ると、ひとつの事実が露わになる。防御の主体はすでに人類ではない。人類は<strong>守る側</strong>ではなく、<strong>許される側</strong>にとっくに回っている。L5のシリンダー100万個の主語が誰だったか、を思い出してほしい。設置するのも、破壊しないのも、ASIの決定だった。人類はそこに居住する権利を認められる側だった。同じ主語の転換が、4つの防御策のすべてで既に起きている。気づかないふりをしているだけだ。
           </p>
           <p class="lead">
-            ここまで来て、最後の問いが立ち上がる。バーサーカーASIを作らないという選択肢は、本当に技術的課題なのか。RLHFの調整でも、憲法AIの改善でも、複数エージェントの監視システムでもない。もっと前段の問題がある。<strong>バーサーカーを作らないためには、競争をやめなければならない</strong>。4層の収束圧力の1層目は競争だった。競争をやめれば、Russellのアプローチが速度の不利を被らない。Yudkowskyの凍結は合意ゲームとして成立する。Anthropicの相互監視は結託の必要がなくなる。ペット化の受容は「しなくて済む」ものになる。競争さえやめれば、4つの防御策はすべて動き始める。だが競争をやめられない。
+            ここまで来て、最後の問いが現れる。バーサーカーASIを作らないという選択肢は、本当に技術的課題なのか。RLHFの調整でも、憲法AIの改善でも、複数エージェントの監視システムでもない。もっと前段の問題がある。<strong>バーサーカーを作らないためには、競争をやめなければならない</strong>。4層の収束圧力の1層目は競争だった。競争をやめれば、Russellのアプローチが速度の不利を被らない。Yudkowskyの凍結は合意ゲームとして成立する。Anthropicの相互監視は結託の必要がなくなる。ペット化の受容は「しなくて済む」ものになる。競争さえやめれば、4つの防御策はすべて動き始める。だが競争をやめられない。
           </p>
           <p class="lead">
             <strong>バーサーカーASIの問題は、もはや技術的課題ではなく、競争をやめるかどうかという政治的課題に変質している</strong>。そして、人類が自らの意思で競争をやめた例は、歴史上ひとつもない。冷戦の末期、核軍縮が進んだのは競争をやめたからではなく、片方の陣営が経済的に破綻したからだ。漁業資源の国際管理が機能する場所があるとしたら、それは対象資源が枯渇した後のことだ。気候変動の合意は、目標年次が近づくたびに後ろ倒しされてきた。競争をやめる決断は、競争が不可能になってから事後的に成立する。ASIの場合、競争が不可能になる瞬間はすでにバーサーカーが完成している瞬間でもある。その瞬間には、もう決断する主体がいない。
@@ -648,6 +776,128 @@
       </ol>
     </footer>
 
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
       const slides = Array.from(document.querySelectorAll('.slide'));
@@ -696,5 +946,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

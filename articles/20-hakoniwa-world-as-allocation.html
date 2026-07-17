@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <title>箱庭主義 — 世界を配給するという思想 — AGI HUB</title>
+    <meta name="revised" content="2026.04.14" />
     <meta name="description" content="ユートピアとディストピアが極限で収束する先にある、物資ではなく世界そのものを配給する思想。希少性の哲学史と、最後の主語が外される地点。" />
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
@@ -171,6 +172,18 @@
         padding-bottom: 14px;
         border-bottom: 1px solid var(--accent);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 36px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -310,6 +323,18 @@
       }
       .slide-count { font-weight: 700; color: var(--accent); }
 
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media (max-width: 900px) {
         .timeline { grid-template-columns: repeat(2, 1fr); }
       }
@@ -344,7 +369,7 @@
     </aside>
 
     <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 20 / 25 &nbsp;·&nbsp; Lineage &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 20 &nbsp;·&nbsp; Lineage &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="19-berserker-asi-optimization-trap.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=lineage" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -366,13 +391,16 @@
             人類史は長いあいだ、理想郷と破滅を両極に置いて未来を語ってきた。片方は欠乏のない世界、もう片方は自由を失った世界。この二つは対極にあるとされ、論者は片方に向かって進み、もう片方を避けることを倫理の出発点にした。だが奇妙なことに、この両極を十分な倍率で拡大していくと、像は次第に重なり始める。
           </p>
           <p class="lead">
-            欠乏が完全に消えた社会では、選ぶべき苦労も、乗り越えるべき困難も、所有を巡る闘争も残らない。自由の総量は極大化したはずなのに、自由が行使される対象が失われている。逆に、完全に統制された社会では、個人の欲望の余地は消えるが、住民は何一つ不足なく与えられ、衝突の種が抹消される。前者をユートピアと呼び、後者をディストピアと呼んできたが、両者のあいだに残るのは呼び名の違いだけである。
+            具体的に二つの世界を並べてみる。世界Aは欠乏のない楽園で、住民は何でも手に入り、何でも選べる。世界Bは完全に管理された牢獄で、住民の行動は全て予測・制御されているが、代わりに何一つ不足がない。Aの住民は自由の総量が極大化しているはずだが、乗り越えるべき困難が消えたせいで自由を行使する対象がない。Bの住民は欲望の余地を奪われているが、衝突の種が抹消されたせいで不満を持つ理由もない。
           </p>
           <p class="lead">
-            AIが飛躍的に発展した未来を論じるとき、この収束が初めて思考実験ではなく設計仕様として扱える距離に近づく。問題は、どちらに進むかではない。<strong>どちらに進んでも、ある一点で像が重なってしまう</strong>ことだ。この記事は、その重なる一点がどんな形をしているかを扱う。
+            両者が区別できなくなる条件は三つある。第一に、<strong>リソース配分が完全に最適化されている</strong>こと。Aでは豊富さゆえに、Bでは管理ゆえに、住民の需要と供給が完全に一致する。第二に、<strong>住民の主観的経験に差がない</strong>こと。Aの住民は「自分で選んだ」と感じ、Bの住民は「与えられたがこれで良い」と感じる。だがその主観的満足の質を外部から測定する方法がない以上、二つの状態は観測的に同値になる。第三に、<strong>選択肢の実効的な差がない</strong>こと。Aには無限の選択肢があるが使い切れない。Bには選択肢がないが不足も感じない。実際に行使される自由度が同じなら、「自由がある世界」と「自由がない世界」は行動の記述レベルで区別がつかない。
+          </p>
+          <p class="lead">
+            「収束する」と「区別できなくなる」は違う、という反論がありうる。確かに、Aの住民が「俺は自由だ」と宣言しBの住民が「俺は管理されている」と認識するなら、両者は主観の内側では違う世界に住んでいる。だが上記の三条件が同時に満たされた場合、その自己認識の違いすら観測可能な帰結を生まない。AIが飛躍的に発展した未来を論じるとき、この収束が初めて思考実験ではなく設計仕様として扱える距離に近づく。<strong>問題は、どちらに進むかではない。三条件が揃った瞬間に、像が重なってしまう</strong>ことだ。この記事は、その重なる一点がどんな形をしているかを扱う。
           </p>
           <div class="note">
-            ユートピアとディストピアという二極は、それぞれ単独では安定しない。強い圧力がかかれば社会は中途半端な場所に留まれず、どちらかの極へ押し出される。AIはその圧力を人類が初めて手にする形で提供している。押し出された先で何が待っているかを、五段階で辿る。
+            ユートピアとディストピアという二極は、それぞれ単独では安定しない。上で挙げた三条件——配分の完全最適化、主観経験の同値性、実効自由度の一致——が揃うとき、両極は区別不能になる。AIはその三条件を同時に満たす方向への圧力を、人類が初めて手にする形で提供している。押し出された先で何が待っているかを、五段階で辿る。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -391,13 +419,16 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            前のスライドで示した両極の収束を先に進める前に、もう一つ古い失敗例を連れてくる必要がある。二十世紀の社会主義・共産主義は、現実の経済運営で失敗した。ハイエクが『The Use of Knowledge in Society』（1945年）で指摘した知識分散の計算問題、ミーゼスの社会主義計算論争（1920年）、そしてソ連末期の実証的崩壊。いずれも原因は同じ一点に帰着する。<strong>物資の配分は、有限の資源をどう分けるかという問題</strong>であり、有限である以上は優先順位を決める誰かが必要で、その決定は必ず歪む。
+            前のセクションで示した両極の収束を先に進める前に、もう一つ古い失敗例を連れてくる必要がある。二十世紀の社会主義・共産主義は、現実の経済運営で失敗した。失敗の原因を分解すると、三つの層が見える。
           </p>
           <p class="lead">
-            ここで一度立ち止まる価値がある。もし物資が無限に近く供給できる世界があったとしたら、配分問題そのものが消える。誰かが多く取っても他人の取り分は減らない。歪みを決める必要も、中央計画を立てる必要も、市場で価格を発見する必要もない。<strong>社会主義が失敗したのは理念の問題ではなく、それが前提としていた「無限供給」という条件を物質世界が提供しなかった</strong>からだ、という読み替えが可能になる。
+            第一層は<strong>情報の非対称性</strong>。ハイエクが『The Use of Knowledge in Society』（1945年）で指摘したのは、経済活動に必要な知識は個人の頭の中に分散しており、中央計画者がそれを集約することは原理的に不可能だという問題だった。第二層は<strong>中央集権化のコスト</strong>。ミーゼスの社会主義計算論争（1920年）が示したのは、市場価格なしには合理的な資源配分の計算ができないという事実。第三層は<strong>誘因構造の崩壊</strong>。所有権と報酬が労働から切り離されたとき、人は働かなくなる。ソ連末期の実証的崩壊はこの三層が同時に効いた帰結だった。
           </p>
           <p class="lead">
-            この読み替えは、マルクスにもハイエクにも存在しない。両者は物質的稀少性を所与として論じていたからだ。ジョージェスク=レーゲンが『The Entropy Law and the Economic Process』（1971年）で示したとおり、物質経済は熱力学第二法則の下にあり、エネルギーと秩序は常に劣化していく。物質的ユートピアはエントロピーによって原理的に阻まれている。だからこそ、稀少性を前提としない経済思想はこれまで誰も真面目に設計できなかった。
+            では、シミュレーション環境はこの三層を解消できるか。<strong>第一層については解消の見込みがある</strong>。箱庭の中では住民の嗜好・行動・状態がリアルタイムで計測可能であり、ハイエクが問題にした「分散知識を集約できない」という制約が物理的に消える。OSは住民の全情報にアクセスできる。<strong>第二層も条件つきで解消される</strong>。配分対象が物質ではなく計算上のビット列であれば、市場価格による発見が不要になる。需要に応じて世界を生成すればよいからだ。ただし<strong>第三層は残る</strong>。箱庭の中で住民が何かを「したい」と感じる誘因構造は、外から設計できるのか、それとも住民自身の内発性に依存するのか。この問いに対する回答は、箱庭のOS設計に直接跳ね返る。計算問題が解けても、住民が何も欲しがらなければ、配分は無意味になる。
+          </p>
+          <p class="lead">
+            ジョージェスク=レーゲンが『The Entropy Law and the Economic Process』（1971年）で示したとおり、物質経済は熱力学第二法則の下にあり、エネルギーと秩序は常に劣化していく。物質的ユートピアはエントロピーによって原理的に阻まれている。だがシミュレーション環境では配分対象が物質ではなくビット列であるため、エントロピーの制約は計算基盤のエネルギー供給に後退する。社会主義の計算問題を三層に分解して検証すると、箱庭主義は第一層と第二層を技術的に解消しうるが、第三層——住民の内発的動機——は未解決のまま持ち越される。
           </p>
           <table class="compare">
             <thead>
@@ -431,7 +462,7 @@
             </tbody>
           </table>
           <p class="lead">
-            この表の最後の行が、次のスライドの入口になる。問いはこうだ——配分する対象を、そもそも物資ではなくしてしまえばどうなるか。
+            この表の最後の行が、次のセクションの入口になる。問いはこうだ——配分する対象を、そもそも物資ではなくしてしまえばどうなるか。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -450,14 +481,52 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            箱庭主義——この記事で扱う思想——の核心は一行で書ける。<strong>配分する対象を、物質からシミュレートされた世界に切り替える</strong>。これだけだ。ただしこの切り替えが起きると、稀少性の議論全体が足元から崩れる。
+            ノージックが『アナーキー・国家・ユートピア』（1974年）で提唱した<strong>「可能世界のユートピア」</strong>から始める。ノージックは万人が同じ理想を共有する単一ユートピアは不可能だとし、代わりに「人々がそれぞれのユートピアを選び合流する枠組み」としてのメタ・ユートピアを提示した。この構想の技術的限界は明白だった。現実世界の中に複数のコミュニティを並列させる以上、土地も物資も有限であり、コミュニティ間の資源競合は消えない。
           </p>
           <p class="lead">
-            物理的物資は有限だが、計算上の世界は原理的に無限に生成できる。一人の住民に割り当てられる箱庭の中では、資源は計算資源として存在し、配分は物質ではなくビット列で実行される。箱庭の中で王になることも、森を所有することも、他人を従えることもできる。だがその「他人」は他の住民ではなく、住民の嗜好に合わせて生成されたプロセスである。現実世界で奪い合われた希少なもの——土地、配偶者、名声、景色——は、箱庭のなかでは全員に同時に与えられる。
+            もう一つ、身近な例がある。ソーシャルゲームのプレイヤーは、自分のアバターが支配する小世界の中で、現実の稀少性とは切り離された達成感を得ている。土地を買い、城を建て、仲間を従える。その「仲間」はサーバー上のプロセスであり、「土地」は描画される画素でしかない。だがプレイヤーの報酬系は確かに反応する。現在のソーシャルゲームは視覚と操作のごく一部にしか及ばないが、これを感覚・感情・記憶・時間感覚のすべてに拡張した場合に何が起きるか。
           </p>
           <p class="lead">
-            一つ手前の段階として、ノージックが『アナーキー・国家・ユートピア』（1974年）で提唱した<strong>「可能世界のユートピア」</strong>を思い出してほしい。ノージックは万人が同じ理想を共有する単一ユートピアは不可能だとし、代わりに「人々がそれぞれのユートピアを選び合流する枠組み」としてのメタ・ユートピアを提示した。箱庭主義はこの枠組みの技術的実装に近い。ただしノージックは現実世界の中に複数のコミュニティを並列させることを想定したのに対し、箱庭主義は<strong>現実世界を捨てる</strong>。各人に一つずつ、物理現実の外側にある世界を渡す。
+            この二つの例——ノージックのメタ・ユートピアとソーシャルゲームの小世界——が指し示す方向に、この記事が扱う思想がある。<strong>箱庭主義</strong>と名づける。核心は一行で書ける。<strong>配分する対象を、物質からシミュレートされた世界に切り替える</strong>。ノージックとの違いは、現実世界の中に複数のコミュニティを並列させるのではなく、<strong>現実世界を捨てる</strong>点にある。各人に一つずつ、物理現実の外側にある世界を渡す。物理的物資は有限だが、計算上の世界は原理的に無限に生成できる。現実世界で奪い合われた希少なもの——土地、配偶者、名声、景色——は、箱庭の中では全員に同時に与えられる。ただしその「他人」は他の住民ではなく、住民の嗜好に合わせて生成されたプロセスである。
           </p>
+          <!-- SVG: Hakoniwa Three-Layer Architecture -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+              <!-- Layer 3: OS (bottom) -->
+              <rect x="60" y="220" width="560" height="50" rx="4" fill="#2f2b92"/>
+              <text x="340" y="241" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#faf8f1" letter-spacing="0.08em">LAYER 3: OS</text>
+              <text x="340" y="258" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#faf8f1" opacity="0.8">配分・生成・整合性 — 国家でも市場でもない基盤</text>
+              <!-- Layer 2: Shared servers (middle) -->
+              <rect x="140" y="140" width="400" height="50" rx="4" fill="none" stroke="#2f2b92" stroke-width="1.5"/>
+              <text x="340" y="162" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#2f2b92" letter-spacing="0.08em">LAYER 2: SHARED</text>
+              <text x="340" y="178" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">任意参加・任意退出の共通空間</text>
+              <!-- Connectors L2 to L3 -->
+              <line x1="240" y1="190" x2="240" y2="220" stroke="#2f2b92" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="440" y1="190" x2="440" y2="220" stroke="#2f2b92" stroke-width="1" stroke-dasharray="4,3"/>
+              <!-- Layer 1: Individual hakoniwa (top) -->
+              <rect x="60" y="40" width="120" height="70" rx="4" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="120" y="66" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#1a1a1a" letter-spacing="0.06em">HAKONIWA A</text>
+              <text x="120" y="82" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">住民a</text>
+              <text x="120" y="98" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#757575">嗜好に合わせた世界</text>
+              <rect x="210" y="40" width="120" height="70" rx="4" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="270" y="66" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#1a1a1a" letter-spacing="0.06em">HAKONIWA B</text>
+              <text x="270" y="82" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">住民b</text>
+              <text x="270" y="98" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#757575">嗜好に合わせた世界</text>
+              <rect x="360" y="40" width="120" height="70" rx="4" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="420" y="66" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#1a1a1a" letter-spacing="0.06em">HAKONIWA C</text>
+              <text x="420" y="82" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">住民c</text>
+              <text x="420" y="98" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#757575">嗜好に合わせた世界</text>
+              <rect x="510" y="40" width="110" height="70" rx="4" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4,3"/>
+              <text x="565" y="78" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">...</text>
+              <!-- Connectors L1 to L2 -->
+              <line x1="120" y1="110" x2="200" y2="140" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="270" y1="110" x2="300" y2="140" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4,3"/>
+              <line x1="420" y1="110" x2="380" y2="140" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="4,3"/>
+              <!-- Label -->
+              <text x="60" y="18" font-family="'SF Mono',monospace" font-size="9" fill="#2f2b92" letter-spacing="0.08em">LAYER 1: INDIVIDUAL HAKONIWA</text>
+            </svg>
+          </div>
+
           <div class="grid-3">
             <div class="card">
               <span class="tag">Layer 1</span>
@@ -473,7 +542,7 @@
             </div>
           </div>
           <p class="lead">
-            ここで身近な具体例を挟む。ソーシャルゲームのプレイヤーは、自分のアバターが支配する小世界の中で、現実の稀少性とは切り離された達成感を得ている。これは箱庭主義の最も初歩的な姿だ。違いは、現在のそれが視覚と操作のごく一部にしか及ばないのに対して、成熟した箱庭は<strong>感覚・感情・記憶・時間感覚のすべてに及ぶ</strong>ことである。初歩的な姿がすでに存在する思想は、技術によって深化する余地しか残されていない。
+            前セクションで検討した社会主義の計算問題を振り返る。箱庭のOS層は住民の全情報にアクセスでき、配分対象はビット列である以上、情報の非対称性と市場価格の不在は技術的に解消される。だが第三層——住民が何かを欲しがる誘因構造——は、箱庭の内部設計に委ねられる。箱庭の中で王になっても、その達成感が内発的なものか、それともOSが注入したものかを区別する方法がない場合、「配分が成功した」と言えるのかどうか。この問いが、セクション5の主語の消失と接続する。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -551,13 +620,46 @@
             一人の住民が千体に分岐し、それぞれが別の人生を歩み、後で統合される——この操作の下で、「私」という主語はどこに残るのか。パーフィットの答えは冷徹だった。残る必要はない。人格同一性は道徳的重要性を持たない概念であり、本当に問うべきは「経験の束がどう連続するか」だけである。箱庭主義はこの結論を技術として実装する。
           </p>
           <div class="note">
-            さらに深い問いがある。箱庭の中で完璧に幸福な一兆のプロセスが走っている世界と、現実に苦しみながら生きる一万人の人間の世界。<strong>どちらがユートピアかという問いは、そもそも「人間にとって」という視点が成立しなければ答えられない</strong>。だが箱庭主義が成熟する頃には、その視点を持つ主体自体が技術の配給対象になっている。ユートピアかディストピアかを評価する審級が、評価される対象の内部に溶け込む。
+            さらに深い問いがある。箱庭の中で完璧に幸福な一兆のプロセスが走っている世界と、現実に苦しみながら生きる一万人の人間の世界。<strong>どちらがユートピアかという問いは、そもそも「人間にとって」という視点が成立しなければ答えられない</strong>。だが箱庭主義が成熟する頃には、その視点を持つ主体自体が技術の配給対象になっている。ユートピアかディストピアかを評価する審級が、評価される対象の内部に混ざる。
           </div>
+          <!-- SVG: Convergence of Utopia and Dystopia -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#2f2b92"/>
+                </marker>
+              </defs>
+              <!-- Utopia branch -->
+              <text x="60" y="60" font-family="'SF Mono',monospace" font-size="11" fill="#1a1a1a" letter-spacing="0.06em">UTOPIA</text>
+              <text x="60" y="76" font-family="sans-serif" font-size="9" fill="#757575">欠乏の消滅</text>
+              <line x1="140" y1="65" x2="310" y2="105" stroke="#2f2b92" stroke-width="1.5" marker-end="url(#arrowB)"/>
+              <!-- Dystopia branch -->
+              <text x="60" y="160" font-family="'SF Mono',monospace" font-size="11" fill="#1a1a1a" letter-spacing="0.06em">DYSTOPIA</text>
+              <text x="60" y="176" font-family="sans-serif" font-size="9" fill="#757575">自由の消滅</text>
+              <line x1="140" y1="165" x2="310" y2="125" stroke="#2f2b92" stroke-width="1.5" marker-end="url(#arrowB)"/>
+              <!-- Convergence point -->
+              <circle cx="340" cy="115" r="28" fill="none" stroke="#2f2b92" stroke-width="2"/>
+              <text x="340" y="112" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2f2b92">主語の</text>
+              <text x="340" y="125" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2f2b92">消失</text>
+              <!-- Result -->
+              <line x1="368" y1="115" x2="440" y2="115" stroke="#2f2b92" stroke-width="1.5" marker-end="url(#arrowB)"/>
+              <rect x="450" y="92" width="190" height="46" rx="4" fill="#2f2b92"/>
+              <text x="545" y="112" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#faf8f1" letter-spacing="0.06em">NO SUBJECT</text>
+              <text x="545" y="127" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#faf8f1" opacity="0.85">問う者のいない世界</text>
+              <!-- Bottom label -->
+              <text x="340" y="205" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">評価する主体が消えると、両極の区別も消える</text>
+            </svg>
+          </div>
+
           <p class="lead">
             記事の冒頭で、ユートピアとディストピアは極限で同じ像を結ぶと書いた。いま、その同じ像が何を意味していたかが見える。像が重なるのは、<strong>評価する主体そのものが消えるから</strong>である。良い世界でも悪い世界でもなく、良し悪しを問える誰かがいなくなった世界。問う者がいなければ、問いは答えを持たない。
           </p>
           <p class="lead">
-            箱庭主義の終着点は、人類が無限の豊かさを手に入れる地点ではない。<strong>豊かさを豊かさと感じる最後の主語が、静かに外される地点</strong>である。次に問われるべきは「人類はそこへ進むべきか」ではない。そこへ進むとき、問い自体を発する者がどこに残るのかである。
+            ここで箱庭主義が成立するための最小条件を明示しておく。<strong>第一に、住民一人あたりの計算資源が主観的に十分な世界を生成し続けられること</strong>。これは太陽系規模のエネルギー予算に上限を持つ。<strong>第二に、住民の内発的動機が維持されること</strong>。セクション2で未解決のまま持ち越した第三層の問題だ。欲望をOSが注入するなら、それは箱庭主義ではなく管理主義の別名になる。<strong>第三に、箱庭の外側にOSを維持する物理インフラが存続すること</strong>。太陽フレア、恒星の寿命、宇宙的災害に対するレジリエンスが確保されなければ、箱庭の住民は一夜にして消滅する。
+          </p>
+          <p class="lead">
+            この三条件がすべて満たされたとしても、箱庭主義の終着点は人類が無限の豊かさを手に入れる地点ではない。<strong>豊かさを豊かさと感じる最後の主語が、静かに外される地点</strong>である。そこへ進むとき、問い自体を発する者がどこに残るのか。三条件は箱庭の稼働を保証するが、箱庭の中で問う主体が問う主体であり続ける保証は、どの条件にも含まれていない。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -604,6 +706,128 @@
       </p>
     </section>
 
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
     <script>
       const progress = document.getElementById('progress');
       window.addEventListener('scroll', () => {
@@ -634,6 +858,21 @@
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
       }, { threshold: 0.15 });
       document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+    </script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
     </script>
   </body>
 </html>

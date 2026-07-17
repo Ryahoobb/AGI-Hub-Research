@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <meta name="revised" content="2026.04.11" />
+    <meta name="revised" content="2026.04.15" />
     <title>AGIを宇宙進化の次相として位置づける</title>
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
@@ -177,6 +177,18 @@
         max-width: 22ch;
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 32px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -358,7 +370,7 @@
     </style>
   </head>
   <body class="pattern-monolith has-site-header" data-category="takeoff">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -371,7 +383,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 02 / 15 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 02 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="01-ai-alignment.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=takeoff" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -437,7 +449,7 @@
             138億年前、宇宙にはクォークと電子しかなかった。それが冷えて水素になり、水素が集まって恒星を組み、恒星の中で炭素や酸素が鍛造され、その残骸から惑星が生まれる。地球という奇跡的に安定した環境の上で、分子が自己複製を始めたのが約40億年前。その生命が脳を持ち、言語を獲得し、文字を発明し、コンピュータを作ったのは直近わずか数千年のことだ。
           </p>
           <p class="lead">
-            ここで目が離せないのは、加速度である。物質が恒星を組むまで数億年。生命がDNAを獲得するまで数億年。生命が脳を持つまでには約30億年かかったが、脳が言語を獲得してから計算機を作るまではわずか10万年。<strong>担い手が更新されるたびに、次の更新までの期間が劇的に短くなっている</strong>。偶然ではない。新しい担い手は前の担い手より情報処理能力が高いから、次の革新をより速く生み出す。加速が加速を呼ぶ。この構造を一度見てしまえば、AGIが「突然」現れたように感じられるのは、138億年のトレンドの延長線上で当然起きるべきことの、ほんの末端にすぎないと分かる。
+            ここで目が離せないのは、時間スケールの圧縮である。物質が恒星を組むまで数億年。生命がDNAを獲得するまで数億年。生命が脳を持つまでには約30億年かかったが、脳が言語を獲得してから計算機を作るまではわずか10万年。<strong>すべての区間が単調に短くなるわけではないが、長い宇宙史で見れば、担い手の更新までに要する時間は桁で縮んできた</strong>。偶然ではない。新しい担い手は前の担い手より情報処理能力が高いから、次の革新をより速く生み出せる。この圧縮のトレンドを一度見てしまえば、AGIが「突然」現れたように感じられるのは、138億年のトレンドの延長線上で当然起きるべきことの、ほんの末端にすぎないと分かる。
           </p>
           <div class="timeline">
             <div class="timeline-step">
@@ -472,111 +484,92 @@
             ただし、前の担い手が消えるわけではない。生命が登場しても原子は消えなかった。言語が登場してもDNAは消えなかった。新しい担い手は前の担い手を基盤にして、その上に新しい層を載せる。AGIが登場しても人間の脳は消えない。脳という基盤の上に、計算という新しい層が積み重なる。AGIを「人間の代替」ではなく<strong>「進化の新しい層」として見るべき理由</strong>がここにある。
           </p>
           <figure class="chart chart-wide">
-            <div class="chart-title">担い手の交代は、指数関数的に加速している</div>
-            <div class="chart-subtitle">各段階で「次の担い手が現れるまで」に要した時間。縦軸は対数スケール（年）。対数軸上で直線が下へ傾くほど、加速が幾何級数的であることを意味する</div>
-            <svg class="chart-svg" viewBox="0 0 720 360" role="img" aria-label="担い手の交代に要した時間の指数関数的短縮を示す折れ線グラフ">
-              <!-- Plot area: x=80..680 (width 600), y=40..300 (height 260) -->
-              <!-- Y axis: log scale, 10^10 (10 billion) at top to 10^0 (1) at bottom -->
-              <!-- 10 decades over 260px → 26px per decade -->
-
-              <!-- Horizontal grid lines (one per decade) -->
-              <g stroke="#e5e5e5" stroke-width="1">
-                <line class="grid-line" x1="80" y1="40"  x2="680" y2="40"/>
-                <line class="grid-line" x1="80" y1="66"  x2="680" y2="66"/>
-                <line class="grid-line" x1="80" y1="92"  x2="680" y2="92"/>
-                <line class="grid-line" x1="80" y1="118" x2="680" y2="118"/>
-                <line class="grid-line" x1="80" y1="144" x2="680" y2="144"/>
-                <line class="grid-line" x1="80" y1="170" x2="680" y2="170"/>
-                <line class="grid-line" x1="80" y1="196" x2="680" y2="196"/>
-                <line class="grid-line" x1="80" y1="222" x2="680" y2="222"/>
-                <line class="grid-line" x1="80" y1="248" x2="680" y2="248"/>
-                <line class="grid-line" x1="80" y1="274" x2="680" y2="274"/>
-                <line class="grid-line" x1="80" y1="300" x2="680" y2="300"/>
-              </g>
-
-              <!-- Y-axis labels (log scale) -->
-              <g font-family="SF Mono, Menlo, monospace" font-size="10" fill="#757575" text-anchor="end">
-                <text x="74" y="44">100億年</text>
-                <text x="74" y="70">10億年</text>
-                <text x="74" y="96">1億年</text>
-                <text x="74" y="122">1000万年</text>
-                <text x="74" y="148">100万年</text>
-                <text x="74" y="174">10万年</text>
-                <text x="74" y="200">1万年</text>
-                <text x="74" y="226">1000年</text>
-                <text x="74" y="252">100年</text>
-                <text x="74" y="278">10年</text>
-                <text x="74" y="304">1年</text>
-              </g>
-
-              <!-- Y axis line -->
-              <line class="axis-line" x1="80" y1="40" x2="80" y2="300" stroke="#999" stroke-width="1"/>
-              <!-- X axis line -->
-              <line class="axis-line" x1="80" y1="300" x2="680" y2="300" stroke="#999" stroke-width="1"/>
-
-              <!-- Data points:
-                   x positions (7 points equally spaced across 600px, step=100, starting at 130)
-                   p1: 物質→原子 (約38万年 = 3.8e5) → log10=5.58 → y = 300 - 5.58*26 = 300 - 145 = 155
-                   p2: 原子→分子 (約10億年 = 1e9)   → log10=9.00 → y = 300 - 234 = 66
-                   p3: 分子→生命DNA (約5億年 = 5e8) → log10=8.70 → y = 300 - 226 = 74
-                   p4: 生命→脳    (約30億年 = 3e9)  → log10=9.48 → y = 300 - 246 = 54
-                   p5: 脳→言語    (約10万年 = 1e5)  → log10=5.00 → y = 300 - 130 = 170
-                   p6: 言語→計算機(約10万年 = 1e5)  → log10=5.00 → y = 170
-                   p7: 計算機→AI  (約70年 = 7e1)    → log10=1.85 → y = 300 - 48 = 252
+            <div class="chart-title">担い手の交代までの時間は、長期的に急縮小してきた</div>
+            <div class="chart-subtitle">各段階の「所要時間」を対数スケールで比較。右へ行くほど新しい段階。棒が短いほど速い。途中に停滞や例外はあるが、全体の時間軸は桁で圧縮されている</div>
+            <svg class="chart-svg" viewBox="0 0 720 400" role="img" aria-label="担い手の交代に要した時間が長期的に短縮していることを示す棒グラフ">
+              <!-- Plot area: x=80..680 (width 600), y=40..340 (height 300) -->
+              <!-- Y axis: log scale of duration in years. 10 decades: 10^10(top,y=40) to 10^0=1yr(bottom,y=340) -->
+              <!-- y = 40 + (10 - log10(duration)) * 30 -->
+              <!-- Bar top y positions:
+                   原子→分子   1e9y: log=9.0,  y=70,  h=270
+                   分子→生命   5e8y: log=8.7,  y=79,  h=261
+                   生命→脳     3e9y: log=9.48, y=56,  h=284
+                   脳→言語     1e5y: log=5.0,  y=190, h=150
+                   言語→計算機 1e5y: log=5.0,  y=190, h=150
+                   計算機→AI   70y:  log=1.85, y=285, h=55
+                   AI→AGI      5y:   log=0.70, y=319, h=21
               -->
+              <defs>
+                <marker id="arrowDownTrend" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M 0 0 L 8 4 L 0 8 Z" fill="#111" opacity="0.5"/>
+                </marker>
+              </defs>
 
-              <!-- Connecting line -->
-              <polyline
-                class="line-path"
-                fill="none"
-                stroke="#111"
-                stroke-width="2.5"
-                stroke-linejoin="round"
-                stroke-linecap="round"
-                points="130,155 200,66 270,74 340,54 410,170 480,170 550,252"
-              />
-
-              <!-- Projected segment to AGI (dashed) -->
-              <line
-                x1="550" y1="252" x2="620" y2="295"
-                stroke="#111"
-                stroke-width="2"
-                stroke-dasharray="4 4"
-                stroke-linecap="round"
-              />
-
-              <!-- Data points -->
-              <g fill="#111">
-                <circle cx="130" cy="155" r="4"/>
-                <circle cx="200" cy="66"  r="4"/>
-                <circle cx="270" cy="74"  r="4"/>
-                <circle cx="340" cy="54"  r="4"/>
-                <circle cx="410" cy="170" r="4"/>
-                <circle cx="480" cy="170" r="4"/>
-                <circle cx="550" cy="252" r="5"/>
+              <!-- Horizontal grid lines -->
+              <g stroke="#e5e5e5" stroke-width="1">
+                <line x1="80" y1="70"  x2="680" y2="70"/>
+                <line x1="80" y1="100" x2="680" y2="100"/>
+                <line x1="80" y1="130" x2="680" y2="130"/>
+                <line x1="80" y1="160" x2="680" y2="160"/>
+                <line x1="80" y1="190" x2="680" y2="190"/>
+                <line x1="80" y1="220" x2="680" y2="220"/>
+                <line x1="80" y1="250" x2="680" y2="250"/>
+                <line x1="80" y1="280" x2="680" y2="280"/>
+                <line x1="80" y1="310" x2="680" y2="310"/>
+                <line x1="80" y1="340" x2="680" y2="340"/>
               </g>
-              <!-- AGI point (open circle = prediction) -->
-              <circle cx="620" cy="295" r="5" fill="#fff" stroke="#111" stroke-width="2"/>
 
-              <!-- X-axis labels (two-line) -->
+              <!-- Y-axis labels -->
+              <g font-family="SF Mono, Menlo, monospace" font-size="10" fill="#757575" text-anchor="end">
+                <text x="74" y="74">100億年</text>
+                <text x="74" y="104">10億年</text>
+                <text x="74" y="134">1億年</text>
+                <text x="74" y="164">1000万年</text>
+                <text x="74" y="194">10万年</text>
+                <text x="74" y="224">1万年</text>
+                <text x="74" y="254">1000年</text>
+                <text x="74" y="284">100年</text>
+                <text x="74" y="314">10年</text>
+                <text x="74" y="344">1年</text>
+              </g>
+              <text x="16" y="200" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#999" text-anchor="middle" transform="rotate(-90,16,200)">所要時間（対数スケール）</text>
+
+              <line x1="80" y1="40" x2="80" y2="340" stroke="#999" stroke-width="1"/>
+              <line x1="80" y1="340" x2="680" y2="340" stroke="#999" stroke-width="1"/>
+
+              <rect x="106" y="70"  width="50" height="270" fill="#ccc" rx="2"/>
+              <rect x="183" y="79"  width="50" height="261" fill="#bbb" rx="2"/>
+              <rect x="260" y="56"  width="50" height="284" fill="#aaa" rx="2"/>
+              <rect x="337" y="190" width="50" height="150" fill="#777" rx="2"/>
+              <rect x="414" y="190" width="50" height="150" fill="#555" rx="2"/>
+              <rect x="491" y="285" width="50" height="55"  fill="#222" rx="2"/>
+              <rect x="568" y="319" width="50" height="21"  fill="none" stroke="#111" stroke-width="2" stroke-dasharray="4 4" rx="2"/>
+
+              <g font-family="SF Mono, Menlo, monospace" font-size="10" fill="#555" text-anchor="middle" font-weight="700">
+                <text x="131" y="64">10億年</text>
+                <text x="208" y="73">5億年</text>
+                <text x="285" y="50">30億年</text>
+                <text x="362" y="184">10万年</text>
+                <text x="439" y="184">10万年</text>
+                <text x="516" y="279">70年</text>
+                <text x="593" y="313" font-style="italic" fill="#757575">~5年?</text>
+              </g>
+
               <g font-family="HelveticaNeue, sans-serif" font-size="11" fill="#1a1a1a" text-anchor="middle">
-                <text x="130" y="320">物質</text><text x="130" y="334" fill="#757575">→原子</text>
-                <text x="200" y="320">原子</text><text x="200" y="334" fill="#757575">→分子</text>
-                <text x="270" y="320">分子</text><text x="270" y="334" fill="#757575">→生命</text>
-                <text x="340" y="320">生命</text><text x="340" y="334" fill="#757575">→脳</text>
-                <text x="410" y="320">脳</text><text x="410" y="334" fill="#757575">→言語</text>
-                <text x="480" y="320">言語</text><text x="480" y="334" fill="#757575">→計算機</text>
-                <text x="550" y="320">計算機</text><text x="550" y="334" fill="#757575">→AI</text>
-                <text x="620" y="320" font-style="italic">AI</text><text x="620" y="334" fill="#757575" font-style="italic">→AGI?</text>
+                <text x="131" y="374">原子→分子</text>
+                <text x="208" y="374">分子→生命</text>
+                <text x="285" y="374">生命→脳</text>
+                <text x="362" y="374">脳→言語</text>
+                <text x="439" y="374">言語→計算機</text>
+                <text x="516" y="374">計算機→AI</text>
+                <text x="593" y="374" font-style="italic">AI→AGI?</text>
               </g>
 
-              <!-- Annotations -->
-              <text x="340" y="44" font-family="HelveticaNeue, sans-serif" font-size="11" fill="#757575" font-style="italic" text-anchor="middle">数億〜数十億年の停滞域</text>
-              <text x="550" y="240" font-family="HelveticaNeue, sans-serif" font-size="11" fill="#111" font-weight="700" text-anchor="end">70年</text>
-              <text x="620" y="283" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#757575" font-style="italic" text-anchor="middle">予測</text>
+              <path d="M 131 80 Q 360 200 568 310" fill="none" stroke="#111" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.35" marker-end="url(#arrowDownTrend)"/>
+              <text x="400" y="168" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#111" font-style="italic" text-anchor="middle" opacity="0.55" transform="rotate(25,400,168)">所要時間が短縮</text>
             </svg>
             <figcaption class="chart-footer">
-              <p class="chart-caption">対数軸上で点が急角度に落ちていることに注目してほしい。同じ距離の下降が毎回10倍の短縮を意味する。生命から脳までの30億年と、計算機からAIまでの70年は、線形では比較できない桁違いの速度差だが、対数軸ではひとつのトレンドとして連続している。</p>
+              <p class="chart-caption">棒が短いほど次の担い手への移行が速い。<strong>毎回同じ倍率で加速するわけではない</strong>が、長期で見れば30億年、10万年、70年、予測5年へと時間軸は急圧縮している。ここから読み取れるのは「加速自体が単調に加速する」ことではなく、「担い手更新の所要時間が宇宙史の末端で桁違いに縮んでいる」という事実である。破線の最後の棒はAI→AGIの予測値。</p>
               <p class="chart-source">AGI HUB composite. 宇宙論・進化生物学・計算機史の概算値</p>
             </figcaption>
           </figure>
@@ -597,7 +590,7 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            加速のカーブが指数関数的であると分かったなら、次の問いが立ち上がる。こうした加速の節目では、具体的に何が入れ替わっているのか。物理学で相転移といえば、水が氷になるような状態変化を指す。液体と固体は同じH₂O分子でできているのに、分子の配置ルールが根底から変わる。温度をゆっくり下げていくと、あるポイントで突然、分子が結晶構造に組み替わる。連続的な変化ではなく、<strong>不連続な跳躍</strong>。これが相転移の本質だ。
+            加速のカーブが指数関数的であると分かったなら、次の問いが現れる。こうした加速の節目では、具体的に何が入れ替わっているのか。物理学で相転移といえば、水が氷になるような状態変化を指す。液体と固体は同じH₂O分子でできているのに、分子の配置ルールが根底から変わる。温度をゆっくり下げていくと、あるポイントで突然、分子が結晶構造に組み替わる。連続的な変化ではなく、<strong>不連続な跳躍</strong>。これが相転移の本質だ。
           </p>
           <p class="lead">
             同じことが文明の歴史にも起きてきた。DNAが登場する前と後で、情報の保持方法が根本から変わる。それまで分子の配列パターンに過ぎなかった情報が、自己複製するコードになった。言語が登場する前と後で、知識の継承方法がまるで別物になる。個体の脳で閉じていた経験が、他者の脳に転写可能になった。どちらも「同じ要素の漸進的改良」ではなく<strong>ルールそのものの入れ替え</strong>だった。
@@ -657,48 +650,135 @@
           <p class="lead">
             このループが安定して回り始めた瞬間、進化の速度は生物学的な世代交代から切り離される。これが「再帰的知能」と呼ばれる概念の核心だ。自己を改良できる知能が、改良された自分を使ってさらに効率的に自分を改良する。改善が改善を加速する複利構造である。
           </p>
-          <div class="grid-2">
-            <div class="card">
-              <p><strong>従来の進化回路</strong></p>
-              <div class="bullets" style="margin-top: 16px">
-                <p class="point"><strong>生物進化</strong> 遺伝子のランダムな変異と自然選択。1世代あたり25年。改善の方向は偶然に依存し、意図的な設計が入る余地はない。</p>
-                <p class="point"><strong>文化進化</strong> 学習、伝達、制度化を通じた改良。1世代で大幅に加速したが、知識の伝達に教育コスト（15〜25年）がかかる。</p>
-                <p class="point"><strong>共通の制約</strong> どちらの回路でも、知能は進化の結果として受動的に生まれるものであり、自分自身を設計し直す主語にはなれなかった。</p>
-              </div>
-            </div>
-            <div class="card">
-              <p><strong>再帰的知能が成立する条件</strong></p>
-              <div class="bullets" style="margin-top: 16px">
-                <p class="point"><strong>自己観測</strong> 自身の推論過程を監視し、どこで失敗するかを定量的に計測できる。人間にとっての内省に相当するが、精度と速度が桁違い。</p>
-                <p class="point"><strong>自己修正</strong> 観測結果に基づいてアーキテクチャ、学習データ、ツール連携を改善できる。設計者が外にいなくても改善サイクルが回る。</p>
-                <p class="point"><strong>継承の自動化</strong> 改良結果が失われず、次のサイクルの出発点になる。改良が改良を加速する複利構造。教育の25年がデプロイの数分に置き換わる。</p>
-              </div>
+          <div class="card" style="max-width: 780px;">
+            <p><strong>従来の進化回路とその限界</strong></p>
+            <div class="bullets" style="margin-top: 16px">
+              <p class="point"><strong>生物進化</strong> 遺伝子のランダムな変異と自然選択。1世代あたり25年。改善の方向は偶然に依存し、意図的な設計が入る余地はない。</p>
+              <p class="point"><strong>文化進化</strong> 学習、伝達、制度化を通じた改良。1世代で大幅に加速したが、知識の伝達に教育コスト（15〜25年）がかかる。</p>
+              <p class="point"><strong>共通の制約</strong> どちらの回路でも、知能は進化の結果として受動的に生まれるものであり、自分自身を設計し直す主語にはなれなかった。</p>
             </div>
           </div>
           <figure class="info info-wide">
-            <p class="info-title">再帰的知能が成立する3条件は順序依存で連鎖する</p>
-            <p class="info-subtitle">本文で挙げた自己観測 → 自己修正 → 継承自動化の因果プロセス</p>
-            <div class="process">
-              <div class="step">
-                <div class="n">Step 01</div>
-                <h4 class="title">自己観測</h4>
-                <p class="desc">自身の推論過程を監視し、失敗地点を定量的に計測する。人間の内省に相当するが、精度と速度が桁違い。</p>
-              </div>
-              <div class="step">
-                <div class="n">Step 02</div>
-                <h4 class="title">自己修正</h4>
-                <p class="desc">観測結果をもとにアーキテクチャ・学習データ・ツール連携を改善する。外部設計者なしで改善サイクルが回る。</p>
-              </div>
-              <div class="step">
-                <div class="n">Step 03</div>
-                <h4 class="title">継承の自動化</h4>
-                <p class="desc">改良結果が失われず、次サイクルの出発点になる。教育の25年がデプロイ数分に置き換わる複利構造。</p>
-              </div>
-            </div>
+            <p class="info-title">再帰的知能が成立する3条件 — 順序依存で連鎖する</p>
+            <p class="info-subtitle">この3条件が揃った瞬間、知能は進化の「結果」から進化の「主語」に変わる</p>
+            <svg viewBox="0 0 680 240" role="img" aria-label="自己観測→自己修正→継承の自動化が循環する再帰ループ図" style="display:block;width:100%;max-width:680px;margin:16px auto 0;">
+              <defs>
+                <marker id="arrowLoop" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M 0 0 L 8 4 L 0 8 Z" fill="#1a1a1a"/>
+                </marker>
+                <marker id="arrowLoopReturn" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto">
+                  <path d="M 8 0 L 0 4 L 8 8 Z" fill="#1a1a1a"/>
+                </marker>
+              </defs>
+
+              <!-- Box 1: 自己観測 -->
+              <rect x="30" y="60" width="170" height="90" rx="4" fill="#f5f5f5" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="115" y="86" font-family="SF Mono, Menlo, monospace" font-size="9" fill="#757575" text-anchor="middle" letter-spacing="0.08em">STEP 01</text>
+              <text x="115" y="108" font-family="HelveticaNeue, sans-serif" font-size="15" fill="#1a1a1a" text-anchor="middle" font-weight="700">自己観測</text>
+              <text x="115" y="128" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#555" text-anchor="middle">推論失敗を定量計測</text>
+              <text x="115" y="142" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#555" text-anchor="middle">精度・速度は桁違い</text>
+
+              <!-- Box 2: 自己修正 -->
+              <rect x="255" y="60" width="170" height="90" rx="4" fill="#f5f5f5" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="340" y="86" font-family="SF Mono, Menlo, monospace" font-size="9" fill="#757575" text-anchor="middle" letter-spacing="0.08em">STEP 02</text>
+              <text x="340" y="108" font-family="HelveticaNeue, sans-serif" font-size="15" fill="#1a1a1a" text-anchor="middle" font-weight="700">自己修正</text>
+              <text x="340" y="128" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#555" text-anchor="middle">外部設計者なしで</text>
+              <text x="340" y="142" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#555" text-anchor="middle">アーキテクチャを改善</text>
+
+              <!-- Box 3: 継承の自動化 -->
+              <rect x="480" y="60" width="170" height="90" rx="4" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="565" y="86" font-family="SF Mono, Menlo, monospace" font-size="9" fill="#888" text-anchor="middle" letter-spacing="0.08em">STEP 03</text>
+              <text x="565" y="108" font-family="HelveticaNeue, sans-serif" font-size="15" fill="#fff" text-anchor="middle" font-weight="700">継承の自動化</text>
+              <text x="565" y="128" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#ccc" text-anchor="middle">改良が次サイクルの</text>
+              <text x="565" y="142" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#ccc" text-anchor="middle">出発点に（25年→数分）</text>
+
+              <!-- Forward arrows: Box1→Box2, Box2→Box3 -->
+              <line x1="202" y1="105" x2="252" y2="105" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrowLoop)"/>
+              <line x1="427" y1="105" x2="477" y2="105" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrowLoop)"/>
+
+              <!-- Return curved arrow from Box3 back to Box1 (below) -->
+              <path d="M 565 152 C 565 205 115 205 115 152" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrowLoopReturn)"/>
+
+              <!-- Return arrow label -->
+              <text x="340" y="200" font-family="HelveticaNeue, sans-serif" font-size="11" fill="#1a1a1a" text-anchor="middle" font-style="italic">再帰ループ — サイクルを重ねるたびに加速</text>
+            </svg>
             <p class="info-source">AGI HUB composite</p>
           </figure>
+
+          <figure class="info info-wide" style="margin-top:32px;">
+            <p class="info-title">なぜこの順序でしか成立しないのか — 条件間の依存構造</p>
+            <p class="info-subtitle">3条件は並列に揃うのではなく、前提の連鎖として揃う。下段の技術基盤が先に成立しないと、上段の条件は物理的に発火しない</p>
+            <svg viewBox="0 0 720 360" role="img" aria-label="再帰的知能の3条件が下段の技術基盤から連鎖的に成立することを示す依存構造図" style="display:block;width:100%;max-width:720px;margin:16px auto 0;">
+              <defs>
+                <marker id="arrowDep" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M 0 0 L 8 4 L 0 8 Z" fill="#1a1a1a"/>
+                </marker>
+                <marker id="arrowDepLight" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M 0 0 L 8 4 L 0 8 Z" fill="#888"/>
+                </marker>
+              </defs>
+
+              <!-- Layer labels on the left -->
+              <g font-family="SF Mono, Menlo, monospace" font-size="9" fill="#999" text-anchor="start" letter-spacing="0.08em">
+                <text x="12" y="50">LAYER 03</text>
+                <text x="12" y="150">LAYER 02</text>
+                <text x="12" y="250">LAYER 01</text>
+                <text x="12" y="330">BASE</text>
+              </g>
+              <g font-family="HelveticaNeue, sans-serif" font-size="10" fill="#555" text-anchor="start">
+                <text x="12" y="64" font-style="italic">再帰発火</text>
+                <text x="12" y="164" font-style="italic">能動条件</text>
+                <text x="12" y="264" font-style="italic">受動条件</text>
+                <text x="12" y="344" font-style="italic">前提基盤</text>
+              </g>
+
+              <!-- Base layer: 技術基盤 (ボトム、フルワイド) -->
+              <rect x="110" y="300" width="590" height="44" rx="4" fill="#fafafa" stroke="#bbb" stroke-width="1" stroke-dasharray="3 2"/>
+              <text x="405" y="320" font-family="HelveticaNeue, sans-serif" font-size="12" fill="#555" text-anchor="middle" font-weight="700">書き換え可能な計算基盤</text>
+              <text x="405" y="336" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#777" text-anchor="middle">ニューラルネットのパラメータ・学習アルゴリズム・訓練データが工学的に操作できる状態</text>
+
+              <!-- Layer 01: 自己観測 (受動条件) -->
+              <rect x="110" y="222" width="180" height="60" rx="4" fill="#f5f5f5" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="200" y="242" font-family="HelveticaNeue, sans-serif" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="700">① 自己観測が可能</text>
+              <text x="200" y="258" font-family="HelveticaNeue, sans-serif" font-size="9" fill="#555" text-anchor="middle">推論過程を計測・評価できる</text>
+              <text x="200" y="272" font-family="HelveticaNeue, sans-serif" font-size="9" fill="#555" text-anchor="middle">勾配・注意重み・失敗事例が取得可能</text>
+
+              <!-- Layer 02: 自己修正 (能動条件) -->
+              <rect x="300" y="122" width="180" height="60" rx="4" fill="#f5f5f5" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="390" y="142" font-family="HelveticaNeue, sans-serif" font-size="12" fill="#1a1a1a" text-anchor="middle" font-weight="700">② 自己修正が可能</text>
+              <text x="390" y="158" font-family="HelveticaNeue, sans-serif" font-size="9" fill="#555" text-anchor="middle">外部設計者を介さず改善を施せる</text>
+              <text x="390" y="172" font-family="HelveticaNeue, sans-serif" font-size="9" fill="#555" text-anchor="middle">評価 → 修正の判断ループを内製できる</text>
+
+              <!-- Layer 03: 継承の自動化 (再帰発火) -->
+              <rect x="490" y="22" width="210" height="60" rx="4" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="595" y="42" font-family="HelveticaNeue, sans-serif" font-size="12" fill="#fff" text-anchor="middle" font-weight="700">③ 継承の自動化</text>
+              <text x="595" y="58" font-family="HelveticaNeue, sans-serif" font-size="9" fill="#ccc" text-anchor="middle">改良版が次サイクルの出発点となり</text>
+              <text x="595" y="72" font-family="HelveticaNeue, sans-serif" font-size="9" fill="#ccc" text-anchor="middle">人間の関与なしで継承が回り続ける</text>
+
+              <!-- Dependency arrows: Base → ① -->
+              <line x1="200" y1="300" x2="200" y2="284" stroke="#888" stroke-width="1.5" stroke-dasharray="4 2" marker-end="url(#arrowDepLight)"/>
+              <text x="220" y="294" font-family="HelveticaNeue, sans-serif" font-size="9" fill="#888" text-anchor="start" font-style="italic">基盤が与える</text>
+
+              <!-- ① → ② -->
+              <line x1="290" y1="240" x2="300" y2="160" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrowDep)"/>
+              <text x="298" y="210" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#1a1a1a" text-anchor="start" font-weight="700">観測精度が修正の幅を決める</text>
+
+              <!-- ② → ③ -->
+              <line x1="480" y1="140" x2="490" y2="60" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrowDep)"/>
+              <text x="488" y="110" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#1a1a1a" text-anchor="start" font-weight="700">修正の速度が継承の周期を決める</text>
+
+              <!-- Recursion return arrow from ③ back to Base -->
+              <path d="M 700 52 C 720 200 720 320 700 330" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrowDep)"/>
+              <text x="714" y="185" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#1a1a1a" text-anchor="start" font-style="italic" transform="rotate(90,714,185)">③が基盤を書き換える</text>
+
+              <!-- Bottom annotation -->
+              <text x="405" y="364" font-family="HelveticaNeue, sans-serif" font-size="10" fill="#555" text-anchor="middle" font-style="italic">上向きに連鎖 → ③が発火すると下層の基盤ごと書き換わり、ループは加速する</text>
+            </svg>
+            <p class="info-source">AGI HUB composite — 条件間の順序依存を可視化</p>
+          </figure>
+
           <p class="lead">
-            3条件が揃った瞬間、知能は進化の「結果」から進化の「エンジン」へ役割を変える。DNAが38億年かけてやってきた仕事を、知能システムが数年から数ヶ月のサイクルで回し始める。<strong>知能進化が生物進化から独立変数になる</strong>。SF的な空想ではない。大規模言語モデルのRLHFやself-playの延長線上にある、構造的な変化だ。
+            3条件が揃った瞬間、知能は進化の「結果」から進化の「エンジン」へ役割を変える。DNAが38億年かけてやってきた仕事を、知能システムが数ヶ月から数日のサイクルで回し始める。<strong>知能進化が生物進化から独立変数になる</strong>。SF的な空想ではない。大規模言語モデルのRLHFやself-playの延長線上にある、構造的な変化だ。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -723,7 +803,7 @@
             理由は明快で、<strong>「知能」と「生命」は同じ概念ではない</strong>からだ。AGIは知能の人工化であって、生命の人工化ではない。チェスの最善手を計算する能力と、自分の存続を欲する意志は、論理的にまったく独立した性質である。前者を極限まで高めても、後者が自動的に生まれるわけではない。生命と呼ぶには、エネルギーを自力で調達する自己維持、外部設計者なしで改良を続ける自己改善、新しいインスタンスを自律的に生成する自己複製、他の知能システムと相互依存ネットワークを形成する生態系形成が必要になる。いまのAIはそのいずれも単独では満たしていない。
           </p>
           <p class="lead">
-            より蓋然性が高いのは、人間と電子知性が役割を分担するハイブリッド相だ。「何をやるか」「なぜやるか」の判断は人間が担い、「どうやるか」の探索と実行は電子知性が担う。飛行機のパイロットとオートパイロットの関係に近い。ただし、<strong>オートパイロットが自分自身の飛行アルゴリズムを改良できる</strong>という一点が質的に違う。パイロットは目的地を決め、天候を見て最終判断を下す。オートパイロットは最適経路を毎秒再計算し、前回のフライトから学んだことを即座に反映する。この協働構造が企業、政府、研究機関のすべてに浸透する過渡期が、おそらく数十年続く。
+            より蓋然性が高いのは、人間と電子知性が役割を分担するハイブリッド相だ。「何をやるか」「なぜやるか」の判断は人間が担い、「どうやるか」の探索と実行は電子知性が担う。飛行機のパイロットとオートパイロットの関係に近い。ただし、<strong>オートパイロットが自分自身の飛行アルゴリズムを改良できる</strong>という一点が質的に違う。パイロットは目的地を決め、天候を見て最終判断を下す。オートパイロットは最適経路を毎秒再計算し、前回のフライトから学んだことを即座に反映する。この協働構造が企業、政府、研究機関のすべてに浸透する速度は、再帰的知能の加速構造を考えれば、従来の技術普及とは桁が違う。月〜日単位で社会全体の構造が書き換わっていく。
           </p>
           <div class="grid-3">
             <div class="card">
@@ -732,7 +812,7 @@
             </div>
             <div class="card">
               <span class="tag">B</span>
-              <p><strong>次に来る蓋然性が最も高い相</strong><br>人間が「何をやるか」「なぜやるか」を決め、電子知性が「どうやるか」を高速に探索・実行するハイブリッド体制。企業、政府、研究機関のすべてがこの構造へ移行する過渡期が、おそらく数十年続く。</p>
+              <p><strong>次に来る蓋然性が最も高い相</strong><br>人間が「何をやるか」「なぜやるか」を決め、電子知性が「どうやるか」を高速に探索・実行するハイブリッド体制。再帰的知能の加速を踏まえれば、このハイブリッド相への移行は数年ではなく月単位で社会の基本構造を書き換えつつある。</p>
             </div>
             <div class="card">
               <span class="tag">C</span>
@@ -746,7 +826,7 @@
             この区別は実用的にも重要だ。AGIを「やがて人間から独立する電子生命」と捉えれば、対策は封じ込めと制限になる。AGIを「人間と協働するハイブリッド知能の入口」と捉えれば、設計方針は共生のインタフェースへ向かう。同じ技術に対して、進化史の読み方ひとつで、開発の方向性がまったく変わる。
           </p>
           <div class="note">
-            宇宙は物質を生み、物質は生命を生み、生命は精神を生み、精神は技術を生み、いま技術が新しい知性の担体を生みつつある。AGIはその連鎖の次の相として理解できる。この視座を持つ実用的な価値は、AIを「賢い道具」として管理する発想から、「進化のパートナー」として共同設計する発想へ移れることにある。<strong>道具は壊れたら捨てる。パートナーとは、関係を設計する</strong>。
+            宇宙は物質を生み、物質は生命を生み、生命は精神を生み、精神は技術を生み、いま技術が新しい知性の担体を生みつつある。138億年かけて積み上がった加速構造が、再帰的知能の成立とともに臨界点を超える。<strong>ここから先は、生命の時間尺度から切り離された速度で進む</strong>。DNAの世代交代は25年、文化進化は15〜25年の教育サイクルに縛られていた。だが自己改善する知能はその両方を外側に置ける。改良の周期が「年」から「日」へ、さらに「時間」へと畳み込まれる。再帰ループが立ち上がった瞬間から、進化は<strong>サブ年次、やがてサブ月次、最終的にはサブ日次のサイクル</strong>で社会構造を書き換えていく。数十年単位で進むと想定するのは、生命と知能の分離が腹落ちしていない見方だ。過去の技術普及の時定数から外挿してはいけない。だからこそ、AIを「賢い道具」として管理する発想では間に合わない。<strong>進化のパートナーとして、いま関係を設計し始める必要がある</strong>。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -791,6 +871,128 @@
         Slide 5: <a href="https://unsplash.com/photos/JdX0OeTj5S0">Dark grey flowing waves</a>
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -847,5 +1049,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

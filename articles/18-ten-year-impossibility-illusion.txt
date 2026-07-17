@@ -1,0 +1,367 @@
+10年で自己改善ループは起きないという直感は、なぜ外れるか — No.18 AGI HUB
+No. 18  ·  Takeoff  ·  5 Slides
+← Prev
+Same Category
+Next →
+AGI HUB  ·  No. 18  ·  Takeoff  ·  The Veteran's Certainty  ·  2026.04.11  ·  By Ryao
+10年で自己改善ループは起きないという直感は、なぜ外れるか
+Photo: Unsplash / Lenny Kuhne
+ある自動車メーカーで30年間ライン設計を担ってきた熟練エンジニアが、会議室の片隅でこう言ったとしよう。「ロボティクスがそんなに早く進むわけがない。10年やそこらで自己改善なんて絶対ない。現場を知らない人間が言うことだ」。発言は具体的な重みを持っている。彼は実際にロボットが工場のどこで詰まるかを知っている。部品公差が0.1mmずれた瞬間に停まるラインを、何百回も手で直してきた。その体験から組み上がった経験則は、会議室のAI楽観論より遥かに地に足がついている。
+この直感は正当だ。ただし、ある時代の経験則としては、という条件付きで。1995年から2020年までのロボティクスは、専用治具と固定プログラムの世界だった。ワークが1mmでも傾けば停まる。新しい部品を流すには数週間の段取り替えが要る。この25年の経験を線形に延ばせば、汎用ロボットが非構造化環境で自律的に働く未来はあと数十年は来ない。熟練者の直感はこの直線の上に立っている。
+しかし問題は、2022年から2025年の3年間で、この直線が折れたことだ。視覚-言語-行動モデル（VLA）と呼ばれる新しい系列の論文が、ロボティクスのスケーリング則を実証し始めた。Google DeepMindのRT-2は2023年7月に発表され、訓練で一度も見ていない物体に対して50%台の成功率でゼロショット操作を成立させた
+[1]
+。翌2024年11月、Physical Intelligence社のπ0は、洗濯物を畳む、箱を組み立てるといった10分級のロングホライゾンタスクを、複数のロボット本体にまたがって実行した
+[2]
+。2025年4月、π0.5は訓練で見たことのない他人の家のキッチンで、10分から15分かけて皿洗いを最後まで完遂した
+[3]
+。2025年3月、DeepMindはGemini Roboticsを発表し、9月にはGemini Robotics 1.5でAloha、Apptronik Apolloを含む複数の身体に同じモデルを流用できることを実証した
+[4]
+。
+記事の狙いは楽観論の流布ではない。「10年で確実に起きる」と言うつもりもない。ここで問うのは一点だけだ。「絶対ない」という経験則の強度が、2020-2025の事実の前で持ちこたえるかどうか。Toyotaのベテランエンジニアが25年間信頼してきた直感と、2022-2025に論文として出てきた数字は、同じ世界を見ているのか。それとも、経験則が終わる瞬間に立ち会っているのか。
+01
+直感の根拠
+1995-2020のロボティクスは専用治具と固定プログラムの世界。この25年を線形に延ばせば「10年で自己改善」はありえない。
+02
+直線の折れ
+2022-2025にVLA（視覚-言語-行動）モデルが登場。RT-2、π0/π0.5、Gemini Roboticsがゼロショット汎化を実証した。
+03
+問い
+経験則はどこまで有効か。それとも、非連続な技術が来る直前に直感が最も強く誤る、あのパターンの再演か。
+経験則は、経験則が成立した時代に対してのみ有効である
+1 / 5
+The Curve Bent Between 2022 And 2025
+ロボット基盤モデルという新しい曲線
+Photo: Pexels / Freek Wolsink
+熟練者の直感が成立していた時代の前提は三つある。第一に、ロボットは特定タスク向けに明示プログラムされなければ動かない。第二に、新しい環境・物体・照明条件への汎化はほぼ不可能で、必ず再教示が要る。第三に、データはタスクごとに別々で、他のロボットの経験を流用できない。この三前提のうち、2022年から2025年までのわずか3年間で、三つとも崩れた。
+起点は2022年4月、Googleの
+SayCan
+だった
+[5]
+。大規模言語モデルが「コーラを持ってきて」という自然言語の指示を、ロボットが実行可能な動作列に分解する。2023年7月、同じGoogle/DeepMindが
+RT-2
+を発表する
+[1]
+。ここで決定的な切り替えが起きた。ウェブスケールの画像-テキスト事前学習を、そのままロボット制御の出力層に接続したのだ。RT-2は訓練データに存在しない物体カテゴリに対して、従来モデルの2倍近い汎化性能を示した。同じ2023年、Google、DeepMind、Stanford、Berkeley、UTokyo、NYUを含む34機関が共同で
+Open X-Embodiment
+を公開する
+[6]
+。22種類の異なるロボット本体から集めた160万以上のエピソードを単一データセットに統合し、これで学習した
+RT-X
+は、個別ロボット用に学習したモデルを50%上回る成功率で汎化した。「ロボットごとにデータを取る」という前提が初めて破れた瞬間だ。
+2024年10月、OpenAI、DeepMindから分派したChelsea FinnとSergey Levineが率いる
+Physical Intelligence
+社が、創業1年弱で
+π0
+を公開した
+[2]
+。π0はVision-Language-Action flow modelと呼ばれる構造で、毎秒50ステップの高頻度制御ポリシーを吐く。洗濯物を畳む、ダンボール箱を組み立てるといった、従来の産業ロボットが苦手としてきた変形物と長時間タスクで連続成功を記録した。2025年4月、
+π0.5
+が公開される
+[3]
+。この版が決定的だ。訓練に含まれていない他人の家のキッチンに持ち込まれ、10分から15分かけて皿洗いと片付けを最後まで完遂した。「新しい家」は事前学習で見ていない環境である。人間が子どもに「台所を片付けて」と言うときの汎化に、初めて届いた。
+2025年3月、DeepMindは
+Gemini Robotics
+を発表する
+[4]
+。基盤モデルGemini 2.0を土台に、物理行動を新しい出力モダリティとして追加した。同年9月のGemini Robotics 1.5では、Aloha bi-arm、Apptronik Apollo（ヒューマノイド）、Franka研究用アームを含む異なる身体に対して、同じモデルがそのまま転移することが示された。身体の設計に縛られないポリシーという概念が初めて実装された。Nvidiaの
+GR00T
+（2024年3月発表、2025年にN1として更新）は、ヒューマノイド向けの汎用基盤モデルとして同じ路線を走っている
+[7]
+。
+ロボット基盤モデル：3年で折れた曲線
+2022年SayCanから2025年Gemini Robotics 1.5まで。汎化性能は年次で跳ね上がっている
+ロボット基盤モデルの進展 2022-2025
+0%
+25%
+50%
+75%
+100%
+新環境・新物体への汎化成功率
+2022.04
+2023.07
+2024.10
+2025.04
+2025.09
+SayCan
+RT-2 / RT-X
+π0
+π0.5 新家庭
+Gemini R 1.5
+1995-2020の線形外挿
+縦軸はvision-language-actionモデルの「訓練に含まれない新環境・新物体への汎化成功率」の定性推移。各点は論文公開時点で報告された代表的指標。線形外挿（点線）に対して実測は折れ上がっている。
+Sources: RT-2 (Brohan et al. 2023), RT-X (Padalkar et al. 2023), π0/π0.5 (Black et al. 2024, 2025), Gemini Robotics (DeepMind 2025)
+重要なのは、この3年間で
+「ロボット基盤モデル」という単語そのものが存在しなかった
+ことだ。2022年のロボティクス会議の目次を見れば、誰も「foundation model for robots」という言い方をしていない。2024年には論文の半分がそれを前提にしている。概念そのものが2年で定着した技術の成熟度を、25年分の経験則で否定できるかは、別の問いだ。
+2022年には存在しなかった概念が、2025年には前提になっている
+2 / 5
+Not "Yet" — Already
+現場の無人化は「まだ」ではなく、すでに起きている
+Photo: Unsplash / Dominik Vanyi
+論文の話はここまでにして、現場の数字に移る。熟練エンジニアの直感の背後には、「論文は論文、現場は現場」という健全な懐疑がある。妥当だ。ではその現場で、2024年から2025年に何が起きていたのか。
+オーストラリア、西オーストラリア州のピルバラ地区。Rio Tintoの鉄鉱石鉱山だ。2008年から試験運用を始めた小松製作所の自律運搬システム（AHS：Autonomous Haulage System）は、2024年8月に
+300台目
+の納車を迎えた
+[8]
+。この300台は10鉱区に配備され、Rio Tintoの日次生産能力の
+およそ80%
+を担う。Rio Tinto自身が公表する累計輸送量は、2018年の
+10億トン達成
+を経て、2024年時点で
+約48億トン
+に達している
+[9]
+。運転席に人間はいない。Rio Tintoは自律運搬導入以降の安全指標の改善を公表しており、運搬業務の死傷リスクは大幅に低下したと報告している。
+これは「将来の可能性」ではない。2026年4月の今、稼働している物理事象だ。鉱山という、温度・粉塵・振動・未舗装路という、ロボティクスに最も不利とされてきた環境で、人間の判断を要しない自律運搬が1日24時間動いている。Caterpillarの競合システム（Cat MineStar Command for hauling）も同種の運用に達しており、両者合わせて世界の露天掘り鉱山の自律トラック台数は2024年時点で1000台を超える
+[10]
+。熟練エンジニアが「現場の人間の判断が要る」と言うとき、想定している現場の一部は、すでに人間から離れて久しい。
+半導体製造に目を移す。TSMCは先端ノードのGigafabについて、**スマート製造と夜間省人運用**（同社CSRレポートで"smart manufacturing" "AI-powered fab"と表現）を継続的に拡張しており、フォトリソグラフィ・ウェハ搬送・検査の組み合わせで、人的介入を極小化した工程が複数存在する
+[11]
+。日本のFANUCは富士山麓の本社工場で、ロボットがロボットを組み立てるラインを1990年代から維持している。Amazon Roboticsは2022年6月にProteusを発表し、人間と共存できる初の自律移動ロボットとして倉庫に導入した。2024年時点でAmazonは75万台以上のロボットを自社物流網で稼働させており、これは世界最大のロボット艦隊である
+[12]
+。BMWはSpartanburg工場で、車体組立工程の大半をロボット化しており、業界平均（自動車組立のロボット密度）を上回る水準で運用している
+[13]
+。
+論点の整理が重要だ。熟練者が「無人化はまだない」と言うとき、厳密には
+「閉ループとしての完全無人化された自己再生産」
+がないことを指している。これは正しい。No.08「産業爆発の隠れた前提」で論じた通り、鉱山から半導体、ヒューマノイド量産までの閉ループはまだ閉じていない。だが熟練者の結論――だから「10年で自己改善は絶対ない」――には、もう一つの命題がそっと挟まっている。「
+個別工程の無人化もほとんど進んでいない
+」という含意だ。この二つはまったく別の命題だ。前者（閉ループの不成立）は真、後者（個別工程の自動化停滞）は偽。工程別の自動化率を積み上げると、2015年と2025年の現場は、質的に異なる。熟練者の直感は、この二つをすり替えた上で成立している。
+2015 vs 2025：工程別の人的判断排除率
+産業分野ごとの「人間の物理介在なしに完了する工程の割合」推定
+分野別自動化率の比較
+0%
+25%
+50%
+75%
+100%
+露天掘り運搬（Pilbara）
+30% (2015)
+80% (2024)
+自動車組立（BMW）
+70% (2015)
+90%+ (2024)
+倉庫物流（Amazon）
+3万台 (2015)
+75万台 (2024)
+半導体スマート製造
+10% (2015)
+50%+ 工程別 (2024)
+器用操作汎化（VLA）
+3% (2015)
+30% (2025)
+2025 実績
+2015 水準
+数値は各事業者の公開発表・年次報告に基づく推定。「0%」は人間の物理介在なしに完了する工程の比率で、判断・監視の全廃を意味しない。器用操作汎化はVLAモデルのベンチマーク値（ALOHA, RT-2等）を参照した相対値。
+Sources: Rio Tinto 2024, Amazon Robotics, BMW Spartanburg reports, TSMC 2023-24, RT-2 benchmark data
+Pilbaraの運搬トラックは既に80%が無人だ。これは未来形ではなく現在形である
+3 / 5
+Wright's Law Enters Robotics
+コスト曲線がロボティクスに到達したとき
+Photo: Unsplash / Gabriele Malaspina
+ここでもう一本の曲線に切り替える。性能だけでなく、価格だ。Wrightの法則は1936年にT.P. Wrightが航空機製造を観察して定式化した経験則で、累積生産量が倍増するごとに単位コストが一定率で下がる。太陽光パネルは半世紀にわたって学習率20%前後を維持し、2010年代以降は指数的な普及を生んだ。リチウムイオン電池は18%前後。両者に共通するのは、
+需要が立ち上がった瞬間に累積生産が急拡大し、コスト低下が加速したこと
+だ。
+ロボティクスでは、この曲線がまだ本格的には始まっていなかった。理由は単純で、**汎用ロボットの需要が存在しなかった**からだ。IFR（国際ロボット連盟）の統計によれば、産業用ロボットの年間出荷は2010年代半ばまで年20-30万台、2021年以降は年50万台超に拡大したが、これらは専用治具に組み込まれた固定タスク用のアームが中心だ。人型や汎用操作の市場は、2024年時点でも事実上未成立である。しかし、2025年時点で構成部品の価格低下は先行して始まっている。LiDARは2010年代初頭にVelodyneが約$75,000で販売していた64チャンネル機が、2017年に$17,900、2020年にはVelodyneが自動車グレードLiDARの$500以下を目標として公表し
+[14]
+、2024年時点で複数メーカーがその水準で量産している。2017年から2024年の7年間で、Velodyne一社だけで約36倍の価格低下だ。Hesai、Luminar、中国勢の参入でさらに圧縮が続いている。
+GPUの学習あたりコスト効率は、Epoch AIの追跡によれば
+年率約30-40%のペースで継続的に改善
+している
+[15]
+。2010年代後半以降だけで一桁以上の効率向上が積み上がっており、AIモデル学習の経済性は数年ごとに塗り替えられている。電動モーターとアクチュエータは、電気自動車の量産によってコスト低下が始まった副産物で、ヒューマノイド向けのサーボドライブは2020年から2025年で半減近い水準まで落ちている
+[16]
+。それでもここまでは構成要素の話で、ヒューマノイド本体はまだ量産前だ。学習率が効くのはこれからである。
+公表された目標価格を並べる。
+Tesla Optimus
+は2024年のAll-Hands会議でElon Muskが
+$20,000-30,000
+を目標と述べた
+[17]
+。Unitreeの中国製ヒューマノイドG1は2024年時点で
+$16,000
+前後で販売されている
+[18]
+。Figure AIの02は企業向けで未公表だが、Brett Adcockは2025年の公開インタビューで量産効果を折り込んだ5年以内のコスト半減を明言している
+[19]
+。これらは「願望」ではない。市場が成立した後の2-3サイクルの累積倍増を前提にした計算だ。
+ここで熟練エンジニアの直感に戻ろう。彼の経験則が成立していた1995-2020の25年間、ロボティクスのコスト曲線は実質的に横ばいだった。横ばいの25年を見続けた経験は、「これが世界の自然」と錯覚させる。しかし横ばいの原因は技術の内在的限界ではなく、需要不在だった。需要が立ち上がった瞬間、太陽光パネルと電池とLiDARが辿った曲線をロボティクスが辿らない積極的な理由は、物理的にも経済的にも存在しない。2010年の太陽光パネル業界で「10年で大規模電力源になる」と言う声は嘲笑された。嘲笑した人々は、横ばいの30年を見続けた業界ベテランだった。
+構成部品のコスト低下：既に曲線に乗っている
+LiDAR・GPU・サーボドライブの対数軸での推移
+ロボット構成部品のコスト低下
+$100,000
+$10,000
+$1,000
+$100
+$10
+2010
+2014
+2018
+2022
+2024
+LiDAR $75k
+$17.9k
+$500（2024）
+GPU同等計算
+40倍↓
+サーボドライブ
+半減
+縦軸は対数。LiDARは単体機械式(64ch)→ソリッドステート自動車グレードへの世代交代を含む実効価格。GPUはEpoch AIの追跡に基づく同等計算量の実効コスト。サーボはヒューマノイド向けの報道値の推定。
+Sources: Velodyne (2010-2024), Epoch AI Compute Database, Nikkei/Reuters 2024-25
+熟練者の経験則が強く効くのは、曲線が横ばいの時代だけだ。曲線が折れた瞬間、横ばい期の経験はむしろ判断を誤らせる。Wrightの法則がロボティクスに入ってくる入口は、既に開いている。問題は開いた入口の向こうで、何回の倍増が起きるか、そのタイムラインだけだ。
+横ばいの25年が終わった瞬間、経験則は逆方向に効き始める
+4 / 5
+The Pattern Of "Absolutely Not"
+「絶対ない」が過去何回、同じ理由で外れてきたか
+Photo: Unsplash / Cash Macanaya
+この記事は「10年で確実に自己改善ループが閉じる」と言わない。言えない。不確実性は大きく、ボトルネックは複数残っている。No.08で論じた通り、採掘・精錬・半導体・エネルギーの4層が同時に閉ループを成立させる必要があり、最後の一つが最も困難だ。熟練者の抵抗の一つは「物理層の制約は情報処理と質的に異なる」という正しい指摘だろう。実際そうだ。物理は慣性・摩擦・部品公差の世界で、情報処理のスケール則がそのまま横滑りしない。本記事の論点は、**情報処理側のフロンティアがどこまで物理層の設計サイクルを短縮するか**である。設計・シミュレーション・制御・学習が情報処理側に移管されるほど、物理層の試行回数が安くなる。だが、ここで扱う問いはそこではない。
+「絶対ない」という言い切りが、論理的に擁護できるか
+、それだけだ。
+歴史を並べる。1957年、Herbert Simonは人工知能研究の草創期に、「10年以内にコンピュータがチェスの世界チャンピオンを破る」と予言した
+[20]
+。外れた。40年かかった。1997年5月、DeepBlueがGarry Kasparovを破った。Simonが間違っていたのはタイミングだけで、結果は予言通りに起きた。1966年、米国学術会議のALPAC報告書は、機械翻訳の実用化は困難でありコストが人間翻訳を上回ると結論し、米国の自動翻訳研究予算の打ち切りを招いた
+[21]
+。50年後の2016年、Google Neural Machine Translationが商用品質の翻訳を実現する。2019年、DeepLが英独翻訳で人間を超えた。
+1990年代、囲碁は「人間に勝つには50年以上かかる」が業界のコンセンサスだった。2016年3月、AlphaGoがLee Sedolに4-1で勝利した
+[22]
+。翌2017年、AlphaZeroは囲碁、チェス、将棋を白紙から自己対戦だけで学習し、既存の全AIを超えた。蛋白質構造予測は50年にわたる未解決問題で、「AIには無理」が2018年時点での標準見解だった
+[23]
+。2020年11月、DeepMindのAlphaFold 2がCASP14で解決を宣言し、2021年には既知蛋白質の立体構造を全ゲノムスケールで公開した。2024年10月、この功績はノーベル化学賞になった。画像認識のImageNetベンチマークは、2010年時点で「人間水準は5年では無理」とされていた。2015年、ResNetが人間を超えた。
+2017年のMcKinseyレポートは、自動化による労働代替のタイムラインを職種別に予測した
+[24]
+。翻訳、画像診断、コーディング支援、文章生成、データ分析。全ての予測が、2020-2024年の実績に対して5年から15年遅れた。2018年に研究者コミュニティで行われたAGI到達時期のサーベイは、中央値2060年だった
+[25]
+。2023年の同じサーベイでは2047年に前倒しされ、2024年のMetaculusコミュニティ予測は2030年代前半に収束している
+[26]
+。専門家の「慎重な予測」が、5年ごとに10年ずつ前倒しされている。
+共通パターンがある。
+「絶対ない」と言った人々は、全員、その分野の実務経験が最も豊富な専門家だった
+。チェスのGrand Master、翻訳言語学者、囲碁のプロ棋士、構造生物学者、コンピュータビジョン研究者、McKinseyのアナリスト。彼らは現場を知っていた。現場の複雑さを知っていたがゆえに、「こんなの機械にできるわけがない」と確信した。そして、全員が同じ理由で外れた。非連続な技術、基盤モデル、自己対戦学習、ニューラルアーキテクチャが、横ばいだった曲線を折ったからだ。
+Chelsea Finn
+Stanford / Physical Intelligence
+Meta-learning の先駆者。π0/π0.5で家庭環境汎化を実証。
+Sergey Levine
+UC Berkeley / Physical Intelligence
+深層強化学習の主導者。VLAモデル系列の理論側を率いる。
+Jim Fan
+NVIDIA GEAR Lab
+GR00Tを率いる。身体汎化を「Physical Turing Test」と定義。
+Brett Adcock
+Figure AI CEO
+02/03ヒューマノイドの商用実装。BMWへの試験導入。
+年
+「絶対ない」と言った人々
+実際に起きた年
+何が曲線を折ったか
+1957
+チェス10年
+Simonの予言に冷笑した一般。40年は絶対無理と言う棋士層。
+1997 DeepBlue
+探索アルゴリズムと専用ハード
+1966
+翻訳不可能
+ALPAC報告書に署名した言語学者たち
+2016 GNMT / 2019 DeepL
+Transformerとニューラル翻訳
+1990s
+囲碁50年
+プロ棋士、AI研究者の多数派
+2016 AlphaGo
+深層学習＋MCTS＋自己対戦
+2018
+蛋白質構造AIに無理
+構造生物学の中核研究者
+2020 AlphaFold 2
+注意機構と進化情報の統合
+2026
+ロボット10年絶対ない
+ライン設計30年の熟練者
+？
+VLA基盤モデル＋Wrightの法則
+表の最後の行
+に「？」が一つ残っている。過去4行のパターンを正直に見つめた上で、この「？」を「絶対ない」で埋めるには、相応の論理的な根拠が要る。線形外挿だけでは足りない。横ばいの25年を見た体験だけでも足りない。2022-2025の基盤モデル論文と、2024年のPilbara 48億トン輸送と、2024年$500のLiDARを、全て否定する論理が要る。それを提示せずに「絶対ない」と言うなら、それは根拠ではなく、祈りに近い。
+1957年、Herbert Simonは10年と言った。間違いは時間だけだった。40年後、DeepBlueがKasparovを破った。2026年、ラインを30年設計してきた熟練エンジニアは「10年で絶対ない」と言う。彼が間違いうるのは、やはり時間だけかもしれない。それが何年になるかを、我々はまだ知らない。
+「絶対ない」と言う熟練者ほど、曲線が折れる瞬間に立ち会っている
+5 / 5
+References
+一次ソース
+Brohan et al. "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control." Google DeepMind, 2023.07.
+robotics-transformer2.github.io
+Black et al. "π0: A Vision-Language-Action Flow Model for General Robot Control." Physical Intelligence, 2024.10. arXiv:2410.24164.
+pi.website/blog/pi0
+Intelligence et al. "π0.5: a Vision-Language-Action Model with Open-World Generalization." Physical Intelligence, 2025.04. arXiv:2504.16054.
+physicalintelligence.company/blog/pi05
+Google DeepMind. "Gemini Robotics 1.5 brings AI agents into the physical world." 2025.09.
+deepmind.google
+Ahn et al. "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances (SayCan)." Google, 2022.04. arXiv:2204.01691.
+Padalkar et al. "Open X-Embodiment: Robotic Learning Datasets and RT-X Models." 34 institutions, 2023.10.
+robotics-transformer-x.github.io
+NVIDIA. "Project GR00T: A Foundation Model for Humanoid Robots." 2024.03 / GR00T N1 2025.
+developer.nvidia.com/project-gr00t
+Rio Tinto. "Komatsu and Rio Tinto celebrate 300th autonomous haul truck delivery at Pilbara operations." 2024.08.
+riotinto.com
+Rio Tinto. "Autonomous Haul Trucks achieve one billion tonne milestone." cumulative 4.8 billion tonnes as of 2024.
+riotinto.com/AHS
+International Mining. "Komatsu and Rio Tinto herald delivery of 300th autonomous haul truck." 2024.08.12.
+im-mining.com
+TSMC. "Corporate Social Responsibility Report 2023" — smart manufacturing and lights-out operations.
+Amazon. "10 years of Amazon Robotics: how robots help sort packages, move product, and improve safety." 2022-2024. Fleet size 750,000+ by 2024.
+BMW Group. "Plant Spartanburg automation and body shop robotization." BMW Press Release 2023-2024.
+Automotive News. "Velodyne targets sub-$500 price for lidar unit." 2020; follow-on industry reports to 2024.
+autonews.com
+Epoch AI. "Trends in GPU Price-Performance." Compute Trends Database, 2023-2024.
+epochai.org
+Nikkei / Reuters. "EV servo and actuator cost decline" 2020-2025 industry coverage.
+Tesla. All-Hands Meeting remarks on Optimus pricing target $20,000-30,000, Elon Musk 2024.
+Unitree Robotics. G1 humanoid product specifications and pricing, 2024.
+Figure AI. Brett Adcock public interviews 2024-2025 on Figure 02 and 03 humanoid deployment and cost trajectory.
+Simon, H. A. & Newell, A. "Heuristic problem solving: The next advance in operations research." 1957. Chess 10-year prediction.
+Pierce, J. R. et al. "Language and Machines — Computers in Translation and Linguistics (ALPAC Report)." NAS, 1966.
+Silver et al. "Mastering the game of Go with deep neural networks and tree search." Nature 529, 2016.
+Jumper et al. "Highly accurate protein structure prediction with AlphaFold." Nature 596, 2021. (2024 Nobel Prize in Chemistry)
+Manyika et al. "A Future That Works: Automation, Employment, and Productivity." McKinsey Global Institute, 2017.
+Grace et al. "When Will AI Exceed Human Performance? Evidence from AI Experts." 2018 researcher survey, median AGI 2060.
+Grace et al. "Thousands of AI Authors on the Future of AI." 2023 follow-up survey, median HLMI 2047.
+arXiv:2401.02843
+Metaculus Community. "When will the first general AI system be devised, tested, and publicly announced?" community prediction timeline, 2024 snapshot.
+metaculus.com/questions/5121
+Related Reading
+他の記事も読む
+No.08 · Takeoff
+産業爆発の隠れた前提は、ロボットがロボットを作ることだ
+No.08は「IF閉ループ成立 THEN産業爆発」の条件付き命題を中立的に論じた。本記事No.18は、そのIF節が2026年時点でどこまで成立しつつあるかの実証的な支持を提供する。
+No.04 · Takeoff
+同じ事実を見ていながら、予測は1,000倍ずれる
+テイクオフ速度の見解分岐を、Yudkowsky・Kokotajlo・Davidson・Erdilの4論者の構造で読む。本記事の「絶対ない」という立ち位置は、この系譜のどこに座るか。
+All Articles — 記事一覧へ
+Images: Unsplash /
+jHZ70nRk7Ns
+,
+7QAbQrQ2Iog
+,
+CjWsslYVnPI
+,
+TBikX7r2pKA
+,
+CcIIao_-Eow
+;
+        Pexels / Freek Wolsink (photo 34207359).
+Key sources: Physical Intelligence π0/π0.5, Google DeepMind RT-2 / Gemini Robotics, Open X-Embodiment, NVIDIA GR00T, Rio Tinto AHS program, Amazon Robotics, Velodyne LiDAR pricing, Epoch AI Compute Database, McKinsey Global Institute 2017, Grace et al. AI researcher surveys 2018 / 2023.
+Reader Feedback
+評価
+*
+1
+★
+★
+★
+★
+★
+5
+コメント
+*
+名前
+メールアドレス
+*
+Send Feedback
+フィードバックを送信しました。ありがとうございます。
+送信に失敗しました。時間をおいて再度お試しください。

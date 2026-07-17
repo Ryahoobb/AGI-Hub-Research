@@ -1,0 +1,39 @@
+name: Update prediction data weekly
+
+# Fetches latest Metaculus values for prediction.html and commits if changed.
+# Runs every Monday at 00:00 UTC. Can also be triggered manually.
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run updater
+        run: python3 scripts/update-prediction-data.py
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet prediction-data.json; then
+            echo "No changes in prediction-data.json"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prediction-data.json
+          git commit -m "data: weekly Metaculus refresh ($(date -u +%Y-%m-%d))"
+          git push

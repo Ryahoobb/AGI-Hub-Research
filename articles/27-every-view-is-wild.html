@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>どちらに転んでも、現在は異常である — AGI HUB</title>
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <meta name="revised" content="2026.04.15">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #ddd5bd;
+        --bg: #f3f1e9;
+        --bg-alt: #ebe7d3;
+        --accent: #b23a2f;
+        --accent-soft: rgba(178, 58, 47, 0.09);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+          游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+          游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
+          sans-serif;
+        font-feature-settings: "palt";
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background: var(--accent);
+        width: 0%;
+        z-index: 100;
+        transition: width 0.3s var(--ease);
+      }
+
+      .nav {
+        position: fixed;
+        right: 24px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: grid;
+        gap: 16px;
+        z-index: 50;
+      }
+
+      .nav button {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        border: 1.5px solid var(--meta);
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s var(--ease);
+      }
+
+      .nav button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.4);
+      }
+
+      main { scroll-snap-type: y mandatory; }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 80px 48px 64px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 32px;
+        scroll-snap-align: start;
+      }
+
+      .slide + .slide { border-top: 1px solid var(--border); }
+
+      .hero {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.6) contrast(1.1);
+        transition: filter 0.6s var(--ease);
+      }
+
+      .hero:hover { filter: grayscale(0) contrast(1); }
+
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+      .slide .hero.img-side-by-side { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .credits {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 80px;
+        border-top: 1px solid var(--border);
+      }
+
+      .credits p {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.047em;
+        line-height: 2;
+        color: var(--light-gray);
+      }
+
+      .credits a {
+        color: var(--meta);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .credits a:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.35s; }
+
+      .eyebrow {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1, h2 {
+        color: var(--black);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        max-width: 24ch;
+        padding-bottom: 16px;
+        border-bottom: 3px double var(--accent);
+      }
+
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
+      h1 { font-size: clamp(30px, 4.4vw, 38px); }
+      h2 { font-size: clamp(26px, 3.8vw, 34px); }
+
+      .lead {
+        max-width: 780px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .lead + .lead { margin-top: 8px; }
+
+      .panel { display: grid; gap: 24px; align-content: start; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+      .card {
+        padding: 24px 20px 24px 0;
+        border-top: 3px solid var(--accent);
+        background: transparent;
+      }
+
+      .card .tag { color: var(--accent); font-weight: 700; }
+      .card strong { color: var(--black); }
+
+      .card p {
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+        margin-bottom: 12px;
+      }
+
+      .bullets { display: grid; gap: 16px; }
+
+      .point {
+        padding-left: 16px;
+        border-left: 3px solid var(--accent);
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .point strong { color: var(--black); }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--border);
+      }
+
+      .timeline-step {
+        display: grid;
+        gap: 8px;
+        padding: 20px 16px;
+        background: var(--bg);
+      }
+
+      .timeline-step.highlight {
+        background: var(--accent);
+      }
+      .timeline-step.highlight .num,
+      .timeline-step.highlight p,
+      .timeline-step.highlight strong {
+        color: var(--bg);
+      }
+
+      .timeline-step .num {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.083em;
+        text-transform: uppercase;
+        color: var(--meta);
+      }
+
+      .timeline-step p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--body-text);
+      }
+
+      .timeline-step strong { color: var(--black); }
+
+      table.compare {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 3px solid var(--accent);
+        border-bottom: 3px double var(--accent);
+        background: var(--bg);
+      }
+
+      table.compare th,
+      table.compare td {
+        padding: 18px 16px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--body-text);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      table.compare th {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 1px solid var(--accent);
+        background: var(--accent-soft);
+      }
+
+      table.compare td strong { color: var(--black); }
+      table.compare tr:last-child td { border-bottom: none; }
+
+      .note {
+        font-size: 17px;
+        line-height: 1.7;
+        color: var(--body-text);
+        padding: 24px 28px;
+        margin: 12px 0;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        position: relative;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      .note * {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      .note::before {
+        content: "EVIDENCE";
+        display: block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+
+      .note strong { color: var(--accent); }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        text-transform: uppercase;
+      }
+
+      .slide-count {
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(1040px, calc(100vw - 48px));
+        margin: 36px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 320px;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .slide { padding: 64px 20px 48px; }
+        .grid-2, .grid-3, .timeline { grid-template-columns: 1fr; }
+        .nav { right: 12px; }
+        table.compare { font-size: 13px; }
+        table.compare th, table.compare td { padding: 14px 10px; }
+        .hero { aspect-ratio: 16 / 9; }
+        .slide .hero.img-fullbleed,
+        .slide .hero.img-wide {
+          width: 100%; max-width: 100%; aspect-ratio: 16/9; margin: 0; transform: none; left: 0;
+          position: static;
+        }
+        .slide .hero.img-content { max-width: 100%; aspect-ratio: 16 / 9; }
+        .credits { padding: 32px 24px 64px; }
+        .note { padding: 20px 18px; font-size: 15px; }
+        .svg-diagram { width: 100% !important; margin: 24px auto; }
+        .loop-block { padding: 20px 18px !important; }
+      }
+      @media (max-width: 480px) {
+        .slide { padding: 56px 16px 40px; }
+        .note { padding: 16px 14px; font-size: 14px; }
+      }
+
+      @media print {
+        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
+        .nav, .progress { display: none; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="pattern-investigation has-site-header" data-category="takeoff">
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+
+    <aside class="nav" aria-label="Slide navigation">
+      <button data-target="slide-1" class="active" aria-label="Slide 1"></button>
+      <button data-target="slide-2" aria-label="Slide 2"></button>
+      <button data-target="slide-3" aria-label="Slide 3"></button>
+      <button data-target="slide-4" aria-label="Slide 4"></button>
+      <button data-target="slide-5" aria-label="Slide 5"></button>
+      <button data-target="slide-6" aria-label="Slide 6"></button>
+      <button data-target="slide-7" aria-label="Slide 7"></button>
+    </aside>
+
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 27 &nbsp;&middot;&nbsp; Takeoff &nbsp;&middot;&nbsp; 7 Sections</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="26-automation-bottleneck-regime.html" style="color:inherit;text-decoration:none;">&larr; Prev</a>
+        <a href="../index.html#filter=takeoff" style="color:inherit;text-decoration:none;">Same Category</a>
+        <a href="28-geopolitics-phase-transition.html" style="color:inherit;text-decoration:none;">Next &rarr;</a>
+      </span>
+    </div>
+
+    <main>
+
+      <!-- ═══════════ SLIDE 1: THE TRIPLE FORK ═══════════ -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &middot; No. 27 &middot; Takeoff &middot; The Triple Fork &middot; 2026.04.13 &middot; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">穏当な未来予測は、なぜ存在しないのか</h1>
+        <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/every-view-is-wild/slide1.jpg" alt="Aerial view of road intersection at dusk">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">「人類の未来について穏当な見解を述べよ」。この課題を出されたら、あなたは何を書くか。銀河に広がるとは言いたくない。自滅するとも言いたくない。だが「まあ、普通に続く」と書こうとした瞬間、根拠が消える。年率2%の経済成長を8,200年続ければ、銀河の全原子を超える経済規模が必要になる。成長が止まるなら、止まる理由が要る。止まらないなら、物理法則と衝突する。どちらも「普通」ではない。</p>
+
+          <p class="lead">2021年7月、Open Philanthropy共同創設者のHolden Karnofskyは "All Possible Views About Humanity's Future Are Wild" と題した論考を発表した。「Most Important Century」シリーズの導入記事だ。Karnofskyの主張の骨格は三叉路の構造にある。楽観（銀河文明の起源に我々はいる）、保守（成長が鈍化してもスケールは変わらない）、懐疑（宇宙進出は起きない）。<strong>彼の論証に従えば、三つの道すべてが「常識外れ」に行き着く</strong>。穏当な中間地帯が消滅するのは、個々の予測が過激だからではなく、分岐の構造そのものが穏当さを許容しないからだ——これがKarnofskyの中心的な論点である。</p>
+
+          <p class="lead">Karnofskyが主張したのは特定の未来ではない。<strong>少なくとも彼が提示したこの三叉路の枠組みで見る限り、「穏当な未来」と呼べる選択肢が見当たらない</strong>ということだ。三本の分岐路のどれを選んでも、「信じがたい」と感じる場所に立つ。一つの分岐だけが奇妙なのではない。分岐構造全体が、現在という時間の異常さを告発している。この記事では、Karnofskyの論証がなぜ単なるモデルではなく人口統計学・物理学・経済学の具体的な数値に根ざしているのかを辿り、その先で日本語読者に届きにくい周辺論点を重ねて読み替える。どこまでがKarnofskyの主張で、どこからが本記事の拡張かは、本文中で明示する。</p>
+
+          <!-- SVG: Triple Fork Diagram (restored to pre-2026-04-15 layout) -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#b23a2f"/>
+                </marker>
+              </defs>
+              <!-- Convergence: WILD -->
+              <rect x="20" y="96" width="165" height="52" rx="4" fill="#b23a2f"/>
+              <text x="103" y="124" text-anchor="middle" font-family="'SF Mono',monospace" font-size="13" fill="#f3f1e9" font-weight="700" letter-spacing="0.10em">ALL VIEWS: WILD</text>
+              <text x="103" y="139" text-anchor="middle" font-family="sans-serif" font-size="10" fill="rgba(243,241,233,0.8)">どれを選んでも「常識外れ」</text>
+              <line x1="185" y1="122" x2="230" y2="122" stroke="#b23a2f" stroke-width="2" stroke-dasharray="6,4"/>
+              <!-- Center label -->
+              <rect x="230" y="100" width="190" height="44" rx="4" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="325" y="120" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#1a1a1a" letter-spacing="0.06em">PRESENT MOMENT</text>
+              <text x="325" y="136" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">現在という分岐点</text>
+              <!-- Three forks -->
+              <line x1="420" y1="110" x2="480" y2="42" stroke="#b23a2f" stroke-width="2" marker-end="url(#arrowR)"/>
+              <line x1="420" y1="122" x2="480" y2="122" stroke="#b23a2f" stroke-width="2" marker-end="url(#arrowR)"/>
+              <line x1="420" y1="134" x2="480" y2="202" stroke="#b23a2f" stroke-width="2" marker-end="url(#arrowR)"/>
+              <!-- Path labels on lines -->
+              <text x="442" y="68" font-family="sans-serif" font-size="9" fill="#b23a2f" transform="rotate(-25,442,68)">楽観</text>
+              <text x="442" y="116" font-family="sans-serif" font-size="9" fill="#b23a2f">保守</text>
+              <text x="442" y="172" font-family="sans-serif" font-size="9" fill="#b23a2f" transform="rotate(25,442,172)">懐疑</text>
+              <!-- Destination labels -->
+              <text x="494" y="30" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" letter-spacing="0.05em" font-weight="700">楽観シナリオ</text>
+              <text x="494" y="44" font-family="sans-serif" font-size="10" fill="#1a1a1a">銀河文明の起源 ← 21世紀が分岐点</text>
+              <text x="494" y="116" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" letter-spacing="0.05em" font-weight="700">保守シナリオ</text>
+              <text x="494" y="130" font-family="sans-serif" font-size="10" fill="#1a1a1a">10万年かかっても銀河に到達する</text>
+              <text x="494" y="200" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" letter-spacing="0.05em" font-weight="700">懐疑シナリオ</text>
+              <text x="494" y="214" font-family="sans-serif" font-size="10" fill="#1a1a1a">宇宙は沈黙する ← 人類は消える</text>
+            </svg>
+          </div>
+
+          <p class="lead">Karnofskyの三叉路が構造の軸になる。各シナリオが「常識外れ」に行き着く根拠はデータで裏付けられている。そして正常性バイアス——異常の渦中にいる者が「自分は普通だ」と感じる心理——が、この構造をさらに厄介にする。</p>
+        </div>
+
+        <div class="footer">
+          <span>三つの分岐路が全て異常に帰結する構造</span>
+          <span class="slide-count">1 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 2: GALAXY-SCALE CIVILIZATION ═══════════ -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">Galaxy-Scale Civilization</div>
+        <h2 class="reveal reveal-delay-1">銀河を埋め尽くす文明の、最初の100年</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/every-view-is-wild/slide2.jpg" alt="Interior of a large telescope structure">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">Karnofskyの楽観シナリオは、「Most Important Century」シリーズ全体を通じて彼が軸足を置く立場だ。21世紀中にAIが生産性の爆発的成長を引き起こし、人類は「技術的に成熟した」文明に到達する。銀河全体に自律的な居住地を展開し、デジタルな存在を含む膨大な人口を複数の恒星系に維持する能力を手にする。</p>
+
+          <p class="lead">この見方がwildなのは明白だ。だが、Karnofskyが強調するのは宇宙進出の壮大さではない。<strong>value lock-in</strong>という概念だ。宇宙進出の初期リーダーが、その後の数十億年にわたる銀河文明の価値観を事実上決定してしまう。光速の制約により、一度広がった文明の価値体系を後から統一的に書き換えることは物理的に不可能になる。つまり、最初の100年で固定された倫理的枠組みが、銀河の寿命と同じ時間スケールで凍結される。</p>
+
+          <p class="lead">蒸気機関の歴史が教える構造がここにある。ウィリアム・スタンレー・ジェヴォンズは1865年に、蒸気機関の熱効率が改善されるほどイギリスの石炭総消費量が増加する逆説を記録した。効率の向上が用途を拡大し、総量を増やす。Karnofskyの銀河シナリオは、この構造の宇宙スケール版として読み替えることができる。AIによる生産性向上は、生産活動を縮小するのではなく、拡張可能なフロンティアを爆発的に広げる。ジェヴォンズの石炭が銀河全体に置き換わった、とも言える。</p>
+
+          <p class="lead">「100年で銀河文明」を荒唐無稽と退けたくなるのは自然な反応だ。だがStuart ArmstrongとAnders Sandbergは2013年の論文 "Eternity in Six Hours" で、既知の物理学の範囲内で自己複製探査機を使えば、<strong>銀河植民は数百万年で完了する</strong>と試算した。銀河の寿命100億年に対して数百万年は0.1%にも満たない。問題は「できるかどうか」ではなく、「いつ始まるか」だけだ。</p>
+
+          <div class="note">
+            2021年の時点でKarnofskyは「21世紀中のAIによる生産性爆発」を中心シナリオとした。2026年現在、GPT-4（2023年3月）、Claude 3.5 Sonnet（2024年6月）、Gemini 2.0 Flash（2024年12月）、そしてscaling lawsの実証的裏付け（Kaplan et al. 2020, Hoffmann et al. 2022）は、この予測のタイムラインをむしろ前倒ししている。Karnofskyは現在Anthropicに在籍しており、彼自身の予測の検証に最も近い場所にいる。
+          </div>
+
+          <p class="lead">数兆人が将来存在するかもしれない人類のうち、現在生きている80億人は「最初のほんの一握り」にあたる。Karnofskyはこれを、歴史上かつてないほどの倫理的重みが現在の意思決定にかかっていることの根拠とする。楽観的だから安心できる話では全くない。楽観シナリオこそが、最も重い責任を突きつけている。だが、この「生産性爆発」の背後には、単なる直感以上の定量的な根拠がある。次のセクションで、保守派の反論を検証した後、その根拠に向き合う。</p>
+        </div>
+
+        <div class="footer">
+          <span>楽観シナリオが突きつける、value lock-inの重み</span>
+          <span class="slide-count">2 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 3: THE CONSERVATIVE SHOCK ═══════════ -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">The Conservative Shock</div>
+        <h2 class="reveal reveal-delay-1">10万年に引き延ばしても、図は変わらない</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/every-view-is-wild/slide3.jpg" alt="Canyon geological layers">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">保守派はこう主張する。100年では速すぎる。ニュートンの物理学から量子力学まで300年かかった。AGIから技術的成熟までなら500年、場合によっては10万年の科学的蓄積が必要だ。この立場は穏当に聞こえる。Karnofskyはそこを突く。</p>
+
+          <p class="lead">銀河の存続期間はおよそ100億年だ。その時間軸でチャートを描いたとき、「100年で到達」と「10万年で到達」の差は、グラフ上で視認できない。Karnofskyは実際に両方のチャートを並べて見せた。ほぼ同一の図になる。保守的な見積もりは、楽観シナリオの結論を覆さない。到着が遅れるだけで、到着する事実は変わらない。</p>
+
+          <!-- SVG: Galactic Timeline — 100yr vs 10万yr are visually indistinguishable -->
+          <div class="svg-diagram" style="width:min(1040px, calc(100vw - 48px));">
+            <svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+              <!-- Title -->
+              <text x="450" y="26" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a" font-weight="700">銀河の存続期間（100億年）を基準にした時間軸</text>
+              <text x="450" y="44" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#757575">100年も10万年も、100億年に対しては同じ「左端の一点」に重なる</text>
+
+              <!-- Main axis (linear scale: 0 to 10^10 years) -->
+              <line x1="80" y1="180" x2="820" y2="180" stroke="#1a1a1a" stroke-width="2"/>
+              <!-- Left origin -->
+              <line x1="80" y1="170" x2="80" y2="190" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="80" y="208" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#757575">現在</text>
+              <text x="80" y="222" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#999">(t=0)</text>
+
+              <!-- 10^10 yr right edge -->
+              <line x1="810" y1="170" x2="810" y2="190" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="810" y="208" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#757575">10¹⁰年</text>
+              <text x="810" y="222" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#999">銀河の終わり</text>
+
+              <!-- SINGLE overlapping bar at left edge — 100yr AND 10万yr both collapse here -->
+              <!-- Linear scale: 100 / 10^10 = 10^-8, 10^5 / 10^10 = 10^-5 → pixel distance <0.01px -->
+              <rect x="78" y="140" width="6" height="80" fill="#b23a2f"/>
+
+              <!-- Annotation arrow from bar to combined label -->
+              <line x1="84" y1="150" x2="200" y2="105" stroke="#b23a2f" stroke-width="1" stroke-dasharray="4,3"/>
+
+              <!-- Combined label for both scenarios -->
+              <rect x="200" y="75" width="320" height="70" rx="4" fill="#fff" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="360" y="97" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700" letter-spacing="0.08em">BOTH COLLAPSE TO THIS POINT</text>
+              <text x="360" y="118" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="600">「100年で到達」も「10万年で到達」も</text>
+              <text x="360" y="135" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="600">同じ一点に重なる（視認不能）</text>
+
+              <!-- Math annotation -->
+              <rect x="550" y="80" width="260" height="60" rx="3" fill="#f3f1e9" stroke="#ddd5bd" stroke-width="1"/>
+              <text x="560" y="98" font-family="'SF Mono',monospace" font-size="10" fill="#585858">100年  / 10¹⁰年 = 10⁻⁸</text>
+              <text x="560" y="114" font-family="'SF Mono',monospace" font-size="10" fill="#585858">10万年 / 10¹⁰年 = 10⁻⁵</text>
+              <text x="560" y="132" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" font-weight="700">差 = 0.001%（ピクセル未満）</text>
+
+              <!-- Galaxy span bracket -->
+              <line x1="80" y1="250" x2="810" y2="250" stroke="#999" stroke-width="1.5" stroke-dasharray="6,4"/>
+              <line x1="80" y1="244" x2="80" y2="256" stroke="#999" stroke-width="1.5"/>
+              <line x1="810" y1="244" x2="810" y2="256" stroke="#999" stroke-width="1.5"/>
+              <text x="445" y="270" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#757575">銀河の存続期間 = 100億年（10¹⁰年）</text>
+
+              <!-- Key insight text at bottom -->
+              <rect x="150" y="300" width="600" height="52" rx="4" fill="#b23a2f"/>
+              <text x="450" y="325" text-anchor="middle" font-family="'SF Mono',monospace" font-size="12" fill="#f3f1e9" font-weight="700" letter-spacing="0.10em">CONSERVATIVE ≠ MODERATE</text>
+              <text x="450" y="343" text-anchor="middle" font-family="sans-serif" font-size="12" fill="rgba(243,241,233,0.9)">保守的な見積もりを採っても、楽観シナリオの結論は覆らない</text>
+            </svg>
+          </div>
+
+          <p class="lead">ここに、Karnofskyの論証で最も鋭利な刃がある。「保守的であること」は「穏当であること」と同義ではない。保守的な見積もりを採用しても、結論は同じだ。我々は、銀河の歴史において「ほぼ無生命」から「生命で満たされた」状態への遷移が起きるまさにその一瞬に存在している。100年後にその遷移が始まるか、10万年後に始まるかは、100億年のスケールでは丸め誤差にすぎない。</p>
+
+          <p class="lead">W. Ross Ashbyが1956年の『Introduction to Cybernetics』で定式化した必要多様性の法則を思い出すと、この構造がより鮮明になる。制御系の多様性は、被制御系の多様性と同等以上でなければならない。銀河規模の文明は銀河規模の制御系を必要とし、その構築にかかる時間は数百年でも数万年でも、銀河の寿命に対しては瞬きの一瞬だ。保守派が「まだ早い」と言い続けても、構造は変わらない。遅延が結論を変えるには、銀河そのものの寿命と同程度の遅延が必要になる。</p>
+
+          <p class="lead">つまり、保守的であることの代償は高い。「穏当な未来」を描くためには、保守的であるだけでは足りず、宇宙進出が原理的に不可能であるか、人類が到達前に消滅するか、どちらかを主張する必要がある。保守派は自覚なく懐疑派の領域に踏み込んでいる。しかも、保守派が依拠する「年率2%成長」という常識的な数字ですら、歴史的に見れば深刻な異常値だ。次のセクションで、その異常性の正体を暴く。</p>
+        </div>
+
+        <div class="footer">
+          <span>保守的な見積もりが穏当さを保証しない逆説</span>
+          <span class="slide-count">3 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 4: THE CANCELLED SINGULARITY ═══════════ -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">The Cancelled Singularity</div>
+        <h2 class="reveal reveal-delay-1">シンギュラリティが取り消された年</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/every-view-is-wild/slide3a.jpg" alt="Abstract dark curves suggesting exponential growth">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">1960年。物理学者Heinz von Foersterは、人類の人口動態に奇妙なパターンを見つけた。人口の倍増時間が、倍増するたびに半減している。紀元前から20世紀半ばまで、この双曲線的成長は数千年にわたって驚くほど正確にデータに乗っていた。この曲線を外挿すると、有限時間で人口が無限大に到達する。von Foersterが1960年の論文で算出した「Doomsday」は、奇しくも2026年11月13日——この記事を書いている年の日付と一致する。もちろんvon Foerster自身は「その日に世界が終わる」とは主張していない。当時のデータを外挿したときに特異点が現れる位置、という数学的な論点だ。ただし、この日付が現在と重なるという歴史的事実は、双曲線成長がどれほど鋭利なモデルだったかを思い出させる記号としては機能する。</p>
+
+          <p class="lead">世界のGDPの倍増時間も、紀元前からおよそ1960年頃まで同じ双曲線に乗っていた。Open PhilanthropyのDavid Roodmanは2020年の研究 "Modeling the Human Trajectory" で、人類の経済成長軌道全体をモデル化し、この双曲線パターンが単なる偶然ではないことを示した。成長率そのものが成長する。倍増時間が短くなり続ける。21世紀初頭にはシンギュラリティに到達するはずだった。</p>
+
+          <!-- SVG: World GDP Doubling Time (data-grounded, simplified) -->
+          <div class="svg-diagram" style="width:min(1040px, calc(100vw - 48px));">
+            <svg viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowB" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+                  <path d="M0,0 L10,4 L0,8" fill="#1a1a1a"/>
+                </marker>
+              </defs>
+
+              <!-- Title -->
+              <text x="450" y="26" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#1a1a1a" font-weight="700">世界GDPの倍増時間（年） — 紀元前〜現在</text>
+              <text x="450" y="46" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#757575">縦軸: 倍増時間（年、対数） / 横軸: 時間　※Roodman 2020 / Maddison / DeLong に基づく概算</text>
+
+              <!-- Axes -->
+              <line x1="110" y1="370" x2="860" y2="370" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrowB)"/>
+              <line x1="110" y1="370" x2="110" y2="70" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arrowB)"/>
+
+              <!-- Y-axis ticks and labels (log scale: dt at top = fast, dt at bottom = slow) -->
+              <!-- dt=1年 at y=70, dt=10000年 at y=370 -->
+              <line x1="106" y1="70"  x2="110" y2="70"  stroke="#1a1a1a" stroke-width="1.5"/>
+              <line x1="106" y1="145" x2="110" y2="145" stroke="#999" stroke-width="1"/>
+              <line x1="106" y1="220" x2="110" y2="220" stroke="#999" stroke-width="1"/>
+              <line x1="106" y1="295" x2="110" y2="295" stroke="#999" stroke-width="1"/>
+              <line x1="106" y1="370" x2="110" y2="370" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="100" y="74"  text-anchor="end" font-family="sans-serif" font-size="10" fill="#585858">1 年</text>
+              <text x="100" y="149" text-anchor="end" font-family="sans-serif" font-size="10" fill="#585858">10 年</text>
+              <text x="100" y="224" text-anchor="end" font-family="sans-serif" font-size="10" fill="#585858">100 年</text>
+              <text x="100" y="299" text-anchor="end" font-family="sans-serif" font-size="10" fill="#585858">1,000 年</text>
+              <text x="100" y="374" text-anchor="end" font-family="sans-serif" font-size="10" fill="#585858">10,000 年</text>
+
+              <!-- Horizontal guide lines (subtle) -->
+              <line x1="110" y1="145" x2="860" y2="145" stroke="#eee" stroke-width="1"/>
+              <line x1="110" y1="220" x2="860" y2="220" stroke="#eee" stroke-width="1"/>
+              <line x1="110" y1="295" x2="860" y2="295" stroke="#eee" stroke-width="1"/>
+
+              <!-- X-axis labels -->
+              <text x="140" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">5000 BC</text>
+              <text x="260" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">1 AD</text>
+              <text x="420" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">1500</text>
+              <text x="560" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">1800</text>
+              <text x="640" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">1900</text>
+              <text x="700" y="390" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700">1960</text>
+              <text x="780" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">2024</text>
+              <text x="830" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">2050</text>
+              <text x="485" y="415" text-anchor="middle" font-family="'SF Mono',monospace" font-size="12" fill="#1a1a1a" font-weight="600" letter-spacing="0.06em">時間</text>
+
+              <!-- Historical curve (solid red): dt shortens from 10,000年 to 18年 over 7000 years -->
+              <!-- Anchors: (140,370) 10000y, (260,340) 2500y, (420,303) 1000y, (560,233) 125y, (640,194) 40y, (700,163) 18y -->
+              <path d="M 140,370 C 200,368 240,352 260,340 C 320,328 370,318 420,303 C 480,285 520,260 560,233 C 600,215 620,205 640,194 C 670,183 690,172 700,163" stroke="#b23a2f" stroke-width="3" fill="none"/>
+
+              <!-- Post-1960 near-flat (solid red): dt slightly rises from 18y to 25y -->
+              <path d="M 700,163 C 730,170 760,176 780,178" stroke="#b23a2f" stroke-width="3" fill="none"/>
+
+              <!-- Data points -->
+              <circle cx="560" cy="233" r="4" fill="#b23a2f"/>
+              <circle cx="640" cy="194" r="4" fill="#b23a2f"/>
+              <circle cx="700" cy="163" r="5" fill="#b23a2f"/>
+              <circle cx="780" cy="178" r="4" fill="#b23a2f"/>
+
+              <!-- Data labels -->
+              <text x="560" y="252" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a">125年</text>
+              <text x="640" y="213" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a">40年</text>
+              <text x="700" y="150" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700">18年（最短）</text>
+              <text x="780" y="195" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a">25年</text>
+
+              <!-- Von Foerster extrapolation (dashed grey): dt → 0 at 2026 -->
+              <path d="M 700,163 C 720,130 740,100 760,80 C 770,72 775,70 780,70" stroke="#888" stroke-width="2" stroke-dasharray="5,4" fill="none"/>
+              <text x="755" y="62" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#888" font-style="italic">Von Foerster外挿（2026に倍増=0）</text>
+
+              <!-- Post-1960 flat extension (what actually happened projecting forward) -->
+              <path d="M 780,178 L 830,178" stroke="#1a1a1a" stroke-width="2" stroke-dasharray="6,3"/>
+
+              <!-- Annotation: stabilized at ~25y -->
+              <line x1="780" y1="178" x2="820" y2="240" stroke="#585858" stroke-width="1" opacity="0.6"/>
+              <text x="820" y="256" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">1960以降：倍増は</text>
+              <text x="820" y="270" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#585858">20〜30年で安定</text>
+
+              <!-- Legend -->
+              <rect x="130" y="80" width="240" height="66" rx="3" fill="#f3f1e9" stroke="#ddd5bd" stroke-width="1"/>
+              <text x="144" y="98" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" font-weight="700" letter-spacing="0.08em">LEGEND</text>
+              <line x1="144" y1="112" x2="176" y2="112" stroke="#b23a2f" stroke-width="3"/>
+              <text x="184" y="116" font-family="sans-serif" font-size="10" fill="#585858">実績（紀元前〜2024）</text>
+              <line x1="144" y1="128" x2="176" y2="128" stroke="#888" stroke-width="2" stroke-dasharray="5,4"/>
+              <text x="184" y="132" font-family="sans-serif" font-size="10" fill="#585858">Von Foerster外挿（外れた）</text>
+            </svg>
+          </div>
+
+          <p class="lead">だが1960年頃、パターンは崩壊した。人口転換（demographic transition）が起きたのだ。豊かになった社会は出生率を下げた。資源の増加が人口増加に直結しなくなった。GDPの倍増時間は水平化し、双曲線は折れた。Scott Alexanderは2019年の "1960: The Year The Singularity Was Cancelled" でこの構造を精緻に復元している。</p>
+
+          <p class="lead">ここで理解すべきは、なぜ双曲線が成立していたかだ。数千年にわたる人類史の大部分で、マルサスの罠と呼ばれるフィードバックループが回っていた。この5段階の自己強化ループが、成長率そのものの加速を駆動していた。</p>
+
+          <!-- Self-reinforcing loop block -->
+          <div class="loop-block" style="margin:20px 0;padding:28px 32px;background:#1a1a1a;color:#f3f1e9;border-radius:4px;box-sizing:border-box;max-width:100%;overflow-wrap:break-word;">
+            <div style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:10px;letter-spacing:0.12em;color:#b23a2f;font-weight:700;margin-bottom:14px;">THE SELF-REINFORCING LOOP</div>
+            <div style="font-size:18px;font-weight:700;line-height:1.7;color:#f3f1e9;">
+              技術が改善される
+              <span style="color:#b23a2f;margin:0 8px;">→</span>
+              食料生産が増える
+              <span style="color:#b23a2f;margin:0 8px;">→</span>
+              人口が増える
+              <span style="color:#b23a2f;margin:0 8px;">→</span>
+              研究者が増える
+              <span style="color:#b23a2f;margin:0 8px;">→</span>
+              技術がさらに改善される
+              <span style="color:#b23a2f;margin:0 8px;">↻</span>
+            </div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(243,241,233,0.2);font-size:13px;line-height:1.7;color:rgba(243,241,233,0.85);">
+              このループの唯一のボトルネックは<strong style="color:#f3f1e9;">人口</strong>だった。研究者の供給源は人間であり、人間の供給源は食料扶養力だった。人口が増え続ける限り、ループは自己加速した。AIがやっているのは、このループから人口という制約を外すことだ。研究者の供給を、食料生産と無関係に拡張できるようになる。ループが回る速度は、もはや赤ん坊が大人になるまでの20年で律速されない。
+            </div>
+          </div>
+
+          <p class="lead">各段階をもう少し具体的に見てみよう。農業技術の改善は一人当たりの余剰カロリーを生む。余剰カロリーは人口扶養力を高める。人口が増えれば、その中から技術者や発明者が一定比率で生まれる。発明者が増えれば技術の改善速度が上がる。そして改善された技術が再び食料生産を押し上げる。産業革命は、このループの最も劇的な加速局面だった。トラクターが食料生産を効率化し、より多くの人間を養い、より多くの発明者を生み出した。</p>
+
+          <p class="lead">だがAlexanderが強調するように、<strong>トラクターは発明できない</strong>。トラクターは食料を増やすが、トラクター自身が次のトラクターを設計することはない。フィードバックループの「研究者→技術」の部分は、つねに人間の頭脳に依存していた。人口転換がその頭脳の供給を止めた瞬間、ループは途切れた。</p>
+
+          <div class="note">
+            「単なるモデルだ」と片付ける人がいる。だがこのモデルは数千年の実データに裏打ちされている。von Foersterの1960年の論文からRoodmanの2020年の研究まで、異なる時代の研究者が同じパターンを独立に確認している。Tom Davidsonは2021年にOpen Philanthropyのために "Could Advanced AI Drive Explosive Economic Growth?" を書き、AIが双曲線成長を復活させるメカニズムを経済学のフレームワークで定量分析した。「単なる外挿」ではなく、具体的なフィードバック構造とその崩壊理由が特定されている。
+          </div>
+
+          <p class="lead">ここでAIが登場する。AIは、人口転換によって途切れたフィードバックループを再起動する可能性がある。「金があればAIを増やせる。AIを増やせば研究が加速する。研究が加速すれば技術が進歩する。技術が進歩すれば金が増える」。このループには人口のボトルネックがない。トラクターは発明できなかったが、<strong>AIは発明できる</strong>。人間の頭脳に依存していたフィードバックの環が、AIによって閉じ直される可能性がある。これが「単なる楽観」ではない理由だ。双曲線が折れた原因が特定されており、その原因を除去する技術が現に発達しつつある。</p>
+        </div>
+
+        <div class="footer">
+          <span>人口転換が折った双曲線を、AIが再起動する構造</span>
+          <span class="slide-count">4 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 5: THE DUPLICATOR ═══════════ -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">The Duplicator</div>
+        <h2 class="reveal reveal-delay-1">複製者の経済学、原子の限界</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/every-view-is-wild/slide3b.jpg" alt="Macro of black circuit board traces">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">前のセクションで示したフィードバックループは、AIが「人口のボトルネック」を迂回する構造だった。この構造をさらに推し進めると、ある思考実験に到達する。Karnofskyが "The Duplicator" と呼ぶものだ。</p>
+
+          <p class="lead">あなたが優秀な研究者だとする。あなたのデジタルコピーを1万個作れるとしたら、何が起きるか。1万人のあなたが、それぞれ異なる研究テーマに取り組む。一人が行き詰まれば、そのコピーを破棄して別のアプローチで再起動できる。速度を10倍にして稼働させれば、主観的には10年分の研究を1年で完了する。Robin Hansonはオックスフォード大学出版局から2016年に刊行した『The Age of Em』で、この脳エミュレーション（em）経済を精密にモデル化した。複製可能、速度変更可能、分岐可能な知的労働者の経済。Hansonの計算では、em経済の倍増時間はおよそ1ヶ月にまで短縮される。</p>
+
+          <p class="lead">David Chalmersは2010年の論文 "The Singularity: A Philosophical Analysis" のSection 9で、デジタル意識の哲学的地位を分析している。もしデジタルマインドが意識を持つなら、複製は単なる計算の並列化ではなく、存在の増殖になる。Hansonのem経済は技術的に荒唐無稽に聞こえるかもしれないが、現在のLLMが示しているのは、<strong>人間の認知能力の機械的な再現が、脳の完全スキャンを待たずに別の経路で進行している</strong>という事実だ。emの経済学的帰結は、LLMベースのAIエージェントにも大部分が当てはまる。</p>
+
+          <p class="lead">だが、ここで物理学が壁を立てる。Karnofskyは "More on Multiple World-Size Economies Per Atom" で、2%成長を8,200年続けた場合の帰結を計算した。現在の世界経済はおよそ10の14乗ドル規模。年率2%で8,200年成長すると、必要な経済価値は10の85乗ドルに達する。銀河に含まれる原子の数はおよそ10の70乗個だ。つまり、<strong>原子1個あたりに複数の世界規模経済が必要になる</strong>。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>変数</th>
+                <th>値</th>
+                <th>含意</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>現在の世界GDP</strong></td>
+                <td>~10<sup>14</sup> ドル</td>
+                <td>出発点</td>
+              </tr>
+              <tr>
+                <td><strong>2%成長 &times; 8,200年</strong></td>
+                <td>~10<sup>85</sup> ドル</td>
+                <td>必要な経済規模</td>
+              </tr>
+              <tr>
+                <td><strong>銀河の原子数</strong></td>
+                <td>~10<sup>70</sup> 個</td>
+                <td>物理的上限</td>
+              </tr>
+              <tr>
+                <td><strong>差分</strong></td>
+                <td>10<sup>15</sup> 倍</td>
+                <td style="color:var(--accent);"><strong>原子あたり千兆個の経済が必要</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">Karnofskyはこの数字の意味を掘り下げるために「完璧な1年」の思考実験を使う。銀河の全原子が意識を持ち、その一つひとつが「毎秒が至福の瞬間である完璧な1年間」を体験したとしても、それが生み出す価値はまだ10の85乗ドルに届かない。2%成長が8,200年を超えて続くには、<strong>人間が経験として認識可能な活動の枠組みそのものを超える必要がある</strong>。</p>
+
+          <p class="lead">この分析が教えるのは二つのことだ。第一に、現在の成長率が永続する未来はない。物理法則が許容しない。第二に、成長が止まるか変容するかの分岐点は、宇宙スケールの歴史の中では「もうすぐ」に位置している。Roodmanの成長軌道モデルとDavidsonの爆発的成長分析を重ねると、双曲線の再起動が起きた場合、数年から数十年で物理的限界への接近が始まる。保守派の「年率2%」ですらこの壁にぶつかるのだから、AIが再起動した双曲線はさらに速く壁に到達する。成長の終着点がどこかではない。<strong>成長という概念そのものが意味を失う地平</strong>が、想定よりはるかに近い。</p>
+
+          <p class="lead">ここで自然な問いが立つ。保守派の年率2%ですら8,200年で銀河を使い尽くすなら、AIが成長率を跳ね上げた場合、飽和はあっという間に到達するのではないか。この問いは正しい。2%ではなく10%で成長したら、原子の壁は8,200年ではなく1,800年で来る。成長率20%なら900年だ。AIが双曲線を再起動すれば、壁までの距離は歴史的スケールから人間のライフスパンに縮む可能性がある。ではその後はどうなるか。想定を別の次元に逃がせる仮説が三つある。<strong>第一に、計算の熱力学的効率</strong>。ランダウアー限界（1ビットの消去に必要な最小エネルギー）に到達するまで、現在の計算機は桁違いに無駄が多い。物理法則の抜け穴ではなく、既知の法則の範囲内でまだ十数桁の改善余地がある。<strong>第二に、デジタル空間への軸足移動</strong>。物質の移動を伴わない価値（意識の深度、体験、多様性）は、物理的フットプリントに対して非線形に伸びる。GDPを「財+サービスの総量」と定義し続ける限り壁は近いが、価値の測定単位を変えれば壁の位置も動く。<strong>第三に、宇宙論スケールの資源拡張</strong>。ダイソン球的な恒星エネルギーの回収、銀河間への拡張、ブラックホールを使った計算機（Frautschi 1982）など、現在のGDPが前提にする「地球規模の資源」を数十桁拡張する経路が理論上は存在する。いずれも既知の物理の範囲内だ。飽和が終わりを意味するとは限らない。成長の定義そのものが、物理的上限とは別の次元へ逃げる可能性がある——ただし、その逃亡を「穏当」と呼ぶことはできない。</p>
+
+          <div class="note">
+            <strong>「成長が飽和する」なら、その後はどうなるか？</strong><br><br>
+            成長が物理的上限に到達するのは確かだ。では上限に当たった後、成長は終わるのか。三つの仮説がある。<br><br>
+            <strong>①飽和して停止:</strong> 成長率がゼロに近づき、定常状態に至る。ただしこれが「何兆人もの意識が何十億年も至福の中に生きる定常状態」であれば、「成長の停止」は悲劇ではない。<br><br>
+            <strong>②次元の拡張:</strong> 3次元空間の物理的限界は、計算が「どれだけ効率的に宇宙のエネルギーと構造を使えるか」の問題でもある。熱力学的限界（ランダウアー限界）を超えるには物理法則の抜け穴が必要だが、量子コンピューティングや宇宙論スケールの工学が異なる次元を開く可能性は排除できない。<br><br>
+            <strong>③成長の変容:</strong> 経済的成長という概念そのものが意味を変える。現在の「GDP=財とサービスの総量」という測定単位では測れない価値（意識の深度、多様性、美しさ）へ軸足が移り、物理的上限とは無縁な成長が始まる可能性がある。Karnofskyは具体的な答えを提示していないが、「成長が上限に当たること」が終わりではなく「変容の入口」である可能性を示唆している。いずれにしても、その地平は想定より速く近づいている。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>原子あたり複数経済という不可能性が示す壁</span>
+          <span class="slide-count">5 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 6: FERMI'S SILENCE ═══════════ -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow reveal">Fermi's Silence</div>
+        <h2 class="reveal reveal-delay-1">沈黙が語る、最も不都合な推論</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/every-view-is-wild/slide4.jpg" alt="Grayscale satellite dish against empty sky">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">楽観派は銀河文明を描く。双曲線は数千年のデータに裏打ちされている。AIがフィードバックループを再起動する構造は具体的だ。物理的限界は存在するが、その限界に到達するまでに膨大な変容が起きる。ここまでの論証を受けて、最後の逃げ場に向かう。宇宙進出そのものを否定すること。人類は銀河に広がらない。技術的に不可能だから。やる動機がないから。先に自滅するから。この懐疑的な立場は、一見すると最も「穏当」に聞こえる。だがKarnofskyは、懐疑派がフェルミパラドックスの前で沈黙せざるを得ないことを指摘する。</p>
+
+          <p class="lead">フェルミパラドックスの核心は、二つの観測事実の組み合わせにある。第一に、宇宙進出は物理法則の範囲内で実現可能に見える。第二に、銀河は空である。この組み合わせ自体が異常だ。「穏当」な世界は、銀河が知的生命で溢れているか、宇宙旅行が原理的に不可能であるか、どちらかの世界だろう。だが現実はそのどちらでもない。</p>
+
+          <p class="lead">Anders Sandberg、Eric Drexler、Toby Ordは2018年の論文 "Dissolving the Fermi Paradox" で、フェルミパラドックスの定量分析を行った。不確実性を手抜きせずに扱うと、「銀河に他の知的文明が存在しない」確率はおよそ3分の1に達する。パラドックスは解消しないが、「我々が最初」という仮説が非合理的ではないことを示している。もし我々が最初であるなら、<a href="13-dissipative-controllability.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">生命が宇宙に登場すること自体が驚くべき出来事</a>であり、銀河文明への拡張は「最も困難なステップを既に踏破した」後の相対的に容易な段階にすぎない。</p>
+
+          <p class="lead">Karnofskyは懐疑派の根拠を6つに分類した。それぞれが依存する前提と、反証可能性の度合いを検証すると、興味深い構造が見えてくる。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>懐疑の類型</th>
+                <th>依存する前提</th>
+                <th>反証可能性</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>技術的不可能</strong></td>
+                <td>物理法則が恒星間航行を許容しない</td>
+                <td style="color:var(--accent);">低い &mdash; 現在の物理学と矛盾</td>
+              </tr>
+              <tr>
+                <td><strong>動機の不在</strong></td>
+                <td>十分に進んだ文明は拡張を望まない</td>
+                <td>検証不能 &mdash; 進んだ文明の心理を推測</td>
+              </tr>
+              <tr>
+                <td><strong>文明の不安定性</strong></td>
+                <td>多惑星文明は数十億年維持できない</td>
+                <td>中程度 &mdash; 自己複製probe不要論と矛盾</td>
+              </tr>
+              <tr>
+                <td><strong>自滅</strong></td>
+                <td>全ての知的文明が宇宙進出前に滅びる</td>
+                <td style="color:var(--accent);">現時点で最も支持者が多いが、<strong>100%のフィルタ率</strong>を要求</td>
+              </tr>
+              <tr>
+                <td><strong>先行文明の存在</strong></td>
+                <td>異星文明が先に銀河を植民済み</td>
+                <td style="color:var(--accent);">観測証拠なし &mdash; 銀河は空に見える</td>
+              </tr>
+              <tr>
+                <td><strong>隠蔽・シミュレーション</strong></td>
+                <td>我々の観測が根本的に誤っている</td>
+                <td>検証不能 &mdash; 原理的に反証できない</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">6つの類型のうち、反証可能な主張は少数だ。そして反証可能なもの（「技術的に不可能」「先行文明の存在」）は、現在の物理学や観測データと既に緊張関係にある。残る主張は検証不能な領域に逃げ込んでいる。Karnofskyは「50%以上の確率で懐疑的立場が正しい」と認めつつも、懐疑派が穏当であるためには、これらの論拠の少なくとも一つが「圧倒的に高い確率で正しい」ことを示す必要があると指摘する。</p>
+
+          <div class="note">
+            フェルミパラドックスの分析が示唆する最も不都合な推論がここにある。「銀河が空である」ことが「人類が最初の知的文明、あるいは極めて初期の知的文明である」ことを意味するなら、<strong>銀河規模の文明への最も困難なステップは、人類がすでに踏破している</strong>ことになる。生命の起源、多細胞化、知能の発達、言語の獲得、技術文明の構築。これらの累積的な「奇跡」が最大のボトルネックであり、残りのステップ（宇宙進出）は相対的に容易だという結論だ。Robin Hansonが1998年に "The Great Filter" 論文で定式化したこの推論を、Karnofskyは自身の文脈に再配置している。
+          </div>
+
+          <p class="lead">ここに論証の折れ目がある。フェルミパラドックスからの推論は、「銀河に他の文明がいない」という観測の不在を根拠にしている。不在の証明は原理的に弱い。SETIの探査範囲は銀河全体のごく一部であり、「見つかっていない」ことが「存在しない」ことを意味するかどうかは、探査のカバー率に依存する。Karnofskyはこの弱点を明示的には扱っていない。だが、この弱さを認めてなお、論証の骨格は残る。なぜなら、フェルミの問いに対する「穏当な回答」が存在しないこと自体が、彼の主張の核心だからだ。</p>
+        </div>
+
+        <div class="footer">
+          <span>懐疑的立場もまた、穏当さを確保できない</span>
+          <span class="slide-count">6 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 7: INVERSION ═══════════ -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow reveal">Inversion</div>
+        <h2 class="reveal reveal-delay-1">あの青い点は、起源だった</h2>
+        <img class="hero reveal reveal-delay-2" src="../images/every-view-is-wild/slide5.jpg" alt="Earth atmosphere seen from orbit">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">三叉路のどの道を選んでも「常識外れ」に行き着く。楽観シナリオのvalue lock-inは、最初の100年の意思決定が銀河の寿命と同スケールで凍結される帰結を突きつける。保守シナリオの「年率2%」は、100億年のグラフ上で楽観と区別がつかない。懐疑シナリオは、フェルミパラドックスへの穏当な解が存在しないことで行き止まる。双曲線の再起動は、1960年に特定された崩壊原因をAIが除去する構造として、経済学のフレームワークで定量分析されている。</p>
+
+          <p class="lead">問題は、この構造を知っても「信じがたい」と感じる人が大半だということだ。ここに正常性バイアスのメカニズムが介入する。災害心理学が特定した三つの要因が、Karnofskyの三叉路に対する典型的な反応と正確に対応する。</p>
+
+          <p class="lead">第一に、<strong>過去の経験への過剰適合</strong>。von Foersterの双曲線が折れた1960年から現在まで、世界経済は比較的安定した倍増時間で推移してきた。この60年を「正常」と認識する脳にとって、双曲線の再起動は「異常」に映る。だが数千年の人類史から見れば、双曲線が折れている現在の60年間のほうが例外的だ。安定期を「正常」と錯覚する心理は、その安定期が長いほど強化される。</p>
+
+          <p class="lead">第二に、<strong>社会的証明への依存</strong>。Karnofskyの"Most Important Century"シリーズを読んだ日本語話者は推定で数千人だ。Roodmanの成長軌道モデルやDavidsonの爆発的成長分析に言及する日本語文献はごく少数しかない。「誰も騒いでいないから大丈夫」という判断は、情報の非対称性に基づく錯覚であって、状況の評価ではない。</p>
+
+          <p class="lead">第三に、<strong>認知的不協和の回避</strong>。三叉路の構造を受け入れるには、「自分が生きている時代は人類史上最も異常な時期かもしれない」という命題を飲む必要がある。楽観シナリオでは数兆人の未来の人類のうち現在の80億人は「最初のほんの一握り」だ。これは日常の自己像と激しく衝突する。脳は衝突を避けるために、三叉路の構造そのものを「大げさな話」として棄却する。棄却の根拠は論理ではなく、不快感だ。</p>
+
+          <p class="lead">ここで「三叉路に収まらない第4の道」が存在しうるかを正面から処理しておく。代表的な候補はShoggoth問題——Janus (2022) "Simulators" が提示した、LLMが人間の意図した単一人格ではなく、無数の人格を重ね合わせた異質な知能として展開するシナリオだ。この第4路は楽観・保守・懐疑のいずれにも属さないように見える。だが構造的には三叉路に吸収される。Shoggoth型の展開が進んだ先に生じうる結末は三つしかない。(a) 異質な知能が人間的価値と折り合う形で統合されれば、これは楽観シナリオのvalue lock-in問題の一変種——誰の価値が凍結されるかが「人間」ですらない——になる。(b) 異質な知能が暴走して文明を終わらせれば、これは懐疑シナリオが想定する「宇宙に広がる知的文明が存在しない理由」のひとつとして消化される——フェルミパラドックスのGreat Filterに別の顔を与えるだけだ。(c) 異質性ゆえに拡張が停滞し人類が穏当な成長曲線へ復帰するなら、これは保守シナリオそのものになる。Karnofskyの三叉路が強いのは個別予測の正しさではなく、宇宙論的時間スケールでの行き着く先の網羅性だ。第4路を名乗る主張も、十分長い時間軸で投影すると三叉路のどれかに着地する。Shoggoth的懸念は三叉路を無効化せず、楽観路のvalue lock-in議論に「誰の価値か」という軸を追加するだけで吸収できる。だから三叉路への反論として「もっと別の未来がある」は、時間スケールの短い視点から放たれた主張として処理される。</p>
+          <p class="lead">Karnofskyの構造は、個々の予測が外れても崩れない。楽観のタイムラインが変わっても、保守の年数が伸びても、三叉路自体は残る。穏当な選択肢を生成するにはフェルミパラドックスの解決が必要であり、その解決策はどれも穏当ではないからだ。2021年の発表から5年、<a href="26-automation-bottleneck-regime.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">産業爆発の前提条件</a>は2020年代後半に部分的に整い始めている。Ajeya Cotraが2020年に50%確率の中央値として2052年に置いたAGI到達予測は、2022年の更新で2040年に前倒しされ、2026年の進歩速度はさらに前倒しの圧力をかけている。</p>
+
+          <p class="lead" style="font-size:18px;font-weight:700;color:var(--black);max-width:680px;">異常の中にいる者が正常性バイアスに陥るメカニズムは、経験への過剰適合、社会的証明、認知的不協和の回避という三重構造だ。von Foersterの式が算出した特異点の日付——2026年11月13日——は、歴史的な計算上の一致として現在と重なる。折れたはずの双曲線を、AIがフィードバックループの別経路から閉じ直しつつあるのだとすれば、我々は「折れたはずの曲線が折れていなかった」可能性を、正常性バイアスの向こう側で問い直すことになる。</p>
+        </div>
+
+        <div class="footer">
+          <span>正常性バイアスの三重構造が、異常の認知を妨げる</span>
+          <span class="slide-count">7 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Article Navigation ═══════════ -->
+      <section class="slide" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="26-automation-bottleneck-regime.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.26</p>
+              <p><strong>自動化率77%の誤読 &mdash; 産業爆発を信じない合理性は、どこで壊れるか</strong></p>
+            </a>
+            <a href="28-geopolitics-phase-transition.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &middot; No.28 &rarr;</p>
+              <p><strong>地政学の相転移 &mdash; AGIが書き換える争いの変数</strong></p>
+            </a>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=takeoff" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Takeoff カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="credits">
+      <p>
+        Photos: All images from <a href="https://unsplash.com">Unsplash</a> (free license).
+        Slide 1: <a href="https://unsplash.com/photos/DPo30-zDO5g">Aerial intersection road</a> /
+        Slide 2: <a href="https://unsplash.com/photos/pU9c26VJZCc">Telescope interior</a> /
+        Slide 3: <a href="https://unsplash.com/photos/WeYamle9fDM">Mountain canyon scenery</a> /
+        Slide 4: <a href="https://unsplash.com/photos/pC8e7FFONcI">Abstract dark curves</a> /
+        Slide 5: <a href="https://unsplash.com/photos/FO7JIlwjOtU">Macro circuit board</a> /
+        Slide 6: <a href="https://unsplash.com/photos/sE95ZRwJo5U">Grayscale satellite dish</a> /
+        Slide 7: <a href="https://unsplash.com/photos/7Cz6bWjdlDs">Space Shuttle orbiting Earth</a> /
+        Thumbnail: <a href="https://unsplash.com/photos/YOId6dA4c0I">Nebula on black background</a>
+      </p>
+      <p style="margin-top:16px;">
+        References:<br>
+        [1] Holden Karnofsky, "All Possible Views About Humanity's Future Are Wild," Cold Takes, July 13, 2021.<br>
+        [2] W. Stanley Jevons, <em>The Coal Question</em>, Macmillan, 1865.<br>
+        [3] Robin Hanson, "The Great Filter &mdash; Are We Almost Past It?," George Mason University, 1998.<br>
+        [4] W. Ross Ashby, <em>An Introduction to Cybernetics</em>, Chapman &amp; Hall, 1956.<br>
+        [5] Jared Kaplan et al., "Scaling Laws for Neural Language Models," OpenAI / Johns Hopkins, arXiv:2001.08361, January 2020.<br>
+        [6] Jordan Hoffmann et al., "Training Compute-Optimal Large Language Models" (Chinchilla), DeepMind, arXiv:2203.15556, March 2022.<br>
+        [7] Carl Sagan, <em>Pale Blue Dot: A Vision of the Human Future in Space</em>, Random House, 1994.<br>
+        [8] Nick Bostrom, "Are We Living in a Computer Simulation?," <em>Philosophical Quarterly</em>, Vol. 53, No. 211, pp. 243&ndash;255, 2003.<br>
+        [9] Enrico Fermi (attributed), "Where Is Everybody?," informal remark at Los Alamos National Laboratory, 1950.<br>
+        [10] Heinz von Foerster, Patricia M. Mora, Lawrence W. Amiot, "Doomsday: Friday, 13 November, A.D. 2026," <em>Science</em>, Vol. 132, No. 3436, pp. 1291&ndash;1295, November 1960.<br>
+        [11] Scott Alexander, "1960: The Year The Singularity Was Cancelled," SlateStarCodex, January 2019.<br>
+        [12] David Roodman, "Modeling the Human Trajectory," Open Philanthropy, June 2020.<br>
+        [13] Tom Davidson, "Could Advanced AI Drive Explosive Economic Growth?," Open Philanthropy, June 2021.<br>
+        [14] Robin Hanson, <em>The Age of Em: Work, Love, and Life when Robots Rule the Earth</em>, Oxford University Press, 2016.<br>
+        [15] Holden Karnofsky, "More on Multiple World-Size Economies Per Atom," Cold Takes, August 2021.<br>
+        [16] Stuart Armstrong &amp; Anders Sandberg, "Eternity in Six Hours: Intergalactic Spreading of Intelligent Life and Sharpening the Fermi Paradox," <em>Acta Astronautica</em>, Vol. 89, pp. 1&ndash;13, 2013.<br>
+        [17] Anders Sandberg, Eric Drexler, Toby Ord, "Dissolving the Fermi Paradox," arXiv:1806.02404, June 2018.<br>
+        [18] David Chalmers, "The Singularity: A Philosophical Analysis," <em>Journal of Consciousness Studies</em>, Vol. 17, No. 9&ndash;10, 2010.<br>
+        [19] Ajeya Cotra, "Forecasting TAI with Biological Anchors," Open Philanthropy, September 2020 (updated 2022).
+      </p>
+      <p style="margin-top:16px;">
+        Note on provenance: This article analyzes the argumentative structure of Karnofsky's "Most Important Century" series, supplemented by von Foerster's population dynamics, Roodman's growth trajectory modeling, Alexander's historical analysis, Hanson's brain emulation economics, and Karnofsky's atom-scale thought experiments. The "triple fork" framing, the connection to Jevons's paradox at galactic scale, and the "cancelled singularity" narrative arc are editorial constructions of AGI HUB, not the original authors' terminology.
+      </p>
+    </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">&#9733;</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">&#9733;</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">&#9733;</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">&#9733;</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">&#9733;</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+          btn.disabled=true;btn.textContent='Sending...';
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
+    <script>
+      const buttons = Array.from(document.querySelectorAll('.nav button'));
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const progress = document.getElementById('progress');
+
+      function setActive(id) {
+        buttons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+      }
+
+      buttons.forEach(b => {
+        b.addEventListener('click', () => {
+          document.getElementById(b.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      const navObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+      }, { threshold: 0.5 });
+
+      slides.forEach(s => navObserver.observe(s));
+
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = scrolled + '%';
+      });
+    </script>
+
+    <!-- Google Translate Widget -->
+    <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'ja',
+        includedLanguages: 'en,zh-CN,ko,fr,de,es',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
+  </body>
+</html>

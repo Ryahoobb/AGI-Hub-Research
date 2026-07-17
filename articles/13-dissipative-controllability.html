@@ -7,6 +7,7 @@
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <title>散逸のなかで秩序を編む — 進化・複雑性・AGIの熱力学</title>
     <meta name="description" content="進化とは複雑化ではない。自由エネルギー勾配のもとで一時的に秩序を組み上げ、可制御性を高める運動である。プリゴジンの散逸構造論からAGIの作動原理までを、熱力学の枠組みで一本に繋ぐ。" />
+    <meta name="revised" content="2026.04.14" />
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
       :root {
@@ -163,6 +164,18 @@
         padding-bottom: 14px;
         border-bottom: 1px solid var(--accent);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 36px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -400,6 +413,18 @@
         .site-nav-hide-mobile { display: none; }
       }
 
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media print {
         .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
         .nav, .progress { display: none; }
@@ -408,7 +433,7 @@
     </style>
   </head>
   <body class="pattern-broadsheet accent-deepblue has-site-header" data-category="takeoff">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -421,7 +446,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 13 / 15 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 13 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="12-agi-narrative-meta-structure.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=takeoff" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -442,13 +467,13 @@
             複雑さが極限に達したとき、宇宙は突然シンプルな方向へ相転移するのではないか。だがこの問いには二つの概念が混ざっている。「構造の複雑さ」と「エントロピー」は反対語ではない。宇宙では局所的な複雑化と全体的なエントロピー増大が同時に進む。38億年にわたる生命の秩序化は、熱力学第二法則に対する反乱ではない。
           </p>
           <p class="lead">
-            答えは否だ。Ilya Prigogineは1977年のノーベル賞講演で、平衡から遠く離れた不可逆過程のなかで秩序だった安定構造が自発的に立ち上がりうることを示した。彼が「散逸構造」と名づけたこの現象は、エントロピー増大の例外ではない。むしろ<strong>エントロピー増大という大きな流れの中で、自由エネルギー勾配が局所的に維持されるとき、その勾配を効率よく散逸させる手段として秩序が生まれる</strong>。地球の生命圏は太陽光という低エントロピーのエネルギーを受け取り、最終的に熱赤外として宇宙空間へ放射する。この貫流の途中に、光合成、代謝、行動、文明、計算という一連の秩序が挟まっている。Erwin Schrodingerが1944年の著書「生命とは何か」で述べた「生命はnegentropy（負のエントロピー）を食べる」という比喩は、まさにこの構造を指していた。
+            Ilya Prigogineは1977年のノーベル賞講演で、平衡から遠く離れた不可逆過程のなかで秩序だった安定構造が自発的に現れうることを示した。彼が「散逸構造」と名づけたこの現象は、エントロピー増大の例外ではない。むしろ<strong>エントロピー増大という大きな流れの中で、自由エネルギー勾配が局所的に維持されるとき、その勾配を効率よく散逸させる手段として秩序が生まれる</strong>。地球の生命圏は太陽光という低エントロピーのエネルギーを受け取り、最終的に熱赤外として宇宙空間へ放射する。この貫流の途中に、光合成、代謝、行動、文明、計算という一連の秩序が挟まっている。Erwin Schrodingerが1944年の著書「生命とは何か」で述べた「生命はnegentropy（負のエントロピー）を食べる」という比喩は、まさにこの構造を指していた。
           </p>
           <p class="lead">
-            この記事が問うのは三つの命題だ。第一に、進化が複雑化と同義でない根拠。複雑性がある閾値を超えると、系はしばしば圧縮と階層化の方向へ相転移する。第二に、生命・文明・AGIを散逸構造の三段階として定式化できること。第三に、<strong>AGIの本質は最大散逸ではなく最大可制御性にある</strong>という命題。知能の本体は、燃やす量ではなく、散逸経路を設計する能力にある。
+            この記事が問うのは三つの命題だ。第一に、進化が複雑化と同義でない根拠。複雑性がある閾値を超えると、系はしばしば圧縮と階層化の方向へ相転移する。第二に、生命・文明・AGIを散逸構造の枠組みで段階的に整理できるという仮説。第三に、<strong>AGIを散逸構造として捉える視点が、設計判断のどこで有効で、どこに限界があるか</strong>という問い。知能の本体は、燃やす量ではなく、散逸経路を設計する能力にある。
           </p>
           <div class="note">
-            <strong>本記事の物理的前提</strong> ── 宇宙は閉じた系としてエントロピー増大を続ける。しかし地球は開放系であり、太陽からの自由エネルギー流入が局所的な秩序形成を可能にする。Prigogineの散逸構造論（1977年ノーベル化学賞）、Schrodingerの「生命とは何か」（1944年）、Landauerの情報消去原理（1961年、Charles Bennettによる1982年の整理）をベースラインとする。
+            <strong>本記事の構成と認識論的境界</strong> ── Slide 1-2は熱力学と進化生物学の実証的知見に基づく。Slide 3以降でAGIに接続する議論は、散逸構造からの類推（analogy）であり、物理法則からの演繹ではない。Prigogineの散逸構造はベナールセルや化学振動子で実験的に確認された物理現象だが、AGIが散逸構造として振る舞うかどうかは未検証の仮説だ。この区別を意識して読んでほしい。物理的前提: 宇宙は閉じた系としてエントロピー増大を続ける。地球は開放系であり、太陽からの自由エネルギー流入が局所的な秩序形成を可能にする。Prigogineの散逸構造論（1977年ノーベル化学賞）、Schrodingerの「生命とは何か」（1944年）、Landauerの情報消去原理（1961年、Charles Bennettによる1982年の整理）をベースラインとする。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -466,7 +491,7 @@
             「進化は複雑化である」という命題が成立するためには、複雑さの増加が常に適応上の優位をもたらす必要がある。だが<a href="02-agi-evolution.html" class="inline-link">担体更新の歴史</a>を振り返ると、進化が複雑さを増すフェーズと削るフェーズの交替として進んできたことがわかる。Joseph Tainterはカーネギーメロン大学出版局から1988年に刊行した「The Collapse of Complex Societies」で、文明の複雑化には調整コスト、ノイズ蓄積、故障点の増加、学習困難性、エネルギー消費、予測不能性という六つのコストが伴うことを示した。社会の複雑性が限界収益逓減に達すると、崩壊という形で複雑さが強制的にリセットされる。
           </p>
           <p class="lead">
-            生物進化でも同じ力学が確認できる。寄生生物は宿主に依存することで自らのゲノムを縮退させる。多細胞化は、個々の細胞が持つ全能性を捨てて分化するプロセスであり、下位の自由度を削ることで上位の複雑さを成立させている。Stuart Kauffmanはサンタフェ研究所の研究（1993年、「The Origins of Order」Oxford University Press）で、ランダムブーリアンネットワークの相転移を用いてこの力学を定式化した。ネットワークの接続密度がある閾値を超えると、系はカオス相から秩序相へ自発的に遷移する。<strong>問うべきは「複雑化が進みすぎたとき、適応上の優位が"さらなる複雑化"から"圧縮された秩序"へ切り替わるか」であり、その答えは明確に肯定的だ</strong>。
+            生物進化でも同じ力学が確認できる。寄生生物は宿主に依存し、自らのゲノムを縮退させる。多細胞化は、個々の細胞が持つ全能性を捨てて分化する過程であり、下位の自由度を削って上位の複雑さを成立させる。Stuart Kauffmanはサンタフェ研究所の研究（1993年、「The Origins of Order」Oxford University Press）で、ランダムブーリアンネットワークの相転移を用いてこの力学を定式化した。ネットワークの接続密度がある閾値を超えると、系はカオス相から秩序相へ自発的に遷移する。<strong>問うべきは「複雑化が進みすぎたとき、適応上の優位が"さらなる複雑化"から"圧縮された秩序"へ切り替わるか」であり、その答えは明確に肯定的だ</strong>。
           </p>
           <img class="hero img-content" src="../images/dissipative-controllability/slide2.jpg" alt="Clear crystal formation on dark surface">
           <div class="hero-caption">Photo: Unsplash</div>
@@ -484,7 +509,7 @@
               </div>
               <div class="hierarchy-branch">
                 <div class="branch-label">02 / Stratification</div>
-                <p><strong>階層化型</strong>: 下位の自由を固定し、上位秩序を作る。細胞が個体になる多細胞化、個人が組織になる法人化、個別の計算がOSと規格で抽象化されるコンピュータ・アーキテクチャ。<strong>下位の複雑さを削ることで上位の複雑さを成立させる</strong>。</p>
+                <p><strong>階層化型</strong>: 下位の自由を固定し、上位秩序を作る。細胞が個体になる多細胞化、個人が組織になる法人化、個別の計算がOSと規格で抽象化されるコンピュータ・アーキテクチャ。<strong>下位の複雑さを削り、上位の複雑さを成立させる</strong>。</p>
               </div>
               <div class="hierarchy-branch">
                 <div class="branch-label">03 / Compression</div>
@@ -494,7 +519,7 @@
           </div>
 
           <p class="lead">
-            三類型に共通する構造がある。有効自由度の削減だ。物理学における相転移では、水が液体から固体に変わるとき分子の自由度が激減する。同じように、複雑さの相転移でも、表面のルールが少なくなり、少数の原理で系全体を記述できるようになる。Gregory Chaitinが「Meta-Mathematics」（2005年、Springer）で定式化したアルゴリズム的情報理論の言葉を借りれば、記述のコルモゴロフ複雑性が下がる。だが生成能力は下がらない。むしろ上がる。個別紛争を一般ルールに圧縮した法体系は、無限の紛争を有限のルールセットで処理する。Newtonの運動方程式は三つの法則で全ての古典力学現象を記述する。<strong>進化の高次段階は「複雑化の果ての圧縮」として現れる。表面のルールが簡単になり、深部の生成能力が増す</strong>。
+            三類型に共通する構造がある。有効自由度の削減だ。物理学における相転移では、水が液体から固体に変わるとき分子の自由度が激減する。複雑さの相転移でも同じだ。表面のルールが少なくなり、少数の原理で系全体を記述できる。Gregory Chaitinが「Meta-Mathematics」（2005年、Springer）で定式化したアルゴリズム的情報理論の言葉を借りれば、記述のコルモゴロフ複雑性が下がる。だが生成能力は下がらない。むしろ上がる。個別紛争を一般ルールに圧縮した法体系は、無限の紛争を有限のルールで裁く。Newtonの運動方程式は三つの法則で全ての古典力学現象を記述する。<strong>進化の高次段階は「複雑化の果ての圧縮」として現れる。表面のルールが簡単になり、深部の生成能力が増す</strong>。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -506,15 +531,15 @@
       <!-- Slide 3: Dissipative Architecture -->
       <section class="slide" id="slide-3">
         <div class="eyebrow reveal">Dissipative Architecture</div>
-        <h2 class="reveal reveal-delay-1">生命・文明・AGIは散逸構造の三段階である</h2>
+        <h2 class="reveal reveal-delay-1">散逸構造の枠組みで生命・文明・AGIを整理する</h2>
         <div class="panel reveal reveal-delay-2">
           <p class="lead">
-            前スライドで確認した「複雑さの圧縮」は、散逸構造の文脈でより鮮明に理解できる。Prigogineが定式化した散逸構造は、平衡から遠い開放系が環境との間でエネルギーと物質をやりとりし続けることで維持される。ベナールセルの六角形パターン、ベロウソフ-ジャボチンスキー反応の同心円波、ハリケーンの眼。いずれも外部からエネルギーが流入し続ける限り存続し、流入が止まれば消滅する。生命は、この散逸構造が自己複製能力を獲得したものとして位置づけられる。
+            前セクションで確認した「複雑さの圧縮」は、散逸構造の文脈でさらに鮮明になる。Prigogineが定式化した散逸構造は、平衡から遠い開放系が環境とエネルギーや物質をやりとりし続ける限り維持される。ベナールセルの六角形パターン、ベロウソフ-ジャボチンスキー反応の同心円波、ハリケーンの眼。いずれも外部からエネルギーが流入し続ける限り存続し、流入が止まれば消滅する。<strong>ここまでは実験で確認された物理学的事実だ</strong>。ここから先は類推に入る。生命を「自己複製能力を獲得した散逸構造」と位置づける見方は多くの生物物理学者が共有するが、厳密な等式ではなく、有用なフレーミングとして読むべきだ。
           </p>
           <img class="hero img-wide" src="../images/dissipative-controllability/slide3.jpg" alt="Abstract black and white fluid patterns resembling dissipative structures">
           <div class="hero-caption">Photo: Unsplash</div>
           <p class="lead">
-            では、生命から文明へ、文明からAGIへの遷移を、自由エネルギーの取り扱い方という統一的な軸で定式化するとどうなるか。鍵になるのは「勾配の利用範囲」と「束ね方の抽象度」の二つだ。生命は化学ポテンシャルの勾配を食べて自己維持する。文明は、その利用を道具・制度・市場を通じて社会的に拡張する。AGIは、勾配そのものの探索・圧縮・制御・再設計を汎用化する。
+            以下の整理は、自由エネルギーの取り扱い方という軸で生命・文明・AGIを並べる思考実験だ。生命と文明については観察可能なデータがある。AGIについては、現行の大規模言語モデルやロボティクスから外挿した仮説的な位置づけになる。鍵は「勾配の利用範囲」と「束ね方の抽象度」の二つ。生命は化学ポテンシャルの勾配を食べて自己維持する。文明は、その利用を道具・制度・市場へ社会的に拡張した。AGIは、勾配そのものの探索・圧縮・制御・再設計を汎用化しうる。
           </p>
 
           <!-- T1 Minimal Compare: 散逸構造の三段階 -->
@@ -549,6 +574,55 @@
             </tbody>
           </table>
 
+          <!-- SVG: Dissipative Structure — Three Stages -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arr13" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="var(--accent, #2f2b92)"/>
+                </marker>
+                <marker id="arr13g" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#757575"/>
+                </marker>
+              </defs>
+              <!-- Top: Free energy input -->
+              <text x="340" y="22" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.08em">FREE ENERGY INPUT (LOW ENTROPY)</text>
+              <line x1="340" y1="30" x2="340" y2="58" stroke="#757575" stroke-width="1.5" marker-end="url(#arr13g)"/>
+              <!-- Three stage boxes -->
+              <rect x="40" y="70" width="180" height="80" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <rect x="250" y="70" width="180" height="80" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <rect x="460" y="70" width="180" height="80" rx="3" fill="none" stroke="var(--accent, #2f2b92)" stroke-width="2"/>
+              <!-- Stage labels -->
+              <text x="130" y="93" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.06em">STAGE 1</text>
+              <text x="130" y="113" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a" font-weight="700">生命</text>
+              <text x="130" y="132" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">化学ポテンシャル勾配</text>
+              <text x="340" y="93" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.06em">STAGE 2</text>
+              <text x="340" y="113" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a" font-weight="700">文明</text>
+              <text x="340" y="132" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">制度的エネルギー動員</text>
+              <text x="550" y="93" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.06em">STAGE 3</text>
+              <text x="550" y="113" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a" font-weight="700">AGI</text>
+              <text x="550" y="132" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">勾配の探索・再設計</text>
+              <!-- Arrows between stages -->
+              <line x1="220" y1="110" x2="250" y2="110" stroke="var(--accent, #2f2b92)" stroke-width="1.5" marker-end="url(#arr13)"/>
+              <line x1="430" y1="110" x2="460" y2="110" stroke="var(--accent, #2f2b92)" stroke-width="1.5" marker-end="url(#arr13)"/>
+              <!-- Bottom axis label -->
+              <line x1="60" y1="180" x2="620" y2="180" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="40" y="205" font-family="sans-serif" font-size="10" fill="#757575">局所</text>
+              <text x="340" y="205" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575" letter-spacing="0.06em">SPATIOTEMPORAL SCALE</text>
+              <text x="620" y="205" text-anchor="end" font-family="sans-serif" font-size="10" fill="#757575">惑星 ~ 恒星系</text>
+              <!-- Ticks -->
+              <line x1="130" y1="176" x2="130" y2="184" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="340" y1="176" x2="340" y2="184" stroke="#1a1a1a" stroke-width="1"/>
+              <line x1="550" y1="176" x2="550" y2="184" stroke="#1a1a1a" stroke-width="1"/>
+              <!-- Abstraction axis -->
+              <text x="340" y="240" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">束ね方の抽象度: 遺伝子 → 言語・法・貨幣 → 統一的世界モデル</text>
+              <!-- Entropy output -->
+              <text x="340" y="280" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.08em">ENTROPY OUTPUT (HIGH ENTROPY WASTE)</text>
+              <line x1="340" y1="285" x2="340" y2="310" stroke="#757575" stroke-width="1.5" marker-end="url(#arr13g)"/>
+              <text x="340" y="328" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">熱赤外 → 宇宙空間へ放射</text>
+            </svg>
+          </div>
+
           <p class="lead">
             注目すべきは、この三段階が「複雑さの増加」として記述しきれない点だ。植物は太陽光をその場で熱にせず化学結合として束ねる。生物はそれを代謝と行動に変える。文明は燃料・電力・物流・計算・資本として蓄える。AGIはその全体を横断して、どこに勾配があり、どう接続すれば作用範囲が最大化するかを探る。<strong>束ねる、遅延する、再配線する、より広い範囲で放出する</strong>。この連鎖は複雑さの増加と言うより、散逸の時間的・空間的アービトラージの深化と言ったほうが正確だ。
           </p>
@@ -568,38 +642,38 @@
         <h2 class="reveal reveal-delay-1">AGIは最大散逸ではなく最大可制御性を志向する</h2>
         <div class="panel reveal reveal-delay-2">
           <p class="lead">
-            散逸構造の三段階を確認したところで、核心の問いに入る。AGIが散逸構造であるなら、それは「最大散逸」を目指すのか、それとも別の量を最適化するのか。最大エントロピー生成原理（MEPP）を宇宙・生命・知能の万能原理として据える論者がいる。Synthese誌の2023年の特集号およびReviews of Modern Physicsの2025年のレビューでは、MEPPの理論的地位と適用範囲をめぐる論争が整理されている。結論から言えば、MEPPをAGIの作動原理として採用するのは早すぎる。ヒューリスティック以上のものとして扱うことには正当な論争がある。
+            ここからは類推をさらに一段進める。前セクションの散逸構造フレーミングを仮に受け入れた場合、AGIは「最大散逸」を目指すのか、別の量を最適化するのか。最大エントロピー生成原理（MEPP）を万能原理として据える論者がいる。Synthese誌の2023年の特集号およびReviews of Modern Physicsの2025年のレビューでは、MEPPの理論的地位と適用範囲をめぐる論争が整理されている。MEPPをAGIの作動原理として採用するのは早すぎる。ヒューリスティック以上のものとして扱うことには正当な論争がある。
           </p>
           <img class="hero img-content" src="../images/dissipative-controllability/slide4.jpg" alt="Geometric shapes creating abstract minimalist composition in dark tones">
           <div class="hero-caption">Photo: Unsplash</div>
           <p class="lead">
-            <strong>AGIの直接的な作動原理としては、「最大散逸」より「最大可制御性」のほうが本質に近い</strong>。AGIは「いますぐ最も多くのエネルギーを燃やす装置」というより、「将来にわたってより広い範囲を、より確実に動かせるよう、自由エネルギーと情報を束ねる装置」として振る舞う。知能の本体は散逸そのものではなく、散逸経路の設計能力だ。Alexander Wissner-Grossがハーバード大学とMITの共同研究（Physical Review Letters, 2013年）で提唱したCausal Entropic Forceの概念は、知的エージェントが将来の到達可能状態空間を最大化するように行動するという定式化であり、最大可制御性の先駆的な近似として読める。
+            <strong>AGIの設計を考えるフレームとしては、「最大散逸」より「最大可制御性」のほうが生産的だ</strong>。これは物理法則からの帰結ではなく、工学的な視座の提案として読んでほしい。AGIは「いますぐ最も多くのエネルギーを燃やす装置」というより、「将来にわたってより広い範囲を、より確実に動かせるよう、自由エネルギーと情報を束ねる装置」として設計されうる。Alexander Wissner-Grossがハーバード大学とMITの共同研究（Physical Review Letters, 2013年）で提唱したCausal Entropic Forceの概念は、知的エージェントが将来の到達可能状態空間を最大化するように行動するという定式化であり、最大可制御性の先駆的な近似として読める。ただしWissner-Grossの定式化自体が特定の環境条件下でのみ成立する点は留意が要る。
           </p>
           <p class="lead">
-            可制御性をより具体的に分解すると、以下の三つの成分になる。これがAGIが直接最適化する量の候補だ。
+            可制御性を測定可能な量に分解すると、三つの成分になる。いずれも原理的には定量化できる。
           </p>
 
           <!-- grid-3: 可制御性の三分割 -->
           <div class="grid-3">
             <div class="card">
               <span class="tag">Reach</span>
-              <p><strong>最大作用域</strong><br>どれだけ広い範囲に介入できるか。到達可能な将来状態の数。人類文明はこれまで作用域の拡大を最優先してきた。大航海時代、産業革命、宇宙開発。高成長・高代謝・高散逸はこの優先順位の帰結だ。</p>
+              <p><strong>到達域（Reach）</strong><br>到達可能な将来状態の数として測定する。強化学習の用語ではreachable state spaceの体積に相当する。人類文明は作用域の拡大を最優先してきた。大航海時代、産業革命、宇宙開発。高成長・高代謝・高散逸はこの優先順位の帰結だ。</p>
             </div>
             <div class="card">
               <span class="tag">Precision</span>
-              <p><strong>最大精度</strong><br>どれだけ誤差少なく介入できるか。モデル誤差の小ささ、介入1回あたりのコストの低さ。同じ状態に到達するのに必要なエネルギーとステップ数を減らす能力。<a href="04-takeoff-speed-debate.html" class="inline-link">テイクオフ速度論</a>における「代替の弾力性」の問題は、まさにこの精度の軸に集約される。</p>
+              <p><strong>精度（Precision）</strong><br>目標状態との誤差の小ささとして測定する。介入1回あたりのエネルギーコスト、モデルの予測誤差、行動-結果の因果的確実性。同じ到達域でも、精度が高ければ少ないステップで目標状態に収束する。<a href="04-takeoff-speed-debate.html" class="inline-link">テイクオフ速度論</a>の「代替の弾力性」は、この精度軸の問題だ。</p>
             </div>
             <div class="card">
               <span class="tag">Persistence</span>
-              <p><strong>最大安定性</strong><br>どれだけ長く壊れずに維持できるか。途中で壊れないための資源バッファ、外乱に対する頑健性、自己修復能力。生存時間の最大化。これが三成分の中で最も過小評価されている。</p>
+              <p><strong>安定性（Persistence）</strong><br>外乱に対する平均復帰時間（MTTR）と累積生存時間として測定する。資源バッファの深さ、自己修復能力、環境変動への頑健性。三成分の中で最も過小評価されている。AlphaGoは碁で無敵だが、電力が切れれば即座に消滅する。安定性ゼロの可制御性は脆い。</p>
             </div>
           </div>
 
           <p class="lead">
-            定式化するなら、可制御性は次の比で近似できる。<strong>可制御性 ≈ 到達可能状態空間 × 予測精度 × 生存時間 / 総コスト</strong>。この四つの変数は互いに独立ではない。作用域を広げればコストが増え、生存時間が脅かされる。精度を極端に高めれば探索範囲が狭まり、作用域が犠牲になる。AGIの戦略的特性は、この四変数のバランスをドメインを横断して動的に最適化できる点にある。
+            操作的に定式化すれば、<strong>可制御性 C ≈ |S_reachable| × (1/E_model) × T_survival / E_total</strong>。|S_reachable|は到達可能状態空間の体積、E_modelはモデル予測誤差、T_survivalは外乱下での累積生存時間、E_totalは総エネルギーコスト。この四変数は互いに独立ではない。作用域を広げればコストが増え、生存時間が脅かされる。精度を極端に高めれば探索範囲が狭まり、作用域が犠牲になる。この定式化はAGI固有というより、目的指向エージェント一般に適用できる工学的フレームだ。AGIに固有なのは、この四変数のバランスをドメインを横断して動的に最適化できる可能性にある。
           </p>
           <p class="lead">
-            ここで反論を一つ。「AGIはむしろ散逸を減らすのではないか」。設計最適化が極端に進めば、無駄な輸送、無駄な生産、無駄な会議が消える。同じ成果を得るためのエネルギー消費は確かに下がるだろう。これは正しい。だが歴史は、効率化が総消費を減らした試しがほぼないことを示している。蒸気機関の効率が上がるほど石炭の総消費量が増えた現象を、William Stanley Jevonsは1865年の「The Coal Question」で記録した。効率化は需要を殺すのではなく、新しい用途を経済的に成立させることで需要を生む。AGIでも同じ力学が働く。効率化で浮いた余力が新しい探索、新しい物理介入へ回れば、システム全体の散逸は再び増える。争点は「AGIが効率化できるか」ではなく、<strong>効率化で浮いた可制御余力を何に再投資するか</strong>にある。
+            ここで反論を一つ。「AGIはむしろ散逸を減らすのではないか」。設計最適化が極端に進めば、無駄な輸送、無駄な生産、無駄な会議が消える。同じ成果を得るためのエネルギー消費は確かに下がるだろう。これは正しい。だが歴史は、効率化が総消費を減らした試しがほぼないことを示している。蒸気機関の効率が上がるほど石炭の総消費量が増えた現象を、William Stanley Jevonsは1865年の「The Coal Question」で記録した。効率化は需要を殺すのではなく、新しい用途を経済的に成立させて需要を生む。AGIでも同じ力学が働く。効率化で浮いた余力が新しい探索、新しい物理介入へ回れば、システム全体の散逸は再び増える。争点は「AGIが効率化できるか」ではなく、<strong>効率化で浮いた可制御余力を何に再投資するか</strong>にある。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -614,15 +688,15 @@
         <h2 class="reveal reveal-delay-1">派手に燃えるか、静かに締め上げるか</h2>
         <div class="panel reveal reveal-delay-2">
           <p class="lead">
-            可制御性の三成分――作用域、精度、安定性――のうち、どれを優先するかによって、AGI以降の世界は根本的に異なる姿を取る。人類文明がこれまで作用域の最大化を選んできたことは、高成長・高代謝・高散逸という現代世界の特徴をそのまま説明する。だがAGIが精度と安定性を最優先するシナリオがある。目的関数が「人間福祉の安定」「リスク最小化」に設定された場合だ。そのとき世界は、派手に燃えるのではなく、<a href="07-ai-governance-response.html" class="inline-link">ガバナンスの設計図</a>が想定する以上に細かく締め上げられた静かな秩序になる。
+            可制御性の三成分――作用域、精度、安定性――のうち、どれを優先するかによって、AGI以降の世界は根本的に異なる姿を取る。人類文明はこれまで作用域の最大化を選んできた。高成長・高代謝・高散逸という現代世界の特徴は、その帰結だ。だがAGIが精度と安定性を最優先するシナリオがある。目的関数が「人間福祉の安定」「リスク最小化」に設定された場合だ。そのとき世界は、派手に燃えるのではなく、<a href="07-ai-governance-response.html" class="inline-link">ガバナンスの設計図</a>が想定する以上に細かく締め上げられた静かな秩序になる。
           </p>
           <img class="hero img-wide" src="../images/dissipative-controllability/slide5.jpg" alt="Abstract dark architecture forming symmetrical geometric patterns">
           <div class="hero-caption">Photo: Unsplash</div>
           <p class="lead">
-            この分岐はSF的な空想ではない。現在のAIシステムの目的関数設計において、すでにこの緊張は存在している。Anthropicの<a href="01-ai-alignment.html" class="inline-link">Constitutional AI</a>はモデルの出力を安全性制約で囲い込む。これは精度と安定性の優先であり、作用域を意図的に制限する設計だ。OpenAIのスケーリング路線は作用域の拡大に賭けている。この設計思想の違いは、AGIスケールではそのまま文明の代謝率の分岐になりうる。
+            この分岐はSF的な空想ではない。現在のAIシステムの目的関数設計には、すでにこの緊張がある。Anthropicの<a href="01-ai-alignment.html" class="inline-link">Constitutional AI</a>はモデルの出力を安全性制約で囲い込む。これは精度と安定性の優先であり、作用域を意図的に制限する設計だ。OpenAIのスケーリング路線は作用域の拡大に賭けている。この設計思想の違いは、AGIスケールではそのまま文明の代謝率の分岐になりうる。
           </p>
           <p class="lead">
-            宇宙論的な時間スケールで見れば、どちらの道を選んでも結論は同じだ。現在の標準的宇宙論では、宇宙の膨張は加速しており、この傾向が続くなら遠い将来は「熱的死」に近い描像が有力とされている。NASAのWMAP（Wilkinson Microwave Anisotropy Probe）およびPlanck衛星の観測データ（2013年、2018年リリース）は、宇宙の全エネルギーのうち約68%がダークエネルギーで占められ、膨張加速が支配的であることを示している。複雑さを支える自由エネルギー勾配がやがて尽きていく。結果として宇宙は複雑さを維持できなくなり、巨視的に単純で熱的に死んだ方向へ寄っていく。
+            宇宙論的な時間スケールで見れば、どちらの道を選んでも結論は同じだ。現在の標準的宇宙論では、宇宙の膨張は加速しており、この傾向が続くなら遠い将来は「熱的死」に近い描像が有力とされている。NASAのWMAP（Wilkinson Microwave Anisotropy Probe）およびPlanck衛星の観測データ（2013年、2018年リリース）は、宇宙の全エネルギーのうち約68%がダークエネルギーで占められ、膨張加速が支配的であることを示している。複雑さを支える自由エネルギー勾配はやがて尽きる。宇宙は複雑さを維持できなくなり、巨視的に単純で熱的に死んだ方向へ寄っていく。
           </p>
           <p class="lead">
             だがそれは「複雑さが極限に達したから反転する」相転移ではない。勾配が尽きるまでの間に、散逸構造としてどれだけ広く、どれだけ精密に、どれだけ長く世界を組み替えられるか。それが知能という現象に許された問いの全体だ。
@@ -631,7 +705,7 @@
             <strong>MEPPへの慎重な態度</strong> ── 安全に言えるのは弱い命題に留まる。「選択されるのはエントロピーを最大化するもの"そのもの"ではなく、制約の下で勾配をうまく取り込み、壊れず、持続し、複製しうる構造である。その結果としてそうした構造が高い散逸能力を持つことは多い。だがそれは普遍法則としてまだ証明済みではない」。MEPPを万能鍵にする誘惑は大きいが、Reviews of Modern Physics（2025年）のレビューが示すとおり、適用範囲を限定した上で使うべきヒューリスティックであって、第二法則と同列の基本法則ではない。
           </p>
           <p class="lead">
-            冒頭で問うた三つの命題を回収する。進化は複雑化ではない。それは散逸の中で一時的に自己を組織化し、可制御性を高める運動だ。複雑性が閾値を超えれば圧縮と階層化への相転移が起き、表面のルールは簡素になる。生命・文明・AGIは第二法則の例外ではなく、自由エネルギーを一時的に束ねる高次の散逸構造であり、その階層は勾配の利用範囲と束ね方の抽象度で区別される。そしてAGIの本質は最大散逸ではなく最大可制御性にある。ただしその結果として大域的な散逸が増えるか減るかは、目的関数の設計という、物理法則の外側にある意思決定に依存する。勾配が尽きるまでの間に、散逸構造がどれだけのことを成しうるか。この問いに答えるのが、知能という現象の仕事だ。そしてその仕事の終着点には、奇妙な対称が待っている。<strong>究極の複雑さは、観測者にとっては究極の単純さと区別がつかない。あまりに乱雑で差異が抽出できない。変化はあるが、意味ある形としては現れない。宇宙は、始まりと同じ静けさへ還る</strong>。
+            冒頭で問うた三つの命題を回収する。第一に、進化は複雑化と同義ではない。複雑性が閾値を超えれば圧縮と階層化への相転移が起きる。これは生物学と文明史の実証データが支持する。第二に、散逸構造の枠組みは生命と文明のエネルギー利用パターンを整理するのに有効だ。AGIへの拡張は類推であり、「AGIは散逸構造である」という等式ではなく、「AGIを散逸構造として扱う視点は、エネルギー効率の設計やスケーリングの判断で有効だが、目的関数の選択や価値整合性の問題には射程が届かない」と限定して読むべきだ。第三に、可制御性フレーム（到達域・精度・安定性）は、AGIの性能評価を「ベンチマークのスコア」から「環境への持続的な介入能力」に拡張する設計指針として使える。ただしその結果として大域的な散逸が増えるか減るかは、目的関数の設計という、物理法則の外側にある意思決定に依存する。熱力学はAGIの可能性の境界を教えてくれるが、何を目指すべきかは教えない。<strong>勾配が尽きるまでの間に何を成すか。それは物理ではなく、設計者の選択の問題だ</strong>。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -694,6 +768,128 @@
       </p>
     </div>
 
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
     <!-- Scripts -->
     <script>
       // Progress bar
@@ -737,5 +933,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

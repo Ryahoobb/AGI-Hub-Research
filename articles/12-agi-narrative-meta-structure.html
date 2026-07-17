@@ -196,6 +196,18 @@
         border-bottom: 3px double var(--accent);
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(30px, 4.4vw, 38px); }
       h2 { font-size: clamp(26px, 3.8vw, 34px); }
 
@@ -326,18 +338,42 @@
       }
       .inline-link:hover { border-bottom-color: var(--accent); }
 
+      /* ── SVG Diagram ── */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media (max-width: 768px) {
         .slide { padding: 48px 20px 40px; gap: 20px; }
         .grid-2, .grid-3 { grid-template-columns: 1fr; }
         .nav { display: none; }
-        h1 { font-size: 26px; }
+  
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
+      h1 { font-size: 26px; }
         h2 { font-size: 22px; }
         .footer { flex-direction: column; gap: 8px; }
       }
     </style>
   </head>
   <body class="pattern-investigation has-site-header" data-category="governance">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -350,7 +386,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 12 / 15 &nbsp;·&nbsp; Governance &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 12 &nbsp;·&nbsp; Governance &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="11-industrial-explosion-before-agi.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=governance" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -439,6 +475,54 @@
             </tbody>
           </table>
 
+          <!-- SVG: Five Layers of AGI Narrative -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Layer blocks (bottom to top = deep to surface) -->
+              <!-- Layer 5: Practice -->
+              <rect x="90" y="280" width="500" height="48" rx="3" fill="#b23a2f" opacity="0.12" stroke="#b23a2f" stroke-width="1"/>
+              <text x="120" y="300" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">L5</text>
+              <text x="150" y="300" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">実践</text>
+              <text x="150" y="318" font-family="sans-serif" font-size="11" fill="#757575">聞いた人に何をさせるのか — 投資、規制支持、キャリア転換</text>
+
+              <!-- Layer 4: Epistemology -->
+              <rect x="90" y="224" width="500" height="48" rx="3" fill="#b23a2f" opacity="0.08" stroke="#b23a2f" stroke-width="1"/>
+              <text x="120" y="244" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">L4</text>
+              <text x="150" y="244" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">認識論</text>
+              <text x="150" y="262" font-family="sans-serif" font-size="11" fill="#757575">何を証拠として採用し、何を切り捨てているか</text>
+
+              <!-- Layer 3: Interests -->
+              <rect x="90" y="168" width="500" height="48" rx="3" fill="#1a1a1a" opacity="0.06" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="120" y="188" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">L3</text>
+              <text x="150" y="188" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">利害</text>
+              <text x="150" y="206" font-family="sans-serif" font-size="11" fill="#757575">誰が得をし、誰が損をする物語か</text>
+
+              <!-- Layer 2: Function -->
+              <rect x="90" y="112" width="500" height="48" rx="3" fill="#1a1a1a" opacity="0.06" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="120" y="132" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">L2</text>
+              <text x="150" y="132" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">機能</text>
+              <text x="150" y="150" font-family="sans-serif" font-size="11" fill="#757575">その物語は何のために語られているか — 警告、動員、正当化</text>
+
+              <!-- Layer 1: Object (surface) -->
+              <rect x="90" y="56" width="500" height="48" rx="3" fill="#1a1a1a" opacity="0.06" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="120" y="76" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">L1</text>
+              <text x="150" y="76" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">対象</text>
+              <text x="150" y="94" font-family="sans-serif" font-size="11" fill="#757575">AGIはどう来るか、社会はどう変わるか</text>
+
+              <!-- Depth arrow -->
+              <line x1="60" y1="60" x2="60" y2="324" stroke="#757575" stroke-width="1"/>
+              <polygon points="60,330 55,320 65,320" fill="#757575"/>
+              <text x="48" y="195" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575" transform="rotate(-90, 48, 195)" letter-spacing="0.06em">DEPTH</text>
+
+              <!-- Surface label -->
+              <text x="60" y="48" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">表層</text>
+              <text x="60" y="348" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">深層</text>
+
+              <!-- Title -->
+              <text x="340" y="24" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">AGIナラティブの5層構造</text>
+            </svg>
+          </div>
+
           <p class="lead">Jens Beckertはマックス・プランク社会研究所で「fictional expectations」の概念を展開した（Beckert, 2016, <em>Imagined Futures</em>, Harvard University Press）。資本主義経済において、行為者は不確実な未来についての「虚構の期待」に基づいて意思決定する。期待が虚構であることは問題ではない。問題は、その虚構がどのような行動を組織し、誰の利益に奉仕するかだ。</p>
           <p class="lead">AGI HUBの既存記事をこの5層で読み直すと、各記事がどの層を主に扱い、どの層を暗黙の前提として残していたかが見える。<a href="05-ai-risk-lineage.html" class="inline-link">AI存亡リスク論の系譜（No. 05）</a>は第1層と第3層の交差を扱った。30年にわたるリスク言説の系譜を辿ったが、その系譜を辿ること自体が「リスク言説の正統性を歴史的に証明する」という第2層の機能を帯びている。記事を書いた時点では、その自己言及的な構造を明示していなかった。</p>
 
@@ -460,7 +544,7 @@
         <h2 class="reveal reveal-delay-1">語る者の4つの役割と固有の失敗</h2>
         <img class="hero img-wide reveal reveal-delay-2" src="../images/agi-narrative-meta-structure/slide3.jpg" alt="Symmetrical concrete structure — roles and their mirror failures">
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">5層の地図を手に入れた。次に必要なのは、自分がその地図のどこに立っているかを知ることだ。AGIを作らない者が語る行為には、少なくとも4つの異なる役割がある。各役割は5層の異なる層に強く作用し、同時に固有の失敗モードを抱えている。Hanne Borup、Nik Brown、Kornelia Konrad、Lente van Lente はヨーク大学の研究で「sociology of expectations」を体系化した（Borup et al., 2006, "The Sociology of Expectations in Science and Technology," <em>Technology Analysis &amp; Strategic Management</em>, Vol. 18, No. 3/4）。期待は未来の予測ではなく、現在の資源配分と制度設計を組織する「遂行的」な装置だ。語る者が採用する役割によって、遂行される現実が変わる。</p>
+          <p class="lead">5層の地図を手に入れた。次に必要なのは、自分がその地図のどこに立っているかを知ることだ。AGIを作らない者が語る行為には、少なくとも4つの異なる役割がある。各役割は5層の異なる層に強く作用し、同時に固有の失敗モードを抱えている。Hanne Borup、Nik Brown、Kornelia Konrad、Lente van Lente はヨーク大学の研究で「sociology of expectations」を体系化した（Borup et al., 2006, "The Sociology of Expectations in Science and Technology," <em>Technology Analysis &amp; Strategic Management</em>, Vol. 18, No. 3）。期待は未来の予測ではなく、現在の資源配分と制度設計を組織する「遂行的」な装置だ。語る者が採用する役割によって、遂行される現実が変わる。</p>
 
           <table>
             <thead>
@@ -493,6 +577,69 @@
               </tr>
             </tbody>
           </table>
+
+          <!-- SVG: Four Roles × Five Layers Matrix -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+              <!-- Column headers (Roles) -->
+              <text x="220" y="28" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">予報者</text>
+              <text x="340" y="28" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">翻訳者</text>
+              <text x="460" y="28" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">設計者</text>
+              <text x="580" y="28" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.06em">批評家</text>
+
+              <!-- Row headers (Layers) -->
+              <text x="100" y="68" text-anchor="end" font-family="sans-serif" font-size="11" fill="#1a1a1a">L1 対象</text>
+              <text x="100" y="112" text-anchor="end" font-family="sans-serif" font-size="11" fill="#1a1a1a">L2 機能</text>
+              <text x="100" y="156" text-anchor="end" font-family="sans-serif" font-size="11" fill="#1a1a1a">L3 利害</text>
+              <text x="100" y="200" text-anchor="end" font-family="sans-serif" font-size="11" fill="#1a1a1a">L4 認識論</text>
+              <text x="100" y="244" text-anchor="end" font-family="sans-serif" font-size="11" fill="#1a1a1a">L5 実践</text>
+
+              <!-- Grid lines -->
+              <line x1="120" y1="40" x2="640" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+              <line x1="120" y1="84" x2="640" y2="84" stroke="#e5e5e5" stroke-width="1"/>
+              <line x1="120" y1="128" x2="640" y2="128" stroke="#e5e5e5" stroke-width="1"/>
+              <line x1="120" y1="172" x2="640" y2="172" stroke="#e5e5e5" stroke-width="1"/>
+              <line x1="120" y1="216" x2="640" y2="216" stroke="#e5e5e5" stroke-width="1"/>
+              <line x1="120" y1="260" x2="640" y2="260" stroke="#e5e5e5" stroke-width="1"/>
+
+              <!-- Strength indicators: filled circles = strong, open circles = weak -->
+              <!-- Forecaster: strong L1, L4 -->
+              <circle cx="220" cy="64" r="8" fill="#b23a2f" opacity="0.8"/>
+              <circle cx="220" cy="108" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+              <circle cx="220" cy="152" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+              <circle cx="220" cy="196" r="8" fill="#b23a2f" opacity="0.5"/>
+              <circle cx="220" cy="240" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+
+              <!-- Translator: strong L1, L2 -->
+              <circle cx="340" cy="64" r="8" fill="#b23a2f" opacity="0.5"/>
+              <circle cx="340" cy="108" r="8" fill="#b23a2f" opacity="0.8"/>
+              <circle cx="340" cy="152" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+              <circle cx="340" cy="196" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+              <circle cx="340" cy="240" r="8" fill="#b23a2f" opacity="0.5"/>
+
+              <!-- Designer: strong L5, L2 -->
+              <circle cx="460" cy="64" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+              <circle cx="460" cy="108" r="8" fill="#b23a2f" opacity="0.5"/>
+              <circle cx="460" cy="152" r="8" fill="#b23a2f" opacity="0.5"/>
+              <circle cx="460" cy="196" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+              <circle cx="460" cy="240" r="8" fill="#b23a2f" opacity="0.8"/>
+
+              <!-- Critic: strong L3, L4 -->
+              <circle cx="580" cy="64" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+              <circle cx="580" cy="108" r="8" fill="#b23a2f" opacity="0.5"/>
+              <circle cx="580" cy="152" r="8" fill="#b23a2f" opacity="0.8"/>
+              <circle cx="580" cy="196" r="8" fill="#b23a2f" opacity="0.8"/>
+              <circle cx="580" cy="240" r="8" fill="none" stroke="#757575" stroke-width="1"/>
+
+              <!-- Legend -->
+              <circle cx="180" cy="275" r="6" fill="#b23a2f" opacity="0.8"/>
+              <text x="192" y="279" font-family="'SF Mono',monospace" font-size="9" fill="#757575">= 強い作用</text>
+              <circle cx="300" cy="275" r="6" fill="#b23a2f" opacity="0.5"/>
+              <text x="312" y="279" font-family="'SF Mono',monospace" font-size="9" fill="#757575">= 中程度</text>
+              <circle cx="410" cy="275" r="6" fill="none" stroke="#757575" stroke-width="1"/>
+              <text x="422" y="279" font-family="'SF Mono',monospace" font-size="9" fill="#757575">= 弱い / 盲点</text>
+            </svg>
+          </div>
 
           <p class="lead">この4役割は排他的ではない。1本の記事が予報者と翻訳者を兼ねることは頻繁にある。問題は、自分がどの役割を演じているかを自覚しないまま語ることだ。予報者のつもりで書いた文章が、読者には正当性の競争として受け取られる。翻訳者のつもりの解説が、立法前の設計図として引用される。</p>
           <p class="lead">Hannah Arendtは『人間の条件』（1958年）で、人間の固有性は生産性（making）ではなく、新しい始まりを作る行為（action）と複数性（plurality）にあると論じた。AGIナラティブの語り手は、AGIを「作る」ことはできない。だが「新しい始まりを作る行為」としてのナラティブ構築は、Arendt的な意味での行為そのものだ。その行為に伴う責任を、役割の自覚なしに引き受けることはできない。</p>
@@ -642,6 +789,10 @@
 
           <p class="lead" style="margin-top:24px;">AGIを作れない。だが、AGIが到来したときに社会がどう反応し、何を守り、何を手放すかの選択肢を事前に構造化することはできる。その仕事を「二次生産」と呼ぶなら、二次生産者は一次生産者と同じだけの厳密さを自分に課さなければならない。ナラティブの品質管理は、コードの品質管理と同じように構造化できる。そしてその構造化を怠ったナラティブは、流通した瞬間に害になる。</p>
 
+          <aside class="note" style="margin-top:24px;border-left:3px solid #1a1a1a;">
+            <strong>読者への実戦的指針 ― 5層分析を判断ツールとして使う。</strong> この記事の5層モデルは、批評のためだけでなく、<strong>日々流れてくるAGIナラティブを読者自身がリアルタイムで解体するための作業道具</strong>だ。具体的な運用手順を置く。 <strong>① 遭遇したナラティブを一次停止する。</strong> 賛成か反対かを判断する前に、評価を30秒保留する。 <strong>② 対象レベルを抜き出す。</strong> 「このナラティブは何が起きると主張しているか」を一文で書き出す。書けなければ、対象レベルが曖昧なまま流通しているナラティブだ。 <strong>③ 機能レベルを問う。</strong> 「これを信じた読者に、次どんな行動を取らせようとしているか（投資／規制支持／恐怖／楽観／行動停止）」。 <strong>④ 利害レベルを問う。</strong> 「このナラティブで得をするのは誰か、失うのは誰か」。語り手のポジションがこの問いで可視化される。 <strong>⑤ 認識論レベルを問う。</strong> 「このナラティブが見ていない可能性、切り捨てている反例は何か」。 <strong>⑥ 最後に自分のポートフォリオ判断に落とす。</strong> このナラティブを採用する／一部採用する／棄却するを明示し、理由を一行で記録する。この6ステップを3か月続けると、ナラティブ供給源の信頼度が自分の中で分布化される。<strong>「語り手を信じる」から「語りの構造を評価する」へ</strong>、読者自身の判断基準が移る。
+          </aside>
+
           <blockquote class="pullquote">
             技術の一次生産者ではなくても、社会的現実の二次生産者にはなれる。だが二次生産にも工学がいる。
           </blockquote>
@@ -690,6 +841,128 @@
         Franssen et al. (2023) "Philosophy of Technology," <em>Stanford Encyclopedia of Philosophy</em>.
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -754,5 +1027,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

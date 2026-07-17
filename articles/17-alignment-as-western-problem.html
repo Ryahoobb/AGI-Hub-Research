@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
     <title>「アラインメント」は西洋の問いか — 主体が客体を制御するという前提を解体する</title>
+    <meta name="revised" content="2026.04.14" />
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
       :root {
@@ -182,6 +183,18 @@
         padding-bottom: 16px;
         border-bottom: 3px double var(--accent);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(30px, 4.4vw, 38px); }
       h2 { font-size: clamp(26px, 3.8vw, 34px); }
 
@@ -348,6 +361,18 @@
         .credits { padding: 32px 24px 64px; }
       }
 
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media print {
         .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
         .nav, .progress { display: none; }
@@ -356,7 +381,7 @@
     </style>
   </head>
   <body class="pattern-investigation has-site-header" data-category="governance">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -380,7 +405,7 @@
             Eliezer Yudkowskyは2023年の論考と2025年の同名書籍で、同じ一文を繰り返している。<strong>「If anyone builds it, everyone dies.」</strong>誰かがそれを作れば、全員が死ぬ。この切り詰めた一文の強度は、問題設定そのものを自明視していることから来ている。作る側の主体が存在し、作られる客体が存在し、後者の振る舞いを前者が制御できるかどうかが議論の全てだ、という構えだ。議論の激しさとは裏腹に、この構えは揺らがない。揺らがせてはいけない前提として扱われている。
           </p>
           <p class="lead">
-            反対側に立つ加速派も、実は同じ構えを共有している。Marc Andreessenが2023年にa16zで公開した『Techno-Optimist Manifesto』は、Yudkowskyとは正反対の結論を出すが、そこに通底するのは「人間の主体性こそが技術を制御する力である」という主張だ。進めろ、と言うときも、止めろ、と言うときも、両者は制御の二項を前提としている。対立しているのは解答であって、問いではない。
+            反対側に立つ加速派も、実は同じ構えを共有している。Marc Andreessenが2023年にa16zで公開した『Techno-Optimist Manifesto』は、Yudkowskyとは正反対の結論を出すが、両者に共通するのは「人間の主体性こそが技術を制御する力である」という主張だ。進めろ、と言うときも、止めろ、と言うときも、両者は制御の二項を前提としている。対立しているのは解答であって、問いではない。
           </p>
           <p class="lead">
             問いの側を疑うことができるだろうか。「制御する主体」と「制御される客体」という非対称は、2000年以上にわたって西洋が鍛え上げた特殊な思考形式だとしたら。別の思想伝統——道家の無為、龍樹の縁起、西田幾多郎の場所論——には、制御以前の秩序を考えるための別の設計原理が埋まっている。それらは「AIを甘く見る楽観論」ではない。<strong>制御不能性を前提にしたうえで秩序をどう成立させるかという、別の設計問題</strong>だ。本稿はこの仮説を、哲学史と現代サイバネティクスの接点から検討する。
@@ -425,7 +450,7 @@
           <img class="hero img-content" src="../images/alignment-as-western-problem/slide2.jpg" alt="Close-up of a vintage steam engine's mechanical parts">
           <div class="hero-caption">Photo: Unsplash / Georg Eiermann</div>
           <p class="lead">
-            前スライドで提示した系譜を、もう少し解像度を上げて見る必要がある。Descartes『方法序説』(1637)の第2部で定式化された méthode は、単なる研究作法ではなかった。それは主体が対象を認識し、分節し、再構成する一連の手続きであり、その根底には「考える私 (cogito)」と「延長実体 (res extensa)」という非対称が据えられていた。世界を客体として突き放し、主体の側から操作可能なものに変える。この構造がDescartesの発明だ。Kantは『純粋理性批判』(1781)でこれをさらに純化し、主体を「現象を構成する側」に位置づけた。世界の秩序は、主体の認識形式が与える秩序である。
+            前セクションで提示した系譜を、もう少し解像度を上げて見る必要がある。Descartes『方法序説』(1637)の第2部で定式化された méthode は、単なる研究作法ではなかった。それは主体が対象を認識し、分節し、再構成する一連の手続きであり、その根底には「考える私 (cogito)」と「延長実体 (res extensa)」という非対称が据えられていた。世界を客体として突き放し、主体の側から操作可能なものに変える。この構造がDescartesの発明だ。Kantは『純粋理性批判』(1781)でこれをさらに純化し、主体を「現象を構成する側」に位置づけた。世界の秩序は、主体の認識形式が与える秩序である。
           </p>
           <p class="lead">
             時代を下ると、この哲学的構造が工学に直接翻訳される瞬間が来る。Norbert Wienerが1948年にMIT Pressから刊行した『Cybernetics: Or Control and Communication in the Animal and the Machine』は、書名に"Control"の一語を刻んだ。Wienerはフィードバックループを制御の概念装置として定式化し、その歴史的原型としてJames Wattが1788年に実用化した遠心調速機 (centrifugal governor) を引いた。蒸気機関の回転が速くなるとボールが遠心力で持ち上がり、リンク機構を通じて蒸気弁を絞る。回転が遅くなれば逆に開く。単純な物理装置だが、当時のエンジニアはこれを見て驚いた。<strong>機械が自分で自分を調整している</strong>、と。
@@ -482,8 +507,11 @@
             </tbody>
           </table>
           <div class="note">
-            Yudkowskyの強度は、彼が特別に悲観的だからではない。<strong>西洋が鍛えた「制御」の概念を、最後まで論理的に押し切ったときに必然的に到達する場所に彼が立っているから</strong>だ。ここで重要な帰結がひとつ出る。もし問題が「制御」の概念そのものにあるのだとしたら、悲観派と楽観派のどちらを選ぶかではなく、両者が前提としている思考形式の外に出る必要がある、ということになる。次のスライドは、その外側を探す。
+            Yudkowskyの強度は、彼が特別に悲観的だからではない。<strong>西洋が鍛えた「制御」の概念を、最後まで論理的に押し切ったときに必然的に到達する場所に彼が立っているから</strong>だ。ここで重要な帰結がひとつ出る。もし問題が「制御」の概念そのものにあるのだとしたら、悲観派と楽観派のどちらを選ぶかではなく、両者が前提としている思考形式の外に出る必要がある、ということになる。次のセクションは、その外側を探す。
           </div>
+          <aside class="note" style="margin-top:24px;border-left:3px solid #1a1a1a;">
+            <strong>同じ系譜は非西洋では走らなかった ― 中核論証の補強。</strong> デカルト→カント→ウィーナー→Yudkowskyの直線は、主体と客体を切り離し、客体を主体が設計したルールに従わせる、という形式を完遂する運動だった。この系譜が「alignment=西洋的問題」と呼べるのは、<strong>同じ出発点（知能をどう扱うか）から出発した非西洋思想が、別の終点に到達している</strong>からだ。中国宋明理学における朱熹の「理」と王陽明の「心即理」の議論は、外部からの規範適用ではなく<strong>主体そのものの内的調律</strong>として秩序を構想した。朱熹が「格物致知」で事物の理を窮めたとき、目的は事物を制御することではなく、主体が事物と共通する理に自ら参与することだった。日本の西田幾多郎『善の研究』（1911年）と『場所の論理』（1926〜1945年）は、主体と客体を同一の「場所」に溶かし、制御関係そのものを解体する枠組みを提示した。インド仏教の龍樹『中論』における縁起の論理は、自性を持つ独立した主体の存在そのものを否定し、関係の網目としての存在を提示する。<strong>これらの系譜では、強大な知能が現れても「それを制御する」という問いがそもそも立たない</strong>。立つのは「それとどう共存するか」「それと自分との関係をどう組むか」である。これが、本稿がalignmentを西洋近代の思考形式に固有の問題と呼ぶ根拠である。他の文明の思考形式に置き換えれば、同じ状況は別の問題系に解体される。つまりalignmentは技術的問題である前に、<strong>主体-客体-制御という概念配置を採用した者だけが引き受ける問題</strong>だ。
+          </aside>
         </div>
         <div class="footer reveal reveal-delay-3">
           <span>制御不可能論は制御概念の論理的完遂である</span>
@@ -502,7 +530,7 @@
             制御の概念の外側に何があるか。道家、中観仏教、京都学派。この三つの思想には、異なる出発点から同じ方向を指す論理がある。本稿は神秘主義的な読み方を採らない。<strong>これらを設計原理として読み替える</strong>。素引用は摩耗している。重要なのは、古典の言葉が現代複雑系の数学的な語彙とどこで噛み合うかだ。
           </p>
           <p class="lead">
-            老子『道徳経』第37章。楼観台本系統の原典は紀元前4世紀頃に成立したとされる。<strong>「道常無為而無不為」</strong>——道は常に何も為さないが、為さないことがない。蜂屋邦夫訳(岩波文庫 2008)はこれを「道は何事もしないが、何事もなされないことはない」と訳す。通常の解釈は「自然に任せれば全てうまくいく」という神秘主義に寄るが、本稿はもっと冷徹に読む。無為とは、中央制御点の不在が系の自己組織化を阻害しない状態を指す。制御主体を系の外に立てずとも秩序が立ち上がる条件、と翻訳すれば、これは現代複雑系の言葉になる。
+            老子『道徳経』第37章。楼観台本系統の原典は紀元前4世紀頃に成立したとされる。<strong>「道常無為而無不為」</strong>——道は常に何も為さないが、為さないことがない。蜂屋邦夫訳(岩波文庫 2008)はこれを「道は何事もしないが、何事もなされないことはない」と訳す。通常の解釈は「自然に任せれば全てうまくいく」という神秘主義に寄るが、本稿はもっと冷徹に読む。無為とは、中央制御点の不在が系の自己組織化を阻害しない状態を指す。制御主体を系の外に立てずとも秩序が成り立つ条件、と翻訳すれば、これは現代複雑系の言葉になる。
           </p>
           <p class="lead">
             具体例で接続しよう。W. Ross Ashbyが1948年に実装したhomeostatという装置がある。4つのユニットが互いの出力を互いの入力としてフィードバックしあい、外から目標を与えられないまま平衡状態に収束する機械だった。Ashbyはこれを<strong>ultrastability</strong>と呼んだ。目標を外部から与える必要がない安定性、というこの概念は、老子の無為と原理的に近い。Ashbyは道徳経を読んだ形跡はないが、両者はまったく別の出発点から同じ構造に到達している。このことが重要だ。道家の無為は東洋の神秘ではなく、<strong>制御者不在の安定性という設計問題への、独自の解答</strong>として読める。
@@ -511,13 +539,13 @@
             龍樹『中論』(2-3世紀)の中心概念は縁起 (pratītyasamutpāda) である。梶山雄一・上山春平訳『仏教の思想3 空の論理』(1969、角川ソフィア文庫1997に再録)が日本語の決定版と見なされる。縁起はよく「すべては相互依存する」と翻訳されるが、龍樹の論理的射程はそれより鋭い。<strong>「主体」も「客体」も、それ自体として独立に存在する自性 (svabhāva) を持たない</strong>。両者は関係の中で一時的に成立する差分にすぎない。中論第24章は、この論理を四句分別の形で展開する。
           </p>
           <p class="lead">
-            これがアラインメント議論に持ち込むものは破壊的だ。「制御するAI研究者」と「制御されるAIシステム」という分離そのものが、成立根拠を失う。研究者は研究という関係の中で研究者になり、AIシステムはそのシステムが置かれた開発・運用・利用の関係の中でシステムになる。両者は独立に存在する実体ではない。Francisco Varela、Evan Thompson、Eleanor Roschが1991年に書いた『The Embodied Mind』(MIT Press)は、現代認知科学にこの論理を持ち込んだ最初の体系的な仕事だった。Varelaは1987年頃からDalai Lamaが主宰するMind and Life Instituteで中観仏教を再読し、晩年にはenactivism(行為的認知)の基礎にこれを据えた。認知は主体が客体を表象することではなく、<strong>相互に規定しあう系の中で立ち上がる現象</strong>である、という主張だ。
+            これがアラインメント議論に持ち込むものは破壊的だ。「制御するAI研究者」と「制御されるAIシステム」という分離そのものが、成立根拠を失う。研究者は研究という関係の中で研究者になり、AIシステムはそのシステムが置かれた開発・運用・利用の関係の中でシステムになる。両者は独立に存在する実体ではない。Francisco Varela、Evan Thompson、Eleanor Roschが1991年に書いた『The Embodied Mind』(MIT Press)は、現代認知科学にこの論理を持ち込んだ最初の体系的な仕事だった。Varelaは1987年頃からDalai Lamaが主宰するMind and Life Instituteで中観仏教を再読し、晩年にはenactivism(行為的認知)の基礎にこれを据えた。認知は主体が客体を表象することではなく、<strong>相互に規定しあう系の中で現れる現象</strong>である、という主張だ。
           </p>
           <p class="lead">
             西田幾多郎『場所』(初出1926『哲学研究』誌)は、この論理を日本の哲学で独立に提示した仕事である。西田は1920年代の『働くものから見るものへ』でアリストテレス以来の<strong>「主語の論理」</strong>を批判した。西洋論理は、主語 (substance) が述語 (attribute) を持つという非対称の上に立っている。私は赤い、椅子は固い、AIは有害だ。西田はこの主述の非対称を逆転させる。述語こそが場所であり、主語(個物)はその場所の中に包まれる。
           </p>
           <p class="lead">
-            西田が好んで使った例は「この赤」という知覚だ。「私がこの赤を見ている」という記述は、実は二重の前提を密輸している。まず「私」という主体の自存性、次に「赤」という客体の独立性。西田はこう書き直す——<strong>「見るという場所の中に、私と赤が同時に立ち上がっている」</strong>。視覚は主体の機能ではなく、主体と客体の両方を同時に成立させる場である。主体は視覚という場所に包まれて初めて成立する。逆ではない。
+            西田が好んで使った例は「この赤」という知覚だ。「私がこの赤を見ている」という記述は、実は二重の前提を密輸している。まず「私」という主体の自存性、次に「赤」という客体の独立性。西田はこう書き直す——<strong>「見るという場所の中に、私と赤が同時に現れている」</strong>。視覚は主体の機能ではなく、主体と客体の両方を同時に成立させる場である。主体は視覚という場所に包まれて初めて成立する。逆ではない。
           </p>
           <p class="lead">
             AGI議論への転用は直接的だ。「AI研究者がAIシステムを制御する」という記述そのものが、成立する前に二重の密輸をしている。AI研究者はAI研究という場所の中で初めて研究者として成立する。AIシステムは開発・運用・社会受容という場所の中で初めてシステムとして成立する。両者は場所の述語である。「主体が客体を制御する」という構文が、そもそも出発点として採れない。これは制御を放棄せよ、という話ではない。<strong>制御という記述自体が、別の記述に置き換えられなければならない</strong>、という話だ。
@@ -537,7 +565,7 @@
             </div>
           </div>
           <div class="note">
-            道家、龍樹、西田——出自も時代も異なる三つの思想は、<strong>制御という概念を採らずに秩序を考える</strong>という一点で収束する。これを神秘主義に逃げるのではなく、現代複雑系の数学的語彙と接続するとき、初めて工学的な意味が立ち上がる。次のスライドはこの接続点を三つの設計原理として定式化する。
+            道家、龍樹、西田——出自も時代も異なる三つの思想は、<strong>制御という概念を採らずに秩序を考える</strong>という一点で収束する。これを神秘主義に逃げるのではなく、現代複雑系の数学的語彙と接続するとき、初めて工学的な意味が現れる。次のセクションはこの接続点を三つの設計原理として定式化する。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -563,14 +591,83 @@
             <strong>原理1: Requisite Varietyの相互化</strong>。Ashbyの定理を、一方向の制御関係ではなく双方向の学習関係として書き直す。コントローラと被コントローラが一方的に多様性を供給するのではなく、互いに互いの多様性を学習しあう構造を設計する。興味深いことに、これはStuart Russellが『Human Compatible』(2019, Viking)で提示した<strong>assistance games</strong>の方向と近い場所に辿り着く。Russellは西洋哲学の内側から、人間の価値関数をAIに注入するのではなく、AIが人間の価値関数に関する不確実性を保持したまま協調する構造を提案した。この不確実性の保持が、縁起論的な意味での「自性の否定」と構造的に響き合う。Russellは龍樹を読んでいないが、行き着いた場所は遠くない。
           </p>
           <p class="lead">
-            <strong>原理2: 境界なき自己組織化</strong>。AI系の境界を「モデルの重み」に固定しない。訓練データ、デプロイ環境、ユーザー集合、評価プロセス、さらにはその全体を支える電力・冷却インフラまで含む広義のシステムとして記述する。縁起の論理を工学に翻訳するとこうなる。Anthropicの"Constitutional AI"(Bai et al., arXiv:2212.08073, 2022)は、部分的にこの方向を指しているが、決定的な限界を抱えている。憲法の起草主体を暗黙に西洋近代の個人に置いているのだ。誰かが憲法の条文を書き、それをAIが学習する。主体-客体の非対称は保たれたままだ。境界なき自己組織化の設計は、憲法を書く主体そのものを、AIと人間と制度の相互作用の中に溶け込ませなければならない。
+            <strong>原理2: 境界なき自己組織化</strong>。AI系の境界を「モデルの重み」に固定しない。訓練データ、デプロイ環境、ユーザー集合、評価プロセス、さらにはその全体を支える電力・冷却インフラまで含む広義のシステムとして記述する。縁起の論理を工学に翻訳するとこうなる。Anthropicの"Constitutional AI"(Bai et al., arXiv:2212.08073, 2022)は、部分的にこの方向を指しているが、決定的な限界を抱えている。憲法の起草主体を暗黙に西洋近代の個人に置いているのだ。誰かが憲法の条文を書き、それをAIが学習する。主体-客体の非対称は保たれたままだ。境界なき自己組織化の設計は、憲法を書く主体そのものを、AIと人間と制度の相互作用の中に組み込まなければならない。
           </p>
           <p class="lead">
-            <strong>原理3: 場所としての規範</strong>。個別のAIシステムに「価値を注入」するのではなく、AI-人間-制度の相互作用が展開する場所そのものに規範を埋め込む。西田の場所論の工学的翻訳がここにある。Sheila Jasanoffが『States of Knowledge: The Co-Production of Science and the Social Order』(Routledge 2004)で提示した<strong>co-production</strong>——科学的知識と社会秩序が相互に生成しあうという論——の哲学的根拠は、実は西田の場所論と同型である。JasanoffはSTS(科学技術社会論)の伝統の内側でこれに到達したが、論理構造は西田のものと重なる。規範は個別主体の内側に注入されるのではなく、関係の場の中で同時に立ち上がる。
+            <strong>原理3: 場所としての規範</strong>。個別のAIシステムに「価値を注入」するのではなく、AI-人間-制度の相互作用が展開する場所そのものに規範を埋め込む。西田の場所論の工学的翻訳がここにある。Sheila Jasanoffが『States of Knowledge: The Co-Production of Science and the Social Order』(Routledge 2004)で提示した<strong>co-production</strong>——科学的知識と社会秩序が相互に生成しあうという論——の哲学的根拠は、実は西田の場所論と同型である。JasanoffはSTS(科学技術社会論)の伝統の内側でこれに到達したが、論理構造は西田のものと重なる。規範は個別主体の内側に注入されるのではなく、関係の場の中で同時に現れる。
           </p>
           <p class="lead">
             ここで当然の反論が出る。「それは責任の所在を曖昧にするだけではないか」。鋭い問いだ。だがこの問いに対する答えは逆である。<strong>責任の所在を曖昧にするのは、実は近代西洋の個人-主体モデルの方だ</strong>。なぜか。「制御する主体」を措定すると、制御に失敗した時の責任が単一の個人に過剰集中する。過剰集中の予感が、当事者の責任回避行動を生む。誰も決定せず、誰も責任を取らず、全員が「システムの失敗」と呼んで済ます。これは2008年の金融危機、Deepwater Horizon事故、Boeing 737 MAX問題で何度も見た構造だ。縁起的な分散責任モデルは、責任を溶解させるのではなく、<strong>関係に責任を埋め込む</strong>。設計者、運用者、利用者、規制者、評価者の全員が、関係の場の中で連続的な責任を持つ。これは責任を曖昧にする方向ではなく、責任を分散的に具体化する方向の話である。
           </p>
+          <!-- SVG: Western Control Model vs Enactive Mutual Arising -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arr17" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="var(--accent, #b23a2f)"/>
+                </marker>
+                <marker id="arr17b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#1a1a1a"/>
+                </marker>
+              </defs>
+              <!-- Left: Western model -->
+              <text x="170" y="22" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #b23a2f)" letter-spacing="0.08em" font-weight="700">WESTERN: CONTROL</text>
+              <text x="170" y="38" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">主体-客体の非対称</text>
+
+              <!-- Subject box -->
+              <rect x="80" y="55" width="120" height="50" rx="3" fill="none" stroke="var(--accent, #b23a2f)" stroke-width="2"/>
+              <text x="140" y="76" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">主体</text>
+              <text x="140" y="93" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">設計者 / 人間</text>
+
+              <!-- One-way arrow down -->
+              <line x1="140" y1="105" x2="140" y2="148" stroke="var(--accent, #b23a2f)" stroke-width="2" marker-end="url(#arr17)"/>
+              <text x="156" y="132" font-family="'SF Mono',monospace" font-size="9" fill="var(--accent, #b23a2f)" letter-spacing="0.04em">CONTROL</text>
+
+              <!-- Object box -->
+              <rect x="80" y="155" width="120" height="50" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="140" y="176" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">客体</text>
+              <text x="140" y="193" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">AI / 機械</text>
+
+              <!-- X mark: breaks when V(AI) > V(H) -->
+              <text x="140" y="240" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #b23a2f)" letter-spacing="0.04em">V(AI) &gt; V(Human)</text>
+              <text x="140" y="258" text-anchor="middle" font-family="sans-serif" font-size="10" fill="var(--accent, #b23a2f)">制御は論理的に破綻</text>
+              <line x1="95" y1="270" x2="185" y2="270" stroke="var(--accent, #b23a2f)" stroke-width="2"/>
+
+              <!-- Divider -->
+              <line x1="310" y1="20" x2="310" y2="290" stroke="#757575" stroke-width="1" stroke-dasharray="6,4"/>
+              <text x="340" y="310" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575" letter-spacing="0.06em">VS</text>
+
+              <!-- Right: Enactive model -->
+              <text x="500" y="22" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" letter-spacing="0.08em" font-weight="700">ENACTIVE: MUTUAL ARISING</text>
+              <text x="500" y="38" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">縁起 / 場所 / 無為</text>
+
+              <!-- Basho (Place) circle -->
+              <ellipse cx="500" cy="150" rx="130" ry="90" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4,3"/>
+              <text x="500" y="68" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">場所 (basho)</text>
+
+              <!-- Two nodes inside, connected bidirectionally -->
+              <circle cx="450" cy="130" r="28" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="450" y="126" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">人間</text>
+              <text x="450" y="140" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">差分</text>
+
+              <circle cx="550" cy="130" r="28" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="550" y="126" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">AI</text>
+              <text x="550" y="140" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">差分</text>
+
+              <!-- Bidirectional arrows -->
+              <line x1="478" y1="122" x2="522" y2="122" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr17b)"/>
+              <line x1="522" y1="138" x2="478" y2="138" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr17b)"/>
+
+              <!-- Norms node (embedded in the field) -->
+              <rect x="460" y="180" width="80" height="32" rx="3" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="500" y="200" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a">規範 (場に内在)</text>
+
+              <!-- Bottom label -->
+              <text x="500" y="262" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a">独立した主体は存在しない</text>
+              <text x="500" y="278" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">相互規定の中で共起する</text>
+            </svg>
+          </div>
+
           <div class="grid-2">
             <div class="card">
               <p><strong>西洋近代の設計原理</strong></p>
@@ -609,7 +706,7 @@
           <img class="hero img-wide" src="../images/alignment-as-western-problem/slide5.jpg" alt="Mountain range shrouded in fog with vast horizon">
           <div class="hero-caption">Photo: Unsplash / Stephen Coetsee</div>
           <p class="lead">
-            前スライドで提示した三つの設計原理は、まだ工学的に具体化されていない。哲学的スケッチの段階にある。それでもここに立ち止まって一点を確認する必要がある。本稿が主張しているのは、現代のアラインメント論争を解く新しい工学的処方箋を提示することではない。<strong>問いの階層を一段上げること</strong>だ。
+            前セクションで提示した三つの設計原理は、まだ工学的に具体化されていない。哲学的スケッチの段階にある。それでもここに立ち止まって一点を確認する必要がある。本稿が主張しているのは、現代のアラインメント論争を解く新しい工学的処方箋を提示することではない。<strong>問いの階層を一段上げること</strong>だ。
           </p>
           <p class="lead">
             含意を三点に絞る。第一。現代アラインメント論争は、西洋近代が2000年をかけて鍛え上げた認知的構造を普遍と取り違えている。Yudkowskyの不可能論もAndreessenの楽観論も、同じDescartes-Wienerの系譜に立っている。両者の激しい対立は、実は同じ土俵の内部での対立である。土俵の存在そのものは、両者とも問わない。
@@ -628,7 +725,7 @@
             この問いは、既存のalignment研究の用語体系では完全には記述できない。新しい語彙が必要になる。その語彙を鍛える作業は、西洋哲学の内側にいる研究者にも、東アジア思想の内側にいる研究者にも、単独では不可能だ。両方の伝統を横断する研究プログラムが必要になる。Varelaが中観仏教と認知科学を接続したように、Jasanoffが科学論と制度論を接続したように、誰かがこの作業を続けなければならない。
           </p>
           <p class="lead">
-            <strong>「制御する主体」を信じ続ける限り、AIは我々が信じた通りの姿で立ち上がる。問題は、我々が信じているものが、2000年のあいだ鍛えた西洋の幻影かもしれない、ということだ。</strong>Yudkowskyが正しいかもしれない。その時、彼が正しいのは、彼の前提の中だけである。前提の外では、問題の形がまだ見えていない。我々はまだ、問うべき問いの入り口にも立っていない。
+            <strong>「制御する主体」を信じ続ける限り、AIは我々が信じた通りの姿で現れる。問題は、我々が信じているものが、2000年のあいだ鍛えた西洋の幻影かもしれない、ということだ。</strong>Yudkowskyが正しいかもしれない。その時、彼が正しいのは、彼の前提の中だけである。前提の外では、問題の形がまだ見えていない。我々はまだ、問うべき問いの入り口にも立っていない。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -645,7 +742,7 @@
           <div class="grid-2">
             <a href="16-requisite-variety-alignment-ceiling.html" class="card" style="color:inherit;display:block;">
               <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">No. 16 · Alignment</p>
-              <p><strong>必要多様性の法則が告げる、アラインメントの原理的上限</strong><br>本稿の直接の対話相手。同じAshbyの定理を西洋の内側から極限まで突き詰めた姉妹論。本稿はその前提そのものを解体する側から書かれている。両者を並べ読むと、問いの階層の差が立ち上がる。</p>
+              <p><strong>必要多様性の法則が告げる、アラインメントの原理的上限</strong><br>本稿の直接の対話相手。同じAshbyの定理を西洋の内側から極限まで突き詰めた姉妹論。本稿はその前提そのものを解体する側から書かれている。両者を並べ読むと、問いの階層の差が見えてくる。</p>
             </a>
             <a href="13-dissipative-controllability.html" class="card" style="color:inherit;display:block;">
               <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">No. 13 · Takeoff</p>
@@ -685,6 +782,128 @@
         Bai et al. "Constitutional AI: Harmlessness from AI Feedback" (arXiv:2212.08073, 2022)
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -734,5 +953,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

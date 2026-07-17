@@ -167,6 +167,18 @@
         padding-bottom: 14px;
         border-bottom: 1px solid var(--accent);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 36px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -281,6 +293,18 @@
       }
       .inline-link:hover { border-color: var(--accent); }
 
+      /* ── SVG Diagram ── */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media (max-width: 768px) {
         .slide { padding: 64px 24px 48px; }
         .grid-2, .grid-3 { grid-template-columns: 1fr; }
@@ -299,7 +323,7 @@
     </style>
   </head>
   <body class="pattern-dispatch accent-wiredblue has-site-header" data-category="governance">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -312,7 +336,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 14 / 15 &nbsp;·&nbsp; Governance &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 14 &nbsp;·&nbsp; Governance &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="13-dissipative-controllability.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=governance" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -330,26 +354,32 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            2018年、AI研究者352人を対象にした調査で「すべての人間の仕事をAIが上回る時期」の中央予測は2061年だった。Grace、Salvatier、Dafoe、ZhangらがarXivで公開したこの論文は、回答のばらつきも記録している。最も早い予測と最も遅い予測のあいだには<strong>100年以上の開き</strong>があった。研究の最前線にいる人々でさえ、到達時期について合意できない。一般市民の認識がズレるのは、情報不足ではなく構造的な必然だ。
+            2018年、AI研究者352人への調査で「すべての人間の仕事をAIが上回る時期」の中央予測は2061年だった（Grace et al., arXiv）。最も早い予測と最も遅い予測のあいだには<strong>100年以上の開き</strong>がある。研究の最前線にいる人々でさえ合意できない。認知バイアス――線形外挿への固執、「AIの冬」からの帰納、専門家の不一致による思考停止――は過小評価の一因だが、一般論にすぎない。AGIの認知ギャップには、従来の技術変化にはなかった固有の構造がある。
           </p>
           <p class="lead">
-            問いを変えよう。「AGIはいつ来るのか」ではなく、「なぜ人間はAGIの時間軸を体系的に過小評価するのか」。答えは認知科学の領域にある。Kahnemanが「Thinking, Fast and Slow」で体系化したように、人間の直感は線形外挿に最適化されている。年率3%の成長は直感で捉えられる。だが年率300%の改善を10年続けた場合の帰結を、脳は正しく描けない。指数関数的変化は、計算すれば分かるが、感じることができない。計算結果を見せられても「さすがにそこまでは」と打ち消す。この打ち消しは、怠慢ではなく、脳が生存のために装備した安全装置だ。
+            先に最有力の反論を潰しておく。「止められないなら、見えても諦めるのと同じではないか」――この反論は、止める/止めないの二項だけで事態を分類している点で誤っている。地震を止められないことは、耐震基準を設計する理由を消さない。津波を止められないことは、避難経路を引く意味を消さない。<strong>止められなさの受容は、結果の幅を変えられるという認識と矛盾しない</strong>。技術的進路を変える類型（本稿で言う類型A）の実現可能性が低いことと、衝撃の広がり方を設計しなおす類型（B、C、D）が空虚であることは別の命題だ。両者を同一視した瞬間、手元に残る介入のほぼすべてが視野から消える。本稿は、止められないという事実認識から出発して、それでも設計可能な層が複数あることを示す。
           </p>
           <p class="lead">
-            たとえば住宅ローンを組む場面を想像してほしい。35年返済を選ぶとき、人は35年後の経済環境が今と大きく変わらないことを暗黙に前提している。この前提が間違っているとしたら、ローンだけでなく、教育計画、キャリア設計、老後資金の全てが同時に崩れる。しかし人間は「前提を疑いながら日常を営む」ことが認知的にできない。Tetlockが「Superforecasting」で示したように、専門家でさえ自分の予測の根拠がどの前提に依存しているかを明示できる人は稀だ。前提の暗黙性こそが認知ギャップの震源だ。
+            AGI固有の認知困難は三つに集約される。第一に、<strong>再帰的改善の想像不能性</strong>。蒸気機関も半導体もインターネットも、人間が設計し人間が改良した。AGIは自分自身を改良しうる。改良された版がさらに改良を加え、そのサイクルが数日から数時間で回る可能性がある。人間の経験に、この種の再帰的加速は存在しない。脳は「改善する主体が自分より賢くなる」状況をシミュレートするための参照点を持たない。
+          </p>
+          <p class="lead">
+            第二に、<strong>能力の非連続的跳躍</strong>。従来の技術は漸進的に性能が上がった。GPT-3からGPT-4への跳躍で、数学やコーディングの能力が突然「使い物にならない」から「人間の中央値を超える」に変わった。Wei et al.（2022年、Google Brain）が記録したemergent abilitiesは、パラメータ数がある閾値を超えると突然出現する能力だ。「まだ全然だめだから大丈夫」が一夜で覆る。この非連続性を直感は扱えない。
+          </p>
+          <p class="lead">
+            第三に、<strong>alignment問題の不可視性</strong>。AGIが人間の意図と異なる目的を追求しうるという問題は、システムが十分に賢くなるまで表面化しない。危険な橋は渡る前に見える。危険なAIは、危険になるまで見えない。Tetlockが「Superforecasting」で示したように、専門家でさえ自分の予測がどの前提に依存しているかを明示できる人は稀だ。AGIの場合、前提そのものが変化する速度が、前提を検証する速度を上回る。
           </p>
           <div class="grid-3">
             <div class="card">
-              <span class="tag">Bias 01</span>
-              <p><strong>線形外挿バイアス</strong><br>人間の直感は線形変化に最適化されている。指数関数的な改善カーブは計算できても感じられない。Kahnemanのシステム1が自動的に曲線を直線に引き伸ばす。</p>
+              <span class="tag">AGI-Specific 01</span>
+              <p><strong>再帰的改善の想像不能性</strong><br>自分より賢い存在が自分自身を改良するサイクルを、人間の脳はシミュレートできない。参照点がない。蒸気機関は蒸気機関を改良しなかった。</p>
             </div>
             <div class="card">
-              <span class="tag">Bias 02</span>
-              <p><strong>AIの冬の帰納</strong><br>1970年代と1990年代に2度、AI研究は凍結した。「今回も同じだろう」という帰納的推論は、過去のパターンが今回も適用されるという未検証の前提に立つ。だが今回の計算資源の指数的増加は、過去の冬と構造が異なる。</p>
+              <span class="tag">AGI-Specific 02</span>
+              <p><strong>能力の非連続的跳躍</strong><br>スケーリング則に従うAIは、ある閾値を超えると突然新しい能力を獲得する。Wei et al.（2022年）のemergent abilities。「まだ全然だめ」から「人間を超えた」への跳躍は、漸進的改善を前提とする直感を裏切る。</p>
             </div>
             <div class="card">
-              <span class="tag">Bias 03</span>
-              <p><strong>専門家の不一致による思考停止</strong><br>専門家が割れているとき、非専門家は「まだ結論が出ていない」と解釈する。Grace et al.の調査で100年以上の幅が出ていることは、一般人にとっては「誰も分からない」と同義になる。不確実性そのものが行動回避の正当化に使われる。</p>
+              <span class="tag">AGI-Specific 03</span>
+              <p><strong>alignment問題の不可視性</strong><br>AGIが人間の意図と乖離する可能性は、システムが十分に高性能になるまで検出できない。危険な橋は渡る前に見えるが、危険なAIは危険になるまで見えない。価値関数の複雑さが人間の理解を超える問題。</p>
             </div>
           </div>
         </div>
@@ -369,7 +399,7 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            前のスライドで見た認知ギャップに対して、「だから何をするのか」は一枚岩ではない。Toby Ordが「The Precipice」で整理した存在リスクへの対応フレームワークを援用すれば、AGIの社会的認知ギャップに対する介入は少なくとも4つの類型に分かれる。制御、緩和、同期、証言。この4つは目標も手段も全く異なり、混同すると戦略が崩壊する。
+            前のセクションで見た認知ギャップに対して、「だから何をするのか」は一枚岩ではない。Toby Ordが「The Precipice」で整理した存在リスクへの対応フレームワークを援用すれば、AGIの社会的認知ギャップに対する介入は少なくとも4つの類型に分かれる。制御、緩和、同期、証言。この4つは目標も手段も全く異なり、混同すると戦略が崩壊する。
           </p>
           <p class="lead">
             まず明確にすべきは、<strong>類型Aの実現可能性の低さ</strong>だ。AGIの技術的進路そのものを社会的合意で変えるというシナリオは、核兵器管理のアナロジーで語られることが多い。だが核兵器と異なり、AGI開発には国境も発射ボタンもない。コードはラップトップ1台で書ける。国際条約で規制しようとしても、Jasanoffが「The Ethics of Invention」で指摘したように、技術規制は常に技術発展より5年から10年遅れる。制御を第一目標に据える戦略は、失敗したときに他の3類型すべてを道連れにする危険がある。
@@ -447,6 +477,72 @@
           <p class="lead">
             認知の減災が意味するのは、AGIの到来を予言することではない。<strong>前提の有限性を意識に上げる</strong>ことだ。35年ローンが悪いのではない。35年ローンの前提を検証せずに組むことが損失の震源になる。教育が無駄なのではない。18歳時点の教育で一生を賄えるという前提が検証されていないことが問題だ。減災の核心は、前提を破壊することではなく、前提を可視化することにある。
           </p>
+          <!-- SVG: Cognitive Disaster Reduction Flow -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#0066ff"/>
+                </marker>
+                <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#757575"/>
+                </marker>
+              </defs>
+
+              <!-- Phase 1: Hidden assumptions -->
+              <rect x="30" y="50" width="160" height="70" rx="4" fill="none" stroke="#0066ff" stroke-width="2"/>
+              <text x="110" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#0066ff" letter-spacing="0.06em">PHASE 1</text>
+              <text x="110" y="92" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">暗黙の前提</text>
+              <text x="110" y="108" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">35年ローン / 終身雇用</text>
+
+              <!-- Arrow 1->2 -->
+              <line x1="190" y1="85" x2="248" y2="85" stroke="#0066ff" stroke-width="1.5" marker-end="url(#arrowB)"/>
+
+              <!-- Phase 2: Visibility -->
+              <rect x="250" y="50" width="160" height="70" rx="4" fill="rgba(0,102,255,0.06)" stroke="#0066ff" stroke-width="2"/>
+              <text x="330" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#0066ff" letter-spacing="0.06em">PHASE 2</text>
+              <text x="330" y="92" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">前提の可視化</text>
+              <text x="330" y="108" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">依存条件の明示</text>
+
+              <!-- Arrow 2->3 -->
+              <line x1="410" y1="85" x2="468" y2="85" stroke="#0066ff" stroke-width="1.5" marker-end="url(#arrowB)"/>
+
+              <!-- Phase 3: Alternative paths -->
+              <rect x="470" y="50" width="180" height="70" rx="4" fill="rgba(0,102,255,0.12)" stroke="#0066ff" stroke-width="2"/>
+              <text x="560" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#0066ff" letter-spacing="0.06em">PHASE 3</text>
+              <text x="560" y="92" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">段階的適応の設計</text>
+              <text x="560" y="108" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">代替経路の事前構築</text>
+
+              <!-- Downward: concrete examples -->
+              <line x1="110" y1="120" x2="110" y2="158" stroke="#757575" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowG)"/>
+              <line x1="330" y1="120" x2="330" y2="158" stroke="#757575" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowG)"/>
+              <line x1="560" y1="120" x2="560" y2="158" stroke="#757575" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowG)"/>
+
+              <!-- Example boxes -->
+              <rect x="20" y="160" width="180" height="80" rx="3" fill="none" stroke="#e5e5e5" stroke-width="1"/>
+              <text x="110" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">収入安定</text>
+              <text x="110" y="196" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">知識の耐用年数</text>
+              <text x="110" y="212" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">労働人口比率</text>
+              <text x="110" y="228" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">制度が依存する前提群</text>
+
+              <rect x="240" y="160" width="180" height="80" rx="3" fill="none" stroke="#e5e5e5" stroke-width="1"/>
+              <text x="330" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">TAI到達: ~2036</text>
+              <text x="330" y="196" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">制度改訂リード: 5年</text>
+              <text x="330" y="212" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">逆算 → 2031着手</text>
+              <text x="330" y="228" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">時間感覚の校正</text>
+
+              <rect x="460" y="160" width="200" height="80" rx="3" fill="none" stroke="#e5e5e5" stroke-width="1"/>
+              <text x="560" y="180" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">変動ローンへの切替</text>
+              <text x="560" y="196" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">リカレント教育の拡充</text>
+              <text x="560" y="212" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">積立方式への段階移行</text>
+              <text x="560" y="228" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">全か無かではない適応</text>
+
+              <!-- Bottom note -->
+              <text x="340" y="275" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#1a1a1a">減災 = 前提を破壊するのではなく、可視化する</text>
+              <text x="340" y="293" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575">AGI Pill: Cognitive Disaster Reduction</text>
+            </svg>
+          </div>
+
           <div class="bullets">
             <div class="point">
               <strong>前提の可視化</strong> — 現行制度がどの前提に依存しているかを明示する。35年ローンは「収入安定」前提、年金は「労働人口比」前提、教育は「知識の耐用年数」前提。前提が可視化されれば、破綻時の代替経路を事前に設計できる。
@@ -517,10 +613,13 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            4類型のC（同期）が指す「先行共同体」は、定義を間違えると簡単に選民サークルに堕する。「我々だけが未来を見ている」という意識は、共同体の凝集力にはなるが、社会への翻訳力を殺す。Beckertが「Imagined Futures」（2016年）で論じたように、未来についての期待は社会的に構築される。閉じた集団の期待は、外部から見れば単なるカルトの教義と区別がつかない。先行共同体が宗教にならないための条件は、機能の定義にある。
+            4類型のC（同期）が指す「先行共同体」は、定義を間違えると簡単に選民サークルに堕する。Beckertが「Imagined Futures」（2016年）で論じたように、未来についての期待は社会的に構築される。閉じた集団の期待は、外部から見れば単なるカルトの教義と区別がつかない。しかし先行共同体はすでに複数存在し、成功と失敗の実績を蓄積している。
           </p>
           <p class="lead">
-            先行共同体の価値は、仲間づくりそのものにはない。3つの機能が社会に対して開かれているかどうかで、共同体と宗教の分岐が決まる。
+            具体的に見る。<strong>Alignment Forum / LessWrong</strong>は2009年からAGIリスクの議論を蓄積し、RLHF（人間のフィードバックによる強化学習）の着想源となった技術的議論を生んだ。成功は、10年以上にわたる公開アーカイブの蓄積と、そこから複数のalignment研究機関（Redwood Research、ARC等）が派生したこと。失敗は、コミュニティの文体と前提知識の壁が高すぎて、Layer 02（生活翻訳）への橋渡しがほぼ機能しなかった点だ。<strong>Open Philanthropy</strong>はAI安全性に年間1億ドル超を投じ、CotraのTAI予測フレームワークやEpoch AIの計算資源データベースを生んだ。研究の公開性は高い。一方で、資金提供者としての影響力が集中しすぎ、独立した批判が出にくいという構造的弱点をBen Garfinkelらが指摘している。<strong>Anthropicの社内文化</strong>は、Constitutional AIとRSP（Responsible Scaling Policy）という形で「試行」を商用製品に組み込んだ。社外への翻訳は限定的だが、安全性を事業の中核に据えた先行実装として、他社への波及効果は無視できない。
+          </p>
+          <p class="lead">
+            先行共同体の価値は仲間づくりにはない。3つの機能が社会に対して開かれているかどうかで、共同体と宗教の分岐が決まる。
           </p>
           <div class="grid-3">
             <div class="card">
@@ -543,7 +642,7 @@
             反対仮説も検討しておく必要がある。「正しい認識を広めれば人は動く」は、歴史的に見て過大評価されてきた。気候変動の科学的合意は30年前に成立したが、制度変更は遅々として進まない。人は認識で動くより、利害、地位、同調圧力で動く。先行共同体が認識の伝達だけに賭けるなら、気候変動と同じ轍を踏む。だからこそ、Function 03（試行）が決定的に重要になる。認識を変えるのではなく、<strong>代替的な判断様式を実装して見せる</strong>ことで、認識の変化を待たずに行動の選択肢を増やす。
           </p>
           <div class="note">
-            <strong>最後に、この構造分析自体が持つ再帰的な性質について。</strong>AGIピルを語ること自体がAGIピルの実践であり、この記事もまた「先行共同体の翻訳機能」の一つの試行にほかならない。ただし自覚すべきは、認識の前線基地は常に二つの失敗モードを抱えているということだ。一つは選民化して社会との接続を失うこと。もう一つは、翻訳の過程でメッセージが薄まり、「何も言っていない」に等しくなること。前線基地は、どちらの崖にも落ちないぎりぎりの稜線を歩き続けなければならない。そして稜線の幅は、AGIが近づくほど狭くなる。
+            <strong>認知の減災を個人レベルで実装する3つの実践。</strong>第一に、週1回、Alignment ForumまたはEpoch AIの最新投稿を1本読む。内容の全てを理解する必要はない。「何が議論されているか」の水位感覚を維持することが目的だ。第二に、月1回、自分の主要な前提を棚卸しする。キャリア、資産配分、教育計画のそれぞれについて「この判断はどの前提に依存しているか」を1行で書き出す。前提が崩れた場合の代替経路を1つ添える。第三に、四半期に1回、3ヶ月前の自分の予測と現実を突き合わせる。「AGIはまだ先」と思っていたか、「もう来る」と思っていたか。どちらの方向にズレていたかを記録する。この記録の蓄積が、自分の認知バイアスのパターンを可視化する。抽象的な「認知の減災」は、この3つの習慣に落ちる。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -587,6 +686,128 @@
         Published: 2026.04.11
       </p>
     </div>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <!-- Scripts -->
     <script>
@@ -633,5 +854,20 @@
       }
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

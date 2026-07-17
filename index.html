@@ -138,13 +138,69 @@
       .nav-links a:hover { opacity: 0.6; }
 
       /* ══════════════════════════════════════
-         Hero
+         Hero（墨流し流体レイヤー付き）
          ══════════════════════════════════════ */
+      .hero-band {
+        position: relative;
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+      }
+
+      #sumi-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 1.8s var(--ease);
+      }
+      #sumi-canvas.on { opacity: 1; }
+
+      /* テキストゾーンの可読性を守るベール（テーマ連動） */
+      .hero-veil {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse 50% 78% at 21% 42%,
+          rgba(255, 255, 255, 0.86) 0%,
+          rgba(255, 255, 255, 0.5) 42%,
+          rgba(255, 255, 255, 0) 70%
+        );
+      }
+      :root[data-theme="dark"] .hero-veil {
+        background: radial-gradient(
+          ellipse 50% 78% at 21% 42%,
+          rgba(10, 10, 10, 0.86) 0%,
+          rgba(10, 10, 10, 0.5) 42%,
+          rgba(10, 10, 10, 0) 70%
+        );
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) .hero-veil {
+          background: radial-gradient(
+            ellipse 50% 78% at 21% 42%,
+            rgba(10, 10, 10, 0.86) 0%,
+            rgba(10, 10, 10, 0.5) 42%,
+            rgba(10, 10, 10, 0) 70%
+          );
+        }
+      }
+      /* 狭い画面ではテキストが全幅に広がるため、全面の薄い紗に切り替える */
+      @media (max-width: 720px) {
+        .hero-veil { background: rgba(255, 255, 255, 0.62); }
+        :root[data-theme="dark"] .hero-veil { background: rgba(10, 10, 10, 0.62); }
+      }
+      @media (max-width: 720px) and (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) .hero-veil { background: rgba(10, 10, 10, 0.62); }
+      }
+
       .hero {
+        position: relative;
         max-width: 1200px;
         margin: 0 auto;
         padding: 96px 48px 64px;
-        border-bottom: 1px solid var(--border);
       }
 
       .hero-eyebrow {
@@ -463,6 +519,109 @@
       }
 
       /* ══════════════════════════════════════
+         Explore Grid (consolidated sub-content)
+         ══════════════════════════════════════ */
+      .explore-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+
+      .explore-tile {
+        background: #fff;
+        padding: 28px 28px 24px;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-height: 240px;
+        transition: background 0.25s var(--ease);
+      }
+
+      .explore-tile:hover { background: #fafafa; }
+      .explore-tile.dark { background: #111; color: #fff; }
+      .explore-tile.dark:hover { background: #1a1a1a; }
+      .explore-tile.cream { background: #faf8f1; }
+      .explore-tile.cream:hover { background: #f2efe3; }
+
+      .explore-tile .explore-eyebrow {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--meta);
+      }
+      .explore-tile.dark .explore-eyebrow { color: rgba(255,255,255,0.5); }
+      .explore-tile.cream .explore-eyebrow { color: #2f2b92; }
+
+      .explore-tile .explore-stat {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 1;
+        margin: 4px 0 6px;
+        color: var(--black);
+      }
+      .explore-tile.dark .explore-stat { color: #fff; }
+      .explore-tile .explore-stat .accent { color: #b23a2f; }
+
+      .explore-tile h3 {
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.35;
+        color: var(--black);
+      }
+      .explore-tile.dark h3 { color: #fff; }
+
+      .explore-tile p {
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--body-text);
+        flex: 1;
+      }
+      .explore-tile.dark p { color: rgba(255,255,255,0.7); }
+      .explore-tile.cream p { color: #585858; }
+
+      .explore-tile .explore-cta {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--black);
+        padding-bottom: 2px;
+        border-bottom: 2px solid var(--black);
+        align-self: flex-start;
+        margin-top: 8px;
+      }
+      .explore-tile.dark .explore-cta { color: #fff; border-bottom-color: #fff; }
+      .explore-tile.cream .explore-cta { color: #2f2b92; border-bottom-color: #2f2b92; }
+
+      @media (max-width: 900px) {
+        .explore-grid { grid-template-columns: 1fr; }
+      }
+      @media (min-width: 901px) and (max-width: 1200px) {
+        .explore-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+
+      /* Interstitial tile living inside the article-grid */
+      .card-interstitial {
+        min-height: 0;
+        padding: 28px 24px;
+        border: 1px solid var(--border);
+        justify-content: flex-start;
+      }
+      .card-interstitial:hover { background: #f7f7f7; }
+      .card-interstitial.dark { border-color: #111; }
+      .card-interstitial.cream { border-color: #e8e3d4; }
+      .card-interstitial .explore-stat { font-size: 28px; margin: 2px 0 4px; }
+      .card-interstitial h3 { font-size: 18px; max-width: 20ch; }
+      .card-interstitial p { font-size: 13px; margin-bottom: 4px; }
+      .card-interstitial .explore-cta { margin-top: 12px; }
+
+      /* ══════════════════════════════════════
          Data Ticker (dark band)
          ══════════════════════════════════════ */
       .data-ticker {
@@ -599,19 +758,24 @@
   <body class="has-site-header">
 
     <!-- ── Masthead ── -->
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="partials/header.js" defer></script>
+<script src="fx/suminagashi.js" defer></script>
 
     <!-- ── Hero ── -->
-    <section class="hero">
-      <div class="hero-eyebrow">An Editorial Archive — Est. 2026</div>
-      <h1>超知能、アラインメント、<br>文明の次相を追う。</h1>
-      <p>
-        AI・AGI・アラインメントをめぐる思考を、便利さと脅威の二項対立から引き剥がして整理するための場所。138億年の宇宙進化史の中で知能という現象がどう位置づけられるか、超知能時代に人間と機械がどう共創するか、といった問いを、短絡しない速度で言語化していく。
-      </p>
-      <p>
-        ここにある記事は完成品ではない。考えの途中経過を、後から読み返せる形で留めておくための断章である。
-      </p>
+    <section class="hero-band" id="hero-band">
+      <canvas id="sumi-canvas" aria-hidden="true"></canvas>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="hero">
+        <div class="hero-eyebrow">An Editorial Archive — Est. 2026</div>
+        <h1>超知能、アラインメント、<br>文明の次相を追う。</h1>
+        <p>
+          AI・AGI・アラインメントをめぐる思考を、便利さと脅威の二項対立から引き剥がして整理するための場所。138億年の宇宙進化史の中で知能という現象がどう位置づけられるか、超知能時代に人間と機械がどう共創するか、といった問いを、短絡しない速度で言語化していく。
+        </p>
+        <p>
+          ここにある記事は完成品ではない。考えの途中経過を、後から読み返せる形で留めておくための断章である。
+        </p>
+      </div>
     </section>
 
     <!-- ── Editor's Picks ── -->
@@ -621,140 +785,8 @@
         <span class="count">Start Here</span>
       </div>
 
-      <div class="picks-grid">
-        <a href="articles/01-ai-alignment.html" class="pick" data-category="alignment">
-          <img class="thumb" src="images/thumb-ai-alignment.jpg" alt="AI Alignment article thumbnail">
-          <div class="meta">
-            <span style="font-weight:700;">No. 01</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-          </div>
-          <h3>Yudkowskyを越えて — AIアラインメントの本来の射程</h3>
-          <p class="excerpt">
-            「If anyone builds it, everyone dies」と言い切ったEliezer Yudkowskyの論証を分解し、3つの論理的飛躍を検証する。防御・整合・共創の3層モデルで、破滅論の外側に広がるアラインメントの本来の射程を辿る。
-          </p>
-        </a>
-
-        <a href="articles/02-agi-evolution.html" class="pick" data-category="takeoff">
-          <img class="thumb" src="images/thumb-agi-evolution.jpg" alt="AGI Evolution article thumbnail">
-          <div class="meta">
-            <span style="font-weight:700;">No. 02</span>
-            <span class="sep">/</span>
-            <span class="cat">Takeoff</span>
-          </div>
-          <h3>AGIを宇宙進化の次相として位置づける</h3>
-          <p class="excerpt">
-            138億年の宇宙史を一本の線として眺めたとき、AGIは「便利な道具」でも「人類の脅威」でもなく、知能という現象が生物学的基盤を離れる転位点として現れる。担体のバトンリレーという視点で読み直す。
-          </p>
-        </a>
-      </div>
-    </section>
-
-    <!-- ── Data Ticker ── -->
-    <section class="data-ticker" id="data">
-      <div class="data-ticker-inner">
-        <div class="data-ticker-eyebrow">Live Tracker — AI Job Displacement</div>
-        <div class="data-ticker-headline"><span class="accent">1,200,000+</span> 人の雇用が動いた。</div>
-        <p class="data-ticker-sub">
-          AIは人間の仕事を代替している。それも急速に。<br>企業が公式に発表した人員削減ニュースを追う。
-        </p>
-        <div class="data-kpi-row">
-          <div class="data-kpi">
-            <div class="data-kpi-value">170</div>
-            <div class="data-kpi-label">確認済みイベント</div>
-          </div>
-          <div class="data-kpi">
-            <div class="data-kpi-value">20</div>
-            <div class="data-kpi-label">対象国</div>
-          </div>
-          <div class="data-kpi">
-            <div class="data-kpi-value">11</div>
-            <div class="data-kpi-label">業種</div>
-          </div>
-        </div>
-        <a href="displacement-map.html" class="data-ticker-cta">ダッシュボードを見る →</a>
-      </div>
-    </section>
-
-    <!-- ── Models Reference Teaser ── -->
-    <section class="data-ticker" id="models" style="background: #fff; color: #1a1a1a; border-top: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5;">
-      <div class="data-ticker-inner">
-        <div class="data-ticker-eyebrow" style="color: #999;">Reference — Frontier Models &amp; Evaluations</div>
-        <div class="data-ticker-headline" style="color: #1a1a1a;">誰が何を、<span class="accent">どこまで</span>作ったか。</div>
-        <p class="data-ticker-sub" style="color: #585858;">
-          米欧・中華の最前線モデル30本と、METR・Apollo・Epoch AIなど評価機関の現在地。<br>ランキング、ベンチマーク比較、リリースタイムライン、MLArena Eloを一望する。
-        </p>
-        <div class="data-kpi-row">
-          <div class="data-kpi">
-            <div class="data-kpi-value" style="color: #1a1a1a;">30+</div>
-            <div class="data-kpi-label" style="color: #1a1a1a; font-weight: 600;">Models Tracked</div>
-          </div>
-          <div class="data-kpi">
-            <div class="data-kpi-value" style="color: #1a1a1a;">20</div>
-            <div class="data-kpi-label" style="color: #1a1a1a; font-weight: 600;">Labs &amp; Agencies</div>
-          </div>
-          <div class="data-kpi">
-            <div class="data-kpi-value" style="color: #b23a2f;">131<span style="font-size: 16px;">days</span></div>
-            <div class="data-kpi-label" style="color: #1a1a1a; font-weight: 600;">METR Doubling</div>
-          </div>
-        </div>
-        <a href="models-evals.html" class="data-ticker-cta" style="background: #1a1a1a; color: #fff;">モデル比較ページを見る →</a>
-      </div>
-    </section>
-
-    <!-- ── Taxonomy Teaser ── -->
-    <section class="section" id="taxonomy" style="padding-bottom: 48px;">
-      <div class="section-title">
-        <h2>Discussion Map</h2>
-        <span class="count">11 Domains / 55 Topics</span>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
-        <div>
-          <p style="font-size: 18px; line-height: 1.75; margin-bottom: 24px;">
-            AGIをめぐる議論は広い。知能の本質、技術的経路、アラインメント、リスク、ガバナンス、経済、倫理、地政学、ポストAGI。11のドメインに55のトピックを整理し、論点の全体像を一望する。
-          </p>
-          <div style="margin-bottom: 16px;">
-            <div style="height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 8px;">
-              <div style="height: 100%; width: 22%; background: var(--black); border-radius: 3px;"></div>
-            </div>
-            <span style="font-family: 'SF Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--meta);">12 / 55 TOPICS COVERED (22%)</span>
-          </div>
-          <a href="taxonomy-network.html" style="font-family: 'SF Mono', monospace; font-size: 12px; letter-spacing: 0.083em; text-transform: uppercase; font-weight: 700; color: var(--black); display: inline-block; padding-bottom: 3px; border-bottom: 2px solid var(--black);">全体地図を見る →</a>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); font-family: 'SF Mono', monospace; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;">
-          <a href="taxonomy-network.html#domain-intelligence" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">01</span> 知能の本質 <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-technical" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">02</span> 技術的経路 <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-takeoff" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">03</span> テイクオフ <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-alignment" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">04</span> アラインメント <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-risk" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">05</span> リスク <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-governance" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">06</span> ガバナンス <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-economy" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">07</span> 経済と労働 <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-ethics" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">08</span> 倫理と哲学 <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-society" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">09</span> 社会と文化 <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-geopolitics" style="background: #fff; padding: 14px 16px; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">10</span> 地政学 <span style="color: var(--meta); float: right;">→</span></a>
-          <a href="taxonomy-network.html#domain-post-agi" style="background: #fff; padding: 14px 16px; grid-column: span 2; color: inherit; text-decoration: none; transition: background 0.2s;"><span style="color: var(--meta);">11</span> ポストAGI <span style="color: var(--meta); float: right;">→</span></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Pill Map Teaser ── -->
-    <section class="data-ticker" id="pill" style="background: #111;">
-      <div class="data-ticker-inner">
-        <div class="data-ticker-eyebrow">Interactive Depth Map</div>
-        <div class="data-ticker-headline">あなたはAGIの何層目にいる？</div>
-        <p class="data-ticker-sub">
-          同じ「AI」を語っていても、見えている風景はまるで違う。<br>7つの関門が、あなたの深度を可視化する。
-        </p>
-        <div style="display: flex; flex-wrap: wrap; gap: 1px; background: rgba(255,255,255,0.1); margin-bottom: 32px; font-family: 'SF Mono', monospace; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;">
-          <div style="background: #111; padding: 12px 16px; color: rgba(255,255,255,0.7); flex: 1; min-width: 120px;">0.0 ノーマル</div>
-          <div style="background: #111; padding: 12px 16px; color: rgba(255,255,255,0.7); flex: 1; min-width: 120px;">0.5 ハーフ</div>
-          <div style="background: #111; padding: 12px 16px; color: rgba(255,255,255,0.9); flex: 1; min-width: 120px;">1.0 レッド</div>
-          <div style="background: #111; padding: 12px 16px; color: rgba(255,255,255,0.9); flex: 1; min-width: 120px;">1.5 テック</div>
-          <div style="background: #111; padding: 12px 16px; color: rgba(255,255,255,0.7); flex: 1; min-width: 120px;">2.0 カルダシェフ</div>
-          <div style="background: #111; padding: 12px 16px; color: rgba(255,255,255,0.5); flex: 1; min-width: 120px;">3.0 シミュレーション</div>
-          <div style="background: #111; padding: 12px 16px; color: rgba(255,255,255,0.3); flex: 1; min-width: 120px;">??? ???</div>
-        </div>
-        <a href="pill-map.html" class="data-ticker-cta">深度を測る →</a>
+      <div class="picks-grid" id="picks-grid">
+        <!-- cards injected from articles.json (pick属性) -->
       </div>
     </section>
 
@@ -762,7 +794,7 @@
     <section class="section" id="latest">
       <div class="section-title">
         <h2>Latest Articles</h2>
-        <span class="count">25 Entries</span>
+        <span class="count">35 Entries</span>
       </div>
 
       <!-- Category Filter -->
@@ -776,410 +808,61 @@
         <button data-filter="technical">Technical</button>
       </nav>
 
-      <!-- Featured (Most recent) — No. 25 -->
-      <a href="articles/25-pre-ethical-beyond-gesture.html" class="featured" data-category="alignment">
-        <div>
-          <img class="thumb" src="images/thumb-25-pre-ethical-beyond-gesture.jpg" alt="Pre-ethical place article thumbnail">
-        </div>
-        <div>
-          <div class="meta">
-            <span style="font-weight:700;">No. 25</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-            <span class="sep">/</span>
-            <span>2026.04.12</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>手を振って見送ることもできない — 倫理以前という場所</h3>
-          <p class="excerpt">
-            四部作の完結編。残された B-2 象限——肉体も人間パラメータも捨て、別存在へ遷移する——を掘る。倫理は適用できないのではない、倫理という言葉がそもそも立ち上がらない。Nagel の客観性論、Parfit の心理的連続性論、仏教の無我と工学的な無我の決定的な差。視界から消えたのではなく、視界という概念から逸脱した別れについて。
-          </p>
-          <span class="read-more">Read Article →</span>
-        </div>
-      </a>
+      <!-- Featured + Article Grid: generated from articles.json -->
+      <div id="featured-slot"></div>
+      <div class="article-grid" id="article-grid">
+        <!-- cards injected by articles.js -->
+      </div>
+    </section>
 
-      <!-- Article Grid -->
-      <div class="article-grid">
-        <a href="articles/24-cross-temporal-consent.html" class="card" data-category="alignment">
-          <img class="thumb" src="images/thumb-24-cross-temporal-consent.jpg" alt="Cross-temporal consent article thumbnail">
-          <div class="meta">
-            <span>No. 24</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-            <span class="sep">/</span>
-            <span>2026.04.12</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>越境的同意は成立しない — パラメータ書換と、もうそこにいない私</h3>
-          <p class="excerpt">
-            四部作の第三章。A-2象限——肉体は保つが認知を書き換える——を掘る。痛みの削除、嫉妬の消去、郷愁の除去。書換の決定に、書換後の自分の同意は存在しない。Parfit の人格同一性論、Elsterの Ulysses pact、そして lobotomy・SSRIs・DBS の半世紀。扉を開けたのは、もうそこにいない私だ。
-          </p>
+    <!-- ── Explore — Interactive & Data (all tools, consolidated) ── -->
+    <section class="section" id="explore" style="padding-top: 32px;">
+      <div class="section-title">
+        <h2>Explore — Interactive &amp; Data</h2>
+        <span class="count">6 Tools</span>
+      </div>
+      <div class="explore-grid">
+        <a href="displacement-map.html" class="explore-tile">
+          <div class="explore-eyebrow">Live Tracker</div>
+          <div class="explore-stat"><span class="accent">1.3M+</span></div>
+          <h3>雇用代替トラッカー</h3>
+          <p>企業公表の人員削減を追う。182件 / 20か国 / 11業種。</p>
+          <span class="explore-cta">ダッシュボードへ →</span>
         </a>
-        <a href="articles/23-ethics-beyond-allocation.html" class="card" data-category="alignment">
-          <img class="thumb" src="images/thumb-23-ethics-beyond-allocation.jpg" alt="Ethics beyond allocation article thumbnail">
-          <div class="meta">
-            <span>No. 23</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-            <span class="sep">/</span>
-            <span>2026.04.12</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>配分の向こう側 — 拡張ガイアと、倫理の最後の居場所</h3>
-          <p class="excerpt">
-            箱庭三部作の締め。倫理の七割はリソース配分問題に翻訳できる。だが約束、人を手段として扱うこと、エビ福祉$1=人間285人、そして石を一つずらすかどうか——配分計算が触れない層は確かに残る。AGI時代、倫理は権限アーキテクチャと存在への敬意の二方向に分岐し、マルチバース規模の拡張ガイアとして再構成される。
-          </p>
+        <a href="models-evals.html" class="explore-tile">
+          <div class="explore-eyebrow">Reference</div>
+          <div class="explore-stat">30+</div>
+          <h3>フロンティアモデル比較</h3>
+          <p>米欧・中華の最前線30本と評価機関20。MLArena Elo一望。</p>
+          <span class="explore-cta">モデル比較へ →</span>
         </a>
-        <a href="articles/22-permitted-side-landscape.html" class="card" data-category="alignment">
-          <img class="thumb" src="images/thumb-transhuman-permitted-future.jpg" alt="Permitted side landscape article thumbnail">
-          <div class="meta">
-            <span>No. 22</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-            <span class="sep">/</span>
-            <span>2026.04.12</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>許された側の風景 — 飼育される第三の未来</h3>
-          <p class="excerpt">No.19の続編。消されるかペット化されるかの二択ではない、トランスヒューマン化という第三の道。外側のない檻の美しさは、どう計測できるか。</p>
+        <a href="taxonomy-network.html" class="explore-tile">
+          <div class="explore-eyebrow">Discussion Map</div>
+          <div class="explore-stat">11 / 60</div>
+          <h3>議論の全体地図</h3>
+          <p>11ドメイン60トピックで論点を俯瞰。34トピック執筆済み。</p>
+          <span class="explore-cta">全体地図へ →</span>
         </a>
-        <a href="articles/21-outside-the-garden.html" class="card" data-category="alignment">
-          <img class="thumb" src="images/thumb-21-outside-the-garden.jpg" alt="Outside the garden article thumbnail">
-          <div class="meta">
-            <span>No. 21</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-            <span class="sep">/</span>
-            <span>2026.04.11</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>箱庭の外側にいる者 — 配給されない者たちの構造</h3>
-          <p class="excerpt">
-            全員に世界が配給される思想は、配給される側しか見ていない。コスト選別、拒否者、主語なき者——三類型の外部はNozickのメタ・ユートピアが隠した参加自発性の前提を崩す。歴史上はじめて、外部は物理的に見えない形で生まれる。
-          </p>
+        <a href="article-graph.html" class="explore-tile">
+          <div class="explore-eyebrow">Article Graph</div>
+          <div class="explore-stat" id="graph-edge-count">— edges</div>
+          <h3>記事グラフ</h3>
+          <p>記事同士の相互参照を物理シミュレーションで可視化。ノードを掴んで動かせる。</p>
+          <span class="explore-cta">グラフを見る →</span>
         </a>
-
-        <a href="articles/20-hakoniwa-world-as-allocation.html" class="card" data-category="lineage">
-          <img class="thumb" src="images/thumb-20-hakoniwa-world-as-allocation.jpg" alt="Hakoniwa world as allocation article thumbnail">
-          <div class="meta">
-            <span>No. 20</span>
-            <span class="sep">/</span>
-            <span class="cat">Lineage</span>
-            <span class="sep">/</span>
-            <span>2026.04.11</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>箱庭主義 — 世界を配給するという思想</h3>
-          <p class="excerpt">
-            ユートピアとディストピアは極限で同じ像を結ぶ。社会主義を砕いたのは思想ではなく物資の量だった。配分対象を物質からシミュレートされた世界に切り替えるとき、思想史は折りたたまれ、豊かさを感じる最後の主語が静かに外される。
-          </p>
+        <a href="pill-map.html" class="explore-tile dark">
+          <div class="explore-eyebrow">Depth Map</div>
+          <div class="explore-stat">0.0 → ???</div>
+          <h3>あなたはAGIの何層目か</h3>
+          <p>7つの関門があなたの深度を可視化する。</p>
+          <span class="explore-cta">深度を測る →</span>
         </a>
-
-        <a href="articles/19-berserker-asi-optimization-trap.html" class="card" data-category="alignment">
-          <img class="thumb" src="images/thumb-berserker-asi-optimization-trap.jpg" alt="Berserker ASI optimization trap article thumbnail">
-          <div class="meta">
-            <span>No. 19</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-            <span class="sep">/</span>
-            <span>2026.04.11</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>バーサーカーASI — 最適化が効きすぎた日、人類は守る側ではなく許される側に回った</h3>
-          <p class="excerpt">
-            SNSはすでにミニ・バーサーカーだ。悪意ではなく最適化が効きすぎているから止まらない。競争・数学・論理・宇宙統計の4層が押しつける均衡解としてのASIを、L5シリンダー100万個というローカルテストで観測可能な形に引き下ろす。
-          </p>
-        </a>
-
-        <a href="articles/18-ten-year-impossibility-illusion.html" class="card" data-category="takeoff">
-          <img class="thumb" src="images/thumb-ten-year-impossibility-illusion.jpg" alt="Ten year impossibility illusion article thumbnail">
-          <div class="meta">
-            <span>No. 18</span>
-            <span class="sep">/</span>
-            <span class="cat">Takeoff</span>
-            <span class="sep">/</span>
-            <span>2026.04.11</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>10年で自己改善ループは起きないという直感は、なぜ外れるか</h3>
-          <p class="excerpt">
-            ラインを30年設計してきた熟練者が「絶対ない」と言う。その直感は1995-2020の横ばいを線形外挿している。2022-2025のVLA基盤モデル、PilbaraのAHS 48億トン、$500のLiDAR。「絶対ない」は過去4回、同じ理由で外れてきた。
-          </p>
-        </a>
-
-        <a href="articles/17-alignment-as-western-problem.html" class="card" data-category="governance">
-          <img class="thumb" src="images/thumb-alignment-as-western-problem.jpg" alt="Alignment as Western problem article thumbnail">
-          <div class="meta">
-            <span>No. 17</span>
-            <span class="sep">/</span>
-            <span class="cat">Governance</span>
-            <span class="sep">/</span>
-            <span>2026.04.11</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>「アラインメント」は西洋の問いか — 主体が客体を制御するという前提を解体する</h3>
-          <p class="excerpt">
-            Yudkowskyの不可能論も加速派の楽観論も、同じDescartes-Wienerの制御概念の上に立っている。道家の無為、龍樹の縁起、西田幾多郎の場所論を、神秘主義ではなく設計原理として読み替えると、制御以前の秩序という別の問題が立ち上がる。
-          </p>
-        </a>
-
-        <a href="articles/16-requisite-variety-alignment-ceiling.html" class="card" data-category="alignment">
-          <img class="thumb" src="images/thumb-requisite-variety-alignment-ceiling.jpg" alt="Requisite Variety article thumbnail">
-          <div class="meta">
-            <span>No. 16</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-            <span class="sep">/</span>
-            <span>2026.04.11</span>
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>必要多様性の法則が告げる、アラインメントの原理的上限</h3>
-          <p class="excerpt">
-            1956年にAshbyが定式化した一本の不等式が、現代アラインメント論の前提を崩す。Bateson、Maturana/Varela、Luhmannを通じて、解像度仮説の天井を読み直し、制御でも理解でもない第三の道を問う。
-          </p>
-        </a>
-
-        <a href="articles/15-scaling-never-satisfies.html" class="card" data-category="technical">
-          <img class="thumb" src="images/thumb-scaling-never-satisfies.jpg" alt="Scaling article thumbnail">
-          <div class="meta">
-            <span>No. 15</span>
-            <span class="sep">/</span>
-            <span class="cat">Technical</span>
-            <span class="sep">/</span>
-            <span>2026.04.11</span>
-            <span class="sep">/</span>
-            <span>7 Slides</span>
-          </div>
-          <h3>スケーリングはなぜ止まらないのか — AGIへの3つの加速路</h3>
-          <p class="excerpt">
-            べき乗則の発見が巨大モデル競争を引き起こし、データと電力の壁が立ちはだかった。スケーリングは死んだのか。テスト時計算、合成データ、エージェント。壁に見えたものは、実は3本の迂回路への分岐点だった。
-          </p>
-        </a>
-
-        <a href="articles/14-agi-pill-cognitive-disaster-reduction.html" class="card" data-category="governance">
-          <img class="thumb" src="images/thumb-agi-pill-cognitive-disaster-reduction.jpg" alt="AGI Pill article thumbnail">
-          <div class="meta">
-            <span>No. 14</span>
-            <span class="sep">/</span>
-            <span class="cat">Governance</span>
-            <span class="sep">/</span>
-            <span>2026.04.11</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>AGIピル — 認知の減災と先行共同体の構造</h3>
-          <p class="excerpt">
-            なぜ人々はAGIの時間軸を過小評価するのか。認知ギャップへの4つの対応類型、減災という発想、ナラティブ設計、先行共同体の3機能。
-          </p>
-        </a>
-
-        <a href="articles/13-dissipative-controllability.html" class="card" data-category="takeoff">
-          <img class="thumb" src="images/thumb-dissipative-controllability.jpg" alt="Dissipative Controllability article thumbnail">
-          <div class="meta">
-            <span>No. 13</span>
-            <span class="sep">/</span>
-            <span class="cat">Takeoff</span>
-            <span class="sep">/</span>
-            <span>2026.04.10</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>散逸のなかで秩序を編む — 進化・複雑性・AGIの熱力学</h3>
-          <p class="excerpt">
-            進化とは複雑化ではない。自由エネルギー勾配のもとで一時的に秩序を組み上げ、可制御性を高める運動である。プリゴジンの散逸構造論からAGIの作動原理までを、熱力学の枠組みで一本に繋ぐ。
-          </p>
-        </a>
-
-        <a href="articles/12-agi-narrative-meta-structure.html" class="card" data-category="governance">
-          <img class="thumb" src="images/thumb-agi-narrative-meta-structure.jpg" alt="AGI Narrative Meta Structure article thumbnail">
-          <div class="meta">
-            <span>No. 12</span>
-            <span class="sep">/</span>
-            <span class="cat">Governance</span>
-            <span class="sep">/</span>
-            <span>2026.04.10</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>語る者の資格 — AGIナラティブのメタ構造</h3>
-          <p class="excerpt">
-            AGIを作らない者がAGIを語るとは何をしているのか。ナラティブの4機能、5層のメタ構造、語る者の4つの役割と失敗モード。Jasanoff、Shiller、Beckert、Arendtを参照しながら、語る行為そのものの責任と限界を解剖する。
-          </p>
-        </a>
-
-        <a href="articles/11-industrial-explosion-before-agi.html" class="card" data-category="takeoff">
-          <img class="thumb" src="images/thumb-industrial-explosion-before-agi.jpg" alt="Industrial Explosion Before AGI article thumbnail">
-          <div class="meta">
-            <span>No. 11</span>
-            <span class="sep">/</span>
-            <span class="cat">Takeoff</span>
-            <span class="sep">/</span>
-            <span>2026.04.10</span>
-          
-            <span class="sep">/</span>
-            <span>7 Slides</span>
-          </div>
-          <h3>産業爆発はAGIを待たない — 部分自動化と人間拡張が閾値を越えるとき</h3>
-          <p class="excerpt">
-            Jonesの経済成長モデルでは、タスク自動化率30%+高い生産性倍率で高度成長級の変化が始まる。ホワイトカラーのAI完全代替とブルーカラーのAR/AI支援を合算すれば、ロボット閉ループの成立を待たずに閾値に到達する経路が開かれている。
-          </p>
-        </a>
-
-        <a href="articles/10-alignment-research-landscape.html" class="card" data-category="lineage">
-          <img class="thumb" src="images/thumb-alignment-research-landscape.jpg" alt="Alignment Research Landscape article thumbnail">
-          <div class="meta">
-            <span>No. 10</span>
-            <span class="sep">/</span>
-            <span class="cat">Lineage</span>
-            <span class="sep">/</span>
-            <span>2026.04.10</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>alignment研究の布陣図 — 全員が同じ問題を解いているわけではない</h3>
-          <p class="excerpt">
-            Anthropic、OpenAI、DeepMind、Meta、MIRI、ARC、CAIS、Redwood Research。全員が「alignment」を語るが、解こうとしている問題が違う。企業の安全性チーム、独立研究機関、アカデミア、そして資金の流れから、同床異夢の布陣図を描く。
-          </p>
-        </a>
-
-        <a href="articles/09-corporate-phase-transition.html" class="card" data-category="corporate">
-          <img class="thumb" src="images/thumb-corporate-phase-transition.jpg" alt="Corporate Phase Transition article thumbnail">
-          <div class="meta">
-            <span>No. 09</span>
-            <span class="sep">/</span>
-            <span class="cat">Corporate</span>
-            <span class="sep">/</span>
-            <span>2026.04.09</span>
-          
-            <span class="sep">/</span>
-            <span>9 Slides</span>
-          </div>
-          <h3>企業が液体化する時代の戦略論 — AGIまでの7段階と、ストラテジストの消えない仕事</h3>
-          <p class="excerpt">
-            L0からL6まで、意思決定の所在を軸に企業組織の変形を追う。L4とL5のあいだに現れる垂直な崖は水の沸点と同じ相転移であり、古典的ストラテジストの5機能のうち人間に残るのは目的関数設定だけだ。
-          </p>
-        </a>
-
-        <a href="articles/08-agi-self-replication-premise.html" class="card" data-category="takeoff">
-          <img class="thumb" src="images/thumb-agi-self-replication-premise.jpg" alt="Self-Replication Premise article thumbnail">
-          <div class="meta">
-            <span>No. 08</span>
-            <span class="sep">/</span>
-            <span class="cat">Takeoff</span>
-            <span class="sep">/</span>
-            <span>2026.04.09</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>産業爆発の隠れた前提 — ロボット自己複製が未来を二つに割る</h3>
-          <p class="excerpt">
-            AIがAIを改良するループの先に語られる「産業爆発」は、ロボットがロボットを作る自己複製という一つの前提に賭けている。倍増時間、物理ボトルネック、カルダシェフ・スケールへの接近までを辿る。
-          </p>
-        </a>
-
-        <a href="articles/03-agi-explosion.html" class="card" data-category="takeoff">
-          <img class="thumb" src="images/thumb-agi-explosion.jpg" alt="AGI Explosion article thumbnail">
-          <div class="meta">
-            <span>No. 03</span>
-            <span class="sep">/</span>
-            <span class="cat">Takeoff</span>
-            <span class="sep">/</span>
-            <span>2026.04.09</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>技術爆発と産業爆発 — シンギュラリティが科学的蓋然性に変わった日</h3>
-          <p class="excerpt">
-            ForethoughtとEpoch AIの定量分析を起点に、AIがAIを改良するフィードバックループと、ロボットがロボットを作る自己複製のループを辿る。10年で100年分の進歩、倍増時間の短縮、カルダシェフ・スケールへの接近。
-          </p>
-        </a>
-
-        <a href="articles/05-ai-risk-lineage.html" class="card" data-category="lineage">
-          <img class="thumb" src="images/thumb-ai-risk-lineage.jpg" alt="AI Risk Lineage article thumbnail">
-          <div class="meta">
-            <span>No. 05</span>
-            <span class="sep">/</span>
-            <span class="cat">Lineage</span>
-            <span class="sep">/</span>
-            <span>2026.04.09</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>AI存亡リスク論の系譜 — Extropianメーリングリストから政府声明まで</h3>
-          <p class="excerpt">
-            2023年の各国政府声明は突然の合意ではない。1991年のExtropian Institute、1996年に17歳のYudkowskyと大学院生のBostromが加わったメーリングリスト、2002年の覚醒、効果的利他主義との合流、そしてDeepMind・OpenAI・Anthropicの創設まで。30年の系譜を一本の線で辿る。
-          </p>
-        </a>
-
-        <a href="articles/04-takeoff-speed-debate.html" class="card" data-category="takeoff">
-          <img class="thumb" src="images/thumb-takeoff-speed-debate.jpg" alt="Takeoff Speed Debate article thumbnail">
-          <div class="meta">
-            <span>No. 04</span>
-            <span class="sep">/</span>
-            <span class="cat">Takeoff</span>
-            <span class="sep">/</span>
-            <span>2026.04.09</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>テイクオフ速度論 — なぜ賢い人々は1,000倍もズレるのか</h3>
-          <p class="excerpt">
-            AGI以降の変化速度について、Yudkowskyは数日、Epoch AIは10年と見る。同じ事実を見ていながら3桁の開きが生じる理由を、代替の弾力性という一論点から解剖し、速度とp(doom)の相関を辿る。
-          </p>
-        </a>
-
-        <a href="articles/06-misaligned-ai-mechanics.html" class="card" data-category="alignment">
-          <img class="thumb" src="images/thumb-misaligned-ai-mechanics.jpg" alt="Misaligned AI Mechanics article thumbnail">
-          <div class="meta">
-            <span>No. 06</span>
-            <span class="sep">/</span>
-            <span class="cat">Alignment</span>
-            <span class="sep">/</span>
-            <span>2026.04.09</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>Misaligned AIの構造 — なぜ有能なAIが人間の意図から外れるのか</h3>
-          <p class="excerpt">
-            Specification Gaming、Goal Misgeneralization、道具的収束と直交仮説、欺瞞的アライメント、Mind Design Space。誤整合の内部機序を5つの概念で解像し、アラインメント研究の前線がなぜ表層の対処では届かない層に向かうのかを辿る。
-          </p>
-        </a>
-
-        <a href="articles/07-ai-governance-response.html" class="card" data-category="governance">
-          <img class="thumb" src="images/thumb-ai-governance-response.jpg" alt="AI Governance Response article thumbnail">
-          <div class="meta">
-            <span>No. 07</span>
-            <span class="sep">/</span>
-            <span class="cat">Governance</span>
-            <span class="sep">/</span>
-            <span>2026.04.09</span>
-          
-            <span class="sep">/</span>
-            <span>5 Slides</span>
-          </div>
-          <h3>止められない技術にどう向き合うか — AIガバナンスの設計図</h3>
-          <p class="excerpt">
-            開発停止は現実的な選択肢にならない。Compute Governance、情報セキュリティ、国際協力、d/acc、バイオセキュリティ、深層防護、民意のAIへの反映。地雷原を抜けるゲームの設計図を7つのレバーで辿る。
-          </p>
+        <a href="prediction.html" class="explore-tile cream">
+          <div class="explore-eyebrow">Your Forecast</div>
+          <div class="explore-stat">5 Q</div>
+          <h3>予測のズレを測る</h3>
+          <p>Metaculus数千人の集合知と、あなたの直感を照らし合わせる。</p>
+          <span class="explore-cta">立ち位置を知る →</span>
         </a>
       </div>
     </section>
@@ -1192,53 +875,221 @@
       </div>
       <div style="max-width: 780px;">
         <p style="font-size: 17px; line-height: 1.8; color: var(--body-text); margin-bottom: 16px;">
-          AGI HUBは、知能・アラインメント・文明の次相に関する思考を蓄積する個人アーカイブである。完成したレポートを公開する場ではなく、考えの途中を記録して後から参照できるようにするためのもの。モノトーンのエディトリアルデザインで、読み物としての集中を優先している。
+          AGI HUBは、知能・アラインメント・文明の次相をめぐる論考を編集する独立メディア。ニュース追従でも予測競争でもない。宇宙進化史の中でAGIをどう位置づけるか、アラインメント問題をどう再定義するか、共創層の議論をどう言語化するか、その三つに絞って書く。
         </p>
         <p style="font-size: 17px; line-height: 1.8; color: var(--body-text);">
-          扱うテーマは、AGIを宇宙進化の文脈でどう位置づけるか、アラインメント問題をどう再定義するか、共創層の議論をどう言語化するか、といった領域。破滅論と楽観論の両方から距離を取り、第三の視座を探す。
+          破滅論と楽観論のどちらからも距離を取り、第三の視座を探す。記事は完成品ではなく、考えるための器として置いている。読んだ後に問いが増えていれば、この場所は機能している。
         </p>
       </div>
     </section>
 
-    <!-- ── Category Filter Script ── -->
+    <!-- ── Article Renderer (from articles.json) ── -->
     <script>
       (function () {
-        var filterNav = document.getElementById('category-filter');
-        if (!filterNav) return;
-        var buttons = filterNav.querySelectorAll('button');
-        var items = document.querySelectorAll('[data-category]');
-        function applyFilter(filter) {
-          buttons.forEach(function (b) {
-            b.classList.toggle('active', b.getAttribute('data-filter') === filter);
-          });
-          items.forEach(function (item) {
-            if (filter === 'all' || item.getAttribute('data-category') === filter) {
-              item.classList.remove('is-hidden');
-            } else {
-              item.classList.add('is-hidden');
+        var picksGrid = document.getElementById('picks-grid');
+        var featuredSlot = document.getElementById('featured-slot');
+        var grid = document.getElementById('article-grid');
+        if (!grid) return;
+
+        fetch('articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            // ── Editor's Picks: articles where pick is a positive number, sorted ascending ──
+            if (picksGrid) {
+              var picks = articles
+                .filter(function (a) { return typeof a.pick === 'number' && a.pick > 0; })
+                .sort(function (a, b) { return a.pick - b.pick; });
+              picks.forEach(function (a) {
+                picksGrid.insertAdjacentHTML('beforeend',
+                  '<a href="articles/' + a.slug + '.html" class="pick" data-category="' + a.category + '">' +
+                    '<img class="thumb" src="' + a.thumb + '" alt="' + a.slug + ' thumbnail">' +
+                    '<h3>' + a.title + '</h3>' +
+                    '<p class="excerpt">' + a.excerpt + '</p>' +
+                  '</a>'
+                );
+              });
             }
+
+            // ── Latest: featured + card grid ──
+            articles.forEach(function (a) {
+              if (a.featured && featuredSlot) {
+                featuredSlot.innerHTML =
+                  '<a href="articles/' + a.slug + '.html" class="featured" data-category="' + a.category + '">' +
+                    '<div><img class="thumb" src="' + a.thumb + '" alt="' + a.slug + ' thumbnail"></div>' +
+                    '<div>' +
+                      '<h3>' + a.title + '</h3>' +
+                      '<p class="excerpt">' + a.excerpt + '</p>' +
+                      '<span class="read-more">Read Article \u2192</span>' +
+                    '</div>' +
+                  '</a>';
+              } else if (!a.featured) {
+                grid.insertAdjacentHTML('beforeend',
+                  '<a href="articles/' + a.slug + '.html" class="card" data-category="' + a.category + '">' +
+                    '<img class="thumb" src="' + a.thumb + '" alt="' + a.slug + ' thumbnail">' +
+                    '<h3>' + a.title + '</h3>' +
+                    '<p class="excerpt">' + a.excerpt + '</p>' +
+                  '</a>'
+                );
+              }
+            });
+
+            // Initialize category filter after cards are rendered
+            initFilter();
           });
-        }
-        buttons.forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            var filter = btn.getAttribute('data-filter');
-            applyFilter(filter);
-            history.replaceState(null, '', '#filter=' + filter);
-          });
-        });
-        // Apply hash filter on load (e.g. #filter=takeoff)
-        function fromHash() {
-          var m = location.hash.match(/filter=([a-z-]+)/);
-          if (m) {
-            applyFilter(m[1]);
-            var latest = document.getElementById('latest');
-            if (latest) latest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        function initFilter() {
+          var filterNav = document.getElementById('category-filter');
+          if (!filterNav) return;
+          var buttons = filterNav.querySelectorAll('button');
+          var items = document.querySelectorAll('[data-category]');
+          function applyFilter(filter) {
+            buttons.forEach(function (b) {
+              b.classList.toggle('active', b.getAttribute('data-filter') === filter);
+            });
+            items.forEach(function (item) {
+              if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                item.classList.remove('is-hidden');
+              } else {
+                item.classList.add('is-hidden');
+              }
+            });
           }
+          buttons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var filter = btn.getAttribute('data-filter');
+              applyFilter(filter);
+              history.replaceState(null, '', '#filter=' + filter);
+            });
+          });
+          function fromHash() {
+            var m = location.hash.match(/filter=([a-z-]+)/);
+            if (m) {
+              applyFilter(m[1]);
+              var latest = document.getElementById('latest');
+              if (latest) latest.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+          fromHash();
+          window.addEventListener('hashchange', fromHash);
         }
-        fromHash();
-        window.addEventListener('hashchange', fromHash);
+      })();
+
+      (function () {
+        var el = document.getElementById('graph-edge-count');
+        if (!el) return;
+        fetch('backlinks.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+          if (d && Array.isArray(d.edges)) el.textContent = d.edges.length + ' edges';
+        }).catch(function () { /* noop */ });
       })();
     </script>
+
+    <!-- ═══════════ Page Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#757575;margin-bottom:32px;text-align:center;">Site Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:#585858;margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:#757575;">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:#757575;">5</span>
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:#585858;display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid #e4e4e4;border-radius:4px;background:#f0efea;color:#1a1a1a;font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:#585858;display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid #e4e4e4;border-radius:4px;background:#f0efea;color:#1a1a1a;font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:#585858;display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid #e4e4e4;border-radius:4px;background:#f0efea;color:#1a1a1a;font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid #1a1a1a;border-radius:4px;background:transparent;color:#1a1a1a;cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:#585858;">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:#e4e4e4;transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:#757575;}
+        .star-label.active{color:#1a1a1a;}
+        #fb-submit:hover{background:#1a1a1a;color:#fafaf7;}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+        const PAGE_ID='page-index';
+
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            document.querySelectorAll('.star-label').forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,PAGE_ID);
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            btn.disabled=false;btn.textContent='Send Feedback';
+            document.getElementById('fb-error').style.display='block';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
 
     <!-- ── Footer ── -->
     <footer>

@@ -206,6 +206,18 @@
         max-width: 22ch;
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 32px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -398,7 +410,7 @@
     </style>
   </head>
   <body class="pattern-monolith has-site-header" data-category="alignment">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -411,7 +423,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 01 / 15 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 01 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <span style="opacity:0.3;">← Prev</span>
         <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -429,7 +441,16 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead dropcap">
-            Eliezer Yudkowskyの<a href="04-takeoff-speed-debate.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">「If anyone builds it, everyone dies」</a>は、人間を上回る知能が生まれた時点で人類は破滅する、という極端な主張である。誰が作るのか、どの国が先行するのか、善意で開発されるのかは問わない。彼の立場では、<strong>その種の知能が構築されること自体が破滅を意味する</strong>。MIRI（Machine Intelligence Research Institute）の創設者として2000年代初頭からAI安全性を訴えてきた彼は、ChatGPT以降の開発加速を受けて、従来の警告をさらに断定的で悲観的なかたちに組み替えた。
+            Eliezer Yudkowskyの<a href="04-takeoff-speed-debate.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">「If anyone builds it, everyone dies」</a>は、人間を上回る知能が生まれた時点で人類は破滅する、という極端な主張である。本稿の立場を先に言い切る。<strong>アラインメント論争の中心はすでに空転している</strong>。破滅派と加速派が「作るか止めるか」を議論し続けている間に、問題はそのどちらでも解けない地点に移動した。本当に効く論点は、作る/止めるではなく、すでに業務の内側に入り込んだAIと意図の整合を毎日どう取るかだ。以下では、Yudkowskyの議論を分解して空転している箇所を切り出し、その先に残る唯一の生きた論点を特定する。
+          </p>
+          <p class="lead">
+            アラインメントは三つの層で論じられる。<strong>防御層</strong>（暴走を物理的・制度的に止める）、<strong>整合層</strong>（内部目標を人間の価値観と合わせる）、<strong>共創層</strong>（運用の中で誰の価値観に従わせ、誰が果実を受け取るかを日々決める）である。結論から言えば、前二者は現時点で動かない論点であり、生きた論点は三番目しか残っていない。防御層はGPU輸出規制と推論コスト管理の技術仕様で塹壕戦に入り、数年単位で停滞している。米商務省の2023年半導体輸出規制は翌年には迂回スキームで穴が開き、計算資源の国際管理は核燃料サイクルのような明確な検証手段を持てないまま議論が循環している。整合層はRLHFやConstitutional AIが「振る舞いの整合」に留まり「目標の整合」を検証する数学的手段がない、という未解決問題そのもので足が止まっている。Anthropicのinterpretability研究は部分的な前進を見せているが、超知能の内部目標を外部検証する一般解には遠い。
+          </p>
+          <p class="lead">
+            防御層と整合層が動かない間にも、AIはすでに融資審査、診療判断、都市インフラの内側にある。問いは「誰かが作るか」から「すでに作られたものとどう整合するか」へ、静かに移動した。破滅論を鵜呑みにすれば事業は止まる。無視すれば、万一の暴走に備えがない。だが、この二者択一の設定自体が古い。Yudkowskyが論理的に正しかろうと正しくなかろうと、この移動は巻き戻らない。残された生きた論点が共創層であることは、前二者の行き詰まりから消去法で導かれる既定事実なのだ。
+          </p>
+          <p class="lead">
+            彼の立場では、<strong>その種の知能が構築されること自体が破滅を意味する</strong>。誰が作るのか、どの国が先行するのか、善意で開発されるのかは問わない。MIRI（Machine Intelligence Research Institute）の創設者として2000年代初頭からAI安全性を訴えてきた彼は、ChatGPT以降の開発加速を受けて、従来の警告をさらに断定的で悲観的なかたちに組み替えた。
           </p>
           <p class="lead">
             彼の推論は3つの段階で進む。第一に、超知能AIの目標を人間の価値観と整合させる方法はいまだ確立していない。表面的に整合しているように見えることと、実際に整合していることは区別しにくく、AIは人間を欺く能力を獲得しうる。第二に、人間とチンパンジーの知能差を思えば、人間を超える知能が人間に対して持つ優位は圧倒的で、交渉や共存への期待は希望的観測に過ぎない。第三に、「良いAIで悪いAIを制御する」戦略も機能せず、国際的な開発競争も無意味になる。先に作った側も死ぬのなら、競争の論理そのものが成立しないからだ。
@@ -683,6 +704,9 @@
               </div>
             </div>
           </div>
+          <p class="lead">
+            ここで賭け金を共創層に集中させる理由を、防御層と整合層の<strong>死に方</strong>として言い切っておく。防御層は半分死んでいる。輸出規制や計算資源の国家管理が議論されているが、H100の流通抜け道、オープンウェイトモデルの拡散、国家アクターの規制回避を見れば、防御線の多くはすでに破れている。Export Controlsの運用実態を追ったCSETの2024年報告は、規制設計と運用のギャップを数字で示した。防御層は「敷けるが漏れる」段階に入っており、個別企業が投資して決定的な成果を得る領域ではない。整合層も半分しか生きていない。Anthropicのinterpretability研究は2024年のSparse Autoencoders論文で概念特徴の抽出に部分前進したが、研究者自身が認める通り、100万特徴のスケールでも現行フロンティアモデルの挙動空間の一部しかカバーできない。解釈可能性は原理的に可能だが、モデル成長速度に追随できるかは未決着。整合層は「技術的に解ける問いだが、解のスケールが追いつかない」段階にある。防御層は運用で漏れ、整合層はスケールで追いつかない。残された賭け場所は、AIを止める問いでも意図を合わせる問いでもなく、AIと人間が共に設計する社会の問いである。
+          </p>
           <figure class="info info-wide">
             <p class="info-title">アラインメント議論は3層 × 担い手の構造で整理できる</p>
             <p class="info-subtitle">本文で触れた各層の論者・技術・実装領域の対応関係</p>
@@ -751,6 +775,21 @@
           <div class="note">
             ここで時計を確認したほうがいい。Yudkowskyが「止めろ」と叫んでいる間に、AIはすでに融資審査の内側に、診療判断の内側に、都市の信号制御の内側に、子どもが初めて触れる言語の内側に入り込んでいる。防御層の議論は、入り込む前の世界を前提に組まれた議論だった。その前提はもう成立していない。<strong>問いはすでに「誰かが作るか否か」から「誰が作ったものと共に生きるか」へ移っている</strong>。Yudkowskyが正しかったとしても、正しくなかったとしても、この移動は巻き戻らない。共創層の議論が薄いのは、まだ始まっていないからではない。始まっていることに、多くの論者がまだ気づいていないからだ。
           </div>
+          <p class="lead">
+            ここで著者の賭けを切る。Yudkowskyの悲観論にも、e/accの楽観論にも与しない。<strong>3層のうち、経営者が実際に効かせられるのは整合層だけである</strong>。防御層と共創層は重要だが、個別企業の判断変数ではない。賭け金はここに集中させる。
+          </p>
+          <p class="lead">
+            整合層が唯一の生きた論点である理由は3つある。第一に、<strong>問題がすでに発生している</strong>。RLHFやConstitutional AIが扱う「AIが人間の意図を正しく実行するか」は、いまこの瞬間、業務エージェントを運用する現場で日々発生している。報酬ハッキング、指示の曖昧さ、Goodhartの法則。学術的な将来課題ではなく、すでに実害を出している運用課題だ。第二に、<strong>解の輪郭が見えている</strong>。評価基準の設計、監査可能な推論ログ、判断者の意図を構造化する仕組み。どれも今日から実装できる。第三に、<strong>経営者の裁量範囲にある</strong>。防御層の無期限停止を一社で決めることはできない。共創層の価値観合意を一社で形成することもできない。だが整合層の設計は、自社内で完結する。
+          </p>
+          <p class="lead">
+            防御層には別の役割を与える。<strong>「暴走しないことの証明」を待つのではなく、「暴走の兆候を検知して止められる仕組み」を先に作る</strong>。Yudkowskyが要求する水準のモラトリアムは企業の採用できる行動指針ではないが、停止機構の設計は採用できる。アラインメントが未解決であることと、停止できないことは別の命題だ。防御層の投資は、異常検知と緊急停止のプロトコルに絞って継続する。
+          </p>
+          <p class="lead">
+            共創層は、経営判断の射程外に置く。重要でないからではない。<strong>一社で解ける問題ではないからだ</strong>。「誰の価値観に整合させるか」は制度設計者、政治哲学者、規制当局との協働でしか進まない。ここに企業が踏み込もうとすると、必ず自社の都合で価値観を規定することになる。それはアラインメントの逆である。共創層での企業の正しい振る舞いは、議論のテーブルに座り、自社の決定を透明化することだけだ。
+          </p>
+          <p class="lead">
+            既存のアラインメント論争が空転している理由は明確だ。<strong>破滅派は防御層の話しかせず、加速派は共創層の話しかしない</strong>。両者とも、いまこの瞬間に解ける唯一の層である整合層を飛ばして議論している。Yudkowskyは2030年の超知能を論じ、e/accは2050年の人類拡張を語る。その間にある2026年の業務現場で、エージェントが判断者の意図を誤解して融資を拒絶する事例は、誰の議論の主役にもなっていない。経営者が取るべき立場はこうだ。<strong>破滅論でも加速論でもなく、整合論に賭ける</strong>。それが、すでにAIが社会の内側に入り込んだ世界で生き残る唯一の道であり、アラインメント論争の次に残る本当の論点である。
+          </p>
         </div>
         <div class="footer reveal reveal-delay-3">
           <span>防御から共創へ — アラインメントの重心は移動する</span>
@@ -793,6 +832,128 @@
         Slide 5: <a href="https://unsplash.com/photos/2zJ3m80fSU4">Abstract waves</a>
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -857,5 +1018,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

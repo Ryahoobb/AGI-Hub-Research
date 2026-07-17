@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="revised" content="2026.04.12" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>自動化率77%の誤読 — 産業爆発を信じない合理性は、どこで壊れるか — AGI HUB</title>
+    <meta name="description" content="Anthropicの自動化率77%は経済全体の77%ではない。ボトルネック仕事の自動化がレジームを書き換え、兆ドル規模の資本が既に動いている。それでも信じない人がいる。その合理性は、どこで壊れるのか。" />
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #e8e3d4;
+        --bg: #faf8f1;
+        --bg-alt: #f3f1e4;
+        --accent: #2f2b92;
+        --accent-soft: rgba(47, 43, 146, 0.08);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", sans-serif;
+        font-feature-settings: "palt"; font-size: 16px; line-height: 1.75; color: var(--body-text); background: var(--bg);
+        -webkit-font-smoothing: antialiased; overflow-x: hidden; word-wrap: break-word;
+      }
+      .progress { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); width: 0%; z-index: 100; transition: width 0.3s var(--ease); }
+      .nav { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); display: grid; gap: 16px; z-index: 50; }
+      .nav button { width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid var(--meta); background: transparent; cursor: pointer; transition: all 0.3s var(--ease); }
+      .nav button.active { background: var(--accent); border-color: var(--accent); transform: scale(1.4); }
+      main { scroll-snap-type: y mandatory; }
+      .slide { position: relative; min-height: 100vh; max-width: 1120px; margin: 0 auto; padding: 80px 48px 64px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 32px; scroll-snap-align: start; }
+      .slide + .slide { border-top: 1px solid var(--border); }
+      .hero { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; display: block; filter: grayscale(0.6) contrast(1.1); transition: filter 0.6s var(--ease); }
+      .hero:hover { filter: grayscale(0) contrast(1); }
+      .hero-caption { font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.083em; color: var(--light-gray); margin-top: 8px; text-transform: uppercase; }
+      .credits { max-width: 1120px; margin: 0 auto; padding: 48px 48px 80px; border-top: 1px solid var(--border); }
+      .credits p { font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.047em; line-height: 2; color: var(--light-gray); }
+      .credits a { color: var(--meta); text-decoration: none; border-bottom: 1px solid var(--border); }
+      .credits a:hover { color: var(--black); border-bottom-color: var(--black); }
+      .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.35s; }
+      .eyebrow { font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; font-weight: 400; letter-spacing: 0.083em; text-transform: uppercase; color: var(--accent); }
+      h1, h2 { color: var(--black); font-weight: 700; line-height: 1.45; letter-spacing: normal; max-width: 26ch; padding-bottom: 14px; border-bottom: 1px solid var(--accent); }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
+      h1 { font-size: clamp(28px, 4vw, 36px); }
+      h2 { font-size: clamp(24px, 3.5vw, 32px); }
+      .lead { max-width: 780px; font-size: 16px; line-height: 1.85; color: var(--body-text); }
+      .lead + .lead { margin-top: 14px; }
+      .lead strong { color: var(--black); }
+      .dropcap::first-letter { float: left; font-size: 3.6em; line-height: 0.85; padding: 4px 12px 0 0; font-weight: 700; color: var(--accent); }
+      .panel { display: grid; gap: 24px; align-content: start; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .card { padding: 24px 0; border-top: 2px solid var(--accent); }
+      .card .tag { color: var(--accent); }
+      .card strong { color: var(--black); }
+      .card p { font-size: 16px; line-height: 1.75; color: var(--body-text); }
+      .tag { display: inline-block; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.083em; color: var(--meta); margin-bottom: 12px; }
+      .point { padding-left: 16px; border-left: 2px solid var(--accent); font-size: 16px; line-height: 1.75; color: var(--body-text); }
+      .point strong { color: var(--black); }
+      .compare { width: 100%; border-collapse: collapse; border-top: 2px solid var(--accent); border-bottom: 2px solid var(--accent); }
+      .compare th, .compare td { padding: 18px 16px; text-align: left; font-size: 15px; line-height: 1.65; color: var(--body-text); border-bottom: 1px solid var(--border); vertical-align: top; }
+      .compare th { font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.083em; text-transform: uppercase; color: var(--accent); font-weight: 400; border-bottom: 1px solid var(--accent); }
+      .compare td strong { color: var(--black); }
+      .compare tr:last-child td { border-bottom: none; }
+      .note { font-size: 16px; line-height: 1.75; color: var(--body-text); padding: 24px 28px; border-left: 2px solid var(--accent); background: var(--accent-soft); }
+      .note strong { color: var(--black); }
+      .footer { display: flex; justify-content: space-between; align-items: end; gap: 16px; font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; font-size: 11px; letter-spacing: 0.083em; color: var(--light-gray); text-transform: uppercase; }
+      .slide-count { font-weight: 700; color: var(--accent); }
+      .slide .hero.img-fullbleed { width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); max-width: none; aspect-ratio: 21/9; }
+      .slide .hero.img-wide { width: min(1280px, calc(100vw - 48px)); position: relative; left: 50%; transform: translateX(-50%); max-width: none; }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+      .slide .hero.img-side-by-side { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      @media (max-width: 768px) {
+        .slide { padding: 64px 24px 48px; }
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        .nav { right: 12px; }
+        .compare { font-size: 13px; }
+        .compare th, .compare td { padding: 14px 10px; }
+        .hero { aspect-ratio: 16 / 9; }
+        .credits { padding: 32px 24px 64px; }
+        .slide .hero.img-fullbleed, .slide .hero.img-wide, .slide .hero.img-content { width: 100%; max-width: 100%; aspect-ratio: 16/9; margin: 0; transform: none; left: 0; }
+      }
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+      @media print { .slide { min-height: auto; page-break-after: always; padding: 24px 0; } .nav, .progress { display: none; } .reveal { opacity: 1; transform: none; } }
+    </style>
+  </head>
+  <body class="pattern-broadsheet accent-deepblue has-site-header" data-category="takeoff">
+    <div id="site-header-mount"></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+    <aside class="nav" aria-label="Slide navigation">
+      <button data-target="slide-1" class="active" aria-label="Slide 1"></button>
+      <button data-target="slide-2" aria-label="Slide 2"></button>
+      <button data-target="slide-3" aria-label="Slide 3"></button>
+      <button data-target="slide-4" aria-label="Slide 4"></button>
+      <button data-target="slide-5" aria-label="Slide 5"></button>
+      <button data-target="slide-6" aria-label="Slide 6"></button>
+      <button data-target="slide-7" aria-label="Slide 7"></button>
+    </aside>
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 26 &nbsp;&middot;&nbsp; Takeoff &nbsp;&middot;&nbsp; 7 Sections</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="25-pre-ethical-beyond-gesture.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">&larr; Prev</a>
+        <a href="../index.html#filter=takeoff" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
+        <span style="opacity:0.3;">Next &rarr;</span>
+      </span>
+    </div>
+    <main>
+      <!-- Slide 1 -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &nbsp;&middot;&nbsp; No. 26 &nbsp;&middot;&nbsp; Takeoff &nbsp;&middot;&nbsp; The Misread Number &nbsp;&middot;&nbsp; 2026.04.12 &nbsp;&middot;&nbsp; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">産業爆発を信じない合理性は、どこで壊れるか</h1>
+        <div class="panel reveal reveal-delay-2">
+          <div>
+            <img class="hero img-fullbleed" src="../images/26-automation-bottleneck-regime/slide1.jpg" alt="Monochrome industrial factory interior with large machinery">
+            <div class="hero-caption">Photo: Unsplash</div>
+          </div>
+          <p class="lead dropcap">企業のAPI利用の77%が自動化パターンだ、と聞いたとき、頭の中で何が起きるか。「経済の8割がもうAIに置き換わりつつある」という映像が浮かぶ。その映像は間違っている。だが、この数字を正しく読み直しても、産業爆発が起きないという結論にはならない。むしろ逆だ。数字を正確に読むほど、爆発の経路がはっきり見えてくる。そして、見えているのに信じない人がいる。その構造を、本稿は分解する。</p>
+          <p class="lead">Anthropicが2025年9月のEconomic Indexで報告した77%という数字の正体から始めよう。これは<strong>Anthropicの企業向けAPI（1P API）を契約し、すでにClaudeを業務に組み込んでいる顧客企業群のなかで、プログラム的に処理を委任しているトランスクリプトの割合</strong>だ。経済全体の77%ではない。AIを積極的に導入している先進企業の、API経由の利用パターンだけを切り取った局所的な数字である。同じ報告書には、O*NETタスクカテゴリの97%がautomation-dominantとあるが、これも「処理されたタスクの97%が自動化済み」ではなく、APIに流れるタスクの種類を分類するとほぼ全種類で自動化パターンが優勢という意味だ。</p>
+          <p class="lead">Claude.ai（消費者向け）では景色が違う。2025年1月時点でaugmentationが56%、automationは41%。2025年8月に一時逆転したが、11月には再びaugmentation 52%、automation 45%に戻った。プラットフォームと時期が変わるだけで数字の意味がまるで変わる。局所的なデータを全体に外挿する誘惑に負けた瞬間、産業爆発の議論は崩れる。</p>
+          <p class="lead">だが、ここで止まると別の間違いを犯す。「まだ局所的だから大したことはない」という安心は、もう一段の読み間違いだ。問題は「何パーセントか」ではない。<strong>どの仕事が、どの順番で、どの摩擦を抱えたまま自動化されているのか</strong>。この順番によって、同じ自動化率でも経済への衝撃がまるで違う。そしてこの順番を理解したうえでなお信じない人がいる理由にも、構造がある。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>局所的なデータを全体に外挿したとき、産業爆発の議論は崩れる</span>
+          <span class="slide-count">1 / 7</span>
+        </div>
+      </section>
+
+      <!-- Slide 2 -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">The Chain Effect</div>
+        <h2 class="reveal reveal-delay-1">同じ30%でも、連続なら生産関数が変わる</h2>
+        <div class="panel reveal reveal-delay-2">
+          <img class="hero img-wide" src="../images/26-automation-bottleneck-regime/slide3.jpg" alt="Aerial view of busy shipping port with containers">
+          <p class="lead">局所的で偏在した自動化は「まだ小さい」のか。この問いに答えるには、自動化率の量だけでなく、自動化がどう分布しているかを見る必要がある。</p>
+          <p class="lead">Menaka Hampole、Dimitris Papanikolaou、Lawrence Schmidt、Bryan Seegmillerの4名は2025年2月のNBER論文「Artificial Intelligence and the Labor Market」で、AI曝露の高いタスクほど労働需要が減少する一方、<strong>企業レベルでは再配置や生産性向上が相殺し、マクロ的な雇用への影響はmodest（穏当）にとどまる</strong>と実証分析から報告した。この実証結果を踏まえると、部分自動化の初期段階は失業の急増ではなく職務再編として現れる、と読める。蒸気機関が紡績工の数を減らしたとき、繊維産業全体の雇用は拡大した。コストが下がって需要が膨らんだからだ。ジェヴォンズが1865年に「石炭の効率が上がるほど総消費が増える」と指摘したパラドックスと同じ構造が、AI自動化にも働いている可能性がある。</p>
+          <p class="lead">ただし、部分自動化が穏当に見えるのは、自動化が散在しているあいだだけかもしれない。Mert Demirer、John Hortonらが2026年2月のNBER論文「Chaining Tasks, Redefining Work」で示したのは、モデルと実証の両面から、<strong>AIが実行する工程が連続する「チェーン」を形成すると、非線形な生産性向上が発生しうる</strong>という知見だ。モデルに従えば、チェーン内ではAIが完全な文脈を保持し、工程間の受け渡しエラーがゼロに近づき、処理の遷移が即時になる。アダム・スミスのピン工場以来、分業の生産性は各工程を得意な主体が担当することで説明されてきた。AIが連続工程を飲み込む局面では、工程間の調整コストそのものが消滅し、比較優位の論理が効かなくなるというのがこの論文の読み替えだ。</p>
+          <div class="grid-2">
+            <div class="card">
+              <span class="tag">散在型 30%</span>
+              <p><strong>人間の受け渡しが残る。</strong>各工程の補助にAIが入るが、工程間の文脈は人間が保持する。組織構造は温存され、生産性向上は加算的。</p>
+            </div>
+            <div class="card">
+              <span class="tag">連続型 30%</span>
+              <p><strong>工程間の摩擦が消滅する。</strong>AIが入力から出力まで一貫処理し、調整コストがゼロに近づく。組織構造が維持できなくなり、生産性向上は乗算的に跳ねる。</p>
+            </div>
+          </div>
+          <p class="lead">同論文の実証パートも方向性を支持している。AIが実行する工程はチェーンとして共起しやすく、隣接工程もAI実行される確率が上がると報告されている。ここから、チェーンは自己強化する傾向を持つ、と読み替えられる。「何パーセント自動化されたか」だけを見ると、変化の非線形性を見落としうる。量だけでなく配置を見る必要がある。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>チェーンは自己強化する。一度つながり始めると、隣接工程を飲み込む</span>
+          <span class="slide-count">2 / 7</span>
+        </div>
+      </section>
+
+      <!-- Slide 3 -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">Bottleneck Regime</div>
+        <h2 class="reveal reveal-delay-1">ボトルネック仕事の自動化が生産関数を書き換える</h2>
+        <div class="panel reveal reveal-delay-2">
+          <img class="hero img-content" src="../images/26-automation-bottleneck-regime/slide4.jpg" alt="Aerial view of industrial factory complex">
+          <p class="lead">チェーンが形成されても、経済全体の成長レジームが自動的に切り替わるとは限らない。Restrepoのモデルに従えば、切り替わりの条件は<strong>ボトルネックとして機能している仕事が自動化されること</strong>だ。</p>
+          <p class="lead">Pascual Restrepoは2025年10月のNBER論文「We Won't be Missed」で、経済における仕事をbottleneck work（成長の律速段階にある仕事）とsupplementary work（付加的な仕事）に分類する理論モデルを提示した。このモデルに沿えば、バックオフィスの文書処理がいくら自動化されても成長率の天井は動かない。だがR&D、創薬候補の設計、新材料の発見のようなbottleneck workが自動化されると、<strong>産出がcomputeに対して線形に依存するようになり、賃金はGDPから切り離され、労働分配率はゼロに向かう</strong>、というのがモデルの帰結である。あくまで理論上の含意であり、まだ歴史的事実として観測されたわけではない。ただし方向性は、複数の独立した研究と整合している。</p>
+          <table class="compare">
+            <thead><tr><th>属性</th><th>Bottleneck Work</th><th>Supplementary Work</th></tr></thead>
+            <tbody>
+              <tr><td><strong>定義</strong></td><td>経済成長の律速段階にある仕事。これが遅いと全体が遅い</td><td>成長に寄与するが、律速段階ではない仕事</td></tr>
+              <tr><td><strong>自動化時の効果</strong></td><td>生産関数の性質が変わる。産出がcomputeに線形依存</td><td>生産性向上は加算的。成長率の天井は動かない</td></tr>
+              <tr><td><strong>労働分配率</strong></td><td>ゼロに向かう</td><td>安定的に推移する</td></tr>
+              <tr><td><strong>例</strong></td><td>R&D、創薬候補の設計、新材料の発見、制度設計</td><td>バックオフィス、文書処理、ルーティン検査</td></tr>
+            </tbody>
+          </table>
+          <p class="lead">Philip TrammellとAnton Korinekが2023年のNBER論文「Economic Growth under Transformative AI」で示したのは、成長モデルの解析として、<strong>完全な生産自動化だけで成長率は大きく跳ね上がり、R&D自動化はそれをさらに加速する追加要因になりうる</strong>という結果だ。Benjamin Jonesは2025年10月のNBER論文「Artificial Intelligence in Research and Development」で、研究分野ごとの加速幅を決める3変数をモデル上で特定した。AIが担うタスクの比率、そのタスクでのAIの生産性、そしてボトルネックの強さ。3番目が決定的で、ボトルネックが物理実験や臨床試験のように現実世界の時定数に縛られている分野では、モデル上もAIがどれだけ速くなっても加速幅に上限がある。</p>
+          <!-- SVG: Automation Staircase to Regime Change -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowR26" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="var(--accent, #2f2b92)"/>
+                </marker>
+                <marker id="arrowUp26" markerWidth="6" markerHeight="8" refX="3" refY="0" orient="auto">
+                  <path d="M0,8 L3,0 L6,8" fill="var(--accent, #2f2b92)"/>
+                </marker>
+              </defs>
+              <!-- Axes -->
+              <line x1="60" y1="280" x2="640" y2="280" stroke="#1a1a1a" stroke-width="1.5"/>
+              <line x1="60" y1="280" x2="60" y2="20" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowUp26)"/>
+              <text x="340" y="308" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em">AUTOMATION SEQUENCE</text>
+              <text x="28" y="150" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em" transform="rotate(-90,28,150)">ECONOMIC IMPACT</text>
+              <!-- Stage 1: Scattered -->
+              <rect x="80" y="220" width="120" height="50" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="140" y="242" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.04em">STAGE 1</text>
+              <text x="140" y="260" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">局所的な自動化</text>
+              <!-- Step up -->
+              <line x1="200" y1="245" x2="230" y2="245" stroke="var(--accent, #2f2b92)" stroke-width="1.5" marker-end="url(#arrowR26)"/>
+              <!-- Stage 2: Chain -->
+              <rect x="240" y="170" width="120" height="50" rx="2" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="300" y="192" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.04em">STAGE 2</text>
+              <text x="300" y="210" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">チェーン形成</text>
+              <!-- Vertical step line -->
+              <line x1="240" y1="220" x2="240" y2="270" stroke="#757575" stroke-width="1" stroke-dasharray="3,3"/>
+              <!-- Step up -->
+              <line x1="360" y1="195" x2="390" y2="195" stroke="var(--accent, #2f2b92)" stroke-width="1.5" marker-end="url(#arrowR26)"/>
+              <!-- Stage 3: Bottleneck -->
+              <rect x="400" y="110" width="120" height="60" rx="2" fill="none" stroke="var(--accent, #2f2b92)" stroke-width="2"/>
+              <text x="460" y="130" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.04em">STAGE 3</text>
+              <text x="460" y="148" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">ボトルネック仕事</text>
+              <text x="460" y="163" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">の自動化</text>
+              <!-- Vertical step line -->
+              <line x1="400" y1="170" x2="400" y2="220" stroke="#757575" stroke-width="1" stroke-dasharray="3,3"/>
+              <!-- Step up (dramatic) -->
+              <line x1="520" y1="140" x2="550" y2="140" stroke="var(--accent, #2f2b92)" stroke-width="1.5" marker-end="url(#arrowR26)"/>
+              <!-- Stage 4: Regime -->
+              <rect x="560" y="40" width="80" height="60" rx="2" fill="var(--accent, #2f2b92)" fill-opacity="0.08" stroke="var(--accent, #2f2b92)" stroke-width="2"/>
+              <text x="600" y="62" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.04em" font-weight="700">STAGE 4</text>
+              <text x="600" y="80" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">レジーム</text>
+              <text x="600" y="94" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">転換</text>
+              <!-- Vertical step line -->
+              <line x1="560" y1="100" x2="560" y2="170" stroke="#757575" stroke-width="1" stroke-dasharray="3,3"/>
+              <!-- Bottleneck annotation -->
+              <text x="460" y="88" text-anchor="middle" font-family="sans-serif" font-size="10" fill="var(--accent, #2f2b92)">R&amp;D, 創薬, 新材料</text>
+              <!-- Supplementary annotation -->
+              <text x="140" y="210" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">文書処理, ルーティン</text>
+            </svg>
+          </div>
+
+          <p class="lead">ここまでの論理を束ねると、産業爆発の条件が明確になる。局所的な自動化、チェーン形成、ボトルネック仕事への到達、レジーム転換。この階段を上るスピードは、何パーセント自動化されたかではなく、<strong>どの仕事が、どの配置で、どの順番で自動化されるか</strong>に依存する。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>ボトルネックが動いたとき、天井が消える</span>
+          <span class="slide-count">3 / 7</span>
+        </div>
+      </section>
+
+      <!-- Slide 4 -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">The Trillion-Dollar Bet</div>
+        <h2 class="reveal reveal-delay-1">資本は、もう動いている</h2>
+        <div class="panel reveal reveal-delay-2">
+          <img class="hero img-wide" src="../images/26-automation-bottleneck-regime/slide5b.jpg" alt="Industrial complex with construction cranes and silos at large scale">
+          <p class="lead">ここまでの話が理論モデルの帰結に聞こえるなら、資本市場側の数字を併置したい。ただし数字ごとに性格が違う。既に支出された投資、公表済みの年次予算、経営者の将来見通し、市場の期待——これらは同じ桁の金額でも確度が異なる。以下は区別して読んでほしい。</p>
+          <p class="lead">TSMCの2025年第1四半期決算説明会（2025年4月17日）で、同社は2025年の資本予算を<strong>380億ドルから420億ドル</strong>と公表した（公表済みの年次予算）。日本の防衛費の約半分に相当する額が、1社の資本計画に積まれている。アリゾナ州での工場投資に追加で見込まれる<strong>1,000億ドル</strong>は経営者の公表見通しであり、forward-looking statementである。過去の資本予算は発表値に近い着地を見せてきたが、追加1,000億ドルは今後数年にわたる計画値であり確定支出ではない。ASMLの2025年年次報告書は、最先端EUV露光装置の納入までに最長6か月のリードタイムを報告している。これは実績ベースの記述だ。</p>
+          <p class="lead">ロボティクスも資金の動きが活発だ。Figureは2025年9月にSeries Cで<strong>10億ドル</strong>を調達し、ポストマネーバリュエーション390億ドルに達した（調達は完了した事実、バリュエーションは直近ラウンドの市場期待）。資金はHelix（汎用ヒューマノイド）とBotQ（量産工場）のスケールアップに投入されると会社は説明している。xAIは2026年4月時点でメンフィスに<strong>100万GPU</strong>規模のスーパーコンピューターを構築中とされる。xAI公式ブログは世界最大のスパコンを4か月で建設したと述べているが、これは会社発表であり第三者検証は限定的だ。IEAの2025年4月のレポート「Energy and AI」は、AIデータセンター拡大に必要な送電インフラの増強に4年から8年かかると指摘している（独立機関の推計）。プロジェクトの20%が遅延リスクにあると見積もっている。</p>
+          <div class="grid-3">
+            <div class="card">
+              <span class="tag">半導体</span>
+              <p><strong>TSMC 2025 CAPEX: $38-42B</strong><br>Arizona追加投資: $100B（forward-looking）<br>ASML EUV装置リードタイム: 最長6か月</p>
+            </div>
+            <div class="card">
+              <span class="tag">ロボティクス</span>
+              <p><strong>Figure Series C: $1B</strong><br>Post-money $39B<br>BotQ初代ラインで年1.2万台量産能力</p>
+            </div>
+            <div class="card">
+              <span class="tag">計算基盤</span>
+              <p><strong>xAI Memphis: 100万GPU</strong><br>4か月で世界最大スパコン建設<br>送電線敷設: 4-8年（IEA推計）</p>
+            </div>
+          </div>
+          <p class="lead">これらの資本は、前のセクションで見た段階論のどこに効くのか。ここは著者の読み替えだ。TSMCとASMLの投資は、チェーン化（段階2）で必要になるAIチップの供給能力を、ボトルネック到達（段階3）の前に積み上げている、と解釈できる。Figureの量産工場とxAIの計算基盤は、ソフトウェア自動化を物理世界に接地させる段階4の前提条件を先行して建設している、と読める。IEAが指摘する送電インフラの4-8年は、この資本がフル稼働するまでの時定数の参考値だ。以上の配置は、各社の戦略意図と段階論を重ねた仮説的整理であって、各社がこの段階論に沿って投資計画を立てていると主張するものではない。ただ、<strong>結果として段階2から段階4への移行を物理的に可能にするインフラが、移行が起きる前に建設されつつある</strong>ことは観察事実として指摘できる。</p>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowDown26b" markerWidth="6" markerHeight="8" refX="3" refY="8" orient="auto">
+                  <path d="M0,0 L3,8 L6,0" fill="var(--accent, #2f2b92)"/>
+                </marker>
+              </defs>
+              <!-- Stage boxes -->
+              <rect x="40" y="20" width="130" height="50" rx="3" fill="none" stroke="#ccc" stroke-width="1.5"/>
+              <text x="105" y="42" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#999" letter-spacing="0.05em">STAGE 1</text>
+              <text x="105" y="58" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">局所的な自動化</text>
+
+              <rect x="190" y="20" width="130" height="50" rx="3" fill="none" stroke="var(--accent, #2f2b92)" stroke-width="1.5"/>
+              <text x="255" y="42" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.05em">STAGE 2</text>
+              <text x="255" y="58" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">チェーン形成</text>
+
+              <rect x="340" y="20" width="130" height="50" rx="3" fill="none" stroke="var(--accent, #2f2b92)" stroke-width="2"/>
+              <text x="405" y="42" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.05em">STAGE 3</text>
+              <text x="405" y="58" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">ボトルネック到達</text>
+
+              <rect x="490" y="20" width="150" height="50" rx="3" fill="var(--accent-soft, rgba(47,43,146,0.08))" stroke="var(--accent, #2f2b92)" stroke-width="2"/>
+              <text x="565" y="42" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.05em" font-weight="700">STAGE 4</text>
+              <text x="565" y="58" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a">レジーム転換</text>
+
+              <!-- Arrows between stages -->
+              <line x1="170" y1="45" x2="190" y2="45" stroke="#ccc" stroke-width="1.5" marker-end="url(#arrowDown26b)"/>
+              <line x1="320" y1="45" x2="340" y2="45" stroke="var(--accent, #2f2b92)" stroke-width="1.5" marker-end="url(#arrowDown26b)"/>
+              <line x1="470" y1="45" x2="490" y2="45" stroke="var(--accent, #2f2b92)" stroke-width="1.5" marker-end="url(#arrowDown26b)"/>
+
+              <!-- Capital investment annotations -->
+              <!-- TSMC/ASML → Stage 2 -->
+              <line x1="255" y1="70" x2="255" y2="115" stroke="var(--accent, #2f2b92)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowDown26b)"/>
+              <rect x="170" y="115" width="170" height="52" rx="3" fill="var(--accent-soft, rgba(47,43,146,0.08))" stroke="var(--accent, #2f2b92)" stroke-width="1"/>
+              <text x="255" y="133" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="var(--accent, #2f2b92)" letter-spacing="0.04em">半導体インフラ</text>
+              <text x="255" y="148" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a">TSMC $38-42B</text>
+              <text x="255" y="161" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">AIチップ供給能力を積み上げ</text>
+
+              <!-- Figure/xAI → Stage 4 -->
+              <line x1="565" y1="70" x2="565" y2="115" stroke="var(--accent, #2f2b92)" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowDown26b)"/>
+              <rect x="480" y="115" width="170" height="52" rx="3" fill="var(--accent-soft, rgba(47,43,146,0.08))" stroke="var(--accent, #2f2b92)" stroke-width="1"/>
+              <text x="565" y="133" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="var(--accent, #2f2b92)" letter-spacing="0.04em">物理インフラ</text>
+              <text x="565" y="148" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a">Figure $1B + xAI 100万GPU</text>
+              <text x="565" y="161" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">物理自動化の前提を先行建設</text>
+
+              <!-- Current position marker -->
+              <line x1="105" y1="20" x2="105" y2="10" stroke="#999" stroke-width="1.5"/>
+              <line x1="192" y1="20" x2="192" y2="10" stroke="#999" stroke-width="1.5"/>
+              <line x1="105" y1="10" x2="192" y2="10" stroke="#999" stroke-width="1.5"/>
+              <text x="148" y="7" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#999">← 2026年現在地</text>
+
+              <!-- IEA time constraint annotation -->
+              <text x="255" y="190" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575" font-style="italic">※送電インフラ整備に4〜8年（IEA推計）</text>
+            </svg>
+          </div>
+          <p class="lead">産業爆発を「単なる仮説」として片付けるには、数千億ドル規模の資本が既に動いている事実と向き合う必要がある。投資が回収不能になるリスクを取ってなお動いている主体がいる——この事実は「起きる」ことの証明ではないが、少なくとも「無視できる仮説」ではないことを示している。「起きない」と主張する側には、これら主体の見通しがどこで誤っているかの具体的な議論が求められる。</p>
+          <p class="lead">ここまでの議論がNBER論文とAnthropicデータに依存しすぎているという批判は正当だ。論文は著者の仮定に引きずられるし、自社プラットフォームのトラフィック分析は自己参照性を免れない。だから独立した観測系を併置する。第一に、<strong>産業用ロボット出荷台数</strong>。International Federation of Robotics (IFR) の「World Robotics 2025」は、2024年の世界新規設置台数を約54万2千台、稼働累積台数を約448万台と報告した。中国単独で設置シェアは54%、史上初めて累積稼働台数が200万台を超えた。NBERもAnthropicも関与しない統計が、物理自動化の加速を裏付けている。第二に、<strong>半導体設備投資の先行指標</strong>。SEMIの「World Fab Forecast 2025年第2四半期版」は、2025年の半導体製造装置への世界投資額を1,255億ドルと推計し、2026年に1,665億ドルへ跳ねると予測する。これは各社決算の合算ではなく、装置メーカーの受注ベースの独立推計だ。第三に、<strong>データセンター電力需要</strong>。IEAの「Energy and AI」(2025年4月) は、世界のデータセンター電力消費が2024年の415TWhから2030年に945TWh超へ倍増すると試算し、うちAIアクセラレーター関連が成長の主因だと指摘した。エネルギー統計は企業広報から独立している。<strong>三つの独立観測は、いずれもチェーン化とボトルネック到達に必要な物理インフラが、NBER/Anthropicの議論とは別の経路で実際に積み上がっていることを示している</strong>。モデル依存は、独立観測の重なりで減衰する。</p>
+          <div class="note">
+            <strong>forward-looking statementに関する注記:</strong> TSMC Arizona追加投資$100B、xAI Memphis 100万GPU、Figure BotQ量産計画は、いずれも各社の将来見通しであり確定支出ではない。NVIDIAの公式開示にも「safe harbor / reliance on third parties to manufacture, assemble, package and test」と明記されている。本稿はこれらを「企業が取るリスクの規模感」として引用している。CEO発言はfrontier labsの内部期待と戦略姿勢の強い証拠だが、独立した科学的証明ではない。
+          </div>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>数千億ドルが賭けられたプロジェクトを、仮説と呼ぶのは正確ではない</span>
+          <span class="slide-count">4 / 7</span>
+        </div>
+      </section>
+
+      <!-- Slide 5 -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">The Cognitive Gap</div>
+        <h2 class="reveal reveal-delay-1">根拠があるのに信じない、という構造</h2>
+        <div class="panel reveal reveal-delay-2">
+          <img class="hero img-content" src="../images/26-automation-bottleneck-regime/slide6.jpg" alt="Foggy city skyline with skyscrapers barely visible through haze">
+          <p class="lead">ここまで見てきた根拠は、どれも公開されている。NBER論文は無料でアクセスでき、TSMCの決算説明会トランスクリプトは投資家向けサイトに載っている。IEAのレポートも、Anthropicの自動化率データも、誰でも読める。では、なぜ「産業爆発は起きない」と考える人が少なくないのか。</p>
+          <p class="lead">第一に、<strong>線形外挿バイアス</strong>がある。人間は指数曲線の初期区間を直線として知覚する。チェスボードの倍々問題を知っていても、自分の生活のなかで指数的変化を体験した記憶はほとんどない。COVID-19の感染曲線を過小評価し続けたのと同じ認知的欠陥が、AI自動化の議論にも作用する。Ray Kurzweilが「収穫加速の法則」で指数的進歩を論じたのは2005年だが、彼の予測を「技術楽観主義者の誇大妄想」と片付けた人々の多くは、2025年のLLMの実力を予見できていなかった。線形外挿は、過去の延長線上に未来を描くという点で合理的に見える。だがその合理性は、系の構造が変わらないことを暗黙の前提にしている。</p>
+          <p class="lead">第二に、<strong>体験と統計の乖離</strong>がある。API自動化率が77%でも、自分の職場にAIが来ていない人が大多数だ。局所的浸透が偏在しているという本稿の分析そのものが、信じない理由でもある。人は「自分の目で見ていない」ものを信じない。1990年代にインターネットが大学と一部のテック企業に閉じていた時期、「すべてのビジネスがオンラインに移行する」と言えば笑われた。だが浸透が偏在から普及に転じる閾値を超えたとき、変化は「まだ来ていない」から「もう戻れない」に数年で切り替わった。</p>
+          <p class="lead">第三に、<strong>歴史的前例の不在</strong>がある。経済成長率が年30%を超えた時代は人類史にない。産業革命ですら年2-3%だった。Epoch AIのTom Davidsonが2023年10月の論考「Explosive growth from AI」で指摘したとおり、爆発的成長への高い確信はまだ正当化されない。だが「前例がないから起きない」は論理的には無効だ。大陸間飛行にも、核分裂にも、前例はなかった。前例の不在は、出来事の不可能性ではなく、想像力の限界を示している。</p>
+          <p class="lead">第四に、<strong>専門家バイアス</strong>がある。経済学者はgradual changeを前提にキャリアを築いている。マクロ経済モデルの大半は、技術変化を外生的なパラメータとして扱い、構造変化そのものをモデル化しない。技術者は逆方向に偏る。自分の分野の摩擦を知りすぎているために、「半導体の増産に3年かかるのだから、爆発は10年先だ」と見積もる。最もデータに近い人が、そのデータの含意を過小評価する逆説がここにある。Oliver Habrykaが2024年7月の「Situational Blindness」で指摘したのは、AGI加速論が社会・制度・政治経済の複雑性を過小評価する飛躍を含むという点だが、同時にその批判自体が、技術の進行速度を制度の時定数に同期させてしまうリスクも抱えている。</p>
+
+          <p class="lead">以下、4つの認知構造それぞれに、すでに観測された事実を横並びで置く。信じない理由が<strong>いまも有効か</strong>を、各自で検証してほしい。</p>
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>信じない理由（認知構造）</th>
+                <th>観測済みの事実</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>線形外挿バイアス</strong><br>指数曲線の初期区間を直線として知覚する</td>
+                <td>Demirer et al. (NBER 2026) がチェーン化による<strong>非線形</strong>生産性向上を理論・実証両面で確認。隣接工程のAI実行確率が上がる自己強化構造も報告</td>
+              </tr>
+              <tr>
+                <td><strong>体験と統計の乖離</strong><br>自分の職場に来ていないから信じられない</td>
+                <td>Figureのヒューマノイドが<strong>BMW製造ラインで1,250時間超稼働、30,000台の生産に貢献</strong>（2025年11月時点）。Agility RoboticsはGXOと複数年商用契約、Mercado Libreで10万トート移動</td>
+              </tr>
+              <tr>
+                <td><strong>歴史的前例の不在</strong><br>年率30%成長は人類史にない、だから起きない</td>
+                <td>TSMC 2025年CAPEX <strong>$38-42B</strong>（日本の防衛費の約半分）、Arizona追加$100B、xAI Memphisで<strong>100万GPU</strong>を4か月で構築。数千億ドルの資本が「前例」を前提にしない判断で動いている</td>
+              </tr>
+              <tr>
+                <td><strong>専門家バイアス</strong><br>自分の分野の摩擦を知りすぎて遠い未来に見積もる</td>
+                <td>IFR「World Robotics 2025」: 産業用ロボット稼働累積<strong>448万台</strong>、2024年新規設置54万台、中国が設置シェア54%。SEMI推計の半導体製造装置投資は<strong>2025年$125.5B→2026年$166.5B</strong>。NBERとも自社広報とも独立した統計が、同じ方向の加速を示す</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="lead" style="margin-top:24px;">4つの理由はどれも今日の時点で<strong>部分的には正しい</strong>。だが右列の事実を並べたとき、どの理由も「方向を否定する」強度は持たない。速度の見積もりを慎重にする理由にはなるが、爆発そのものが起きないと主張する根拠にはならない、というのがこの対比から読み取れる構造だ。</p>
+
+          <div class="note">
+            <strong>信じないことの合理性を認める:</strong> ここで強調しておくべきは、上記の認知バイアスを指摘しても、産業爆発の確実性が証明されるわけではないということだ。Epoch AIのDavidsonは「爆発的成長のオッズはイーブンよりやや上」と慎重に見積もり、AI Futures Projectは自身の2027年モデルを後続の更新で3-5年後ろに修正している。線形外挿が間違っているという主張は、指数関数が正しいという主張とは同値ではない。信じないことには、それなりの根拠がある。問いは、その根拠がどこまで有効かだ。
+          </div>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>最もデータに近い人が、そのデータの含意を過小評価する</span>
+          <span class="slide-count">5 / 7</span>
+        </div>
+      </section>
+
+      <!-- Slide 6 -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow reveal">The Clock Mismatch</div>
+        <h2 class="reveal reveal-delay-1">制度の時計は、技術の時計と同期しない</h2>
+        <div class="panel reveal reveal-delay-2">
+          <img class="hero" src="../images/26-automation-bottleneck-regime/slide2.jpg" alt="Dark server room with electronic equipment">
+          <p class="lead">信じない人の5番目の根拠は、制度の時定数だ。そしてこの根拠は、上記4つのバイアスとは異質で、はるかに手強い。なぜなら、これは認知の問題ではなく、物理と制度の問題だからだ。</p>
+          <p class="lead">新薬の臨床試験は第I相から承認まで平均10年かかる。建築基準法の改正には政令改正と施行期間を含めて5年以上を要する。労働基準法の「労働者」定義にAIエージェントを含めるかどうかの議論は、まだ始まってすらいない。教育課程の改訂は10年周期で動き、産業安全規格の策定には業界団体との合意形成に3-5年を要する。保険制度は新リスクカテゴリの導入に数年を費やす。これらの時定数は、技術の加速とは独立に存在する。</p>
+          <p class="lead">EpochのGATE（General Assessment of Transformative Effects）モデルが2025年3月に示したのは、computeとautomationの関係だけでなく、<strong>非AI資本、投資フロー、労働再配置、資本蓄積の摩擦まで含めた動的統合評価で見なければ、経済変化を過大評価する</strong>という結論だ。Forethoughtも2025年5月のリサーチノート「The Industrial Explosion」で、産業爆発は技術爆発より遅れると整理した。100年分の技術進歩が10年に圧縮されても、制度と資本の時計は圧縮されない。</p>
+          <p class="lead">だが、制度の時定数を固定定数として扱う思考にも限界がある。Figureのヒューマノイドは2025年11月時点でBMWの製造ラインで1,250時間超を稼働し、30,000台の生産に貢献したと報告している。Agility Roboticsは2024年6月にGXOと業界初の複数年商用契約を締結し、Mercado Libreとの契約では10万トートの移動を報告した。これらはまだ限定的な用途だが、「ロボットが工場で働く」という命題は、規制当局にとっても保険会社にとっても、もはや仮説ではなく管理すべき現実になりつつある。</p>
+          <p class="lead">Physical Intelligenceの公式ブログ（2026年2月）は、現場導入でhuman-in-the-loop（リモートスペシャリスト、介入システム）がまだ不可欠であることを率直に開示している。Figureの工場導入でもinterventions（人間の介入回数）が重要なKPIとして追跡されている。自動化率が高くても、最後の5%の例外処理に人間が必要な現段階では、完全自動化には距離がある。<a href="08-agi-self-replication-premise.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">No.08で扱った産業爆発の前提</a>が、ここでも効いている。</p>
+          <p class="lead">制度の時定数は、信じない人にとって最も強い論拠だ。だが同時に、制度は静的な壁ではなく、圧力を受けて変形する構造でもある。インターネットの暗号規制は1990年代に輸出管理法で厳しく制限されていたが、eコマースの爆発的成長とともに5年で規制緩和された。制度の時計は技術の時計と同期しない。だが、技術が十分な経済的圧力を生んだとき、制度の時計は加速する。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>制度の時計は加速しうる。ただし、技術の速度には永遠に追いつかない</span>
+          <span class="slide-count">6 / 7</span>
+        </div>
+      </section>
+
+      <!-- Slide 7 -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow reveal">The Sequence</div>
+        <h2 class="reveal reveal-delay-1">合理性が壊れる場所</h2>
+        <div class="panel reveal reveal-delay-2">
+          <img class="hero img-fullbleed" src="../images/26-automation-bottleneck-regime/slide5.jpg" alt="Black and white photo of industrial factory with pipes">
+          <p class="lead">本稿が「産業爆発」と呼ぶものは、一括して起きる単一の事象ではない。<strong>既に資本が投下された領域から順に、制度の時定数の短い順に、段階的に波及する</strong>経路を想定している。ここまでに挙げた数字で順序を示すと、経路の実体が見える。</p>
+          <p class="lead">第一段階は、<strong>資本が既に張られた領域</strong>だ。データセンターと半導体供給。TSMCの2025年$38-42BのCAPEX、Arizona追加$100B、SEMI推計で2026年に$166.5Bまで跳ねる半導体製造装置投資、xAI Memphisの100万GPU。ここは資金も意思決定も既に動いており、残る変数は送電インフラの時定数（IEA推計4-8年）だけだ。第二段階は、<strong>現場導入実績が出た領域</strong>。Figureのヒューマノイドは既にBMWの製造ラインで30,000台の生産に貢献し、Agility RoboticsはGXOとの複数年契約、Mercado Libreでの10万トート移動を報告している。IFRの統計では産業用ロボット稼働累積が448万台に達し、2024年だけで54万台が新規設置された。ここから第三段階として、<strong>制度の時定数が比較的短い領域</strong>（物流、倉庫、製造ライン、バックオフィス、専門職の一部）が続く。送電や工場投資に比べれば、これらの現場導入は規制と契約の再編で数年単位で動く。最後に到達するのが<strong>制度の時定数が長い領域</strong>——臨床試験、建築基準、労働法制、教育課程だ。ここはソフトウェアとハードウェアの速度では押し込めない。</p>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 960 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="stageFlowTitle stageFlowDesc">
+              <title id="stageFlowTitle">産業爆発の4段階と時定数</title>
+              <desc id="stageFlowDesc">左から右へ、資本投下済みの領域から制度時定数の長い領域へ、4段階の順序と各段階の代表領域・根拠数字・時定数を示すフロー図</desc>
+              <defs>
+                <marker id="arrowStage26" markerWidth="7" markerHeight="9" refX="6" refY="4.5" orient="auto">
+                  <path d="M0,0 L7,4.5 L0,9 z" fill="var(--accent, #2f2b92)"/>
+                </marker>
+              </defs>
+
+              <!-- Section label -->
+              <text x="480" y="22" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#757575" letter-spacing="0.12em">PATHWAY · SHORT → LONG TIME CONSTANT</text>
+
+              <!-- Stage 1 -->
+              <rect x="20" y="50" width="220" height="60" rx="3" fill="var(--accent-soft, rgba(47,43,146,0.10))" stroke="var(--accent, #2f2b92)" stroke-width="2"/>
+              <text x="130" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.08em" font-weight="700">STAGE 1 · 資本投下済み</text>
+              <text x="130" y="92" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a" font-weight="600">データセンター・半導体</text>
+              <text x="130" y="106" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">残るは送電の時定数のみ</text>
+
+              <!-- Stage 2 -->
+              <rect x="260" y="50" width="220" height="60" rx="3" fill="var(--accent-soft, rgba(47,43,146,0.06))" stroke="var(--accent, #2f2b92)" stroke-width="1.5"/>
+              <text x="370" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="var(--accent, #2f2b92)" letter-spacing="0.08em" font-weight="700">STAGE 2 · 現場導入実績</text>
+              <text x="370" y="92" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a" font-weight="600">ヒューマノイド・産業ロボット</text>
+              <text x="370" y="106" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">契約と量産は既に稼働</text>
+
+              <!-- Stage 3 -->
+              <rect x="500" y="50" width="220" height="60" rx="3" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>
+              <text x="610" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#555" letter-spacing="0.08em" font-weight="700">STAGE 3 · 短時定数</text>
+              <text x="610" y="92" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a" font-weight="600">物流・倉庫・バックオフィス</text>
+              <text x="610" y="106" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">規制と契約の再編で数年</text>
+
+              <!-- Stage 4 -->
+              <rect x="740" y="50" width="220" height="60" rx="3" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>
+              <text x="850" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#555" letter-spacing="0.08em" font-weight="700">STAGE 4 · 長時定数</text>
+              <text x="850" y="92" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a" font-weight="600">臨床・建築・労働法・教育</text>
+              <text x="850" y="106" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">技術の速度では押し込めない</text>
+
+              <!-- Inter-stage arrows -->
+              <line x1="240" y1="80" x2="260" y2="80" stroke="var(--accent, #2f2b92)" stroke-width="2" marker-end="url(#arrowStage26)"/>
+              <line x1="480" y1="80" x2="500" y2="80" stroke="var(--accent, #2f2b92)" stroke-width="2" marker-end="url(#arrowStage26)"/>
+              <line x1="720" y1="80" x2="740" y2="80" stroke="#999" stroke-width="2" marker-end="url(#arrowStage26)"/>
+
+              <!-- Evidence cards -->
+              <!-- Stage 1 evidence -->
+              <rect x="20" y="140" width="220" height="150" rx="3" fill="#fff" stroke="#ccc" stroke-width="1"/>
+              <text x="30" y="160" font-family="'SF Mono',monospace" font-size="9" fill="#999" letter-spacing="0.06em">EVIDENCE</text>
+              <text x="30" y="180" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">TSMC CAPEX</text>
+              <text x="30" y="194" font-family="sans-serif" font-size="11" fill="#555">$38-42B（2025年）</text>
+              <text x="30" y="215" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">Arizona追加投資</text>
+              <text x="30" y="229" font-family="sans-serif" font-size="11" fill="#555">$100B（予定）</text>
+              <text x="30" y="250" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">SEMI装置投資</text>
+              <text x="30" y="264" font-family="sans-serif" font-size="11" fill="#555">$166.5B（2026予測）</text>
+              <text x="30" y="280" font-family="sans-serif" font-size="11" fill="#555">xAI Memphis: 100万GPU</text>
+
+              <!-- Stage 2 evidence -->
+              <rect x="260" y="140" width="220" height="150" rx="3" fill="#fff" stroke="#ccc" stroke-width="1"/>
+              <text x="270" y="160" font-family="'SF Mono',monospace" font-size="9" fill="#999" letter-spacing="0.06em">EVIDENCE</text>
+              <text x="270" y="180" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">Figure × BMW</text>
+              <text x="270" y="194" font-family="sans-serif" font-size="11" fill="#555">1,250時間稼働・3万台貢献</text>
+              <text x="270" y="215" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">Agility × GXO</text>
+              <text x="270" y="229" font-family="sans-serif" font-size="11" fill="#555">複数年商用契約</text>
+              <text x="270" y="250" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">IFR World Robotics</text>
+              <text x="270" y="264" font-family="sans-serif" font-size="11" fill="#555">累積448万台</text>
+              <text x="270" y="280" font-family="sans-serif" font-size="11" fill="#555">2024新規54万台</text>
+
+              <!-- Stage 3 evidence -->
+              <rect x="500" y="140" width="220" height="150" rx="3" fill="#fafafa" stroke="#ddd" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="510" y="160" font-family="'SF Mono',monospace" font-size="9" fill="#999" letter-spacing="0.06em">PROJECTED · 数年</text>
+              <text x="510" y="180" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">規制・契約の再編</text>
+              <text x="510" y="194" font-family="sans-serif" font-size="11" fill="#555">産業安全規格 3-5年</text>
+              <text x="510" y="215" font-family="sans-serif" font-size="11" fill="#555">保険制度 数年</text>
+              <text x="510" y="236" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">浸透先</text>
+              <text x="510" y="250" font-family="sans-serif" font-size="11" fill="#555">物流・倉庫・製造ライン</text>
+              <text x="510" y="264" font-family="sans-serif" font-size="11" fill="#555">バックオフィス</text>
+              <text x="510" y="278" font-family="sans-serif" font-size="11" fill="#555">専門職の一部</text>
+
+              <!-- Stage 4 evidence -->
+              <rect x="740" y="140" width="220" height="150" rx="3" fill="#fafafa" stroke="#ddd" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="750" y="160" font-family="'SF Mono',monospace" font-size="9" fill="#999" letter-spacing="0.06em">PROJECTED · 10年〜</text>
+              <text x="750" y="180" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">臨床試験</text>
+              <text x="750" y="194" font-family="sans-serif" font-size="11" fill="#555">第I相〜承認 平均10年</text>
+              <text x="750" y="215" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">建築基準法</text>
+              <text x="750" y="229" font-family="sans-serif" font-size="11" fill="#555">改正〜施行 5年超</text>
+              <text x="750" y="250" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">教育課程</text>
+              <text x="750" y="264" font-family="sans-serif" font-size="11" fill="#555">改訂 10年周期</text>
+              <text x="750" y="280" font-family="sans-serif" font-size="11" fill="#555">労働法制: 議論未着手</text>
+
+              <!-- Current position marker -->
+              <line x1="130" y1="50" x2="130" y2="35" stroke="var(--accent, #2f2b92)" stroke-width="1.5"/>
+              <line x1="370" y1="50" x2="370" y2="35" stroke="var(--accent, #2f2b92)" stroke-width="1.5"/>
+              <line x1="130" y1="35" x2="370" y2="35" stroke="var(--accent, #2f2b92)" stroke-width="1.5"/>
+              <rect x="215" y="24" width="70" height="16" rx="2" fill="var(--accent, #2f2b92)"/>
+              <text x="250" y="36" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#fff" letter-spacing="0.06em" font-weight="700">2026 NOW</text>
+
+              <!-- Time axis -->
+              <line x1="20" y1="330" x2="960" y2="330" stroke="#ccc" stroke-width="1"/>
+              <text x="20" y="350" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em">← 資本の時計（動いている）</text>
+              <text x="960" y="350" text-anchor="end" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em">制度の時計（圧力で変形する） →</text>
+
+              <!-- Insight band -->
+              <rect x="20" y="370" width="940" height="40" rx="3" fill="var(--accent-soft, rgba(47,43,146,0.06))" stroke="var(--accent, #2f2b92)" stroke-width="1"/>
+              <text x="480" y="388" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="600">「産業爆発は起きない」という直感は、多くの場合 STAGE 4 だけを見て生まれる</text>
+              <text x="480" y="402" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#555">STAGE 1・2 は既に動いている。問いは「方向」ではなく「STAGE 3 の波及速度」</text>
+            </svg>
+          </div>
+
+          <p class="lead">この順序で読み替えると、「産業爆発がとってつけた仮説」という印象は<strong>第一段階と第二段階をスキップして第四段階だけを見た場合に生じる</strong>錯覚だとわかる。資本と現場導入は既に動いている。残る問いは、第三段階の波及速度と、第四段階でどれだけ屈折するかだ。以下、5つの「信じない理由」を、この順序と照らし合わせて再評価する。</p>
+          <p class="lead">産業爆発を信じないことは合理的か。ここまでの議論を振り返ると、答えは「条件付きで合理的、ただし条件が崩れつつある」だ。</p>
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>信じない理由</th>
+                <th>事実</th>
+                <th>何が言えるか</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>自動化はまだ局所的だ</td>
+                <td>API利用企業の77%が自動化パターン。O*NETタスクカテゴリの97%でAPI自動化が優勢</td>
+                <td><strong>偏在は事実だが、浸透先では既に支配的。</strong>速度の問題であって方向の問題ではない</td>
+              </tr>
+              <tr>
+                <td>指数曲線は直線に見える</td>
+                <td>チェーン化による非線形生産性向上がNBER論文（Demirer et al.）で理論・実証の両面から確認済み</td>
+                <td><strong>線形に見えているのは、チェーンがまだ短いから。</strong>チェーンが伸びた瞬間、非線形ジャンプが起きる</td>
+              </tr>
+              <tr>
+                <td>自分の職場にはまだ来ていない</td>
+                <td>Claude.aiではaugmentation 52%/automation 45%。消費者プラットフォームでも自動化は半数に迫る</td>
+                <td><strong>来ていないのではなく、見えていない。</strong>CRM、スケジューリング、文書処理で既に浸透中</td>
+              </tr>
+              <tr>
+                <td>歴史的前例がない</td>
+                <td>TSMC年間$38-42B CAPEX、Figure $1B調達、xAI 100万GPU。数千億ドルが先行投資として動いている</td>
+                <td><strong>前例がないのは出来事の不可能性ではなく、想像力の限界。</strong>資本は前例なしに賭けている</td>
+              </tr>
+              <tr>
+                <td>制度の時定数が追いつかない</td>
+                <td>臨床試験10年、建築基準法5年、送電線4-8年。だが暗号規制は5年で解体された</td>
+                <td><strong>唯一「速度」ではなく「構造」の問題。</strong>ただし制度は壁ではなく、圧力で変形する弾性体</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="lead" style="margin-top:24px;">5つとも事実であり、どれも今日の時点で否定できない。ここまでの論文と投資動向を踏まえて読むと、最初の4つは主に<strong>速度の問題であって方向の問題ではない</strong>と整理できる。少なくとも、これらの根拠は産業爆発の方向性そのものを否定するには弱く、到着時刻の不確実性を示しているにとどまる。方向と到着時刻を混同したとき、信じないことの合理性は揺らぎ始める。</p>
+          <p class="lead">5番目の柱、制度の時定数だけは、速度の問題ではなく構造の問題だ。新薬の臨床試験、建築基準法の改正、労働法の再定義。これらは技術が速くなっても短縮されない。ソフトウェアとハードウェアの産業爆発が制度の壁にぶつかったとき、成長曲線は屈折する。<a href="18-ten-year-impossibility-illusion.html" style="color:inherit;border-bottom:1px solid #999;transition:border-color 0.3s;">No.18で検討した自己改善ループの反論</a>は、ここでも射程に入る。制度が動かなければ、産業爆発は理論上の上限に永遠に届かない。</p>
+          <p class="lead">だが、制度が動かないという前提も、検証が必要だ。インターネットの暗号規制は5年で解体された。自動運転の規制は州ごとに分断されたが、商用展開は止まらなかった。制度は壁ではなく、圧力を受けて変形する弾性体だ。どのくらいの圧力で、どのくらい速く変形するかは、事前にはわからない。ただし、数千億ドルの投資が生み出す圧力が、過去の技術革新のそれを超えていることだけは、定量的に確認できる。</p>
+          <div class="point" style="margin-top:8px;">
+            <p>ここまでの論文と資本の動きを重ねると、2026年の現在地は階段の1段目と2段目のあいだに位置づけられる。局所的で偏在した自動化が始まり、チェーン化の初期段階に入った、と読める。3段目（ボトルネック仕事への到達）はまだ先にあり、4段目（レジーム転換）はさらに先だ。ただし、階段そのものの存在を否定するには、本稿で参照した論文群とは別系統の反証が必要になる。</p>
+          </div>
+          <p class="lead" style="margin-top:20px;">産業爆発が起きるかどうかは、もはや正しい問いではない。起きたときに自分がどの階段にいるかを認識できるかどうか。これが、問いの正しい形だ。認識できなかった人は、階段が足元を通り過ぎたあとで、自分が取り残されたことに気づく。気づいたときには、階段は次の段に移っている。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>階段は、足元を通り過ぎてから見えるようにできている</span>
+          <span class="slide-count">7 / 7</span>
+        </div>
+      </section>
+
+      <!-- Article Navigation -->
+      <section class="slide" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="25-pre-ethical-beyond-gesture.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.25</p>
+              <p><strong>手を振って見送ることもできない — 倫理以前という場所</strong></p>
+            </a>
+            <a href="27-every-view-is-wild.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &middot; No.27 &rarr;</p>
+              <p><strong>どちらに転んでも、現在は異常である</strong></p>
+            </a>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=takeoff" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Takeoff カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Photo Credits & References -->
+    <section class="credits">
+      <p>
+        Photos courtesy of Unsplash contributors.<br>
+        Slide 1: <a href="https://unsplash.com/photos/pWUyHVJgLhg">pWUyHVJgLhg</a> /
+        Slide 2: <a href="https://unsplash.com/photos/JJCrTi0lvTs">JJCrTi0lvTs</a> /
+        Slide 3: <a href="https://unsplash.com/photos/_EFvjSgbw1c">_EFvjSgbw1c</a> /
+        Slide 4: <a href="https://unsplash.com/photos/QXikw20RjGk">QXikw20RjGk</a> /
+        Slide 5: <a href="https://unsplash.com/photos/FMTA4vo9cRk">FMTA4vo9cRk</a> /
+        Slide 6: <a href="https://unsplash.com/photos/OnI_TNcIv9U">OnI_TNcIv9U</a> /
+        Slide 7: <a href="https://unsplash.com/photos/KNerjdQGXKc">KNerjdQGXKc</a> /
+        Thumbnail: <a href="https://unsplash.com/photos/qafbp6O0Rr0">qafbp6O0Rr0</a>
+      </p>
+      <p style="margin-top:24px;">
+        Primary references:
+        Anthropic (2026) "Anthropic Economic Index: Economic Primitives," January 2026 report.
+        Anthropic (2025) "Anthropic Economic Index: Uneven Geographic and Sectoral AI Adoption," September 2025 report.
+        Menaka Hampole et al. (2025) "Artificial Intelligence and the Labor Market," NBER Working Paper 33509.
+        Mert Demirer et al. (2026) "Chaining Tasks, Redefining Work," NBER Working Paper 34859.
+        Pascual Restrepo (2025) "We Won't be Missed," NBER Working Paper 34423.
+        Philip Trammell, Anton Korinek (2023) "Economic Growth under Transformative AI," NBER Working Paper 31815.
+        Benjamin Jones (2025) "Artificial Intelligence in Research and Development," NBER Working Paper 34312.
+        Epoch AI (2025) "GATE," arXiv:2503.04941.
+        Tom Davidson (2023) "Explosive growth from AI: A review of the arguments," Epoch AI blog.
+        AI Futures Project (2025) "AI Futures Model: Dec 2025 Update."
+        Oliver Habryka (2024) "Situational Blindness."
+        TSMC (2025) 1Q25 Earnings Call Transcript (2025 capital budget USD 38-42B; Arizona additional USD 100B; forward-looking statement).
+        ASML (2026) 2025 Annual Report: Strategic Report (EUV lead times up to six months).
+        IEA (2025) "Energy and AI" (transmission line buildout 4-8 years; 20% of projects at risk of delay; global data center electricity 415 TWh in 2024 → 945+ TWh by 2030).
+        International Federation of Robotics (2025) "World Robotics 2025 — Industrial Robots" (2024 new installations approx. 542,000 units; operational stock 4.48 million units; China share 54%).
+        SEMI (2025) "World Fab Forecast, Q2 2025 update" (global semiconductor equipment investment USD 125.5B in 2025; USD 166.5B forecast for 2026).
+        Figure (2025) Series C ($1B at $39B post-money); BMW 30,000 cars (1,250+ hours); BotQ (12,000 units/year).
+        Agility Robotics (2024) GXO multi-year agreement; (2025) Mercado Libre (100,000 totes).
+        xAI (2026) "Building the Future of Intelligence in Memphis" (1M GPUs; built in 4 months).
+        Physical Intelligence (2026) "The Physical Intelligence Layer" (remote specialists; intervention system).
+        Forethought (2025) "The Industrial Explosion"; "Preparing for the Intelligence Explosion."
+        NVIDIA (2026) "Physical AI to the Real World" (forward-looking / safe harbor).
+        W. Stanley Jevons (1865) "The Coal Question."
+        Ray Kurzweil (2005) "The Singularity Is Near."
+      </p>
+    </section>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
+    <script>
+      const progress = document.getElementById('progress');
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = pct + '%';
+      });
+      const slides = document.querySelectorAll('main > .slide');
+      const buttons = document.querySelectorAll('.nav button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const id = e.target.id;
+            buttons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+          }
+        });
+      }, { threshold: 0.1 });
+      slides.forEach(s => { if (s.id) io.observe(s); });
+      const revealIO = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+    </script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
+  </body>
+</html>

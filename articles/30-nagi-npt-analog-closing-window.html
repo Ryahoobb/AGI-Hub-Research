@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>固定化の前夜 — AGI参入の時間窓が閉じるまで — AGI HUB</title>
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #ddd5bd;
+        --bg: #f3f1e9;
+        --bg-alt: #ebe7d3;
+        --accent: #b23a2f;
+        --accent-soft: rgba(178, 58, 47, 0.09);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+          游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+          游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
+          sans-serif;
+        font-feature-settings: "palt";
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .progress {
+        position: fixed; top: 0; left: 0;
+        height: 2px; background: var(--accent);
+        width: 0%; z-index: 100;
+        transition: width 0.3s var(--ease);
+      }
+
+      .nav {
+        position: fixed; right: 24px; top: 50%;
+        transform: translateY(-50%);
+        display: grid; gap: 16px; z-index: 50;
+      }
+
+      .nav button {
+        width: 8px; height: 8px; border-radius: 999px;
+        border: 1.5px solid var(--meta);
+        background: transparent; cursor: pointer;
+        transition: all 0.3s var(--ease);
+      }
+
+      .nav button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.4);
+      }
+
+      main { scroll-snap-type: y mandatory; }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 80px 48px 64px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 32px;
+        scroll-snap-align: start;
+      }
+
+      .slide + .slide { border-top: 1px solid var(--border); }
+
+      .hero {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.6) contrast(1.1);
+        transition: filter 0.6s var(--ease);
+      }
+
+      .hero:hover { filter: grayscale(0) contrast(1); }
+
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .credits {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 80px;
+        border-top: 1px solid var(--border);
+      }
+
+      .credits p {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.047em;
+        line-height: 2;
+        color: var(--light-gray);
+      }
+
+      .credits a {
+        color: var(--meta);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .credits a:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.35s; }
+
+      .eyebrow {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1, h2 {
+        color: var(--black);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        max-width: 24ch;
+        padding-bottom: 16px;
+        border-bottom: 3px double var(--accent);
+      }
+
+      h1 { font-size: clamp(30px, 4.4vw, 38px); }
+      h2 { font-size: clamp(26px, 3.8vw, 34px); }
+
+      .lead {
+        max-width: 780px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .lead + .lead { margin-top: 8px; }
+
+      .panel { display: grid; gap: 24px; align-content: start; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+      .card {
+        padding: 24px 20px 24px 0;
+        border-top: 3px solid var(--accent);
+        background: transparent;
+      }
+
+      .card .tag { color: var(--accent); font-weight: 700; }
+      .card strong { color: var(--black); }
+
+      .card p {
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+        margin-bottom: 12px;
+      }
+
+      .bullets { display: grid; gap: 16px; }
+
+      .point {
+        padding-left: 16px;
+        border-left: 3px solid var(--accent);
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .point strong { color: var(--black); }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1px;
+        background: var(--border);
+      }
+
+      .timeline-step {
+        display: grid;
+        gap: 8px;
+        padding: 20px 14px;
+        background: var(--bg);
+      }
+
+      .timeline-step.highlight { background: var(--accent); }
+      .timeline-step.highlight .num,
+      .timeline-step.highlight p,
+      .timeline-step.highlight strong { color: var(--bg); }
+
+      .timeline-step .num {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.083em;
+        text-transform: uppercase;
+        color: var(--meta);
+      }
+
+      .timeline-step p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--body-text);
+      }
+
+      .timeline-step strong { color: var(--black); }
+
+      table.compare {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 3px solid var(--accent);
+        border-bottom: 3px double var(--accent);
+        background: var(--bg);
+      }
+
+      table.compare th, table.compare td {
+        padding: 18px 16px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--body-text);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      table.compare th {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 1px solid var(--accent);
+        background: var(--accent-soft);
+      }
+
+      table.compare td strong { color: var(--black); }
+      table.compare tr:last-child td { border-bottom: none; }
+
+      .note {
+        font-size: 17px;
+        line-height: 1.7;
+        color: var(--body-text);
+        padding: 24px 28px;
+        margin: 12px 0;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        position: relative;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        max-width: 100%;
+      }
+      .note::before {
+        content: "EVIDENCE";
+        display: block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .note strong { color: var(--accent); }
+
+      .bignum {
+        display: grid;
+        gap: 6px;
+        padding: 22px 18px;
+        border-top: 3px solid var(--accent);
+        background: var(--bg);
+      }
+      .bignum .num {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: -0.01em;
+      }
+      .bignum .label {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--meta);
+      }
+      .bignum p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--body-text);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        text-transform: uppercase;
+      }
+
+      .slide-count { font-weight: 700; color: var(--accent); }
+
+      .svg-diagram {
+        max-width: none;
+        width: min(1040px, calc(100vw - 48px));
+        margin: 20px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 260px;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .slide { padding: 64px 20px 48px; }
+        .grid-2, .grid-3, .grid-4, .timeline { grid-template-columns: 1fr; }
+        .nav { right: 12px; }
+        table.compare { font-size: 13px; }
+        table.compare th, table.compare td { padding: 14px 10px; }
+        .hero { aspect-ratio: 16 / 9; }
+        .slide .hero.img-fullbleed,
+        .slide .hero.img-wide {
+          width: 100%; max-width: 100%; aspect-ratio: 16/9;
+          margin: 0; transform: none; left: 0; position: static;
+        }
+        .slide .hero.img-content { max-width: 100%; aspect-ratio: 16 / 9; }
+        .credits { padding: 32px 24px 64px; }
+        .note { padding: 20px 18px; font-size: 15px; }
+        .svg-diagram { width: 100% !important; margin: 16px auto; }
+      }
+      @media (max-width: 480px) {
+        .slide { padding: 56px 16px 40px; }
+        .note { padding: 16px 14px; font-size: 14px; }
+      }
+
+      @media print {
+        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
+        .nav, .progress { display: none; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="pattern-investigation has-site-header" data-category="governance">
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+
+    <aside class="nav" aria-label="Section navigation">
+      <button data-target="slide-1" class="active" aria-label="Section 1"></button>
+      <button data-target="slide-2" aria-label="Section 2"></button>
+      <button data-target="slide-3" aria-label="Section 3"></button>
+      <button data-target="slide-4" aria-label="Section 4"></button>
+      <button data-target="slide-5" aria-label="Section 5"></button>
+      <button data-target="slide-nav" aria-label="Navigation"></button>
+    </aside>
+
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 30 &nbsp;&middot;&nbsp; Governance &nbsp;&middot;&nbsp; 5 Sections</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="29-deep-utopia-solved-world.html" style="color:inherit;text-decoration:none;">&larr; Prev</a>
+        <a href="../index.html#filter=governance" style="color:inherit;text-decoration:none;">Same Category</a>
+        <a href="31-agi-timelines-institutions-map.html" style="color:inherit;text-decoration:none;">Next &rarr;</a>
+      </span>
+    </div>
+
+    <main>
+
+      <!-- ═══════════ SECTION 1: THE CLOSING DOOR ═══════════ -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &middot; No. 30 &middot; Governance &middot; The Closing Door &middot; 2026.04.17 &middot; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">善意で閉じられる扉の前に立つ</h1>
+        <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/nagi-npt-analog-closing-window/slide1.jpg" alt="閉ざされた黒い金属ゲート、Closedの看板">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">あなたはいま、閉じかけている扉の前に立っている。扉の名前は「AGIを安全に開発・運用できると認められた国のクラブ」である。扉は善意で閉じられる。閉じようとしている者たちに悪意はない。むしろ彼らは、この扉を閉じることが人類を守ると信じている。AI安全サミットがブレッチリーで開かれ、29カ国が存亡リスクを公式に認識した。EU AI Actが世界最初の包括的AI規制として施行された。各国がAI安全研究所を設立した。その一つひとつが、扉を閉じる力になっている。</p>
+
+          <p class="lead">2026年4月16日、一般社団法人AIアライメントネットワーク(ALIGN)が『日本AGI基盤構想(NAGI計画)』の第二版を公表した。この文書は、超大規模計算施設群と専用電源を国家プロジェクトとして整備する政策提言である。だが読み進めると、これが単なるインフラ投資計画ではないことが分かる。第二版が前面に押し出したのは、<strong>時間の問題</strong>だった。「AGI開発能力を持つ国の枠組みが制度的に固定化される前に、日本が開発能力を確保する時間的猶予は、多くの人が想定するよりも短いかもしれない」——この一文が構想全体の重力源として働いている。</p>
+
+          <p class="lead">本稿はNAGI構想を要約しない。要約は原典PDFを読めば足りる。本稿が問うのは、なぜこの構想がいま書かれたのか、何が書き手を急がせているのか、そして扉の外側にいる者が扉の内側にいる者から何を期待されているのか——である。議論の核は一つの歴史類比にある。<strong>核拡散防止条約(NPT)</strong>が保有国と非保有国の区分を不可逆的に固定したように、AGI開発においても同じ構造が繰り返される可能性がある、という類比。類比は素引用ではない。類比の先にある逆説こそが、本稿の出発点である。</p>
+
+          <div class="note">
+            <strong>本稿の出発点となる三つの逆説。</strong> 第一に、核拡散とAGI拡散は、安全性との関係が正反対である。第二に、AGI競争の勝敗は情報空間の競争ではなく、物理インフラ(原子炉・送電網・立地許認可)の競争に還元されつつある。第三に、この構想が書かれた時点で、日本は扉の外側にいる。内側にいる者は善意を持っているが、善意は外側を思いやる形をとらない。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>固定化前夜にある三つの逆説</span>
+          <span class="slide-count">1 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 2: NPT ANALOG ═══════════ -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">The NPT Analog</div>
+        <h2 class="reveal reveal-delay-1">核拡散防止条約が教えた、固定化の物理学</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/nagi-npt-analog-closing-window/slide2.jpg" alt="古い石造りのアーチ、通路">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">1968年、核拡散防止条約(Treaty on the Non-Proliferation of Nuclear Weapons)が国連で署名のために開放された。条約の論理は明快だった——核兵器は危険である。ゆえに、これ以上広めない。既に保有している五カ国(米・ソ・英・仏・中)は、国際原子力機関の枠組みのもと段階的に軍縮を進める。保有していない国は、新たに開発・取得してはならない。善意に基づく枠組みだった。核戦争を防ぐためには、保有国の数を増やさないことが理にかなっていた。</p>
+
+          <p class="lead">だがNPTがもたらしたのは、人類の核リスク低減であると同時に、<strong>保有国/非保有国の区分の不可逆的固定</strong>だった。条約発効後、後から核兵器を保有しようとした国は国際制裁・外交的孤立・経済封鎖に直面した。インドとパキスタンはNPTに加盟せず独自に核実験を強行した(1974年、1998年)が、両国とも代償として長期の制裁を受けた。北朝鮮はNPTから離脱(2003年)して核開発を公然化したが、国際社会からの孤立は深刻化した。条約は「危険だから広めない」の論理で、参入可能な国の範囲を構造的に閉じたのである。</p>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 900 220" xmlns="http://www.w3.org/2000/svg">
+              <!-- Timeline axis -->
+              <line x1="40" y1="110" x2="860" y2="110" stroke="#999" stroke-width="1"/>
+              <!-- Events -->
+              <g font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a">
+                <circle cx="90" cy="110" r="5" fill="#b23a2f"/>
+                <text x="90" y="92" text-anchor="middle" font-size="11" fill="#b23a2f" font-weight="700">1968</text>
+                <text x="90" y="136" text-anchor="middle" font-size="10">NPT署名開放</text>
+                <text x="90" y="150" text-anchor="middle" font-size="9" fill="#757575">5カ国固定</text>
+
+                <circle cx="230" cy="110" r="4" fill="#1a1a1a"/>
+                <text x="230" y="92" text-anchor="middle" font-size="11" fill="#1a1a1a" font-weight="700">1974</text>
+                <text x="230" y="136" text-anchor="middle" font-size="10">インド核実験</text>
+                <text x="230" y="150" text-anchor="middle" font-size="9" fill="#757575">非加盟で強行</text>
+
+                <circle cx="370" cy="110" r="4" fill="#1a1a1a"/>
+                <text x="370" y="92" text-anchor="middle" font-size="11" fill="#1a1a1a" font-weight="700">1998</text>
+                <text x="370" y="136" text-anchor="middle" font-size="10">印パ核実験</text>
+                <text x="370" y="150" text-anchor="middle" font-size="9" fill="#757575">長期制裁</text>
+
+                <circle cx="510" cy="110" r="4" fill="#1a1a1a"/>
+                <text x="510" y="92" text-anchor="middle" font-size="11" fill="#1a1a1a" font-weight="700">2003</text>
+                <text x="510" y="136" text-anchor="middle" font-size="10">北朝鮮NPT離脱</text>
+                <text x="510" y="150" text-anchor="middle" font-size="9" fill="#757575">国際的孤立</text>
+
+                <circle cx="650" cy="110" r="5" fill="#b23a2f"/>
+                <text x="650" y="92" text-anchor="middle" font-size="11" fill="#b23a2f" font-weight="700">2023</text>
+                <text x="650" y="136" text-anchor="middle" font-size="10">ブレッチリー宣言</text>
+                <text x="650" y="150" text-anchor="middle" font-size="9" fill="#757575">29カ国存亡リスク認知</text>
+
+                <circle cx="790" cy="110" r="6" fill="#b23a2f" stroke="#b23a2f" stroke-width="2" fill-opacity="0.3"/>
+                <text x="790" y="92" text-anchor="middle" font-size="11" fill="#b23a2f" font-weight="700">202X</text>
+                <text x="790" y="136" text-anchor="middle" font-size="10">AGI枠組み固定化</text>
+                <text x="790" y="150" text-anchor="middle" font-size="9" fill="#757575">扉が閉じる</text>
+              </g>
+              <!-- Labels -->
+              <text x="40" y="30" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.08em" font-weight="700">核の歴史</text>
+              <text x="40" y="190" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" letter-spacing="0.08em" font-weight="700">AGIの前夜</text>
+              <!-- Connector arc showing analogy -->
+              <path d="M 90 108 Q 370 50 790 108" stroke="#b23a2f" stroke-width="1" stroke-dasharray="4,4" fill="none" opacity="0.5"/>
+              <text x="440" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b23a2f" font-style="italic">構造的類比:「危険だから広めない」の論理</text>
+            </svg>
+          </div>
+
+          <p class="lead">ここからがNAGI第二版の本質的な論点である。<strong>核兵器とAGIでは、拡散と安全性の関係が逆転している</strong>。核兵器においては、技術の拡散そのものが脅威を増大させた。保有国が増えるほど、誤算・事故・意図的使用のリスクは積み上がる。だからNPTの論理は正しかった——少なくともその論理空間の中では。</p>
+
+          <p class="lead">AGIは違う。AGIにおいては、<strong>開発能力が少数国に集中すること自体が構造的リスクである</strong>。開発が一国・一企業に集中すれば、その主体の価値観・商業的判断・政治的都合が人類のAGI設計思想を事実上独占する。逸脱を検出・対抗できる別のシステムが存在しなくなる。ALIGNが「AI生態系」と呼ぶもの——多様なシステムが相互に依存し相互に牽制するネットワーク——は、多極的な開発能力がなければ成立しない。核の論理を逆向きに適用しなければならない領域で、核の論理がそのまま輸入されようとしている。これがNAGI構想が問題にする構造的ねじれである。</p>
+
+          <div class="note">
+            <strong>NPT類比の射程。</strong> NAGIが描く「固定化」は、条約のような明示的な文書を指していない。AI安全サミット、EU AI Act、各国AI安全研究所の設立、OECD AI Principles、G7広島AIプロセス——これら善意の積み重ねが、結果として「安全に開発できると認められた国」のクラブを形作る。後から入ろうとした国は、「安全性が未確認である」という理由で参入を拒まれる可能性がある。扉は文書ではなく、雰囲気と慣行と前例の積層で閉じる。
+          </div>
+
+          <p class="lead">参入拒否のメカニズムは既に部分的に動いている。米国は2022年以降、先端半導体の対中輸出管理を段階的に強化し、2024年にはHBMや先端GPUの輸出規制を拡張した。日本・オランダも同調した。規制の目的は「安全保障」であり、悪意ではない。だがこの規制フレームが安定化するにつれ、「誰に何を売ってよいか」の境界線は雰囲気として固定化されていく。扉の存在は、条約調印式としてではなく、個別の輸出ライセンス審査の積み重ねとして顕在化する。</p>
+        </div>
+
+        <div class="footer">
+          <span>安全性と拡散の関係は、核とAGIで逆転している</span>
+          <span class="slide-count">2 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 3: POWER AS AXIS ═══════════ -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">Power As The Axis</div>
+        <h2 class="reveal reveal-delay-1">FLOPSを捨て、電力を測る国家</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/nagi-npt-analog-closing-window/slide3.jpg" alt="夜間の送電塔">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">NAGI構想を読んで最初に目を引くのは、具体的な規模目標ではない。<strong>FLOPS値を数値目標にしていない</strong>という点である。第3章で明言されている——「本計画では、あらかじめ設定したFLOPS値を数値目標として掲げず、電力予算(Power Budget)を基軸とした設計を採用する」。100MW、300MW、1GW、10GWという段階が基本単位になる。FLOPSは結果であって制約ではない。同じ電力でも、アーキテクチャや演算精度やアルゴリズム効率によって、実効性能は桁単位で変化するからだ。</p>
+
+          <p class="lead">この設計思想の転換は、表面的には技術的な選択に見える。だが深層では、国家競争力の測定軸そのものを書き換えている。ALIGNが導入する指標の名前は、<strong>Watts-per-intelligence(WPI)</strong>——電力あたりの知能変換効率。ある時点の先端技術を前提にしたとき、WPIには物理的制限がある。つまり、一定の知能水準を国内で維持しようとするなら、最低限の電力を自前で調達できなければならない。電力は技術の関数ではなく、技術の制約である。この順序の入れ替えが、AGI時代の国家設計原理を変える。</p>
+
+          <div class="grid-4">
+            <div class="bignum">
+              <div class="label">Phase 1</div>
+              <div class="num">100 MW</div>
+              <p>初期段階。既設電源・系統電力で稼働。10万世帯分の常時電力に相当</p>
+            </div>
+            <div class="bignum">
+              <div class="label">Phase 2</div>
+              <div class="num">300 MW</div>
+              <p>専用電源の並行準備。中規模SMR1基〜2基相当</p>
+            </div>
+            <div class="bignum">
+              <div class="label">Phase 3</div>
+              <div class="num">1 GW</div>
+              <p>SMR一体型運転開始。Oracleが米国で計画する規模と同水準</p>
+            </div>
+            <div class="bignum">
+              <div class="label">Long Term</div>
+              <div class="num">10 GW</div>
+              <p>広域ブロック拠点の総量目標。原発10基分の専用電源</p>
+            </div>
+          </div>
+
+          <p class="lead">なぜ電力なのか。Epoch AIの追跡データによれば、AI学習に投入される計算量は年間約4倍のペースで増大している。これを支えるエネルギー需要も当然爆発的に伸びる。国際エネルギー機関(IEA)は2030年までに世界のデータセンター電力需要が現在の2倍以上の945TWhに達すると予測している。2040年頃までの伸びはさらに加速しうる。情報産業が電力産業に吸収される構造的転換が起きている。この構造下では、計算資源の競争は電力調達の競争に還元される。</p>
+
+          <div class="note">
+            <strong>計算量下限という戦略的絞り込み。</strong> NAGIは既存基盤(ABCI、富岳NEXT)と棲み分けるため、利用対象に総学習計算量10<sup>24</sup>FLOPs以上という下限を設ける(目安: GPU数千基×数週間以上)。中小規模学習はABCI等が担い、NAGIはフロンティア学習だけに資源を集中する。これは単なる分業ではない。経済安全保障政策として「日本としてフロンティア学習を継続できる能力」を独立変数として確保する宣言である。
+          </div>
+
+          <p class="lead">逆説がここに現れる。<strong>情報空間の競争だと思われていたAGIレースは、発電所の競争だった</strong>。ソロモノフ帰納への漸近を示唆するGoogle DeepMindらの研究(2024)が正しいとすれば、既存Transformerのスケーリング延長線上でAGI級能力に到達する可能性がある。だがスケーリングを支えるのはアルゴリズムではなく電力である。アルゴリズムは数時間で他国に伝播するが、原子炉は10年で1基しか建たない。競争変数の時定数が根本的に違う。</p>
+        </div>
+
+        <div class="footer">
+          <span>電力予算を基軸に据えた設計思想</span>
+          <span class="slide-count">3 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 4: PHYSICALIZATION ═══════════ -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">The Physicalization</div>
+        <h2 class="reveal reveal-delay-1">AGIレースは原子炉のレースに還元される</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/nagi-npt-analog-closing-window/slide4.jpg" alt="原子力発電所の冷却塔">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">電力が制約になったとき、米国テック企業が何を始めたか。2024年、Oracleは3基のSMR(小型モジュール炉)で合計1GW出力を調達し、データセンター全電力を賄う計画を公表した。Larry Ellisonは「許可取得済みで設計中」と述べている。GoogleはKairos Power社と提携して最大500MW規模のSMRを導入する計画を結んだ。AmazonはX-energy社の約5億ドル資金調達ラウンドにアンカー投資家として参加し、最大960MWの原子力電源確保に動いた。Microsoftは停止中だったスリーマイル島原発を再稼働させ、20年間835MWの電力購入契約(PPA)を締結した。</p>
+
+          <p class="lead">これらは単独の事例ではない。2024年から2025年にかけて、米国主要テック企業は<strong>原子力電源の自社確保という新しい競争軸</strong>に一斉に参入した。理由は単純である。AI学習は数週間から数ヶ月にわたって一定の高電力を消費し続ける。ベースロード電源である原子炉の容量因子90%超は、この負荷パターンと極めて相性がよい。再生可能エネルギーの変動に対応するための蓄電設備も最小限で済む。運転時CO₂排出ゼロで将来のカーボンプライシング導入リスクも回避できる。経済合理性がテック企業を原子力に押し戻している。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>主体</th>
+                <th>電源形式</th>
+                <th>規模</th>
+                <th>契約・投資の特徴</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Oracle</strong></td>
+                <td>SMR 3基一体型</td>
+                <td>約1 GW</td>
+                <td>DC全電力を自社SMRで賄う計画。設計段階</td>
+              </tr>
+              <tr>
+                <td><strong>Microsoft</strong></td>
+                <td>既設原発PPA</td>
+                <td>835 MW × 20年</td>
+                <td>スリーマイル島再稼働契約。Unit 1を復活</td>
+              </tr>
+              <tr>
+                <td><strong>Google</strong></td>
+                <td>SMR (Kairos Power)</td>
+                <td>最大500 MW</td>
+                <td>新興企業との長期開発提携</td>
+              </tr>
+              <tr>
+                <td><strong>Amazon</strong></td>
+                <td>SMR (X-energy)</td>
+                <td>最大960 MW</td>
+                <td>約5億ドル資金調達にアンカー投資</td>
+              </tr>
+              <tr>
+                <td><strong>商船三井(MOL)</strong></td>
+                <td>洋上DC(船載発電)</td>
+                <td>20〜73 MW</td>
+                <td>9千トン級船舶に搭載、2027年稼働予定</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">ここで競争変数が再定義される。AGIレースの勝敗を決めるのは、アルゴリズムの革新でもGPUの調達量でもない。<strong>原子炉の新設許認可を速く通せる国、ベースロード電源を確保できる国、冷却水と立地と地元合意を供給できる国が勝つ</strong>。フランスは国家HPC基盤(Jean Zay)を活用した研究環境でMistral AIをはじめとするフロンティア企業の創出を後押しした。UAEは国家計算基盤を活用してFalcon 180Bを開発した。国家が計算基盤を整備することが需要を「待つ」のではなく「生む」という構図は、国際的に実証されつつある。</p>
+
+          <div class="note">
+            <strong>時定数の非対称。</strong> ソフトウェアのブレークスルーは数時間で論文化され、数週間で再実装される。Transformerアーキテクチャは2017年の論文公開から2022年のChatGPT公開までに、産業全体に浸透した。他方、原子炉の新設許認可は日本で10年以上を要する。SMRの規制枠組みは未整備である。洋上原子炉の許認可は現行法に存在しない。送電網の増強も数年単位。アルゴリズムが指数的に加速する時代に、インフラが線形にしか進めないという非対称が、地政学的な固定化を生む本質的な駆動力である。
+          </div>
+
+          <p class="lead">日本がこの競争に参入するためには、物理インフラの時定数を短縮する制度設計が必要になる。NAGIが第7章で原子炉の新設許認可・規制緩和、SMRの認可プロセス確立、洋上プラットフォームの法整備、官民ファンド型PPPを列挙するのはこのためである。AGI開発はもはや情報産業の一部ではない。エネルギー政策・原子力政策・土地利用計画の一部である。この認識の転換ができない国は、アルゴリズムで勝っても電力で負ける。</p>
+        </div>
+
+        <div class="footer">
+          <span>計算の物理化が競争変数を書き換える</span>
+          <span class="slide-count">4 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 5: THE COST OF ABSENCE ═══════════ -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">The Cost Of Absence</div>
+        <h2 class="reveal reveal-delay-1">扉の外側に残される者の値段</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/nagi-npt-analog-closing-window/slide5.jpg" alt="地下インフラの廊下、無人の光">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">NAGI構想の付録1には、日本がAGI開発能力を保有しない場合の経済的リスク試算が収められている。前提は明示的だ——AGIが「人間がリモートワークで遂行できる仕事をすべて実行できる」という強い仮定を置く。日本の在宅勤務可能比率約30%(就業者数6,781万人の3割強に相当)を雇用者報酬314.2兆円に掛けると、AGIが直接競合しうる労働報酬は年94.3兆円(名目GDPの14.7%)になる。この94.3兆円が、三つの損失経路の母数になる。</p>
+
+          <div class="grid-3">
+            <div class="card">
+              <span class="tag">依存シナリオ</span>
+              <p><strong>年6.6〜25.5兆円</strong>の海外流出。AGIを平時に使えるが、基盤が海外にある限りレントが構造的に国外へ流出する。経産省は国内パブリッククラウド起因の赤字を2030年頃に年約8兆円と見込んでおり、これはAGIが完成しなくても既に見えている下限である</p>
+            </div>
+            <div class="card">
+              <span class="tag">遮断シナリオ</span>
+              <p><strong>3か月停止で2.4〜7.1兆円</strong>の業務停止相当額。輸出管理の強化、同盟国優先の供給制限、クラウド事業者のポリシー変更などで海外AGI基盤へのアクセスが制限された場合。OECDは2021年の半導体不足が日本GDPを0.5〜1%(3.2〜6.4兆円)押し下げた可能性に言及しており、同じオーダーに入る</p>
+            </div>
+            <div class="card">
+              <span class="tag">取り残しシナリオ</span>
+              <p><strong>10年で32.9〜179.9兆円</strong>のGDP水準差。井上智洋が「第二の大分岐」と呼ぶ構造。AIとロボットが人間の介在なく財・サービスを生産する経済では、成長率が爆発的に加速する。第一の大分岐が工場と蒸気機関で決まったように、第二の大分岐は自律的生産基盤を持つか否かで決まる</p>
+            </div>
+          </div>
+
+          <p class="lead">この数字を数字として読んではならない。これは<strong>不在の値段</strong>である。日本がAGI開発能力を保有しないことによって支払う、受動的な税金。扉の外側にいる者が、扉の内側にいる者へ納め続ける歳入。そして三経路の中で最も重いのは取り残しシナリオだ。依存と遮断は回避策がある。依存は関係の再設計で緩和できるし、遮断は代替基盤への切替で対応できる。だが取り残しは複利で広がる。第一の大分岐が後発国のキャッチアップで部分的に縮小したのとは違って、第二の大分岐は自己増幅の構造により不可逆化する可能性がある。</p>
+
+          <p class="lead">井上智洋が『人工知能と経済の未来』(2016)と『純粋機械化経済』(2019)で展開した議論を、NAGI付録1はAK型生産関数の枠組みで引いている。AI・ロボットが自身を生産する経済では、資本蓄積と生産が同じ変数になり、GDP成長率は指数的に発散する。この構造下で「AGI開発能力を持つ国」と「持たない国」の間に開く差は、過去の先進国/途上国の格差とは性質が違う。キャッチアップが物理的に不可能になる段階が存在する可能性がある。</p>
+
+          <div class="note">
+            <strong>本稿の議論が依存する仮定。</strong> 付録1の試算は「リモートワーク可能な仕事をまるごと担えるAGI」という強い仮定に基づく。物理タスク(建設、介護、物流、保守)は含まない。Goldman Sachsが自動化に露出する仕事の割合を15〜35%で置いているのに対し、日本の在宅勤務可能比率約30%はレンジの上側に近いがなお範囲内にある。仮定は強いが最大ではない。仮定が外れれば数字は変わるが、構造的論理——扉が閉じる前に参入するか否かで長期の国力差が決まる——は独立に成立する。
+          </div>
+
+          <p class="lead">結論を述べる前に、一つ認めるべきことがある。NAGI構想は完璧な設計ではない。SMRの国内商用実用化には時間がかかる。原子炉新設の社会受容性は不確実だ。2023年に米NuScaleのCarbon Free Power Projectがコスト超過で中止されたように、SMRの経済性自体も検証途上にある。10兆円規模の国家プロジェクトが政権交代や財政状況の変化で中断するリスクもある。本稿はNAGIを完成した処方箋として推奨しているのではない。だが構想が指摘した構造——時間窓が閉じる前に参入する必要がある、そして参入に必要な変数は物理インフラである——は、NAGI自体の成否とは独立に成立する論理である。</p>
+
+          <p class="lead">2025年10月14日、ALIGNがNAGI初版を公表した。2026年4月16日、第二版が公表された。半年で改訂された第二版は、初版にはなかった強い一文を加えていた——「多くの人が想定するよりも短いかもしれない」。この一行は予言ではなく、警告でもない。既に動いている時計の針の音である。</p>
+
+          <p class="lead" style="margin-top: 36px; font-size: 17px;">扉は善意で閉じられる。善意は、外側を思いやる形をとらない。</p>
+        </div>
+
+        <div class="footer">
+          <span>不在の値段は、複利で積み上がる</span>
+          <span class="slide-count">5 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Article Navigation ═══════════ -->
+      <section class="slide" id="slide-nav" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="29-deep-utopia-solved-world.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.29</p>
+              <p><strong>Deep Utopia — 問題がすべて解かれた世界の退屈</strong></p>
+            </a>
+            <a href="31-agi-timelines-institutions-map.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &rarr; &middot; No.31</p>
+              <p><strong>AGIはいつ来るのか — 9つの研究機関と3つの時間軸</strong></p>
+            </a>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=governance" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Governance カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="credits">
+      <p>AGI HUB &middot; No. 30 &middot; Governance &middot; 2026.04.17 &middot; By Ryao</p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Primary source.</strong>
+        一般社団法人AIアライメントネットワーク(ALIGN)『日本AGI基盤構想(NAGI計画)第二版』v2.0.1 (2026-04-16)。初版は2025年10月14日公表、第二版は半年後の改訂。超大規模計算施設群GigaDCと専用電源(SMR等)の一体整備を経済安全保障政策として提言する政策文書。
+      </p>
+      <p style="margin-top:8px;">
+        <strong style="color:#585858;">References.</strong>
+        [1] ALIGN (2026) 『日本AGI基盤構想(NAGI計画)第二版』 v2.0.1. <a href="https://www.aialign.net/">aialign.net</a>
+        [2] Grau-Moya et al., Google DeepMind (2024) "Learning Universal Predictors". Marcus Hutterを含むチームがTransformerのソロモノフ帰納への漸近を示した論文。同様の結果がYoung &amp; Witbrock (2024), Wan &amp; Mei (2025)からも独立に報告されている。
+        [3] Epoch AI (2024) "Trends in Machine Learning Compute". AI学習計算量の年間約4倍増加トレンド。<a href="https://epoch.ai/trends">epoch.ai/trends</a>
+        [4] International Energy Agency (2025) "Energy and AI" Special Report. 2030年までに世界のデータセンター電力需要が945TWhに達する予測。
+        [5] Datacenter Dynamics (2024) "Oracle to build nuclear SMR-powered gigawatt data center". 3基合計1GW出力のSMRでデータセンター全電力を賄う計画。
+        [6] Datacenter Dynamics (2024) "Three Mile Island nuclear power plant to return as Microsoft signs 20-year, 835MW AI data center PPA".
+        [7] World Nuclear News (2024) "Tech companies invest in nuclear for data centres". Google/Kairos Power, Amazon/X-energyなどの動向。
+        [8] Datacenter Dynamics (2024) "MOL partners with Kinetics to develop floating data center platform". 商船三井の9千トン級船舶搭載洋上DC、2027年稼働予定。
+        [9] CNRS (2024/3/28) "GENCI and CNRS choose Eviden to make the Jean Zay supercomputer one of the most powerful in France". フランス国家HPC基盤。BLOOM(176B)学習、150超のAIスタートアップ支援。
+        [10] Technology Innovation Institute (2023) "Falcon 180B". <a href="https://falconllm.tii.ae/">falconllm.tii.ae</a>
+        [11] 井上智洋 (2016) 『人工知能と経済の未来』文春新書. 井上智洋 (2019) 『純粋機械化経済』日本経済新聞出版. 第二の大分岐論の原典。
+        [12] OECD (2022) 半導体不足が日本GDP を0.5〜1%押し下げたとの分析。
+        [13] Treaty on the Non-Proliferation of Nuclear Weapons (1968). 核拡散防止条約。1970年発効。
+        [14] UK Government (2023) "The Bletchley Declaration by Countries Attending the AI Safety Summit". 2023年11月、29カ国が署名。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on scope.</strong>
+        本稿はNAGI構想の紹介ではなく、構想が前提としている時間観(制度的固定化の時間窓)と構造観(AGI競争の物理化)を批評的に読み解いたエディトリアルである。構想自体の政策的妥当性の評価は行っていない。SMR経済性、原子力社会受容性、国家プロジェクトのガバナンスについては別の検証が必要である。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on the NPT analog.</strong>
+        「核拡散とAGI拡散は安全性との関係が逆転している」という論点はALIGN第二版が前面に押し出した独自の構造分析であり、核軍縮研究の標準的論点ではない。本稿はこの分析を採用して展開しているが、類比の射程には限界がある。核兵器は破壊的使用の一回性が脅威の核心であるのに対し、AGIは運用能力の持続性が論点になる。類比は構造的対応であって完全な同型ではない。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Images.</strong>
+        All photographs via <a href="https://unsplash.com/">Unsplash</a>.
+        Hero (slide1): Masaaki Komori / <a href="https://unsplash.com/photos/iaSzwYccV28">iaSzwYccV28</a>.
+        Slide 2: <a href="https://unsplash.com/photos/zhbmjN1rHGQ">zhbmjN1rHGQ</a>.
+        Slide 3: <a href="https://unsplash.com/photos/AA5v6sMcalY">AA5v6sMcalY</a>.
+        Slide 4: <a href="https://unsplash.com/photos/vMQFh9rAkeU">vMQFh9rAkeU</a>.
+        Slide 5: Simon Infanger / <a href="https://unsplash.com/photos/eHGEczzoN50">eHGEczzoN50</a>.
+        Thumbnail: <a href="https://unsplash.com/photos/qDyL3-tk_ts">qDyL3-tk_ts</a>.
+      </p>
+    </footer>
+
+    <!-- Feedback form -->
+    <section id="feedback-section" style="max-width:1120px;margin:0 auto;padding:48px 48px 64px;border-top:1px solid var(--border);">
+      <h3 style="font-size:18px;font-weight:700;color:var(--black);margin-bottom:8px;">Reader Feedback</h3>
+      <p style="font-size:13px;color:var(--meta);margin-bottom:24px;">この記事の評価・感想をお寄せください。匿名可、1分で完了します。</p>
+      <form id="feedback-form" style="display:grid;gap:16px;max-width:640px;">
+        <div>
+          <label style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">評価 (1-5)</label>
+          <div id="star-group" style="display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px;">
+            <input type="radio" name="rating" value="5" id="s5" style="display:none;"><label for="s5" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="4" id="s4" style="display:none;"><label for="s4" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="3" id="s3" style="display:none;"><label for="s3" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="2" id="s2" style="display:none;"><label for="s2" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="1" id="s1" style="display:none;"><label for="s1" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+          </div>
+        </div>
+        <div>
+          <label for="fb-comment" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">コメント (任意)</label>
+          <textarea id="fb-comment" rows="4" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label for="fb-name" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">名前 (任意)</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+          <div>
+            <label for="fb-email" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">メール (任意)</label>
+            <input type="email" id="fb-email" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+        </div>
+        <button type="submit" id="fb-submit" style="padding:12px 24px;background:var(--black);color:var(--bg);border:none;font-family:'SF Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;justify-self:start;">送信</button>
+      </form>
+      <p id="fb-success" style="display:none;font-size:14px;color:var(--body-text);margin-top:16px;">フィードバックを送信しました。ありがとうございます。</p>
+      <p id="fb-error" style="display:none;font-size:14px;color:var(--accent);margin-top:16px;">送信に失敗しました。時間をおいて再度お試しください。</p>
+    </section>
+
+    <script>
+      // Star rating hover
+      (function(){
+        const group = document.getElementById('star-group');
+        if (!group) return;
+        const labels = group.querySelectorAll('label');
+        labels.forEach((lab, i) => {
+          lab.addEventListener('mouseenter', () => {
+            // In flex-direction: row-reverse, siblings after current = stars with lower value.
+            // Highlight current + all preceding siblings in DOM order (which are star values >= current in visual order).
+            labels.forEach(l => l.style.color = '#ccc');
+            let el = lab;
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          });
+        });
+        group.addEventListener('mouseleave', () => {
+          const checked = group.querySelector('input:checked');
+          labels.forEach(l => l.style.color = '#ccc');
+          if (checked) {
+            let el = group.querySelector(`label[for="${checked.id}"]`);
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          }
+        });
+      })();
+
+      // Form submit
+      document.getElementById('feedback-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const rating = (document.querySelector('input[name="rating"]:checked') || {}).value || '';
+        const comment = document.getElementById('fb-comment').value;
+        const name = document.getElementById('fb-name').value;
+        const email = document.getElementById('fb-email').value;
+        const eyebrowText = document.querySelector('.eyebrow').textContent;
+        const numMatch = eyebrowText.match(/No\.\s*(\d+)/);
+        const articleNo = numMatch ? numMatch[1] : '30';
+
+        const params = new URLSearchParams();
+        if (email) params.append('emailAddress', email);
+        params.append('entry.1131711956', rating);
+        params.append('entry.897250758', articleNo);
+        params.append('entry.242373434', comment);
+        params.append('entry.420368578', name);
+
+        fetch(FORM_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: params.toString()})
+          .then(() => {
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('fb-success').style.display = 'block';
+          })
+          .catch(() => {
+            document.getElementById('fb-error').style.display = 'block';
+          });
+      });
+    </script>
+
+    <script>
+      // Progress bar
+      const progress = document.getElementById('progress');
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = scrolled + '%';
+      });
+
+      // Reveal on scroll
+      const reveals = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.2 });
+      reveals.forEach(el => io.observe(el));
+
+      // Nav dots
+      const buttons = document.querySelectorAll('.nav button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (target) target.scrollIntoView({behavior:'smooth'});
+        });
+      });
+
+      // Active dot tracking
+      const slides = document.querySelectorAll('.slide');
+      const slideIo = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            buttons.forEach(b => b.classList.remove('active'));
+            const match = document.querySelector(`.nav button[data-target="${e.target.id}"]`);
+            if (match) match.classList.add('active');
+          }
+        });
+      }, { threshold: 0.5 });
+      slides.forEach(s => slideIo.observe(s));
+    </script>
+  </body>
+</html>

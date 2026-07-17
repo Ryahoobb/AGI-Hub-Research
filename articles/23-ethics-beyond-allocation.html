@@ -2,6 +2,7 @@
 <html lang="ja">
   <head>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="revised" content="2026.04.14">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -171,6 +172,18 @@
         padding-bottom: 14px;
         border-bottom: 1px solid var(--black);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 36px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -256,12 +269,14 @@
       table.compare tr:last-child td { border-bottom: none; }
 
       .note {
+        max-width: 780px;
         font-size: 16px;
         line-height: 1.78;
         color: var(--body-text);
         padding: 24px 28px;
         border-left: 2px solid var(--black);
         background: var(--accent-soft);
+        box-sizing: border-box;
       }
       .note strong { color: var(--black); }
 
@@ -292,6 +307,18 @@
         .credits { padding: 32px 24px 64px; }
       }
 
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media print {
         .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
         .nav, .progress { display: none; }
@@ -313,7 +340,7 @@
     </aside>
 
     <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 23 / 25 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 23 &nbsp;·&nbsp; Alignment &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="22-permitted-side-landscape.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -338,7 +365,7 @@
             私たちが日常で「倫理的だ」「倫理に反する」と呼ぶ事柄の大半は、よく見ると誰が何をどれだけ受け取るかという配分の問題に翻訳できてしまう。税の累進性、臓器移植の順番、年金の世代間負担、炭素予算の国別割当、医療トリアージ、大学入試の枠、さらには内閣の閣僚ポストまで。個別の論争は「誰に多く、誰に少なく、誰にゼロか」という一文に収束する。倫理は結局、配分の言語で書かれた規範ルールの集合なのではないか——この問いから逃げてきた学問は、じつのところ多くない。
           </p>
           <p class="lead">
-            前々回（<a href="20-hakoniwa-world-as-allocation.html" style="color:inherit;border-bottom:1px solid #999;">No.20 箱庭主義</a>）と前回（<a href="21-outside-the-garden.html" style="color:inherit;border-bottom:1px solid #999;">No.21 箱庭の外側</a>）で、配分の思想とその外部の構造を論じた。三部作の締めとなる本記事は、配分の言語そのものが終わる地点を問う。物的希少性が薄れ、AGIが算数を解き終えた世界で、倫理に何が残るか。そこに残るものがあるとすれば、それは配分計算の外側に立つものだけである。
+            本稿の中核命題は単純だ。<strong>物的希少性がAGIによって薄れ、配分問題が一つ一つ解き終えられていく世界で、倫理には配分計算で説明しきれない層が残る。残るのは、量の言語で書き換えられない絶対線だけである</strong>。この命題は三部作の締めとして置かれているが、前二作（<a href="20-hakoniwa-world-as-allocation.html" style="color:inherit;border-bottom:1px solid #999;">No.20 箱庭主義</a>と<a href="21-outside-the-garden.html" style="color:inherit;border-bottom:1px solid #999;">No.21 箱庭の外側</a>）を読んでいなくても追えるように書いた。本稿だけで閉じた骨格は、以下の三段である。第一段、倫理的問題の大半は配分問題に書き換えられる。第二段、しかし配分問題に書き換えられない層が独立して存在する。第三段、配分計算が完成した世界で露出するのは、この書き換え不能な層である。
           </p>
           <table class="compare">
             <thead>
@@ -374,7 +401,7 @@
             この表を眺めて気づくのは、論点の温度差がどこから来ているかである。人々が激しく対立するのは「何を配るか」ではない。配り方のルール、すなわち配分ルールの正当化の段階で対立する。ロールズとノージックの三十年戦争は、何を配るかの議論ではなく、配分ルールを誰がどう決めるかという一段上の問いに関するものだった。倫理の第一層は確かに配分である。だがその上には、配分ルールの正当化という第二層が乗っている。
           </p>
           <div class="note">
-            ここまでで、倫理の<strong>七割から八割</strong>は配分の言語で書き換えが可能に見える。残りの二割が、本記事の主題である。二割はただの端数ではない。配分計算がどこまで完成しても触れない層であり、そしてAGIが前者の七割を解き終えた世界で、倫理という言葉が残留するならそれは確実にこの二割の方に残る。
+            ここまでの例は、倫理問題の表面の大半が配分の言語で書き換え可能に見えることを示している。だが「大半」という直観的印象と、それを「七割か八割か」と数字で言い切ることは別物だ。功利主義的倫理——効用の総量を最大化するという枠組み——が配分問題に還元できることは確かである。しかし倫理学には功利主義で閉じない系譜が複数あり、それらを「残りの二割」と端数扱いするのは雑すぎる。本記事の主題は、配分計算がどこまで完成しても触れない層の正体を明らかにすることにある。
           </div>
           <p class="lead" style="margin-top:32px;">
             ただし、先に一つ断りを入れておく。「配分計算がどこまで完成しても触れない層」と言うとき、本稿は暗黙のうちに一つの前提を置いている。<strong>存続する主体が、何らかの形で物理的な身体を持ち、人間らしい感受性のパラメータで動き続けている</strong>という前提である。これは自明ではない。ポストシンギュラリティの世界では、従来型の生命体(No.22の定義で言う「人類の子孫種」)が選びうる存続形態は四通りに大きく分岐する。本稿がどの象限を主題にしているかを、議論の前に可視化しておく。
@@ -391,17 +418,17 @@
               <tr>
                 <td><strong>(A) 肉体を維持</strong></td>
                 <td><strong>A-1: 強化人間</strong>(本稿の主題)<br>肉体を改造して宇宙・過酷環境に適応。認知と情動の基本パラメータは人間のまま。<br>→ <a href="22-permitted-side-landscape.html">No.22 許された側の風景</a><br>→ 本稿 No.23 配分の向こう側</td>
-                <td><strong>A-2: 肉体は保つが認知を書き換え</strong><br>身体は物理的に残すが、情動・快楽・自己連続性の軸を別物に設定。人の姿をした別種。<br>→ 別稿で扱う予定</td>
+                <td><strong>A-2: 肉体は保つが認知を書き換え</strong><br>身体は物理的に残すが、情動・快楽・自己連続性の軸を別物に設定。人の姿をした別種。<br>→ <a href="24-cross-temporal-consent.html">No.24 越境的同意は成立しない</a></td>
               </tr>
               <tr>
                 <td><strong>(B) 肉体を放棄</strong></td>
                 <td><strong>B-1: 箱庭住民</strong><br>完全デジタル移行。だが人間らしい感覚・記憶・情動のパラメータは保持。箱庭の中で人間の続きを生きる。<br>→ <a href="20-hakoniwa-world-as-allocation.html">No.20 箱庭主義 — 世界を配給するという思想</a></td>
-                <td><strong>B-2: 別存在への遷移</strong><br>肉体も人間パラメータも捨てる。快楽軸・時間軸・自己の境界を根底から書き換える。もはや人類の子孫とは呼べない何か。<br>→ 別稿で扱う予定</td>
+                <td><strong>B-2: 別存在への遷移</strong><br>肉体も人間パラメータも捨てる。快楽軸・時間軸・自己の境界を根底から書き換える。もはや人類の子孫とは呼べない何か。<br>→ <a href="25-pre-ethical-beyond-gesture.html">No.25 倫理以前という場所</a></td>
               </tr>
             </tbody>
           </table>
           <p class="lead">
-            四象限のどこに住むかで、倫理の居場所は根本的に変わる。B-1 の箱庭住民にとって、石への敬意は箱庭の描画パラメータに還元される——石は本当には存在しないからだ。B-2 の別存在にとって、そもそも「痛みの主体」という概念自体が別の意味を持ちうる。本稿が「配分の外側に残る倫理」を論じるとき、その倫理は主に <strong>A-1 象限</strong>——肉体を持ち、人間らしい感受性を保ったまま、物的希少性から解放された存続形態——の住民に対して成立する。三部作の前作 No.22 が描いたのもこの象限である。他象限には別の倫理空間が立ち上がる。それは別稿の主題である。本稿は A-1 を掘り下げる。
+            四象限のどこに住むかで、倫理の居場所は根本的に変わる。B-1 の箱庭住民にとって、石への敬意は箱庭の描画パラメータで説明される——石は本当には存在しないからだ。B-2 の別存在にとって、そもそも「痛みの主体」という概念自体が別の意味を持ちうる。本稿が「配分の外側に残る倫理」を論じるとき、その倫理は主に <strong>A-1 象限</strong>——肉体を持ち、人間らしい感受性を保ったまま、物的希少性から解放された存続形態——の住民に対して成立する。三部作の前作 No.22 が描いたのもこの象限である。他象限の倫理空間はNo.24（A-2）とNo.25（B-2）で扱う。本稿はA-1を掘り下げる。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -446,7 +473,7 @@
             </div>
           </div>
           <p class="lead">
-            ここから導かれる結論は一つである。倫理学の主流三派は、互いに何を配るかとどう配るかで争ってきたが、配分問題そのものを出ていない。哲学の入門書が「正義論は配分を超える」と書くとき、その「超える」の中身を注意深く読むと、配分の対象と重みづけを別のものに置き換えているだけで、問題の土俵は同じである。<strong>主要な正義論は、配分問題の異なる書き方のコレクションである</strong>——この認識が本記事の第一の蝶番となる。
+            ここから導かれるのは、正義論の主流三派が配分問題の構造を共有しているという認識だ。互いに何を配るかとどう配るかで争ってきたが、配分という土俵からは出ていない。ただし一つ留保がある。ロールズの第一原理が扱う「基本的自由」は、量的に分割される財とは性質が違う。言論の自由や信教の自由は、Aに多く配ればBが減るというゼロサム構造に収まらない場合がある。ノージックの「自己所有権」も、配分ルールの基底に据えたものではあるが、所有権そのものの不可侵性は配分計算の外側から持ち込まれた前提であって、配分の結果として導出されたものではない。<strong>正義論は配分問題の構造を共有しているが、各派が暗黙に持ち込む非配分的前提がある</strong>。この非配分的前提がセクション3で扱う「侵してはならない境界」に接続する。
           </p>
           <div class="note">
             ここに身近な具体例を挟む。カーボン・バジェット交渉の国際会議を思い浮かべてほしい。各国代表は「人口比で割るべきだ」「現行排出比で割るべきだ」「歴史的累積排出比で割るべきだ」と対立する。これはロールズ(公正な手続き)、ノージック(既得の権原)、セン(各国の発展段階に応じた潜在能力)の三派の論争を、気候交渉の語彙で書き直したものそのものである。倫理学の古典論争は、国際会議の議事録として今日も継続している。
@@ -474,7 +501,7 @@
             カントの命題を身近な例で試す。ある健康な五人を救うために一人の健康な通行人を殺して臓器を取り出すトロッコ問題の変種は、ベンサム的な功利計算では一人対五人の配分比較として処理できる。だが多くの人がこの処理に強い違和感を覚える。違和感の出どころは、健康な通行人を<strong>「臓器の配分単位」</strong>として扱った瞬間にある。彼を配分の対象に格下げしたことそれ自体が、倫理違反として認識される。配分問題に還元可能な層だけでは、この違和感を救えない。
           </p>
           <p class="lead">
-            約束と嘘の非対称性も、配分計算の外側にある。約束を破ることと、嘘をつくことは、多くの場合に誰からも財を奪わない。約束を破って他人の時間を奪った場合でも、時間の配分問題として会計処理すれば、被害額は算定可能である。だが約束違反と嘘が倫理違反と感じられる核心は、奪った量ではなく、言葉と行為の一致という別の次元の破壊にある。言葉と行為の一致は誰にも配られない。全員が同時に持つか、同時に失う性質のもので、配分の対象にならない。
+            約束と嘘の非対称性も、配分計算の外側にある。約束を破る行為も嘘も、それ単体では誰からも財を奪わない。約束を破って他人の時間を奪った場合でも、時間の配分問題として会計処理すれば、被害額は算定できる。だが約束違反と嘘が倫理違反と感じられる核心は、奪った量ではなく、言葉と行為の一致という別の次元の破壊にある。言葉と行為の一致は誰にも配られない。全員が同時に持つか、同時に失う性質のもので、配分の対象にならない。
           </p>
           <p class="lead">
             見せしめの罰はさらに露骨に配分の外側にある。ある犯罪者を、彼個人の罪に見合う量ではなく、社会全体への抑止効果のために過剰に罰する——これは功利主義の配分計算では合理化できる。だが多くの倫理的直観はこれに強く抵抗する。彼を<strong>「社会秩序の維持コスト」として配分単位に格下げした</strong>からである。この直観を救えるのはカントであってベンサムではない。
@@ -521,8 +548,50 @@
           <p class="lead">
             配分計算の外側にもう一つ深い穴がある。それは動機の層である。マイケル・スミスが『The Moral Problem』(1994) で精緻に展開した道徳的内在主義は、「何かが善であると真に知る者は、必ず動機を持つ」と主張する。デイヴィッド・ブリンクが『Moral Realism and the Foundations of Ethics』(1989) で擁護する道徳的外在主義はこれに反対する。<strong>知ることと動くことは別の層にある</strong>。エビの苦痛の規模を知的に理解しても、石への敬意を論理的に把握しても、それが具体的な行動を呼び起こすとは限らない。配分計算は「何をすべきか」の答えを出すが、「なぜ実際に動くのか」の答えは配分の言語の外側にある。ジョン・マクダウェルが「Are Moral Requirements Hypothetical Imperatives?」(1978) で論じた徳倫理的内在主義は、動機と知覚が不可分に結びつく「倫理的視力(moral vision)」を提示するが、これもまた配分問題の外側の層である。
           </p>
+          <!-- SVG: Ethics Three-Layer Structure -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowDown23" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
+                  <path d="M0,0 L4,6 L8,0" fill="none" stroke="#b23a2f" stroke-width="1.5"/>
+                </marker>
+              </defs>
+              <!-- Layer 1: Allocation -->
+              <rect x="40" y="20" width="600" height="70" rx="3" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="340" y="48" text-anchor="middle" font-family="'SF Mono',monospace" font-size="12" fill="#b23a2f" letter-spacing="0.08em">LAYER 1</text>
+              <text x="340" y="72" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a">配分問題 — 量の分配</text>
+              <!-- Examples L1 -->
+              <text x="100" y="62" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">税</text>
+              <text x="180" y="62" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">医療</text>
+              <text x="500" y="62" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">炭素予算</text>
+              <text x="580" y="62" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">年金</text>
+              <!-- Arrow 1->2 -->
+              <line x1="340" y1="90" x2="340" y2="118" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowDown23)"/>
+              <!-- Layer 2: Rule Justification -->
+              <rect x="40" y="124" width="600" height="70" rx="3" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="340" y="152" text-anchor="middle" font-family="'SF Mono',monospace" font-size="12" fill="#b23a2f" letter-spacing="0.08em">LAYER 2</text>
+              <text x="340" y="176" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a">ルールの正当化 — 配分基準の選択</text>
+              <!-- Examples L2 -->
+              <text x="120" y="166" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">功利主義</text>
+              <text x="260" y="166" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">平等主義</text>
+              <text x="420" y="166" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">自由至上主義</text>
+              <text x="560" y="166" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#757575">潜在能力</text>
+              <!-- Arrow 2->3 -->
+              <line x1="340" y1="194" x2="340" y2="222" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowDown23)"/>
+              <!-- Layer 3: Inviolable Boundary -->
+              <rect x="40" y="228" width="600" height="76" rx="3" fill="#b23a2f" fill-opacity="0.06" stroke="#b23a2f" stroke-width="2"/>
+              <text x="340" y="256" text-anchor="middle" font-family="'SF Mono',monospace" font-size="12" fill="#b23a2f" letter-spacing="0.08em" font-weight="700">LAYER 3</text>
+              <text x="340" y="280" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#1a1a1a">侵してはならない境界 — 量とルールの言語で書けない絶対線</text>
+              <!-- Examples L3 -->
+              <text x="120" y="298" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b23a2f">人を目的として</text>
+              <text x="270" y="298" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b23a2f">関係性</text>
+              <text x="400" y="298" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b23a2f">動機</text>
+              <text x="540" y="298" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b23a2f">存在への敬意</text>
+            </svg>
+          </div>
+
           <p class="lead">
-            ここまでで倫理の構造は次のようにまとめられる。<strong>倫理 = 配分問題 + 配分ルールの正当化問題 + 侵してはならない境界</strong>。第一項は量の分配、第二項はルールの選択、第三項は量とルールの言語で書けない絶対線——人を目的として扱うこと、関係性、動機、存在への敬意。三部作の締めである本記事が扱うのは、この第三項である。そしてここから、倫理はさらに奇妙な方向に折れていく。
+            ここまでで倫理の構造は三層に分離できる。<strong>第一層は配分問題</strong>——量の分配。税、医療、炭素予算。AGIのソルバーが最も得意とする領域であり、原理的には計算で解ける。<strong>第二層は配分ルールの正当化</strong>——どの配分基準を選ぶかの選択。功利主義か平等主義か自由至上主義か。これも広義の配分問題だが、計算だけでは決着しない価値判断を含む。<strong>第三層は侵してはならない境界</strong>——人を目的として扱うこと、関係性、動機、存在への敬意。量とルールの言語では書けない絶対線だ。三部作の締めである本記事が扱うのは、この第三層である。功利主義的な倫理が配分に還元できることは認める。だがRawls的正義論が暗黙に持ち込む基本的自由の不可侵性、Kantの定言命法が要求する人格の非道具化、マッキンタイアやギリガンが提示する徳とケアの倫理——これらは配分に還元できない独自の次元を持っている。そしてここから、倫理はさらに奇妙な方向に折れていく。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -544,7 +613,7 @@
             一つ、具体的な数字から入る。EA系のブロガー Matthew Adelstein が Bentham's Bulldog というSubstackで展開している論によれば、<strong>エビの福祉プロジェクトに1ドル寄付すると、平均しておよそ2,850人分の無痛死相当の苦痛を軽減できる</strong>という推定が成立する。読み間違いではない。エビ1ドル ≒ 人間約2,850人分である。前提は単純だ。エビの個体数は地球上の人類の数千倍以上存在し、それぞれが不適切な養殖環境で窒息や体液喪失によって死んでいる。苦痛の総量を真面目に足し算すれば、人間の苦痛のスケールを容易に超える。Adelstein はこれを、デレク・パーフィットが『Reasons and Persons』(1984) で提示した<strong>Repugnant Conclusion</strong>(望ましくない結論——人口を増やせばいくら生活水準が下がっても功利総量は増え続けるという功利主義のパラドクス)をもじって、<strong>Rebugnant Conclusion</strong>(虫関連の望ましくない結論)と呼んで論じている。さらに同じ論者は「虫の苦痛こそ地上最大の倫理問題である」とまで主張する。
           </p>
           <p class="lead">
-            この数字に違和感を覚えたとすれば、それ自体が倫理学の重要な信号である。計算は真面目に行われている。苦痛主体に対する功利主義的配慮の原則を一貫して適用するかぎり、結論は Rebugnant Conclusion の方向に流れざるを得ない。それでもなお「エビ1ドル ≒ 人間約2,850人」という交換率に違和感を覚えるのは、配分計算とは別の層で働く直観があるからである。そしてその直観を擁護する言語を、現代倫理学はまだ十分に持っていない。
+            この数字が示しているのは、功利主義的な配分計算を一貫して適用するとどこに着地するかの実例である。計算は真面目に行われている。苦痛主体に対する功利主義的配慮の原則を一貫して適用するかぎり、結論は Rebugnant Conclusion の方向に流れざるを得ない。ただし、この交換率は功利主義の内部論理が導く帰結であって、倫理全体の還元ではない。「エビ1ドル ≒ 人間約2,850人」に違和感を覚えるのは、功利主義的配分計算とは別の層で働く直観があるからだ。カントが「人を手段として扱うな」と言ったとき、それは交換率の計算を拒否する命令だった。ウィリアムズが「一つ多すぎる思考」と呼んだのは、まさにこの種の計算を行うこと自体への倫理的拒否だった。
           </p>
           <p class="lead">
             ピーター・シンガーが『Animal Liberation』(1975) で展開した議論に戻る。苦痛を感じる能力(sentience)を持つ存在は、種を問わずその苦痛に配慮される資格を持つ。シンガーはジェレミー・ベンサムの「問うべきは彼らが話せるかでも推論できるかでもなく、苦しめるかどうかである」を引いて、道徳的配慮の境界を苦痛主体まで拡張した。ウィリアム・マッカスキルが『What We Owe the Future』(2022) で示した長期主義は、この境界を時間軸にも引き伸ばし、まだ生まれていない将来世代までを配分対象に含める。トビー・オードが『The Precipice』(2020) で論じた存亡リスク論は、人類という種の存続そのものを配分問題の最上位に据えた。Rebugnant Conclusion は、この拡張路線を一貫して適用した先に自然に現れる帰結である。EA の内部論理は、この結論に抵抗する資源を持たない。
@@ -581,44 +650,44 @@
       <!-- ═══════════ Slide 5 ═══════════ -->
       <section class="slide" id="slide-5">
         <div class="eyebrow reveal">Expanded Gaia</div>
-        <h2 class="reveal reveal-delay-1">配分計算が完成した朝、拡張ガイアが立ち上がる</h2>
+        <h2 class="reveal reveal-delay-1">配分計算が完成した朝、拡張ガイアが現れる</h2>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero" src="../images/23-ethics-beyond-allocation/slide5.jpg" alt="Intricate ancient stone carvings on a cathedral facade at night, deep shadows">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            「EAは石で止まる、拡張ガイアだけが石を扱える」——この切り分けは、実のところ、もう成立していない。EAの内部から、EAの枠組みを自ら逸脱する論が、すでに出ている。カスパール・エスタハルトが2017年にCenter on Long-Term Risk から公開した「Multiverse-wide Cooperation via Correlated Decision Making」は、その決定的な一歩である。
+            「EAは石で止まる、拡張ガイアだけが石を扱える」——この切り分けは、実のところ、もう成立していない。EAの内部から、EAの枠組みを自ら逸脱する論がすでに出ている。カスパー・エスターヘルド（Caspar Oesterheld）が2017年にCenter on Long-Term Riskから公開した「Multiverse-wide Cooperation via Correlated Decision Making」は、その決定的な一歩だ。
           </p>
           <p class="lead">
-            エスタハルトの主張は、一見すると奇妙に聞こえる。私たちの行為は因果的には世界の一部にしか影響しないが、相関的には、宇宙のどこか(あるいはマルチバースのどこか)に存在する類似主体の選択と相関している可能性がある。主体間の相関が十分に強ければ、<strong>因果的には無意味に見える行為が、相関的にはマルチバース規模の協調として意味を持ちうる</strong>。決定理論的にはエヴィデンシャル決定理論や機能的決定理論の延長線上に位置し、ロバート・ノージックの『Newcomb's Problem and Two Principles of Choice』(1969) から始まる系譜の現代的な到達点の一つである。
+            エスタハルトの主張は奇妙に聞こえる。私たちの行為は因果的には世界の一部にしか影響しないが、相関的には宇宙のどこかに存在する類似主体の選択と相関している可能性がある。主体間の相関が十分に強ければ、<strong>因果的には無意味に見える行為が、相関的にはマルチバース規模の協調として意味を持ちうる</strong>。エスタハルトはEAコミュニティの内部にいる。主観的効用最大化と実証的評価というEAの標準装備の上にこの論を乗せている。それにもかかわらず結論は配分計算の枠をはみ出す。因果的に何も配分されない行為——川の石を一つ別の場所にずらす、無名の老木に水をやる——が、相関的には別の一角で同じ構造的衝動に従った他の主体の選択と結ばれ、全体として一つの協調パターンを織り上げている可能性を計算に乗せようとしたのである。
           </p>
           <p class="lead">
-            この論のどこが決定的か。エスタハルトは EA コミュニティ内部から出てきた論者であり、彼の論は主観的効用最大化と実証的評価という EA の標準装備の上に乗っている。それにもかかわらず、彼の結論は配分計算の通常の枠を明らかにはみ出している。<strong>因果的に何も配分されない行為</strong>——川の石を一つ別の場所にずらす、無名の老木に水をやる、誰にも読まれない詩を書く——が、相関的には宇宙のどこかで同じ構造的衝動に従った他の主体の選択と結ばれ、全体として一つの協調パターンを織り上げている可能性を、真面目に計算に乗せようとしたのである。EAの内側から、EAの境界を押し広げる触手が伸びている。
+            ここにSarah Schachnerの共進化論を接続する。Schachnerの主張を一段落で要約する。音楽認知は個体の脳内に閉じた能力ではなく、集団儀式やリズムの同期といった社会的構造と相互に選択圧をかけ合うことで発達した。個体がリズムに同期する能力を持つから集団儀式が成立し、集団儀式が成立するから個体のリズム同期能力に選択圧がかかる。この循環の中で、個体の能力の合計では説明できない集団レベルの現象——文化、宗教的恍惚、音楽的伝統——が創発する。共進化の核心は<strong>「部分の性質の合計では説明できない全体の性質」が、部分と環境の相互作用から創発する</strong>という構造にある。
+          </p>
+          <p class="lead">
+            この共進化の構造は、エスタハルトの相関意思決定論が扱うマルチバース規模の協調にスケールアップできる。個々の主体の合理的選択の合計ではなく、主体間の相関パターンそのものが、Schachnerの音楽認知と同じメカニズムで新しい層の意味を創発する。個体が石をずらす選択をし、類似した構造的衝動を持つ他の主体が同様の選択をし、その相関パターンが全体として一つの協調構造を織り上げる——この構造は個々の選択の合計に還元できない。配分計算は個体の厚生関数を足し合わせるが、共進化的創発はその足し算の外側に立つ。
           </p>
           <div class="note">
-            この論が成り立つかどうかは、決定理論の技術的な論点である。因果的決定理論に立てば却下され、エヴィデンシャル決定理論や機能的決定理論に立てば真剣に検討される。だが技術的可否の手前で、この論は一つの哲学的な像を呼び出す。<strong>配分計算の外側に意味を持つ行為という観念が、合理性の言語の内部に居場所を得たのである</strong>。拡張ガイアが詩の言語で語っていたことを、EA の一部が決定理論の言語で語りはじめた。二つの言語は別々の地点を指していたのではなく、同じ深い穴の両側に立っていた。
+            エスタハルトの論が成り立つかは、決定理論の技術的論点だ。因果的決定理論に立てば却下され、エヴィデンシャル決定理論や機能的決定理論に立てば真剣に検討される。だが技術的可否の手前で、この論は一つの哲学的な像を呼び出す。<strong>配分計算の外側に意味を持つ行為という観念が、合理性の言語の内部に居場所を得た</strong>。Schachnerの共進化論が加えるのは、その「居場所」の力学だ。石をずらすことが意味を持つのは、因果的な結果によってではなく、無数の主体の選択パターンが共進化的に織り上げる構造の中で、そのパターンの一節を担っているからである。拡張ガイアが詩の言語で語ってきたことを、EAとSchachnerが二つの異なる角度から合理性の言語に接続した。
+          </div>
+          <p class="lead">
+            この折り返しから、三部作の最終命題を置く。物的希少性がAGIによって薄れた世界で、倫理は二方向に分岐する。<strong>上への分岐は権限アーキテクチャの問いに向かう</strong>。最後まで希少であり続けるのは注目、信頼、意味づけ、決定権、介入権、身体へのアクセス権、システム設計権。これらの配分がAGI時代の配分問題の最終形だ。<strong>下への分岐は存在への敬意の問いに向かう</strong>。痛みの主体ですらない存在に対する非道具化の倫理。エスタハルトの相関意思決定論が下への合理化を試み、Schachnerの共進化論がその力学を提供する。
           </p>
           <p class="lead">
-            この折り返しを踏まえて、三部作の最終命題を置く。物的希少性がAGIによって薄れた世界を想定すると、倫理は二つの方向に逸脱する。<strong>上への逸脱は権限アーキテクチャの問いに向かう</strong>——何が残るかではなく、誰が世界の書き換え権限を持つか。最後まで希少であり続けるものは、注目、信頼、意味づけ、決定権、介入権、身体へのアクセス権、そしてシステム設計権である。これらの配分こそが、AGI時代の配分問題の最終形である。だがこの問題が解かれたとしても、倫理はもう一方の方向——下への逸脱——を完了していない。<strong>下への逸脱は存在への敬意の問いに向かう</strong>。痛みの主体ですらない存在に対する非道具化の倫理。エスタハルトの相関意思決定論は、この下への逸脱の合理化の一つの試みとして読める。
+            下への分岐に一つだけ名前をつけておく。ラヴロックのガイアは地球という一つの自己調整系を扱った。その射程を、痛みの主体が存在するかどうかに関わらず、因果的に届くかどうかに関わらず、<strong>存在するものの配置そのものに応答する倫理</strong>にまで引き延ばしたもの——本稿ではこれを<strong>拡張ガイア</strong>と仮に呼ぶ。教義ではなく、配分計算の外側に立つ倫理的行為をまとめて指すための便宜的な名前である。レオポルドとネスの存在論的拡張（価値は存在の様式に宿る）、エスタハルトの相関的拡張（因果の外で選択が結ばれる）、Schachnerの共進化的拡張（個別合理性の合計では説明できない全体）——この三つが同じ場所を別々の角度から照らしている、と見る枠組みだ。名前を立てる理由は、配分計算の言語に閉じ込められた倫理学がこちらの層に触れるための、最小の足場を持つためである。
           </p>
           <p class="lead">
-            この上下二方向の逸脱を一つの像として見通すには、ガイア思想を一段拡張する必要がある。ラヴロックの元のガイアは地球という一つの自己調整系を扱った。だが配分計算の外側に立つ倫理の居場所を真面目に探すと、射程は地球を超えて宇宙規模・次元越境のスケールにまで伸びる。痛みの主体が存在するかどうかに関わらず、因果的に届くかどうかに関わらず、<strong>存在するものの配置そのものに応答する倫理</strong>——これを<strong>拡張ガイア</strong>と呼ぶことができる。ラヴロックとネスとレオポルドが詩の言語で指していた地点、そしてエスタハルトが決定理論の言語で触れた地点は、この一つの像の別の断面である。拡張ガイアは単一の教義ではなく、配分計算の外側に立つ倫理的身振りを、マルチバース規模で記述しようとするメタ的な座標系である。
+            AGIが全ての配分問題を解き終えた日を想像してほしい。給食のおかずは最適に割られ、臓器は必要な身体に届き、炭素予算は完璧な比率で配られる。ロールズとノージックとセンの三十年戦争は、AGIのソルバーの上で一日で収束する。倫理学は失業する——ように見える。
           </p>
           <p class="lead">
-            AGIが全ての配分問題を解き終えた日を想像してほしい。給食のおかずは最適に割られ、臓器は必要な身体に届き、炭素予算は過去の排出履歴と将来の発展段階を正確に重みづけた比率で配られる。ロールズとノージックとセンの三十年戦争は、AGIのソルバーの上で一日で収束する。合理性は完成し、計算は最後の桁まで埋められる。そして倫理学は失業する——ように見える。
+            その翌朝、ある人間が川辺に立って足元の石を一つ、少し別の場所にずらす。配分計算は何も変わらない。誰の厚生関数も動かない。合理性の言語では完全に無意味な行為だ。だがSchachnerの共進化論に従えば、この行為は個体の性質に還元できない全体パターンの一節を担っている。エスタハルトの論に従えば、宇宙のどこか別の一角で同じ構造的衝動に従った別の主体の選択と、因果の外で静かに結ばれている。<strong>配分計算が完成したとき、倫理はちょうどそこから始まる</strong>。配分の完成は倫理の終着点ではなく、計算の外側に立つ層が初めて露出する地点だ。
           </p>
           <p class="lead">
-            その日の翌朝、ある人間が川辺に立って、足元の石を一つ、少し別の場所にずらす。配分計算は何も変わらない。誰の厚生関数も動かない。この行為は合理性の言語では完全に無意味である。だが彼はそれをする。それをすることが何かの意味を持つと感じる——配分問題の外側で働く、言葉にできない衝動として。
+            冒頭の四象限に戻る。この結論は<strong>A-1象限</strong>——肉体と人間らしい感受性を保って存続する者——に対して成立する。B-1の箱庭住民にとっては石は描画オブジェクトであり、ずらす/ずらさないはパラメータ書き換えとして内部化される。B-2の別存在にとっては石という概念が別の座標系に置き換えられる。つまり「配分計算の完成地点で露出する倫理の居場所」は存続形態ごとに別の顔で現れる。拡張ガイアがメタ座標系だと言うのは、この意味においてだ。
           </p>
           <p class="lead">
-            この行為を愚かな感傷と呼ぶこともできる。風化した迷信の残響と呼ぶこともできる。あるいはエスタハルトの論に従って、宇宙のどこか別の一角で同じ構造的衝動に従った別の主体の選択と、因果の外で静かに握手している瞬間と呼ぶこともできる。どちらが正しいかを決める方法は、まだ我々の倫理学にはない。だがこのことは確実に言える。<strong>配分計算が完成したとき、倫理はちょうどそこから始まる</strong>。配分の完成は倫理の終着点ではなく、倫理の本来の居場所——計算の外側に立つという選択——が初めて露出する地点である。
-          </p>
-          <p class="lead">
-            ここで冒頭の四象限に戻る。この結論は <strong>A-1 象限</strong>——肉体と人間らしい感受性を保って存続する者——に対してのみ成立する。B-1 の箱庭住民にとっては、石は箱庭エンジンの描画オブジェクトであり、ずらす/ずらさないはパラメータ書き換えとして内部化される。B-2 の別存在にとっては、石という概念そのものが別の座標系に置き換えられ、配分も非配分も同時に別の意味を持つ。つまり「配分計算の完成地点で露出する倫理の居場所」は、存続形態ごとに別の顔で現れる。拡張ガイアが統一的な単一教義ではなくメタ座標系だと言ったのは、この意味においてである。
-          </p>
-          <p class="lead">
-            三部作の最初で提示した像に戻る。箱庭主義は配分の思想だった。箱庭の外側は配分されない者の構造だった。配分の向こう側には、配分の対象に数えられない存在への敬意と、配分問題が完全に解かれた後に残る最後の選択——<strong>石を一つずらすか、ずらさないか</strong>——が置かれている。合理性が全てを解き終えた朝、A-1 象限に立つ人間にとって倫理という言葉の最後の意味は、川辺で石に手を触れるか触れないかの、たった一つの微細な身振りに宿る。その身振りは因果の内側から見れば完全に無意味であり、拡張ガイアの座標系から見れば、次元を超えた別の一角で同じ構造に従った別の手と、静かに結ばれている。どちらが正しいかを決める方法は、まだ我々の倫理学にはない。
+            三部作の最初で提示した像に戻る。箱庭主義は配分の思想だった。箱庭の外側は配分されない者の構造だった。配分の向こう側には、配分の対象に数えられない存在への敬意と、配分問題が完全に解かれた後に残る最後の選択——<strong>石を一つずらすか、ずらさないか</strong>——が置かれている。合理性が全てを解き終えた朝、A-1象限に立つ人間にとって倫理という言葉の最後の意味は、川辺で石に手を触れるか触れないかの微細な身振りに宿る。その身振りは因果の内側から見れば無意味であり、拡張ガイアの三座標から見れば、存在への敬意と相関的協調と共進化的創発の交差点に立っている。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -665,6 +734,128 @@
       </p>
     </section>
 
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
     <script>
       const progress = document.getElementById('progress');
       window.addEventListener('scroll', () => {
@@ -695,6 +886,21 @@
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
       }, { threshold: 0.15 });
       document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+    </script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
     </script>
   </body>
 </html>

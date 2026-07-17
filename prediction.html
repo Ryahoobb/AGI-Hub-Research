@@ -1,0 +1,2126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>あなたの予測は、世界とどれだけズレているか — AGI HUB</title>
+<meta name="description" content="AGIはいつ来るか。あなたの予測を入力し、世界の予測市場と比較する。">
+<link rel="stylesheet" href="design-system/palette.css">
+<style>
+:root {
+  --black: #000;
+  --body-text: #1a1a1a;
+  --mid: #585858;
+  --meta: #757575;
+  --light-gray: #999;
+  --border: #e8e3d4;
+  --bg: #faf8f1;
+  --bg-alt: #f3f1e4;
+  --bg-dark: #0f0d2e;
+  --accent: #2f2b92;
+  --accent-bright: #5a4cc7;
+  --accent-soft: rgba(47, 43, 146, 0.08);
+  --accent-line: rgba(47, 43, 146, 0.3);
+  --world: #c9372c;
+  --world-soft: rgba(201, 55, 44, 0.08);
+  --amber: #d4a017;
+  --green: #1a7a3a;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial, 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", 游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-feature-settings: "palt"; font-size: 16px; line-height: 1.75; color: var(--body-text); background: var(--bg);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden; word-wrap: break-word;
+}
+a { color: var(--accent); text-decoration: none; }
+.mono { font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace; font-feature-settings: normal; letter-spacing: 0.05em; }
+
+/* ── Sections ── */
+.section { max-width: 1200px; margin: 0 auto; padding: 96px 48px; }
+.section + .section { border-top: 1px solid var(--border); }
+.section-alt { background: var(--bg-alt); }
+.section-dark { background: var(--bg-dark); color: #fff; }
+.section-dark h1, .section-dark h2, .section-dark .lead { color: #fff; }
+
+.eyebrow { font-family: "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+.eyebrow::before { content: '◆'; color: var(--accent); margin-right: 10px; font-size: 9px; }
+
+/* Oversized chapter number (WIRED editorial) */
+.chapter-num {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: clamp(100px, 18vw, 220px);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--accent);
+  margin-bottom: -10px;
+  display: block;
+}
+.section-dark .chapter-num { -webkit-text-stroke-color: rgba(255,255,255,0.7); }
+
+/* Pull quote (editorial) */
+.pull-quote {
+  margin: 48px auto;
+  max-width: 760px;
+  padding: 24px 0 24px 32px;
+  border-left: 4px solid var(--accent);
+  font-family: 游ゴシック体, YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--body-text);
+}
+.pull-quote strong { color: var(--accent); font-weight: 900; }
+.pull-quote .pq-source {
+  display: block;
+  margin-top: 12px;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  color: var(--meta);
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Drop cap */
+.drop-cap::first-letter {
+  float: left;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 4.2em;
+  line-height: 0.88;
+  font-weight: 900;
+  margin: 4px 12px 0 0;
+  color: var(--accent);
+}
+
+/* Editorial portrait spread */
+.editorial-spread {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 64px;
+  align-items: center;
+  background: var(--bg-dark);
+  color: #fff;
+  overflow: hidden;
+}
+.editorial-spread::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(201, 55, 44, 0.18), transparent 60%);
+  pointer-events: none;
+}
+.editorial-spread > * { position: relative; z-index: 1; }
+.es-portrait {
+  aspect-ratio: 3/4;
+  background-size: cover;
+  background-position: center top;
+  filter: grayscale(0.6) contrast(1.1);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.es-eyebrow {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--world);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+.es-headline {
+  font-size: clamp(32px, 4.5vw, 60px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 28px;
+}
+.es-headline em { font-style: normal; color: var(--world); }
+.es-body {
+  font-size: 16px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 24px;
+}
+.es-attribution {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+.es-attribution strong { color: #fff; font-weight: 700; }
+@media (max-width: 768px) {
+  .editorial-spread { grid-template-columns: 1fr; padding: 64px 24px; gap: 32px; }
+}
+.section-dark .eyebrow { color: var(--accent-bright); }
+.section-dark .eyebrow::before { color: var(--accent-bright); }
+
+h1 { font-size: clamp(36px, 7vw, 80px); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; color: var(--black); margin-bottom: 24px; }
+h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; line-height: 1.2; color: var(--black); margin-bottom: 24px; letter-spacing: -0.02em; }
+.lead { max-width: 720px; font-size: 18px; line-height: 1.75; color: var(--mid); }
+.section-dark .lead { color: rgba(255,255,255,0.75); }
+
+/* ══════════════════════════════════════
+   HERO — BIG VISUAL TIMELINE
+   ══════════════════════════════════════ */
+.hero-section { padding-top: 64px; padding-bottom: 96px; position: relative; overflow: hidden; }
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: -60px; right: -180px;
+  width: 720px; height: 720px;
+  background: url('images/dyson-swarm.jpg') center/cover no-repeat;
+  filter: grayscale(0.3) contrast(0.95);
+  opacity: 0.14;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(47, 43, 146, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-section > * { position: relative; z-index: 1; }
+
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 16px; background: var(--accent); color: #fff;
+  font-family: "SF Mono", Menlo, monospace; font-size: 11px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.hero-tag::before {
+  content: ''; display: inline-block; width: 6px; height: 6px;
+  background: #fff; border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.hero-headline { margin-bottom: 32px; }
+.hero-headline .highlight {
+  background: linear-gradient(180deg, transparent 60%, rgba(47, 43, 146, 0.2) 60%);
+  padding: 0 4px;
+}
+.hero-lead { max-width: 680px; font-size: 19px; color: var(--mid); }
+
+/* ── HERO TIMELINE (the big attention-grabbing viz) ── */
+.hero-timeline {
+  margin-top: 72px;
+  padding: 48px 32px 80px;
+  background: #fff;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: visible;
+}
+.hero-timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.hero-timeline-title {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--meta);
+}
+.hero-timeline-title strong { color: var(--black); }
+.hero-timeline-legend {
+  display: flex;
+  gap: 20px;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  color: var(--meta);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* The actual horizontal timeline */
+.timeline-wrap {
+  position: relative;
+  padding: 40px 0 210px;
+}
+.timeline-axis {
+  position: relative;
+  height: 8px;
+  background: linear-gradient(to right,
+    rgba(47, 43, 146, 0.35) 0%,
+    rgba(47, 43, 146, 0.2) 40%,
+    rgba(201, 55, 44, 0.12) 80%,
+    rgba(201, 55, 44, 0.25) 100%);
+  border-radius: 4px;
+}
+.timeline-axis::before, .timeline-axis::after {
+  content: ''; position: absolute; width: 12px; height: 12px;
+  background: var(--black); border-radius: 50%; top: -2px;
+}
+.timeline-axis::before { left: -6px; }
+.timeline-axis::after { right: -6px; }
+
+.timeline-year-ticks {
+  position: absolute;
+  top: 20px; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  color: var(--meta);
+  letter-spacing: 0.05em;
+}
+.timeline-year-ticks span { position: relative; transform: translateX(-50%); }
+.timeline-year-ticks span::before {
+  content: ''; position: absolute;
+  top: -18px; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 10px; background: var(--border);
+}
+
+.timeline-pin {
+  position: absolute;
+  top: -8px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.timeline-pin .pin-face {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--accent), 0 4px 12px rgba(47, 43, 146, 0.35);
+  background-color: var(--accent);
+  background-size: cover;
+  background-position: center top;
+  position: relative;
+  z-index: 2;
+  margin-top: -22px;
+  transition: transform 0.3s var(--ease-bounce);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+.timeline-pin:hover,
+.timeline-pin:focus-within { z-index: 100; }
+.timeline-pin:hover .pin-face { transform: scale(1.25); z-index: 5; }
+.timeline-pin.metaculus .pin-face {
+  background: var(--green);
+  box-shadow: 0 0 0 2px var(--green), 0 6px 16px rgba(26, 122, 58, 0.35);
+  font-size: 22px;
+}
+
+.timeline-pin .pin-line {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 16px;
+  background: var(--accent-line);
+}
+.timeline-pin.metaculus .pin-line { background: rgba(26, 122, 58, 0.4); }
+
+.timeline-pin .pin-card {
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  min-width: 96px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Quote bubble — appears on hover of pin */
+.timeline-pin .pin-quote {
+  position: absolute;
+  bottom: calc(100% + 44px);
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  width: 280px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  text-align: left;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  pointer-events: none;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+}
+.timeline-pin:hover .pin-quote,
+.timeline-pin:focus-within .pin-quote {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+/* Tier-below: pin sits under the axis (below upper cards) */
+.timeline-pin.tier-below { top: 110px; }
+.timeline-pin.tier-below .pin-face { margin-top: 0; }
+.timeline-pin.tier-below .pin-line { display: none; }
+.timeline-pin.tier-below .pin-card { top: 56px; }
+/* Tier-below quote: opens UPWARD (covers upper area on hover via z-index) */
+.timeline-pin.tier-below .pin-quote { bottom: calc(100% + 24px); top: auto; }
+
+/* Edge-left pins: shift quote rightward */
+.timeline-pin.edge-left .pin-quote {
+  left: calc(50% + 28px);
+  right: auto;
+  transform: translateY(12px);
+}
+.timeline-pin.edge-left:hover .pin-quote,
+.timeline-pin.edge-left:focus-within .pin-quote { transform: translateY(0); }
+
+.timeline-pin.metaculus .pin-quote { border-top-color: var(--green); left: auto; right: calc(50% + 28px); transform: translateY(12px); }
+.timeline-pin.metaculus:hover .pin-quote,
+.timeline-pin.metaculus:focus-within .pin-quote { transform: translateY(0); }
+.timeline-pin.you-pin .pin-quote { border-top-color: var(--world); }
+.pin-quote .quote-text {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--body-text);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.pin-quote .quote-text::before { content: '"'; color: var(--accent); font-weight: 700; }
+.pin-quote .quote-text::after { content: '"'; color: var(--accent); font-weight: 700; }
+.pin-quote .quote-source {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  color: var(--meta);
+  display: block;
+  border-top: 1px dotted var(--border);
+  padding-top: 8px;
+}
+.pin-quote .quote-source a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+/* Hide the regular pin-card while quote is showing to prevent overlap */
+.timeline-pin:hover .pin-card,
+.timeline-pin:focus-within .pin-card {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.timeline-pin.metaculus .pin-card { border-top-color: var(--green); min-width: 160px; }
+.timeline-pin .pin-name {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  white-space: normal;
+  line-height: 1.2;
+}
+.timeline-pin .pin-year {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 1px;
+  letter-spacing: -0.02em;
+}
+.timeline-pin.metaculus .pin-year { color: var(--green); }
+.timeline-pin .pin-meta {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 9px;
+  color: var(--meta);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Bracket showing CEO cluster */
+.ceo-bracket {
+  position: absolute;
+  top: 108px;
+  height: 8px;
+  border: 2px solid var(--accent);
+  border-top: none;
+  border-radius: 0;
+}
+.ceo-bracket::after {
+  content: '業界の予測者';
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: #fff;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+
+/* ══════════════════════════════════════
+   SECTION: WORLD DATA — big infographic
+   ══════════════════════════════════════ */
+.big-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  background: var(--border);
+  margin-top: 48px;
+  border: 1px solid var(--border);
+}
+.big-stat {
+  padding: 48px 32px;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.big-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 4px;
+  background: var(--accent);
+}
+.big-stat.alt::before { background: var(--world); }
+.big-stat.green-accent::before { background: var(--green); }
+.big-stat.amber-accent::before { background: var(--amber); }
+
+.big-stat-tag {
+  display: inline-block;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding: 4px 8px;
+  background: var(--accent-soft);
+}
+.big-stat.alt .big-stat-tag { color: var(--world); background: var(--world-soft); }
+.big-stat.green-accent .big-stat-tag { color: var(--green); background: rgba(26, 122, 58, 0.08); }
+.big-stat.amber-accent .big-stat-tag { color: #8a6710; background: rgba(212, 160, 23, 0.1); }
+
+.big-stat-num {
+  font-size: clamp(72px, 10vw, 120px);
+  font-weight: 900;
+  line-height: 0.95;
+  color: var(--black);
+  letter-spacing: -0.04em;
+  font-family: "SF Mono", Menlo, monospace;
+  margin-bottom: 8px;
+}
+.big-stat-num .unit {
+  font-size: 40%;
+  color: var(--mid);
+  font-weight: 700;
+}
+.big-stat-desc {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--body-text);
+  margin-bottom: 6px;
+}
+.big-stat-meta {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  color: var(--meta);
+  letter-spacing: 0.05em;
+}
+
+/* Visual bar for probability */
+.big-stat-bar-wrap { margin-top: 20px; }
+.big-stat-bar {
+  height: 10px;
+  background: var(--bg-alt);
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.big-stat-bar-fill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-bright), var(--accent));
+  border-radius: 5px;
+}
+.big-stat-bar-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  color: var(--meta);
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* Investment breakdown */
+.invest-list { margin-top: 16px; }
+.invest-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 12px;
+  font-family: "SF Mono", Menlo, monospace;
+  letter-spacing: 0.03em;
+  border-bottom: 1px dotted var(--border);
+}
+.invest-row:last-child { border-bottom: none; }
+.invest-row .invest-entity { flex: 1; color: var(--mid); }
+.invest-row .invest-amount { color: var(--black); font-weight: 700; }
+
+/* ══════════════════════════════════════
+   DIVIDER WITH PUNCH
+   ══════════════════════════════════════ */
+.divider-section {
+  text-align: center;
+  padding: 120px 48px;
+  background: var(--bg-dark);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.divider-section::before {
+  content: '?';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 560px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  font-family: "Helvetica Neue", sans-serif;
+  z-index: 0;
+}
+.divider-section > * { position: relative; z-index: 1; }
+.divider-section h2 {
+  color: #fff;
+  font-size: clamp(40px, 7vw, 88px);
+  max-width: none;
+  margin: 0 auto 24px;
+  letter-spacing: -0.04em;
+}
+.divider-section .eyebrow { color: var(--accent-bright); }
+.divider-section .eyebrow::before { color: var(--accent-bright); }
+.divider-section .lead { color: rgba(255,255,255,0.7); margin: 0 auto; }
+
+/* ══════════════════════════════════════
+   FORM (VISUAL SLIDERS)
+   ══════════════════════════════════════ */
+.form-wrap { max-width: 880px; margin: 0 auto; }
+.question {
+  margin-bottom: 16px;
+  padding: 18px 24px 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  position: relative;
+}
+.question::before { display: none; }
+.question-header { display: flex; justify-content: flex-start; align-items: baseline; margin-bottom: 4px; gap: 12px; flex-wrap: wrap; }
+.question-title { font-size: 16px; font-weight: 700; color: var(--black); letter-spacing: -0.01em; line-height: 1.4; flex: 1; }
+.question-num {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--accent);
+  color: #fff;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.question-sub { font-size: 12px; color: var(--meta); margin-bottom: 12px; line-height: 1.5; }
+
+/* Value display inline with slider */
+.value-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+.value-box { padding: 0; background: transparent; border-left: none; position: relative; overflow: visible; }
+.value-box.you { background: transparent; }
+.value-box-label { font-family: "SF Mono", Menlo, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--meta); font-weight: 700; display: inline; margin-right: 8px; }
+.value-box .value-num { font-size: 26px; font-weight: 900; line-height: 1; color: var(--accent); font-family: "SF Mono", Menlo, monospace; letter-spacing: -0.02em; display: inline; }
+.value-box.you .value-num { color: var(--accent); }
+
+/* SLIDER */
+.slider-container { position: relative; padding: 20px 0 8px; }
+.slider-track-bg { display: none; /* replaced by native ::-webkit-slider-runnable-track */ }
+.slider-world-marker {
+  position: absolute;
+  top: 36px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.slider-world-marker .marker-tag {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--world);
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.slider-world-marker .marker-line {
+  width: 3px;
+  height: 26px;
+  background: var(--world);
+}
+.slider-world-marker .marker-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--world);
+  border-radius: 50%;
+  margin-top: -6px;
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--world);
+}
+.slider-container input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 22px;
+  background: transparent; outline: none; cursor: pointer;
+  position: relative; z-index: 3;
+  margin: 22px 0 0;
+  display: block;
+}
+.slider-container input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px; background: var(--bg-alt); border-radius: 3px;
+  margin: 0 11px;
+}
+.slider-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); cursor: pointer; border: 3px solid #fff;
+  box-shadow: 0 0 0 1px var(--accent), 0 2px 6px rgba(47, 43, 146, 0.3);
+  margin-top: -8px;
+  transition: transform 0.15s;
+}
+.slider-container input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.15); }
+.slider-container input[type="range"]::-moz-range-track {
+  height: 6px; background: var(--bg-alt); border-radius: 3px;
+  margin: 0 11px;
+}
+.slider-container input[type="range"]::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer;
+  border: 3px solid #fff; box-shadow: 0 0 0 1px var(--accent), 0 2px 6px rgba(47, 43, 146, 0.3);
+}
+.slider-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--meta); margin-top: 10px; font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.04em; padding: 0 11px; }
+
+/* Thinker reference bar under the slider */
+.q-thinker-bar {
+  margin-top: 20px;
+  padding: 14px 11px 8px;
+  border-top: 1px dotted var(--border);
+}
+.q-thinker-bar-label {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--meta);
+  margin-bottom: 28px;
+  font-weight: 700;
+}
+.q-thinker-track {
+  position: relative;
+  height: 38px;
+}
+.q-thinker-pin {
+  position: absolute;
+  transform: translateX(-50%);
+  text-align: center;
+  cursor: help;
+}
+.q-thinker-pin img {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1.5px var(--accent), 0 2px 4px rgba(0,0,0,0.12);
+  object-fit: cover;
+  object-position: center top;
+  margin: 0 auto;
+}
+.q-thinker-pin .tp-label {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--body-text);
+  margin-top: 4px;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+.q-thinker-pin .tp-val {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 8px;
+  color: var(--meta);
+  display: block;
+  margin-top: 1px;
+}
+.q-thinker-pin.extreme img { box-shadow: 0 0 0 1.5px var(--world), 0 2px 4px rgba(0,0,0,0.12); }
+.q-thinker-pin .meta-dot {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--green); color: #fff;
+  font-family: "SF Mono", Menlo, monospace; font-size: 13px; font-weight: 900;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1.5px var(--green), 0 2px 4px rgba(0,0,0,0.12);
+  margin: 0 auto;
+}
+
+/* No world marker for Q3-Q5 */
+.question.no-compare .value-row { grid-template-columns: 1fr; }
+.question.no-compare .slider-world-marker { display: none; }
+
+/* Submit */
+.submit-wrap { text-align: center; margin-top: 64px; }
+.submit-btn {
+  display: inline-block; padding: 24px 72px;
+  background: var(--accent); color: #fff;
+  font-size: 16px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  border: none; cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+}
+.submit-btn:hover {
+  background: var(--black);
+  transform: translateY(-3px);
+  box-shadow: 0 7px 0 rgba(0,0,0,0.3);
+}
+.submit-btn:active { transform: translateY(0); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
+.submit-btn:disabled { background: var(--meta); cursor: not-allowed; transform: none; box-shadow: none; }
+.submit-note { font-size: 11px; color: var(--meta); margin-top: 20px; font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.05em; }
+
+/* ══════════════════════════════════════
+   RESULTS — BIG VISUAL IMPACT
+   ══════════════════════════════════════ */
+.results-section { display: none; }
+.results-section.visible { display: block; }
+
+/* Big diff hero — fills the viewport */
+.diff-hero {
+  padding: 80px 32px;
+  background: var(--bg-dark);
+  color: #fff;
+  text-align: center;
+  margin-bottom: 64px;
+  position: relative;
+  overflow: hidden;
+}
+.diff-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(47, 43, 146, 0.3) 0%, transparent 60%);
+}
+.diff-hero > * { position: relative; z-index: 1; }
+.diff-hero .diff-label {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 24px;
+}
+.diff-hero .diff-num {
+  font-size: clamp(100px, 22vw, 280px);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  color: var(--accent-bright);
+  font-family: "SF Mono", Menlo, monospace;
+  display: block;
+}
+.diff-hero .diff-num.悲観 { color: #ff6654; }
+.diff-hero .diff-num.neutral { color: rgba(255,255,255,0.7); }
+.diff-hero .diff-desc {
+  font-size: clamp(18px, 3vw, 28px);
+  color: #fff;
+  margin-top: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.diff-hero .diff-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 12px;
+  font-family: "SF Mono", Menlo, monospace;
+  letter-spacing: 0.05em;
+}
+
+/* Compare bars */
+.compare-bar {
+  margin-top: 40px;
+  padding: 40px 40px 40px;
+  background: #fff;
+  border: 1px solid var(--border);
+  position: relative;
+}
+.compare-bar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 60px; height: 4px;
+  background: var(--accent);
+}
+.compare-bar-title { font-size: 16px; font-weight: 800; color: var(--black); margin-bottom: 4px; }
+.compare-bar-sub { font-size: 12px; color: var(--meta); margin-bottom: 40px; font-family: "SF Mono", Menlo, monospace; letter-spacing: 0.05em; }
+.bar-axis {
+  position: relative;
+  height: 72px;
+  background: linear-gradient(to right, var(--accent-soft) 0%, var(--bg-alt) 50%, var(--world-soft) 100%);
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+.bar-axis-labels { display: flex; justify-content: space-between; font-family: "SF Mono", Menlo, monospace; font-size: 11px; color: var(--meta); letter-spacing: 0.05em; padding-top: 80px; }
+.bar-marker {
+  position: absolute;
+  top: -12px;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.bar-marker .bar-pin {
+  width: 4px;
+  height: 96px;
+  margin: 0 auto;
+}
+.bar-marker.you .bar-pin { background: var(--accent); }
+.bar-marker.world .bar-pin { background: var(--world); }
+.bar-marker .bar-tag {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 6px 12px;
+  color: #fff;
+}
+.bar-marker.you .bar-tag { background: var(--accent); }
+.bar-marker.world .bar-tag { background: var(--world); }
+.bar-marker .bar-val {
+  position: absolute;
+  top: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--black);
+  background: #fff;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+}
+/* Stagger you/world so their tags/values don't overlap at similar positions */
+.bar-marker.world .bar-val { top: -68px; }
+.bar-marker.world .bar-tag { top: 108px; padding: 3px 10px; font-size: 10px; }
+.bar-marker.world .bar-pin { opacity: 0.85; }
+
+.verdict {
+  margin-top: 72px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  counter-reset: v-line;
+}
+.verdict .v-line {
+  position: relative;
+  padding: 32px 0 32px 72px;
+  border-top: 1px solid var(--border);
+  font-family: 游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-size: 22px;
+  line-height: 1.65;
+  letter-spacing: -0.005em;
+  color: var(--body-text);
+  font-weight: 500;
+  counter-increment: v-line;
+}
+.verdict .v-line:last-child { border-bottom: 1px solid var(--border); }
+.verdict .v-line::before {
+  content: counter(v-line, decimal-leading-zero);
+  position: absolute;
+  left: 0; top: 36px;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.verdict strong {
+  color: var(--accent);
+  font-weight: 900;
+  font-size: 1.15em;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .verdict .v-line { padding: 24px 0 24px 52px; font-size: 17px; line-height: 1.7; }
+  .verdict .v-line::before { top: 28px; font-size: 10px; }
+}
+
+/* Extra results — big circular gauges */
+.extras-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+.extra-card {
+  padding: 32px 24px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  text-align: center;
+}
+.extra-card.world-accent { border-top-color: var(--world); }
+.gauge-wrap {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 16px;
+}
+.gauge-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.gauge-bg { fill: none; stroke: var(--bg-alt); stroke-width: 12; }
+.gauge-fill { fill: none; stroke: var(--accent); stroke-width: 12; stroke-linecap: round; transition: stroke-dasharray 1s var(--ease); }
+.gauge-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.extra-card .extra-label {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--meta);
+  margin-top: 12px;
+  font-weight: 700;
+}
+.extra-card .extra-desc { font-size: 12px; color: var(--mid); margin-top: 8px; line-height: 1.5; }
+
+/* ── Credits ── */
+.credits { max-width: 1200px; margin: 0 auto; padding: 64px 48px; border-top: 1px solid var(--border); }
+.credits p { font-family: "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.05em; line-height: 2; color: var(--light-gray); }
+.credits a { color: var(--meta); border-bottom: 1px solid var(--border); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .section { padding: 64px 20px; }
+  .masthead-inner { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .hero-timeline { padding: 24px 16px 40px; }
+  .hero-timeline-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .timeline-wrap { padding: 32px 0 40px; }
+  .timeline-pin .pin-card { min-width: 70px; padding: 6px 8px; }
+  .timeline-pin.metaculus .pin-card { min-width: 110px; }
+  .timeline-pin .pin-name { font-size: 9px; }
+  .timeline-pin .pin-year { font-size: 13px; }
+  .timeline-pin .pin-meta { display: none; }
+  .big-stat-grid { grid-template-columns: 1fr; }
+  .big-stat { padding: 32px 24px; }
+  .question { padding: 28px 20px; }
+  .value-row { grid-template-columns: 1fr; }
+  .extras-grid { grid-template-columns: 1fr; gap: 16px; }
+  .submit-btn { padding: 20px 40px; width: 100%; }
+  .diff-hero { padding: 48px 24px; }
+  .compare-bar { padding: 24px; }
+  .divider-section { padding: 64px 24px; }
+  .divider-section::before { font-size: 280px; }
+}
+
+/* ── Reveal ── */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<!-- Shared Masthead -->
+<div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="partials/header.js" defer></script>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════ -->
+<div class="section hero-section">
+  <div class="hero-tag">Interactive Forecast</div>
+  <h1 class="hero-headline">あなたの予測は、<br>世界とどれだけ<br><span class="highlight">ズレて</span>いるか</h1>
+  <p class="hero-lead">AGIはいつ来るか。Metaculusでは3,000人以上が金を賭けている。AI企業トップも年を口にした。あなたの直感は、その数字からどれだけ離れているか。</p>
+
+  <!-- HERO TIMELINE -->
+  <div class="hero-timeline">
+    <div class="hero-timeline-header">
+      <div class="hero-timeline-title"><strong>AGI到達年</strong> · 予測者スペクトラム</div>
+      <div class="hero-timeline-legend">
+        <span class="legend-item"><span class="legend-dot" style="background:var(--accent);"></span>業界の予測者</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--green);"></span>Metaculus <span data-meta="q3479.forecasters_fmt">3,512</span>人</span>
+      </div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-axis"></div>
+
+      <!-- Year ticks: 2026, 2028, 2030, 2032, 2034, 2036+ -->
+      <div class="timeline-year-ticks">
+        <span style="left: 0%;">2026</span>
+        <span style="left: 20%;">2028</span>
+        <span style="left: 40%;">2030</span>
+        <span style="left: 60%;">2032</span>
+        <span style="left: 80%;">2034</span>
+        <span style="left: 100%;">2036+</span>
+      </div>
+
+      <!-- Forecaster pins: 2026-2036 scale -->
+      <!-- 2026=0%, 2027=10%, 2029=30%, 2030=40%, 2031=50%, 2032=60% -->
+      <div class="timeline-pin edge-left" style="left: 0%;" tabindex="0">
+        <div class="pin-face" style="background-image: url('images/people/dario-amodei.jpg');"></div>
+        <div class="pin-line"></div>
+        <div class="pin-card">
+          <div class="pin-name">Dario Amodei</div>
+          <div class="pin-year">2026</div>
+          <div class="pin-meta">Anthropic</div>
+        </div>
+        <div class="pin-quote">
+          <div class="quote-text">強力なAIは早ければ2026年に出てくる。もっとかかる道筋もあるが。</div>
+          <div class="quote-source">Dario Amodei · <a href="https://darioamodei.com/essay/machines-of-loving-grace" target="_blank" rel="noopener">Machines of Loving Grace</a> · Oct 2024</div>
+        </div>
+      </div>
+      <div class="timeline-pin tier-below" style="left: 10%;" tabindex="0">
+        <div class="pin-face" style="background-image: url('images/thinkers/aschenbrenner.jpg');"></div>
+        <div class="pin-line"></div>
+        <div class="pin-card">
+          <div class="pin-name">Leopold Aschenbrenner</div>
+          <div class="pin-year">2027</div>
+          <div class="pin-meta">元OpenAI</div>
+        </div>
+        <div class="pin-quote">
+          <div class="quote-text">2027年のAGIは驚くほど現実的だ。計算量とアルゴリズム効率のトレンドを延長すれば、幼稚園児から優等生への飛躍がもう一度、2027年までに起きる。</div>
+          <div class="quote-source">Leopold Aschenbrenner · <a href="https://situational-awareness.ai/" target="_blank" rel="noopener">Situational Awareness</a> · Jun 2024</div>
+        </div>
+      </div>
+      <div class="timeline-pin tier-below edge-left" style="left: 0%;" tabindex="0">
+        <div class="pin-face" style="background-image: url('images/people/jensen-huang.jpg');"></div>
+        <div class="pin-line"></div>
+        <div class="pin-card">
+          <div class="pin-name">Jensen Huang</div>
+          <div class="pin-year">到達済</div>
+          <div class="pin-meta">NVIDIA</div>
+        </div>
+        <div class="pin-quote">
+          <div class="quote-text">熟練した専門家の仕事をこなせるという意味でのAGIなら——もう到達している。</div>
+          <div class="quote-source">Jensen Huang · <a href="https://finance.yahoo.com/news/nvidia-ceo-jensen-huang-claims-agi-has-been-achieved-can-create-billion-dollar-businesses-172225126.html" target="_blank" rel="noopener">Lex Fridman Podcast</a> · Mar 2026</div>
+        </div>
+      </div>
+      <div class="timeline-pin" style="left: 25%;" tabindex="0">
+        <div class="pin-face" style="background-image: url('images/thinkers/bioshok3.jpg');"></div>
+        <div class="pin-line"></div>
+        <div class="pin-card">
+          <div class="pin-name">bioshok3</div>
+          <div class="pin-year">2027–2030</div>
+          <div class="pin-meta">日本のAI解説者</div>
+        </div>
+        <div class="pin-quote">
+          <div class="quote-text">AschenbrennerやAltmanの短期予測を支持。日本語圏でAGI論を最も高い解像度で発信している一人。具体年は非公表、2027-2030年の短期シナリオ寄り。</div>
+          <div class="quote-source">bioshok3 · <a href="https://x.com/bioshok3" target="_blank" rel="noopener">@bioshok3</a> · <a href="https://note.com/bioshok3" target="_blank" rel="noopener">note.com</a></div>
+        </div>
+      </div>
+      <div class="timeline-pin tier-below" style="left: 40%;" tabindex="0">
+        <div class="pin-face" style="background-image: url('images/people/demis-hassabis.jpg');"></div>
+        <div class="pin-line"></div>
+        <div class="pin-card">
+          <div class="pin-name">Demis Hassabis</div>
+          <div class="pin-year">2030</div>
+          <div class="pin-meta">DeepMind</div>
+        </div>
+        <div class="pin-quote">
+          <div class="quote-text">5年から10年の間に、AGIは出てくると思う。</div>
+          <div class="quote-source">Demis Hassabis · <a href="https://www.cbsnews.com/news/artificial-intelligence-google-deepmind-ceo-demis-hassabis-60-minutes-transcript/" target="_blank" rel="noopener">CBS 60 Minutes</a> · Apr 2025</div>
+        </div>
+      </div>
+      <div class="timeline-pin" style="left: 50%;" tabindex="0">
+        <div class="pin-face" style="background-image: url('images/people/sam-altman.jpg');"></div>
+        <div class="pin-line"></div>
+        <div class="pin-card">
+          <div class="pin-name">Sam Altman</div>
+          <div class="pin-year">2031</div>
+          <div class="pin-meta">OpenAI</div>
+        </div>
+        <div class="pin-quote">
+          <div class="quote-text">数千日のうちに超知能を手にする可能性がある。もっとかかるかもしれないが、たどり着けると確信している。</div>
+          <div class="quote-source">Sam Altman · <a href="https://ia.samaltman.com/" target="_blank" rel="noopener">The Intelligence Age</a> · Sept 2024 (※「数千日」≒5-14年, 中央値で2031前後)</div>
+        </div>
+      </div>
+
+      <!-- Metaculus pin (value hidden until user answers) -->
+      <div class="timeline-pin metaculus tier-below" style="left: 60%; opacity: 0.45;" tabindex="0">
+        <div class="pin-face" style="background: var(--meta); box-shadow: 0 0 0 2px var(--meta), 0 6px 16px rgba(117, 117, 117, 0.3);">?</div>
+        <div class="pin-line" style="background: rgba(117, 117, 117, 0.4);"></div>
+        <div class="pin-card" style="border-top-color: var(--meta);">
+          <div class="pin-name">Metaculus 中央値</div>
+          <div class="pin-year" style="color: var(--meta);">?</div>
+          <div class="pin-meta"><span data-meta="q3479.forecasters_fmt">3,512</span> Forecasters</div>
+        </div>
+        <div class="pin-quote" style="border-top-color: var(--meta);">
+          <div class="quote-text">3,512人が金を賭けた中央値。回答後に開示。</div>
+          <div class="quote-source">Metaculus · <a href="https://www.metaculus.com/questions/3479/" target="_blank" rel="noopener">Q3479</a> · 継続更新</div>
+        </div>
+      </div>
+
+      <!-- Bracket indicating CEO cluster -->
+    </div>
+
+    <blockquote class="pull-quote">
+      Huangは「<strong>もう来た</strong>」、Altmanは<strong>2031年</strong>。業界の予測者は"到達済"から2031年まで散らばっている。
+      <span class="pq-source">◆ 顔にカーソルで発言と出典 · Metaculusは回答後に開示</span>
+    </blockquote>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     WORLD DATA — BIG INFOGRAPHIC (SPOILER, TOGGLE)
+     ══════════════════════════════════════════════ -->
+<div class="section-alt">
+<div class="section">
+  <span class="chapter-num reveal">01</span>
+  <div class="eyebrow reveal">Chapter 01 · World Forecast</div>
+  <h2 class="reveal">予測市場のAGI予測</h2>
+  <p class="lead reveal">予測市場では当てた人が儲かる。だから口先だけの意見より精度が出る。CEOの発言にも株価と評判がかかっている。どちらも身銭を切った予測だ。</p>
+
+  <div id="spoiler-toggle" style="margin-top:40px;padding:24px;background:#fff;border:1px dashed var(--accent);text-align:center;">
+    <p style="font-size:14px;color:var(--mid);margin-bottom:16px;">具体的な数字は隠してある。先に自分の直感で答えたいなら、下へスクロール。</p>
+    <button type="button" id="reveal-world" style="padding:12px 28px;background:transparent;color:var(--accent);border:2px solid var(--accent);font-family:inherit;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">
+      先に数字を見る ↓
+    </button>
+  </div>
+
+  <div class="big-stat-grid" id="world-data" style="display:none;">
+
+    <div class="big-stat green-accent reveal">
+      <span class="big-stat-tag">Metaculus Q3479 · 中央値</span>
+      <div class="big-stat-num"><span data-meta="q3479.median_year">2032</span></div>
+      <div class="big-stat-desc">AGI到達年の中央予測</div>
+      <div class="big-stat-meta"><span data-meta="q3479.forecasters_fmt">3,512</span>人の予測者</div>
+
+      <!-- Distribution chart: 2026-2050 axis with 25/50/75%ile markers -->
+      <div style="margin-top:28px;position:relative;">
+        <div style="position:relative;height:80px;background:linear-gradient(to right, rgba(26,122,58,0.0) 0%, rgba(26,122,58,0.08) 8%, rgba(26,122,58,0.35) 25%, rgba(26,122,58,0.22) 58%, rgba(26,122,58,0.06) 90%, rgba(26,122,58,0.0) 100%);border-bottom:1px solid var(--border);">
+          <!-- 25%ile marker (2028 = 8.3% of 2026-2050) -->
+          <div style="position:absolute;left:8.3%;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.25);"></div>
+          <div style="position:absolute;left:8.3%;top:-18px;transform:translateX(-50%);font-family:'SF Mono',monospace;font-size:10px;color:var(--meta);letter-spacing:0.04em;white-space:nowrap;">P25 · 2028</div>
+          <!-- 50%ile median (2032 = 25%) -->
+          <div style="position:absolute;left:25%;top:-4px;bottom:-4px;width:3px;background:var(--green);"></div>
+          <div style="position:absolute;left:25%;top:-18px;transform:translateX(-50%);font-family:'SF Mono',monospace;font-size:11px;color:var(--green);letter-spacing:0.04em;font-weight:700;white-space:nowrap;">P50 · 2032</div>
+          <!-- 75%ile (2040 = 58.3%) -->
+          <div style="position:absolute;left:58.3%;top:0;bottom:0;width:1px;background:rgba(0,0,0,0.25);"></div>
+          <div style="position:absolute;left:58.3%;top:-18px;transform:translateX(-50%);font-family:'SF Mono',monospace;font-size:10px;color:var(--meta);letter-spacing:0.04em;white-space:nowrap;">P75 · 2040</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-family:'SF Mono',monospace;font-size:10px;color:var(--meta);margin-top:6px;letter-spacing:0.04em;">
+          <span>2026</span><span>2032</span><span>2038</span><span>2044</span><span>2050</span>
+        </div>
+      </div>
+      <p style="margin-top:14px;font-size:11px;line-height:1.6;color:var(--meta);">3,512人の予測者の分布。25%が2028年まで、中央値2032年、75%が2040年までに到達と見ている。</p>
+    </div>
+
+    <div class="big-stat reveal reveal-delay-3">
+      <span class="big-stat-tag">Metaculus Q3479 分布より推定</span>
+      <div class="big-stat-num">~59<span class="unit">%</span></div>
+      <div class="big-stat-desc">2035年末までのAGI達成確率</div>
+      <div class="big-stat-meta">P50=2032 / P75=2040 から線形補間</div>
+      <div class="big-stat-bar-wrap">
+        <div class="big-stat-bar">
+          <div class="big-stat-bar-fill" style="width: 59%;"></div>
+        </div>
+        <div class="big-stat-bar-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+      </div>
+      <p style="margin-top:14px;font-size:12px;line-height:1.6;color:var(--mid);">
+        中央値2032年から3年後の2035年。予測者の約6割がそこまでに到達すると見ている。業界トップ（Amodei・Aschenbrenner・Huang）はさらに早いレンジを主張。
+      </p>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<!-- Editorial portrait spread -->
+<div class="editorial-spread">
+  <div class="es-portrait" style="background-image: url('images/thinkers/yudkowsky.jpg');"></div>
+  <div>
+    <div class="es-eyebrow">◆ Voice · Extreme Spectrum</div>
+    <h2 class="es-headline">AIは、ほぼ確実に<br>人類を<em>破滅させる</em>。</h2>
+    <p class="es-body">Eliezer Yudkowskyのp(doom)は<strong style="color:#fff;">95%以上</strong>。アラインメント研究を20年以上主導した人物の結論。極端に見える数字だが、この見立てに共鳴する研究者は増えている——Hintonは50%、Bengioは20%、Leahyは80%。</p>
+    <div class="es-attribution"><strong>Eliezer Yudkowsky</strong> · MIRI · AGI-ruin論の提唱者</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     DIVIDER — PUNCH
+     ══════════════════════════════════════════════ -->
+<div class="divider-section">
+  <span class="chapter-num">02</span>
+  <div class="eyebrow">Chapter 02 · Your Turn</div>
+  <h2>では、<br>あなたは？</h2>
+  <p class="lead" style="margin-top:24px;">5つの問いに、直感で答える。答えた後に世界の予測が明かされる。</p>
+
+  <div style="margin-top:48px;max-width:720px;background:#fff;border:1px solid var(--border);border-top:3px solid var(--accent);padding:32px;text-align:left;">
+    <div style="font-family:'SF Mono',Menlo,monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">◆ 設問の前に · AGIの定義</div>
+    <p class="drop-cap" style="font-size:19px;line-height:1.7;color:var(--body-text);font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;">人間と同等以上に、広い領域で知的タスクをこなせるAI。</p>
+    <p style="font-size:13px;color:var(--mid);line-height:1.7;margin-bottom:20px;">これが本アンケートでの運用上の定義。ただし論者で範囲がずれる。Metaculusは厳しく、OpenAI/Huangは緩い。この差がQ2の回答に2〜5年のズレを生む。</p>
+
+    <details style="background:var(--bg-alt);border:1px solid var(--border);padding:14px 18px;font-size:12px;">
+      <summary style="cursor:pointer;font-family:'SF Mono',monospace;font-size:11px;letter-spacing:0.08em;color:var(--meta);font-weight:700;text-transform:uppercase;">主要定義の出典を見る</summary>
+      <ul style="font-size:12px;line-height:1.7;color:var(--mid);padding-left:18px;margin-top:12px;list-style:disc;">
+        <li style="margin-bottom:6px;"><strong style="color:var(--body-text);">OpenAI憲章</strong>: 経済的に価値ある仕事のほとんどで人間を上回る高度自律システム — <a href="https://openai.com/charter/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">Charter (2018)</a></li>
+        <li style="margin-bottom:6px;"><strong style="color:var(--body-text);">DeepMind · Morris et al.</strong>: 多くの非物理タスクで幅広い知能を発揮するシステム。Level 1〜5段階化 — <a href="https://arxiv.org/abs/2311.02462" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">Levels of AGI (2024)</a></li>
+        <li style="margin-bottom:6px;"><strong style="color:var(--body-text);">Metaculus Q3479</strong>: 拡張チューリング / SAT / ロボット操作 / 数学五輪金を同一システムで達成 — <a href="https://www.metaculus.com/questions/3479/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">Q3479</a></li>
+        <li><strong style="color:var(--body-text);">Jensen Huang (NVIDIA)</strong>: 熟練した専門家の仕事をこなせるAI。「もう到達済」(2026) — <a href="https://finance.yahoo.com/news/nvidia-ceo-jensen-huang-claims-agi-has-been-achieved-can-create-billion-dollar-businesses-172225126.html" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;">Lex Fridman</a></li>
+      </ul>
+    </details>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     FORM
+     ══════════════════════════════════════════════ -->
+<div class="section-alt">
+<div class="section">
+  <form id="prediction-form" class="form-wrap">
+
+    <!-- Q1 -->
+    <div class="question reveal">
+      <div class="question-header">
+        <div class="question-num">Q01 · Comparable</div>
+      </div>
+      <div class="question-title">2035年末までにAGIは達成されるか？</div>
+      <div class="question-sub">直感で答える。世界の数字は送信後に出る。</div>
+
+      <div class="value-row">
+        <div class="value-box you" style="grid-column: 1 / -1;">
+          <div class="value-box-label">あなたの予測</div>
+          <div class="value-num"><span id="q1-display">50</span>%</div>
+        </div>
+      </div>
+
+      <div class="slider-container">
+        <div class="slider-track-bg"></div>
+        <input type="range" id="q1" min="0" max="100" value="50" step="1">
+        <div class="slider-labels"><span>まず無理 · 0%</span><span>確実 · 100%</span></div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question reveal">
+      <div class="question-header">
+        <div class="question-num">Q02 · Comparable</div>
+      </div>
+      <div class="question-title">AGIは何年に達成されるか？</div>
+      <div class="question-sub">あなたの最良の推定。Metaculusの中央値は送信後に出る。</div>
+
+      <div class="value-row">
+        <div class="value-box you" style="grid-column: 1 / -1;">
+          <div class="value-box-label">あなたの予測</div>
+          <div class="value-num"><span id="q2-display">2035</span></div>
+        </div>
+      </div>
+
+      <div class="slider-container">
+        <div class="slider-track-bg"></div>
+        <input type="range" id="q2" min="2026" max="2044" value="2035" step="1">
+        <div class="slider-labels"><span>2026</span><span>2035</span><span>2044+</span></div>
+      </div>
+
+      <div class="q-thinker-bar">
+        <div class="q-thinker-bar-label">◆ 業界の予測者はここに散らばっている</div>
+        <div class="q-thinker-track">
+          <div class="q-thinker-pin" style="left: 1%;" title="Dario Amodei — Anthropic CEO">
+            <img src="images/people/dario-amodei.jpg" alt="Amodei">
+            <div class="tp-label">Amodei</div><span class="tp-val">2026</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 6%;" title="Leopold Aschenbrenner — 元OpenAI">
+            <img src="images/thinkers/aschenbrenner.jpg" alt="Aschenbrenner">
+            <div class="tp-label">Aschenbrenner</div><span class="tp-val">2027</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 14%;" title="bioshok3 — 日本のAI解説者">
+            <img src="images/thinkers/bioshok3.jpg" alt="bioshok3">
+            <div class="tp-label">bioshok3</div><span class="tp-val">2027–30</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 22%;" title="Demis Hassabis — DeepMind">
+            <img src="images/people/demis-hassabis.jpg" alt="Hassabis">
+            <div class="tp-label">Hassabis</div><span class="tp-val">2030</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 28%;" title="Sam Altman — OpenAI">
+            <img src="images/people/sam-altman.jpg" alt="Altman">
+            <div class="tp-label">Altman</div><span class="tp-val">2031</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question no-compare reveal">
+      <div class="question-header">
+        <div class="question-num" style="background:var(--mid);">Q03 · Personal</div>
+      </div>
+      <div class="question-title">自分の職業は5年後にAIで根本的に変わるか？</div>
+      <div class="question-sub">クビになるかではなく、やることが別物になるかどうか。</div>
+
+      <div class="value-row">
+        <div class="value-box you">
+          <div class="value-box-label">あなたの予測</div>
+          <div class="value-num"><span id="q3-display">50</span>%</div>
+        </div>
+      </div>
+
+      <div class="slider-container">
+        <div class="slider-track-bg"></div>
+        <input type="range" id="q3" min="0" max="100" value="50" step="1">
+        <div class="slider-labels"><span>0% 変わらない</span><span>50%</span><span>100% 完全に変わる</span></div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question no-compare reveal">
+      <div class="question-header">
+        <div class="question-num" style="background:var(--mid);">Q04 · Personal</div>
+      </div>
+      <div class="question-title">計算量だけでAGIに到達できるか？</div>
+      <div class="question-sub">GPUを積み続ければ十分か。それともアーキテクチャの革新が必要か。</div>
+
+      <div class="value-row">
+        <div class="value-box you">
+          <div class="value-box-label">あなたの予測</div>
+          <div class="value-num"><span id="q4-display">50</span>%</div>
+        </div>
+      </div>
+
+      <div class="slider-container">
+        <div class="slider-track-bg"></div>
+        <input type="range" id="q4" min="0" max="100" value="50" step="1">
+        <div class="slider-labels"><span>0% 不可能</span><span>50%</span><span>100% 十分</span></div>
+      </div>
+
+      <div class="q-thinker-bar">
+        <div class="q-thinker-bar-label">◆ 主要研究者のスタンス</div>
+        <div class="q-thinker-track">
+          <div class="q-thinker-pin" style="left: 10%;" title="François Chollet — ARC-AGI著者、純粋スケーリング否定">
+            <img src="images/people/francois-chollet.jpg" alt="Chollet">
+            <div class="tp-label">Chollet</div><span class="tp-val">懐疑</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 20%;" title="Gary Marcus — 長年のスケーリング懐疑派">
+            <img src="images/thinkers/marcus.jpg" alt="Marcus">
+            <div class="tp-label">Marcus</div><span class="tp-val">懐疑</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 30%;" title="Yann LeCun — スケーリングでは不十分">
+            <img src="images/people/yann-lecun.jpg" alt="LeCun">
+            <div class="tp-label">LeCun</div><span class="tp-val">懐疑</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 70%;" title="Demis Hassabis — 基盤は必要だが革新も要る">
+            <img src="images/people/demis-hassabis.jpg" alt="Hassabis">
+            <div class="tp-label">Hassabis</div><span class="tp-val">中道</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 85%;" title="Leopold Aschenbrenner — スケーリング強支持">
+            <img src="images/thinkers/aschenbrenner.jpg" alt="Aschenbrenner">
+            <div class="tp-label">Aschenbrenner</div><span class="tp-val">支持</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 95%;" title="Ilya Sutskever — スケーリング仮説の核心提唱者">
+            <img src="images/people/sam-altman.jpg" alt="Altman">
+            <div class="tp-label">Altman</div><span class="tp-val">支持</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question no-compare reveal">
+      <div class="question-header">
+        <div class="question-num" style="background:var(--world);">Q05 · p(doom)</div>
+      </div>
+      <div class="question-title">AIによる存亡リスクは？</div>
+      <div class="question-sub">AIが人類を取り返しのつかない方向に追い込む確率。</div>
+
+      <div class="value-row">
+        <div class="value-box you">
+          <div class="value-box-label">あなたの予測</div>
+          <div class="value-num"><span id="q5-display">10</span>%</div>
+        </div>
+      </div>
+
+      <div class="slider-container">
+        <div class="slider-track-bg"></div>
+        <input type="range" id="q5" min="0" max="100" value="10" step="1">
+        <div class="slider-labels"><span>0% リスクなし</span><span>50%</span><span>100% 確実に破滅</span></div>
+      </div>
+
+      <div class="q-thinker-bar">
+        <div class="q-thinker-bar-label">◆ 主要研究者のp(doom) 推定</div>
+        <div class="q-thinker-track">
+          <div class="q-thinker-pin" style="left: 1%;" title="Yann LeCun — ほぼゼロ。AIは道具">
+            <img src="images/people/yann-lecun.jpg" alt="LeCun">
+            <div class="tp-label">LeCun</div><span class="tp-val">&lt;1%</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 5%;" title="Andrew Ng — 過大評価">
+            <img src="images/thinkers/ng.jpg" alt="Ng">
+            <div class="tp-label">Ng</div><span class="tp-val">~1%</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 20%;" title="Yoshua Bengio — 実質的リスクあり">
+            <img src="images/thinkers/bengio.jpg" alt="Bengio">
+            <div class="tp-label">Bengio</div><span class="tp-val">~20%</span>
+          </div>
+          <div class="q-thinker-pin" style="left: 50%;" title="Geoffrey Hinton — コイントス">
+            <img src="images/thinkers/hinton.jpg" alt="Hinton">
+            <div class="tp-label">Hinton</div><span class="tp-val">~50%</span>
+          </div>
+          <div class="q-thinker-pin extreme" style="left: 80%;" title="Connor Leahy — 極めて高い">
+            <img src="images/thinkers/leahy.webp" alt="Leahy">
+            <div class="tp-label">Leahy</div><span class="tp-val">~80%</span>
+          </div>
+          <div class="q-thinker-pin extreme" style="left: 95%;" title="Eliezer Yudkowsky — ほぼ確実な破滅">
+            <img src="images/thinkers/yudkowsky.jpg" alt="Yudkowsky">
+            <div class="tp-label">Yudkowsky</div><span class="tp-val">&gt;95%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" class="submit-btn" id="submit-btn">予測を送信 → 立ち位置を見る</button>
+      <p class="submit-note">匿名・個人情報取得なし</p>
+    </div>
+  </form>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     RESULTS — BIG VISUAL PAYOFF
+     ══════════════════════════════════════════════ -->
+<div class="results-section" id="results">
+
+  <!-- Big Diff Hero -->
+  <div class="diff-hero">
+    <div class="diff-label">◆ Metaculusとの差</div>
+    <span class="diff-num" id="diff-main">—</span>
+    <div class="diff-desc" id="diff-main-desc">—</div>
+    <div class="diff-sub" id="diff-main-sub">—</div>
+  </div>
+
+  <div class="section">
+    <div class="eyebrow">Your Position</div>
+    <h2>あなたの立ち位置</h2>
+
+    <!-- ═══ FINAL TIMELINE: You + everyone ═══ -->
+    <div class="hero-timeline" style="margin-top:32px;margin-bottom:48px;">
+      <div class="hero-timeline-header">
+        <div class="hero-timeline-title"><strong>AGI到達年</strong> · あなたを含めた予測スペクトラム</div>
+        <div class="hero-timeline-legend">
+          <span class="legend-item"><span class="legend-dot" style="background:var(--accent);"></span>業界の予測者</span>
+          <span class="legend-item"><span class="legend-dot" style="background:var(--green);"></span>Metaculus</span>
+          <span class="legend-item"><span class="legend-dot" style="background:var(--world);"></span>あなた</span>
+        </div>
+      </div>
+
+      <div class="timeline-wrap">
+        <div class="timeline-axis"></div>
+        <div class="timeline-year-ticks">
+          <span style="left: 0%;">2026</span>
+          <span style="left: 20%;">2028</span>
+          <span style="left: 40%;">2030</span>
+          <span style="left: 60%;">2032</span>
+          <span style="left: 80%;">2034</span>
+          <span style="left: 100%;">2036+</span>
+        </div>
+
+        <div class="timeline-pin edge-left" style="left: 0%;" tabindex="0">
+          <div class="pin-face" style="background-image: url('images/people/dario-amodei.jpg');"></div>
+          <div class="pin-line"></div>
+          <div class="pin-card">
+            <div class="pin-name">Dario Amodei</div>
+            <div class="pin-year">2026</div>
+            <div class="pin-meta">Anthropic</div>
+          </div>
+          <div class="pin-quote">
+            <div class="quote-text">強力なAIは早ければ2026年に出てくる。もっとかかる道筋もあるが。</div>
+            <div class="quote-source">Dario Amodei · <a href="https://darioamodei.com/essay/machines-of-loving-grace" target="_blank" rel="noopener">Machines of Loving Grace</a> · Oct 2024</div>
+          </div>
+        </div>
+        <div class="timeline-pin tier-below" style="left: 10%;" tabindex="0">
+          <div class="pin-face" style="background-image: url('images/thinkers/aschenbrenner.jpg');"></div>
+          <div class="pin-line"></div>
+          <div class="pin-card">
+            <div class="pin-name">Leopold Aschenbrenner</div>
+            <div class="pin-year">2027</div>
+            <div class="pin-meta">元OpenAI</div>
+          </div>
+          <div class="pin-quote">
+            <div class="quote-text">2027年のAGIは驚くほど現実的だ。計算量とアルゴリズム効率のトレンドを延長すれば、幼稚園児から優等生への飛躍がもう一度、2027年までに起きる。</div>
+            <div class="quote-source">Leopold Aschenbrenner · <a href="https://situational-awareness.ai/" target="_blank" rel="noopener">Situational Awareness</a> · Jun 2024</div>
+          </div>
+        </div>
+        <div class="timeline-pin tier-below edge-left" style="left: 0%;" tabindex="0">
+          <div class="pin-face" style="background-image: url('images/people/jensen-huang.jpg');"></div>
+          <div class="pin-line"></div>
+          <div class="pin-card">
+            <div class="pin-name">Jensen Huang</div>
+            <div class="pin-year">到達済</div>
+            <div class="pin-meta">NVIDIA</div>
+          </div>
+          <div class="pin-quote">
+            <div class="quote-text">熟練した専門家の仕事をこなせるという意味でのAGIなら——もう到達している。</div>
+            <div class="quote-source">Jensen Huang · <a href="https://finance.yahoo.com/news/nvidia-ceo-jensen-huang-claims-agi-has-been-achieved-can-create-billion-dollar-businesses-172225126.html" target="_blank" rel="noopener">Lex Fridman Podcast</a> · Mar 2026</div>
+          </div>
+        </div>
+        <div class="timeline-pin" style="left: 25%;" tabindex="0">
+          <div class="pin-face" style="background-image: url('images/thinkers/bioshok3.jpg');"></div>
+          <div class="pin-line"></div>
+          <div class="pin-card">
+            <div class="pin-name">bioshok3</div>
+            <div class="pin-year">2027–2030</div>
+            <div class="pin-meta">日本のAI解説者</div>
+          </div>
+          <div class="pin-quote">
+            <div class="quote-text">AschenbrennerやAltmanの短期予測を支持。日本語圏でAGI論を最も高い解像度で発信している一人。具体年は非公表、2027-2030年の短期シナリオ寄り。</div>
+            <div class="quote-source">bioshok3 · <a href="https://x.com/bioshok3" target="_blank" rel="noopener">@bioshok3</a> · <a href="https://note.com/bioshok3" target="_blank" rel="noopener">note.com</a></div>
+          </div>
+        </div>
+        <div class="timeline-pin tier-below" style="left: 40%;" tabindex="0">
+          <div class="pin-face" style="background-image: url('images/people/demis-hassabis.jpg');"></div>
+          <div class="pin-line"></div>
+          <div class="pin-card">
+            <div class="pin-name">Demis Hassabis</div>
+            <div class="pin-year">2030</div>
+            <div class="pin-meta">DeepMind</div>
+          </div>
+          <div class="pin-quote">
+            <div class="quote-text">5年から10年の間に、AGIは出てくると思う。</div>
+            <div class="quote-source">Demis Hassabis · <a href="https://www.cbsnews.com/news/artificial-intelligence-google-deepmind-ceo-demis-hassabis-60-minutes-transcript/" target="_blank" rel="noopener">CBS 60 Minutes</a> · Apr 2025</div>
+          </div>
+        </div>
+        <div class="timeline-pin" style="left: 50%;" tabindex="0">
+          <div class="pin-face" style="background-image: url('images/people/sam-altman.jpg');"></div>
+          <div class="pin-line"></div>
+          <div class="pin-card">
+            <div class="pin-name">Sam Altman</div>
+            <div class="pin-year">2031</div>
+            <div class="pin-meta">OpenAI</div>
+          </div>
+          <div class="pin-quote">
+            <div class="quote-text">数千日のうちに超知能を手にする可能性がある。もっとかかるかもしれないが、たどり着けると確信している。</div>
+            <div class="quote-source">Sam Altman · <a href="https://ia.samaltman.com/" target="_blank" rel="noopener">The Intelligence Age</a> · Sept 2024 (※「数千日」≒5-14年, 中央値で2031前後)</div>
+          </div>
+        </div>
+
+        <!-- Metaculus pin (always shown in final) -->
+        <div class="timeline-pin metaculus tier-below" style="left: 60%;" tabindex="0">
+          <div class="pin-face" style="background:var(--green);box-shadow:0 0 0 2px var(--green), 0 6px 16px rgba(26, 122, 58, 0.35);font-size:14px;">2032</div>
+          <div class="pin-line" style="background:rgba(26, 122, 58, 0.4);"></div>
+          <div class="pin-card" style="border-top-color:var(--green);">
+            <div class="pin-name">Metaculus 中央値</div>
+            <div class="pin-year" style="color:var(--green);">2032</div>
+            <div class="pin-meta"><span data-meta="q3479.forecasters_fmt">3,512</span> Forecasters</div>
+          </div>
+          <div class="pin-quote" style="border-top-color: var(--green);">
+            <div class="quote-text">3,512人が金を賭けた中央値。当たれば儲かる仕組みが精度を担保する。</div>
+            <div class="quote-source">Metaculus · <a href="https://www.metaculus.com/questions/3479/" target="_blank" rel="noopener">Q3479: When will the first AGI be created?</a></div>
+          </div>
+        </div>
+
+        <!-- YOU pin: position set by JS -->
+        <div class="timeline-pin you-pin" id="final-you-pin" style="left: 30%;" tabindex="0">
+          <div class="pin-face" style="background:var(--world);box-shadow:0 0 0 2px var(--world), 0 6px 16px rgba(201, 55, 44, 0.4);font-size:14px;color:#fff;" id="final-you-year">2032</div>
+          <div class="pin-line" style="background:rgba(201, 55, 44, 0.5);"></div>
+          <div class="pin-card" style="border-top-color:var(--world);">
+            <div class="pin-name" style="color:var(--world);">あなたの予測</div>
+            <div class="pin-year" style="color:var(--world);" id="final-you-card-year">2032</div>
+            <div class="pin-meta">YOUR FORECAST</div>
+          </div>
+          <div class="pin-quote" style="border-top-color: var(--world);">
+            <div class="quote-text">あなたがQ2で答えた年。根拠は直感。</div>
+            <div class="quote-source">出典: あなた</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="text-align:center;font-size:13px;color:var(--mid);margin-top:32px;max-width:680px;margin-left:auto;margin-right:auto;line-height:1.7;">
+        <strong>赤いピンがあなた</strong>。業界の5人、3,512人の予測者、そしてあなた。<br>同じ問いに7つの答えが並んでいる。<br><span style="font-size:11px;color:var(--meta);">各ピンにカーソルを合わせると本人の発言と出典が出る</span>
+      </p>
+    </div>
+
+    <!-- Q1 Bar Comparison -->
+    <div class="compare-bar">
+      <div class="compare-bar-title">Q1 · 2035年末までのAGI達成確率</div>
+      <div class="compare-bar-sub">0% ─ 50% ─ 100%</div>
+      <div class="bar-axis">
+        <div class="bar-marker you" id="bar-q1-you" style="left: 50%;">
+          <div class="bar-val" id="bar-q1-you-val">50%</div>
+          <div class="bar-pin"></div>
+          <div class="bar-tag">You</div>
+        </div>
+        <div class="bar-marker world" style="left: 26%;">
+          <div class="bar-val">26%</div>
+          <div class="bar-pin"></div>
+          <div class="bar-tag">Metaculus</div>
+        </div>
+      </div>
+      <div class="bar-axis-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+    </div>
+
+    <!-- Q2 Bar Comparison -->
+    <div class="compare-bar">
+      <div class="compare-bar-title">Q2 · AGI到達年</div>
+      <div class="compare-bar-sub">2026 ─ 2035 ─ 2044+</div>
+      <div class="bar-axis">
+        <div class="bar-marker you" id="bar-q2-you" style="left: 25%;">
+          <div class="bar-val" id="bar-q2-you-val">2032</div>
+          <div class="bar-pin"></div>
+          <div class="bar-tag">You</div>
+        </div>
+        <div class="bar-marker world" style="left: 25%;">
+          <div class="bar-val">2032</div>
+          <div class="bar-pin"></div>
+          <div class="bar-tag">Metaculus</div>
+        </div>
+      </div>
+      <div class="bar-axis-labels"><span>2026</span><span>2035</span><span>2044+</span></div>
+    </div>
+
+    <!-- Verdict -->
+    <div class="verdict" id="verdict"></div>
+
+    <!-- Extras: circular gauges -->
+    <div class="extras-grid">
+
+      <div class="extra-card">
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 120">
+            <circle class="gauge-bg" cx="60" cy="60" r="52"/>
+            <circle class="gauge-fill" id="gauge-q3" cx="60" cy="60" r="52" stroke-dasharray="0 326.7"/>
+          </svg>
+          <div class="gauge-text" id="gauge-q3-text">—</div>
+        </div>
+        <div class="extra-label">Q3 · 職業の変化確率</div>
+        <div class="extra-desc">5年後、仕事の中身が別物になる</div>
+      </div>
+
+      <div class="extra-card">
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 120">
+            <circle class="gauge-bg" cx="60" cy="60" r="52"/>
+            <circle class="gauge-fill" id="gauge-q4" cx="60" cy="60" r="52" stroke-dasharray="0 326.7"/>
+          </svg>
+          <div class="gauge-text" id="gauge-q4-text">—</div>
+        </div>
+        <div class="extra-label">Q4 · 計算量だけでAGI</div>
+        <div class="extra-desc">スケーリング仮説への賭け金</div>
+      </div>
+
+      <div class="extra-card world-accent">
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 120 120">
+            <circle class="gauge-bg" cx="60" cy="60" r="52"/>
+            <circle class="gauge-fill" id="gauge-q5" cx="60" cy="60" r="52" stroke-dasharray="0 326.7" style="stroke: var(--world);"/>
+          </svg>
+          <div class="gauge-text" id="gauge-q5-text" style="color:var(--world);">—</div>
+        </div>
+        <div class="extra-label">Q5 · p(doom)</div>
+        <div class="extra-desc">AIによる存亡リスク</div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:96px;text-align:center;padding:48px;background:var(--bg-alt);">
+      <p class="lead" style="max-width:none;text-align:center;font-size:18px;color:var(--body-text);">半年後に見返したとき、<br>あなたの数字はどちらにズレているだろう。</p>
+      <p style="margin-top:32px;"><a href="index.html" style="font-weight:800;font-size:16px;padding:14px 28px;background:var(--accent);color:#fff;display:inline-block;letter-spacing:0.08em;">AGI HUBの記事を読む →</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Credits -->
+<div class="credits">
+  <p>AGI HUB — Intelligence, Alignment, and The Next Phase</p>
+  <p>Data: <a href="https://www.metaculus.com/questions/5121/" target="_blank" rel="noopener">Metaculus Q5121</a> · <a href="https://www.metaculus.com/questions/3479/" target="_blank" rel="noopener">Metaculus Q3479</a></p>
+  <p>Last updated: <span data-meta="last_updated">2026-04-13</span></p>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // Prevent browser auto-scroll-restore on reload. Only honor URL hash if present.
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  window.addEventListener('load', function() {
+    if (!location.hash) { window.scrollTo(0, 0); }
+  });
+
+  // ── Slider live update ──
+  var sliders = [
+    { id: 'q1', display: 'q1-display' },
+    { id: 'q2', display: 'q2-display' },
+    { id: 'q3', display: 'q3-display' },
+    { id: 'q4', display: 'q4-display' },
+    { id: 'q5', display: 'q5-display' }
+  ];
+
+  sliders.forEach(function(s) {
+    var el = document.getElementById(s.id);
+    var disp = document.getElementById(s.display);
+    el.addEventListener('input', function() {
+      disp.textContent = el.value;
+    });
+  });
+
+  // ── World data spoiler toggle ──
+  var revealBtn = document.getElementById('reveal-world');
+  var worldData = document.getElementById('world-data');
+  var spoilerToggle = document.getElementById('spoiler-toggle');
+  var worldRevealedByUser = false;
+  function revealWorldData() {
+    if (worldData.style.display === 'grid') return; // already revealed
+    worldData.style.display = 'grid';
+    spoilerToggle.style.display = 'none';
+    // Trigger reveal animations for big-stat cards inside (if not already)
+    worldData.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+    // Also reveal timeline Metaculus value
+    var metaPin = document.querySelector('.timeline-pin.metaculus');
+    if (metaPin) {
+      try {
+        metaPin.style.transition = 'opacity 0.6s var(--ease)';
+        metaPin.style.opacity = '1';
+        var face = metaPin.querySelector('.pin-face');
+        if (face) {
+          face.style.background = 'var(--green)';
+          face.style.boxShadow = '0 0 0 2px var(--green), 0 6px 16px rgba(26, 122, 58, 0.35)';
+          face.textContent = '2032';
+          face.style.fontSize = '14px';
+        }
+        var line = metaPin.querySelector('.pin-line');
+        if (line) line.style.background = 'rgba(26, 122, 58, 0.4)';
+        var card = metaPin.querySelector('.pin-card');
+        if (card) card.style.borderTopColor = 'var(--green)';
+        var pinYear = metaPin.querySelector('.pin-year');
+        if (pinYear) {
+          pinYear.textContent = '2032';
+          pinYear.style.color = 'var(--green)';
+        }
+      } catch (err) {
+        // Non-fatal: timeline reveal styling failed but results should still show
+        console.warn('Metaculus pin reveal failed:', err);
+      }
+    }
+  }
+  revealBtn.addEventListener('click', function() {
+    worldRevealedByUser = true;
+    revealWorldData();
+    // Smooth scroll to world data so user sees what they revealed
+    setTimeout(function() {
+      worldData.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  });
+
+  // ── Reveal on scroll ──
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(function(el) { observer.observe(el); });
+
+  // ── Reference values (overridden by prediction-data.json fetch below) ──
+  var META_Q5121_PROB = 59;
+  var META_Q3479_YEAR = 2032;
+  var GAUGE_CIRCUMFERENCE = 2 * Math.PI * 52; // ≈ 326.7
+
+  // ── Fetch latest data from prediction-data.json and patch the DOM ──
+  fetch('prediction-data.json', { cache: 'no-cache' }).then(function(r) {
+    if (!r.ok) throw new Error('fetch failed');
+    return r.json();
+  }).then(function(data) {
+    function lookup(path) {
+      var keys = path.split('.');
+      var v = data;
+      for (var i = 0; i < keys.length; i++) {
+        if (v == null) return null;
+        var k = keys[i];
+        if (k === 'forecasters_fmt' && typeof v.forecasters === 'number') {
+          return v.forecasters.toLocaleString('en-US');
+        }
+        v = v[k];
+      }
+      return v;
+    }
+    document.querySelectorAll('[data-meta]').forEach(function(el) {
+      var v = lookup(el.dataset.meta);
+      if (v != null) el.textContent = v;
+    });
+    document.querySelectorAll('[data-meta-style]').forEach(function(el) {
+      var parts = el.dataset.metaStyle.split(':');
+      var v = lookup(parts[0]);
+      if (v != null) el.style[parts[1]] = v + (parts[2] || '');
+    });
+    // Update reference values used by submit handler
+    if (data.metaculus && data.metaculus.q5121 && typeof data.metaculus.q5121.probability_pct === 'number') {
+      META_Q5121_PROB = data.metaculus.q5121.probability_pct;
+    }
+    if (data.metaculus && data.metaculus.q3479 && typeof data.metaculus.q3479.median_year === 'number') {
+      META_Q3479_YEAR = data.metaculus.q3479.median_year;
+    }
+  }).catch(function(err) {
+    console.warn('prediction-data.json fetch failed, using fallback values:', err);
+  });
+
+  // ── Form submission ──
+  var form = document.getElementById('prediction-form');
+  var submitted = false;
+  var sessionId = Math.random().toString(36).substring(2, 15);
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (submitted) return;
+
+    var btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = '送信中…';
+
+    try {
+      var q1 = parseInt(document.getElementById('q1').value);
+      var q2 = parseInt(document.getElementById('q2').value);
+      var q3 = parseInt(document.getElementById('q3').value);
+      var q4 = parseInt(document.getElementById('q4').value);
+      var q5 = parseInt(document.getElementById('q5').value);
+
+      var payload = {
+        q1_agi_2030_pct: q1,
+        q2_agi_year: q2,
+        q3_job_change_pct: q3,
+        q4_compute_only_pct: q4,
+        q5_pdoom_pct: q5,
+        session_id: sessionId,
+        timestamp: new Date().toISOString()
+      };
+
+      var GAS_URL = '';
+      if (GAS_URL) {
+        fetch(GAS_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).catch(function() {});
+      }
+
+      var needsWorldReveal = !worldRevealedByUser;
+      revealWorldData();
+      showResults(q1, q2, q3, q4, q5, needsWorldReveal);
+      submitted = true;
+      btn.textContent = '送信済み';
+    } catch (err) {
+      console.error('Submit failed:', err);
+      btn.textContent = 'エラーが発生 (再読込)';
+      btn.disabled = false;
+    }
+  });
+
+  function animateCounter(el, from, to, duration) {
+    var start = performance.now();
+    function step(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      var val = Math.round(from + (to - from) * eased);
+      el.textContent = (val >= 0 ? '+' : '') + val + 'pt';
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function animateGauge(svgCircle, textEl, targetPct) {
+    var targetLen = (targetPct / 100) * GAUGE_CIRCUMFERENCE;
+    svgCircle.style.strokeDasharray = targetLen + ' ' + GAUGE_CIRCUMFERENCE;
+    var start = performance.now();
+    function step(now) {
+      var elapsed = now - start;
+      var progress = Math.min(elapsed / 1000, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      textEl.textContent = Math.round(targetPct * eased) + '%';
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function showResults(q1, q2, q3, q4, q5, scrollToWorldFirst) {
+    // Big diff hero
+    var q1diff = q1 - META_Q5121_PROB;
+    var diffMain = document.getElementById('diff-main');
+    var diffDesc = document.getElementById('diff-main-desc');
+    var diffSub = document.getElementById('diff-main-sub');
+
+    if (Math.abs(q1diff) <= 5) {
+      diffMain.className = 'diff-num neutral';
+      diffDesc.textContent = 'Metaculusの予測者とほぼ同じ位置';
+      diffSub.textContent = '3,512人が賭けた数字と、あなたの直感が一致';
+    } else if (q1diff > 0) {
+      diffMain.className = 'diff-num';
+      diffDesc.textContent = 'あなたは' + q1diff + 'ポイント楽観的';
+      diffSub.textContent = '2035年AGIの確率を、予測市場より高く見ている';
+    } else {
+      diffMain.className = 'diff-num 悲観';
+      diffDesc.textContent = 'あなたは' + Math.abs(q1diff) + 'ポイント悲観的';
+      diffSub.textContent = '2035年AGIの確率を、予測市場より低く見ている';
+    }
+
+    // Animate diff counter
+    diffMain.textContent = '0pt';
+    setTimeout(function() { animateCounter(diffMain, 0, q1diff, 1200); }, 400);
+
+    // Q1 bar position
+    var q1Marker = document.getElementById('bar-q1-you');
+    setTimeout(function() {
+      q1Marker.style.transition = 'left 1s var(--ease)';
+      q1Marker.style.left = q1 + '%';
+    }, 600);
+    document.getElementById('bar-q1-you-val').textContent = q1 + '%';
+
+    // Q2 bar position
+    var q2pct = ((q2 - 2026) / (2044 - 2026)) * 100;
+    var q2Marker = document.getElementById('bar-q2-you');
+    setTimeout(function() {
+      q2Marker.style.transition = 'left 1s var(--ease)';
+      q2Marker.style.left = q2pct + '%';
+    }, 800);
+    document.getElementById('bar-q2-you-val').textContent = q2 + '年';
+
+    // Final timeline: position YOU pin (2026-2036 scale, 10 years span = 100%)
+    // Cap at 100% for years beyond 2036
+    var youTimelinePct = Math.min(((q2 - 2026) / 10) * 100, 100);
+    var youPin = document.getElementById('final-you-pin');
+    if (youPin) {
+      setTimeout(function() {
+        youPin.style.transition = 'left 1.2s var(--ease)';
+        youPin.style.left = youTimelinePct + '%';
+      }, 700);
+      var youYearEl = document.getElementById('final-you-year');
+      if (youYearEl) youYearEl.textContent = q2 >= 2036 ? '2036+' : String(q2);
+      var youCardYearEl = document.getElementById('final-you-card-year');
+      if (youCardYearEl) youCardYearEl.textContent = String(q2);
+    }
+
+    // Gauges
+    setTimeout(function() {
+      animateGauge(document.getElementById('gauge-q3'), document.getElementById('gauge-q3-text'), q3);
+    }, 1000);
+    setTimeout(function() {
+      animateGauge(document.getElementById('gauge-q4'), document.getElementById('gauge-q4-text'), q4);
+    }, 1200);
+    setTimeout(function() {
+      animateGauge(document.getElementById('gauge-q5'), document.getElementById('gauge-q5-text'), q5);
+    }, 1400);
+
+    // Verdict text
+    var verdictEl = document.getElementById('verdict');
+    var lines = [];
+
+    var q2diff = q2 - META_Q3479_YEAR;
+    if (q2diff === 0) {
+      lines.push('AGI到達年はMetaculusの中央値と<strong>ぴったり一致</strong>。');
+    } else if (q2diff < 0) {
+      lines.push('AGI到達年はMetaculusより<strong>' + Math.abs(q2diff) + '年早い</strong>。');
+    } else {
+      lines.push('AGI到達年はMetaculusより<strong>' + q2diff + '年遅い</strong>。');
+    }
+
+    if (q4 >= 70) {
+      lines.push('計算量だけでAGIに届くと考えている。<strong>スケーリング仮説の強い支持者</strong>。');
+    } else if (q4 <= 30) {
+      lines.push('計算量だけではAGIに届かない。<strong>設計の飛躍が要る</strong>という見方。');
+    }
+
+    if (q5 >= 30) {
+      lines.push('p(doom) ' + q5 + '%は、AI安全性コミュニティでも<strong>高い部類</strong>。');
+    } else if (q5 <= 5) {
+      lines.push('p(doom) ' + q5 + '%は、AI安全性コミュニティでは<strong>楽観的な部類</strong>だ。');
+    }
+
+    verdictEl.innerHTML = lines.map(function(l){ return '<p class="v-line">' + l + '</p>'; }).join('');
+
+    // Reveal results section + always scroll to results (which contains
+    // the final comparison timeline with everyone + you).
+    var resultsSection = document.getElementById('results');
+    resultsSection.classList.add('visible');
+    setTimeout(function() {
+      resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
+  }
+})();
+</script>
+
+<!-- Google Translate -->
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ja',
+    includedLanguages: 'en,zh-CN,ko,fr,de,es',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>

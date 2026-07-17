@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>AGIはいつ来るのか — 9つの研究機関と3つの時間軸 — AGI HUB</title>
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #ddd5bd;
+        --bg: #f3f1e9;
+        --bg-alt: #ebe7d3;
+        --accent: #1f3a5f;
+        --accent-soft: rgba(31, 58, 95, 0.09);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+          游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+          游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
+          sans-serif;
+        font-feature-settings: "palt";
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .progress {
+        position: fixed; top: 0; left: 0;
+        height: 2px; background: var(--accent);
+        width: 0%; z-index: 100;
+        transition: width 0.3s var(--ease);
+      }
+
+      .nav {
+        position: fixed; right: 24px; top: 50%;
+        transform: translateY(-50%);
+        display: grid; gap: 16px; z-index: 50;
+      }
+
+      .nav button {
+        width: 8px; height: 8px; border-radius: 999px;
+        border: 1.5px solid var(--meta);
+        background: transparent; cursor: pointer;
+        transition: all 0.3s var(--ease);
+      }
+
+      .nav button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.4);
+      }
+
+      main { scroll-snap-type: y mandatory; }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 80px 48px 64px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 32px;
+        scroll-snap-align: start;
+      }
+
+      .slide + .slide { border-top: 1px solid var(--border); }
+
+      .hero {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.6) contrast(1.1);
+        transition: filter 0.6s var(--ease);
+      }
+
+      .hero:hover { filter: grayscale(0) contrast(1); }
+
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .credits {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 80px;
+        border-top: 1px solid var(--border);
+      }
+
+      .credits p {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.047em;
+        line-height: 2;
+        color: var(--light-gray);
+      }
+
+      .credits a {
+        color: var(--meta);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .credits a:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.35s; }
+
+      .eyebrow {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1, h2 {
+        color: var(--black);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        max-width: 24ch;
+        padding-bottom: 16px;
+        border-bottom: 3px double var(--accent);
+      }
+
+      h1 { font-size: clamp(30px, 4.4vw, 38px); }
+      h2 { font-size: clamp(26px, 3.8vw, 34px); }
+
+      .lead {
+        max-width: 780px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .lead + .lead { margin-top: 8px; }
+
+      .panel { display: grid; gap: 24px; align-content: start; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+      .card {
+        padding: 24px 20px 24px 0;
+        border-top: 3px solid var(--accent);
+        background: transparent;
+      }
+
+      .card .tag { color: var(--accent); font-weight: 700; }
+      .card strong { color: var(--black); }
+
+      .card p {
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+        margin-bottom: 12px;
+      }
+
+      .bullets { display: grid; gap: 16px; }
+
+      .point {
+        padding-left: 16px;
+        border-left: 3px solid var(--accent);
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .point strong { color: var(--black); }
+
+      table.compare {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 3px solid var(--accent);
+        border-bottom: 3px double var(--accent);
+        background: var(--bg);
+      }
+
+      table.compare th, table.compare td {
+        padding: 18px 16px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--body-text);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      table.compare th {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 1px solid var(--accent);
+        background: var(--accent-soft);
+      }
+
+      table.compare td strong { color: var(--black); }
+      table.compare tr:last-child td { border-bottom: none; }
+
+      .note {
+        font-size: 17px;
+        line-height: 1.7;
+        color: var(--body-text);
+        padding: 24px 28px;
+        margin: 12px 0;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        position: relative;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        max-width: 100%;
+      }
+      .note::before {
+        content: "EVIDENCE";
+        display: block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .note strong { color: var(--accent); }
+
+      .bignum {
+        display: grid;
+        gap: 6px;
+        padding: 22px 18px;
+        border-top: 3px solid var(--accent);
+        background: var(--bg);
+      }
+      .bignum .num {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: -0.01em;
+      }
+      .bignum .label {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--meta);
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+      }
+
+      .footer .slide-count {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .svg-diagram {
+        width: 100%;
+        overflow-x: auto;
+        padding: 24px 0;
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .svg-diagram svg {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+      }
+
+      @media (max-width: 768px) {
+        .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        .slide { padding: 64px 24px 48px; }
+        h1 { font-size: 26px; }
+        h2 { font-size: 22px; }
+      }
+
+      @media (max-width: 480px) {
+        .slide { padding: 56px 16px 40px; }
+        .note { padding: 16px 14px; font-size: 14px; }
+      }
+
+      @media print {
+        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
+        .nav, .progress { display: none; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="pattern-investigation has-site-header" data-category="technical">
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+
+    <aside class="nav" aria-label="Section navigation">
+      <button data-target="slide-1" class="active" aria-label="Section 1"></button>
+      <button data-target="slide-2" aria-label="Section 2"></button>
+      <button data-target="slide-3" aria-label="Section 3"></button>
+      <button data-target="slide-4" aria-label="Section 4"></button>
+      <button data-target="slide-5" aria-label="Section 5"></button>
+      <button data-target="slide-6" aria-label="Section 6"></button>
+      <button data-target="slide-7" aria-label="Section 7"></button>
+      <button data-target="slide-nav" aria-label="Navigation"></button>
+    </aside>
+
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 31 &nbsp;&middot;&nbsp; Technical &nbsp;&middot;&nbsp; 7 Sections</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="30-nagi-npt-analog-closing-window.html" style="color:inherit;text-decoration:none;">&larr; Prev</a>
+        <a href="../index.html#filter=technical" style="color:inherit;text-decoration:none;">Same Category</a>
+        <a href="32-japan-agi-silence.html" style="color:inherit;text-decoration:none;">Next &rarr;</a>
+      </span>
+    </div>
+
+    <main>
+
+      <!-- ═══════════ SECTION 1: THE QUESTION WITHOUT AN ANSWER ═══════════ -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &middot; No. 31 &middot; Technical &middot; The Ungiven Answer &middot; 2026.04.18 &middot; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">AGIはいつ来るのか、という問いの落とし穴</h1>
+        <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/agi-timelines-institutions-map/slide1.jpg" alt="霧の奥に消えていく研究室の廊下">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">「AGIはいつ来るのか」——この問いは、2023年以降、世界で最も引用された技術時計の針である。Dario Amodeiは2026-2027年に "Powerful AI" が出ると書いた。Leopold Aschenbrennerは『Situational Awareness』で2027年ASIの筋道を5万語で描いた。Daniel Kokotajloは『AI 2027』で月単位のシナリオを書いた。Demis Hassabisは5-10年と語った。Yann LeCunは「現行LLMの延長には存在しない」と繰り返した。Metaculusの群衆予測は2030年前後で推移した。この散らばりは情報の不足ではない。<strong>問いが成立していないことの表れ</strong>である。</p>
+
+          <p class="lead">AGIの予測値が散らばる理由は三つある。第一に、定義が機関ごとに違う。OpenAIは「経済的に重要な大多数のタスクで人間を上回る」と定義し、DeepMindは5レベルのフレームワークで Level 5 を Superhuman と位置づける。Anthropicは "Powerful AI" を「ノーベル賞級の生物学者がデータセンターの中にいるような能力」と定義する。Meta FAIRのLeCunは「猫レベルの世界モデルさえ未達成」だと言う。<strong>定義が違えば、到達時刻も違う</strong>——これは当然の論理だが、一般報道ではこの差異が消され、単一の「AGI」という言葉に全部が畳み込まれる。</p>
+
+          <p class="lead">第二に、予測者が見ている根拠が違う。Aschenbrennerはスケーリング則と実効計算の外挿を見ている。LeCunは身体性・因果推論・世界モデルの欠如を見ている。Yudkowskyは理論的アラインメント未解決を見ている。Kurzweilは長期的な収益逓増のLog-linear直線を見ている。<strong>同じ「AGI」という言葉で、違う変数の外挿を議論している</strong>。議論がかみ合わないのは、参加者が互いに違う地図を広げているからだ。</p>
+
+          <p class="lead">第三に、立場性がある。OpenAI・Anthropic・xAIは「AGI近い」と言うほど資本が集まる。MIRI・FAR AI・アカデミアの批判系は「安全性が遅れている」と言うほど研究資金が集まる。Meta・Appleのような後発は「LLM単体では無理」と言うほど自社のR&Dロードマップが肯定される。<strong>予測はニュートラルではない</strong>。誰が何を言っているかを、その機関の資本構造・研究資源・公表義務と切り離して読むことはできない。</p>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arr1" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                  <polygon points="0,0 10,5 0,10" fill="#757575"/>
+                </marker>
+              </defs>
+              <text x="30" y="24" font-family="'SF Mono',monospace" font-size="10" fill="#1f3a5f" letter-spacing="0.08em" font-weight="700">FLOW &middot; 予測が散らばる3つの源</text>
+
+              <!-- 3 input boxes -->
+              <g>
+                <rect x="40" y="50" width="240" height="84" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+                <text x="160" y="78" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="13" fill="#1f3a5f">① 定義の差</text>
+                <text x="160" y="100" text-anchor="middle" font-size="11" fill="#585858">OpenAI: 経済的重要タスク</text>
+                <text x="160" y="116" text-anchor="middle" font-size="11" fill="#585858">DeepMind: Level 1-5</text>
+                <text x="160" y="128" text-anchor="middle" font-size="10" fill="#757575">Anthropic: Powerful AI</text>
+              </g>
+              <g>
+                <rect x="330" y="50" width="240" height="84" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+                <text x="450" y="78" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="13" fill="#1f3a5f">② 根拠の差</text>
+                <text x="450" y="100" text-anchor="middle" font-size="11" fill="#585858">Aschenbrenner: スケーリング外挿</text>
+                <text x="450" y="116" text-anchor="middle" font-size="11" fill="#585858">LeCun: 世界モデル未達</text>
+                <text x="450" y="128" text-anchor="middle" font-size="10" fill="#757575">Yudkowsky: アラインメント</text>
+              </g>
+              <g>
+                <rect x="620" y="50" width="240" height="84" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+                <text x="740" y="78" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="13" fill="#1f3a5f">③ 立場性</text>
+                <text x="740" y="100" text-anchor="middle" font-size="11" fill="#585858">発信で資本が動く機関</text>
+                <text x="740" y="116" text-anchor="middle" font-size="11" fill="#585858">研究資金が動くアカデミア</text>
+                <text x="740" y="128" text-anchor="middle" font-size="10" fill="#757575">後発のR&D正当化</text>
+              </g>
+
+              <!-- Arrows converging down -->
+              <path d="M 160,134 Q 160,170 430,180" fill="none" stroke="#757575" stroke-width="1.5" marker-end="url(#arr1)"/>
+              <path d="M 450,134 L 450,178" fill="none" stroke="#757575" stroke-width="1.5" marker-end="url(#arr1)"/>
+              <path d="M 740,134 Q 740,170 470,180" fill="none" stroke="#757575" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+              <!-- Output box -->
+              <rect x="260" y="192" width="380" height="50" fill="#1f3a5f" fill-opacity="0.18" stroke="#1f3a5f" stroke-width="1.5"/>
+              <text x="450" y="217" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="14" fill="#1f3a5f">予測値は散らばる（情報不足ではなく、構造的必然）</text>
+              <text x="450" y="233" text-anchor="middle" font-size="11" fill="#585858">3つの源は独立で重なる &rarr; 単一の数字に畳み込めない</text>
+            </svg>
+          </div>
+
+          <div class="note">
+            <strong>この記事が描くこと。</strong> AGI予測の「一つの正しい答え」は提示しない。代わりに、予測を発信している9つの研究機関の立場性、3つの時間軸に収束するクラスタ、そして論争の収束点と分岐点を地図化する。読者が自分で予測を評価できる土台を提供する。個別技術（Transformer・SSM・World Model・RL・解釈可能性）の議論はこの幹から派生する枝記事に譲る。
+          </div>
+
+          <p class="lead">この記事は幹である。「AGIはいつ来るか」という問いに単一の答えはない。だが、問いが散らばっている<strong>構造</strong>には答えがある。それを描く。</p>
+        </div>
+
+        <div class="footer">
+          <span>問いの散らばりには構造がある</span>
+          <span class="slide-count">1 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 2: THE INSTITUTION MAP ═══════════ -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">The Institution Map</div>
+        <h2 class="reveal reveal-delay-1">9つの研究機関と、それぞれが賭けている命題</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/agi-timelines-institutions-map/slide2.jpg" alt="複数のカーブが交わる都市の地下通路">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">AGI言説を発信している機関は無数にあるが、議論を動かしている主要な発信源は9つに集約できる。それぞれが異なる技術的前提に賭けており、その前提が外れれば機関のロードマップが根本から書き換わる関係にある。賭けを理解すれば、発言の重みが違って読める。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>機関</th>
+                <th>賭けている命題</th>
+                <th>代表発言・根拠</th>
+                <th>射程</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>OpenAI</strong></td>
+                <td>スケーリング + 推論の継続で汎用性に到達する</td>
+                <td>GPT系スケーリング則、o1/o3で推論を別軸として切り出し、強化学習で汎用推論を獲得</td>
+                <td>数年以内</td>
+              </tr>
+              <tr>
+                <td><strong>Anthropic</strong></td>
+                <td>スケーリングは効くが、解釈可能性とアラインメントが並走しないと危険</td>
+                <td>Amodei『Machines of Loving Grace』で2026-2027に Powerful AI。Constitutional AI、機械的解釈可能性研究</td>
+                <td>2026-2027</td>
+              </tr>
+              <tr>
+                <td><strong>Google DeepMind</strong></td>
+                <td>マルチモーダル統合と定理証明的推論でLevel間を段階的に登る</td>
+                <td>Hassabis発言で5-10年、Gemini、AlphaProof、AlphaGeometry、Levels of AGI論文(Morris et al. 2024)</td>
+                <td>5-10年</td>
+              </tr>
+              <tr>
+                <td><strong>Meta FAIR</strong></td>
+                <td>LLMは行き止まり、World Modelと自己教師あり学習が本道</td>
+                <td>LeCun発言で10年以上。JEPA、V-JEPA、猫レベル世界モデル未達成論</td>
+                <td>10年以上</td>
+              </tr>
+              <tr>
+                <td><strong>xAI</strong></td>
+                <td>計算資源の絶対量が先端性能を決める</td>
+                <td>Grok 3でColossusの20万GPU、H100の単一クラスタ運用、物理法則ベースの推論志向</td>
+                <td>数年以内</td>
+              </tr>
+              <tr>
+                <td><strong>MIRI</strong></td>
+                <td>到達時期より、到達前にアラインメント未解決のまま強能力が出現することが破綻的</td>
+                <td>Yudkowsky『If Anyone Builds It, Everyone Dies』、初期の「If we build superintelligence with current methods, we die」論</td>
+                <td>時期より破綻性</td>
+              </tr>
+              <tr>
+                <td><strong>METR</strong></td>
+                <td>AIが自律遂行できるタスクの時間長が指数的に伸びている。この指数の外挿が時期を決める</td>
+                <td>Measuring AI Ability to Complete Long Tasks論文。2024年時点で30分〜1時間級、約7ヶ月で倍化</td>
+                <td>定量外挿</td>
+              </tr>
+              <tr>
+                <td><strong>UK AISI / US AISI</strong></td>
+                <td>AGI時期ではなく、危険能力evalsで先端モデルを継続測定する</td>
+                <td>英米AI安全研究所(2023-2024設立)。Frontier modelへのpre-deployment evals</td>
+                <td>継続測定</td>
+              </tr>
+              <tr>
+                <td><strong>Allen AI (AI2)</strong></td>
+                <td>オープンモデルで科学的検証が可能な状態を保たないと、予測そのものが信頼できない</td>
+                <td>OLMoシリーズ、Tulu、Molmo。オープンソース原理主義</td>
+                <td>検証可能性の保全</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Shared logo symbol library (document-wide) -->
+          <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+            <defs>
+              <symbol id="logo-anthropic" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/>
+              </symbol>
+              <symbol id="logo-meta" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/>
+              </symbol>
+              <symbol id="logo-xai" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/>
+              </symbol>
+              <symbol id="logo-deepmind" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/>
+              </symbol>
+              <symbol id="logo-openai" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <ellipse cx="12" cy="12" rx="8.5" ry="3.4"/>
+                  <ellipse cx="12" cy="12" rx="8.5" ry="3.4" transform="rotate(60 12 12)"/>
+                  <ellipse cx="12" cy="12" rx="8.5" ry="3.4" transform="rotate(120 12 12)"/>
+                </g>
+              </symbol>
+            </defs>
+          </svg>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg">
+              <!-- Title -->
+              <text x="60" y="28" font-family="'SF Mono',monospace" font-size="10" fill="#1f3a5f" letter-spacing="0.08em" font-weight="700">9機関のポジショニング — スケーリング観 × Safety/Capability志向</text>
+
+              <!-- Quadrant backgrounds -->
+              <rect x="60" y="60" width="390" height="200" fill="#1f3a5f" fill-opacity="0.04"/>
+              <rect x="450" y="60" width="390" height="200" fill="#1f3a5f" fill-opacity="0.08"/>
+              <rect x="60" y="260" width="390" height="200" fill="#1f3a5f" fill-opacity="0.02"/>
+              <rect x="450" y="260" width="390" height="200" fill="#1f3a5f" fill-opacity="0.06"/>
+
+              <!-- Axes -->
+              <line x1="60" y1="260" x2="840" y2="260" stroke="#1a1a1a" stroke-width="1.2"/>
+              <line x1="450" y1="60" x2="450" y2="460" stroke="#1a1a1a" stroke-width="1.2"/>
+
+              <!-- Arrow heads -->
+              <polygon points="840,260 832,256 832,264" fill="#1a1a1a"/>
+              <polygon points="60,260 68,256 68,264" fill="#1a1a1a"/>
+              <polygon points="450,60 446,68 454,68" fill="#1a1a1a"/>
+              <polygon points="450,460 446,452 454,452" fill="#1a1a1a"/>
+
+              <!-- Axis labels -->
+              <text x="840" y="278" text-anchor="end" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" font-weight="700">スケーリング楽観 →</text>
+              <text x="60" y="278" text-anchor="start" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" font-weight="700">← スケーリング懐疑</text>
+              <text x="460" y="72" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" font-weight="700">↑ Safety志向</text>
+              <text x="460" y="454" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" font-weight="700">↓ Capability志向</text>
+
+              <!-- Institution markers (filled circle + letter mark + label) -->
+              <!-- MIRI (mid-x, top=very safety) -->
+              <circle cx="390" cy="105" r="22" fill="#1f3a5f" stroke="#1f3a5f" stroke-width="1.5"/>
+              <text x="390" y="110" text-anchor="middle" font-family="'SF Mono',monospace" font-size="13" fill="#ffffff" font-weight="700">MR</text>
+              <text x="390" y="145" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">MIRI</text>
+
+              <!-- AISI (left-mid, high safety) -->
+              <circle cx="220" cy="140" r="22" fill="#ffffff" stroke="#1f3a5f" stroke-width="1.5"/>
+              <text x="220" y="145" text-anchor="middle" font-family="'SF Mono',monospace" font-size="13" fill="#1f3a5f" font-weight="700">AS</text>
+              <text x="220" y="180" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">AISI (UK/US)</text>
+
+              <!-- METR (right-mid, mid-high safety) -->
+              <circle cx="560" cy="145" r="22" fill="#ffffff" stroke="#1f3a5f" stroke-width="1.5"/>
+              <text x="560" y="150" text-anchor="middle" font-family="'SF Mono',monospace" font-size="13" fill="#1f3a5f" font-weight="700">MT</text>
+              <text x="560" y="185" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">METR</text>
+
+              <!-- Anthropic (right, mid-safety) -->
+              <circle cx="700" cy="195" r="24" fill="#1f3a5f" stroke="#1f3a5f" stroke-width="1.5"/>
+              <use href="#logo-anthropic" x="686" y="181" width="28" height="28" color="#ffffff"/>
+              <text x="700" y="235" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">Anthropic</text>
+
+              <!-- Allen AI (left, mid) -->
+              <circle cx="270" cy="235" r="22" fill="#ffffff" stroke="#1f3a5f" stroke-width="1.5"/>
+              <text x="270" y="240" text-anchor="middle" font-family="'SF Mono',monospace" font-size="13" fill="#1f3a5f" font-weight="700">A2</text>
+              <text x="270" y="272" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">Allen AI (AI2)</text>
+
+              <!-- DeepMind (center-right) -->
+              <circle cx="510" cy="275" r="24" fill="#1f3a5f" fill-opacity="0.7" stroke="#1f3a5f" stroke-width="1.5"/>
+              <use href="#logo-deepmind" x="496" y="261" width="28" height="28" color="#ffffff"/>
+              <text x="510" y="312" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">DeepMind</text>
+
+              <!-- OpenAI (right, capability) -->
+              <circle cx="720" cy="345" r="26" fill="#1f3a5f" stroke="#1f3a5f" stroke-width="1.5"/>
+              <use href="#logo-openai" x="704" y="329" width="32" height="32" color="#ffffff"/>
+              <text x="720" y="385" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">OpenAI</text>
+
+              <!-- Meta FAIR (left, capability) -->
+              <circle cx="180" cy="355" r="22" fill="#ffffff" stroke="#1f3a5f" stroke-width="1.5"/>
+              <use href="#logo-meta" x="167" y="342" width="26" height="26" color="#1f3a5f"/>
+              <text x="180" y="392" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">Meta FAIR</text>
+
+              <!-- xAI (far right, very capability) -->
+              <circle cx="790" cy="415" r="22" fill="#1f3a5f" stroke="#1f3a5f" stroke-width="1.5"/>
+              <use href="#logo-xai" x="778" y="403" width="24" height="24" color="#ffffff"/>
+              <text x="790" y="448" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">xAI</text>
+
+              <!-- Quadrant labels -->
+              <text x="70" y="82" font-family="'SF Mono',monospace" font-size="9" fill="#757575" letter-spacing="0.05em">QUADRANT: 懐疑 × Safety</text>
+              <text x="830" y="82" text-anchor="end" font-family="'SF Mono',monospace" font-size="9" fill="#757575" letter-spacing="0.05em">QUADRANT: 楽観 × Safety</text>
+              <text x="70" y="448" font-family="'SF Mono',monospace" font-size="9" fill="#757575" letter-spacing="0.05em">QUADRANT: 懐疑 × Capability</text>
+              <text x="830" y="448" text-anchor="end" font-family="'SF Mono',monospace" font-size="9" fill="#757575" letter-spacing="0.05em">QUADRANT: 楽観 × Capability</text>
+
+              <!-- Footer note -->
+              <text x="60" y="500" font-family="'SF Mono',monospace" font-size="9" fill="#757575">● 塗り=発信主体、○ 白抜き=評価/公共基盤主体。サイズは発言の言論影響度の印象目安</text>
+            </svg>
+          </div>
+
+          <p class="lead">この9機関を縦に並べて見ると、論争の構図が立ち上がる。<strong>OpenAI・Anthropic・xAI</strong>がスケーリング楽観派、<strong>Meta FAIR</strong>がスケーリング懐疑派、<strong>DeepMind</strong>がその中間で「段階的にLevelを登る」という中位観、<strong>MIRI</strong>が時期論を相対化する安全論、<strong>METR</strong>が定量外挿で時期論自体を検証する立場、<strong>AISI</strong>が予測より測定を優先する公共基盤、<strong>Allen AI</strong>が検証可能性そのものを守る科学論。</p>
+
+          <div class="note">
+            <strong>個人予測者の存在感。</strong> 機関以外に、個人予測者の影響力が大きい。Leopold Aschenbrenner(元OpenAI、Situation Awareness Fund)は2027年ASI論、Daniel Kokotajlo(元OpenAI)は『AI 2027』で月単位シナリオ、Ray Kurzweilは2029年AGI・2045年Singularity、Nick Bostromは哲学的に論じる存在、Eliezer Yudkowskyは2010年代から破綻論。これらは機関の公式見解ではないが、機関の発信より早く世論を形成している。個人予測者は機関の立場性に縛られないぶん、<strong>想定を極端まで押し出す役割</strong>を果たす。
+          </div>
+
+          <p class="lead">機関と個人予測者の関係は生態系的だ。機関が慎重に公表した内容を個人予測者が極端化して言論空間に投げ、その反響を見て機関が次のポジションを決める。Aschenbrennerの『Situational Awareness』(2024年6月)がOpenAIの組織的態度にどう影響したかは検証困難だが、同年秋以降のAGI予測の加速トーンと時期的に重なる。<strong>公式見解と非公式見解の循環</strong>が、AGI言説全体の時間軸を動かしている。</p>
+        </div>
+
+        <div class="footer">
+          <span>機関ごとに賭けている命題が違う</span>
+          <span class="slide-count">2 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 3: THREE TIME HORIZONS ═══════════ -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">Three Time Horizons</div>
+        <h2 class="reveal reveal-delay-1">2027年軸、2030-2035年軸、2045年以降軸</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/agi-timelines-institutions-map/slide3.jpg" alt="3本の時計の針が異なる時刻を指す">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">機関の予測を時間軸に並べ直すと、3つのクラスタに収束する。それぞれのクラスタには固有の技術的根拠と、外れた場合の代償がある。</p>
+
+          <div class="grid-3">
+            <div class="card">
+              <span class="tag">2027年軸</span>
+              <p><strong>発信元</strong>: Amodei (Anthropic CEO)、Aschenbrenner、Kokotajlo、OpenAI/xAIの一部。<strong>根拠</strong>: スケーリング則の継続、推論コストの急落、エージェントタスク長の指数成長、計算量の年約4倍増。<strong>命題</strong>: 「今までの外挿が外れる理由がない」。外れる場合の代償は、AI資本配分が2026年中に過剰配分になっている状態を示す</p>
+            </div>
+            <div class="card">
+              <span class="tag">2030-2035年軸</span>
+              <p><strong>発信元</strong>: Hassabis (DeepMind CEO)、Metaculus中央値、AI Impacts 2023 Expert Survey、多くの企業研究者。<strong>根拠</strong>: 現行アーキテクチャのボトルネック認識(長期記憶、計画、身体性)、新技術の成熟時間、規制枠組みの確立。<strong>命題</strong>: 「スケーリングだけでは届かないが、隣接技術と組み合わせれば届く」</p>
+            </div>
+            <div class="card">
+              <span class="tag">2045年以降軸</span>
+              <p><strong>発信元</strong>: LeCun (Meta FAIR)、AI懐疑派。<strong>根拠</strong>: World Model・因果推論・身体性の未解決、Transformer以降の本質的ブレークスルー不足、AlphaFold的な高難度領域ブレークスルーでも狭い。<strong>命題</strong>: 「核心の知能理論が未完成のまま到達宣言する可能性はある。だが真の汎用性は遠い」。<strong>別建て</strong>: Ray Kurzweilは2005年『The Singularity Is Near』および2024年『The Singularity Is Nearer』で一貫してAGI到達年を2029年に置く。指数成長(Law of Accelerating Returns)を根拠とし、本稿3軸のどれにも属さない最短派の独立予測者として位置づける</p>
+            </div>
+          </div>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <clipPath id="cp-amodei"><circle cx="105" cy="108" r="18"/></clipPath>
+                <clipPath id="cp-aschenbrenner"><circle cx="155" cy="108" r="18"/></clipPath>
+                <clipPath id="cp-kokotajlo"><circle cx="205" cy="108" r="18"/></clipPath>
+                <clipPath id="cp-hassabis"><circle cx="320" cy="355" r="18"/></clipPath>
+                <clipPath id="cp-lecun"><circle cx="720" cy="108" r="18"/></clipPath>
+              </defs>
+              <!-- Title -->
+              <text x="60" y="28" font-family="'SF Mono',monospace" font-size="10" fill="#1f3a5f" letter-spacing="0.08em" font-weight="700">AGI到達予測の分布 — 予測者と機関のマッピング</text>
+
+              <!-- Timeline axis -->
+              <line x1="60" y1="250" x2="860" y2="250" stroke="#1a1a1a" stroke-width="1.5"/>
+              <polygon points="860,250 852,246 852,254" fill="#1a1a1a"/>
+
+              <!-- Year markers -->
+              <g font-family="'SF Mono',monospace" font-size="11" fill="#1a1a1a">
+                <line x1="140" y1="244" x2="140" y2="256" stroke="#1a1a1a" stroke-width="1.5"/>
+                <text x="140" y="274" text-anchor="middle" font-weight="700">2027</text>
+                <line x1="260" y1="244" x2="260" y2="256" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="260" y="274" text-anchor="middle" font-weight="700" font-size="10">2029</text>
+                <line x1="320" y1="244" x2="320" y2="256" stroke="#1a1a1a" stroke-width="1.5"/>
+                <text x="320" y="274" text-anchor="middle" font-weight="700">2030</text>
+                <line x1="460" y1="244" x2="460" y2="256" stroke="#1a1a1a" stroke-width="1.5"/>
+                <text x="460" y="274" text-anchor="middle" font-weight="700">2035</text>
+                <line x1="620" y1="244" x2="620" y2="256" stroke="#1a1a1a" stroke-width="1.5"/>
+                <text x="620" y="274" text-anchor="middle" font-weight="700">2040</text>
+                <line x1="780" y1="244" x2="780" y2="256" stroke="#1a1a1a" stroke-width="1.5"/>
+                <text x="780" y="274" text-anchor="middle" font-weight="700">2045</text>
+              </g>
+
+              <!-- CLUSTER 1: 2027年軸 (around x=140) -->
+              <rect x="70" y="50" width="170" height="150" fill="#1f3a5f" fill-opacity="0.08" stroke="#1f3a5f" stroke-width="1"/>
+              <text x="155" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#1f3a5f" font-weight="700">2027年軸</text>
+              <!-- Amodei (Anthropic CEO) -->
+              <image href="../images/people/dario-amodei.jpg" x="87" y="90" width="36" height="36" clip-path="url(#cp-amodei)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="105" cy="108" r="18" fill="none" stroke="#1f3a5f" stroke-width="2"/>
+              <text x="105" y="138" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a" font-weight="700">Amodei</text>
+              <!-- Aschenbrenner -->
+              <image href="../images/thinkers/aschenbrenner.jpg" x="137" y="90" width="36" height="36" clip-path="url(#cp-aschenbrenner)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="155" cy="108" r="18" fill="none" stroke="#1f3a5f" stroke-width="2"/>
+              <text x="155" y="138" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a" font-weight="700">Aschenbrenner</text>
+              <!-- Kokotajlo -->
+              <image href="../images/thinkers/kokotajlo.jpg" x="187" y="90" width="36" height="36" clip-path="url(#cp-kokotajlo)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="205" cy="108" r="18" fill="none" stroke="#1f3a5f" stroke-width="2"/>
+              <text x="205" y="138" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a" font-weight="700">Kokotajlo</text>
+              <!-- OpenAI logo mark -->
+              <circle cx="115" cy="170" r="16" fill="#1f3a5f" stroke="#1f3a5f"/>
+              <use href="#logo-openai" x="100" y="155" width="30" height="30" color="#ffffff"/>
+              <text x="115" y="197" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">OpenAI</text>
+              <!-- xAI logo mark -->
+              <circle cx="155" cy="170" r="16" fill="#1f3a5f" stroke="#1f3a5f"/>
+              <use href="#logo-xai" x="145" y="160" width="20" height="20" color="#ffffff"/>
+              <text x="155" y="197" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">xAI</text>
+              <!-- Anthropic logo mark -->
+              <circle cx="195" cy="170" r="16" fill="#1f3a5f" stroke="#1f3a5f"/>
+              <use href="#logo-anthropic" x="185" y="160" width="20" height="20" color="#ffffff"/>
+              <text x="195" y="197" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Anthropic</text>
+              <!-- Connector to axis -->
+              <line x1="155" y1="200" x2="155" y2="244" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+              <!-- CLUSTER 2: 2030-2035年軸 (around x=390) -->
+              <rect x="285" y="300" width="220" height="110" fill="#1f3a5f" fill-opacity="0.14" stroke="#1f3a5f" stroke-width="1"/>
+              <text x="395" y="322" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#1f3a5f" font-weight="700">2030-2035年軸 (最厚支持層)</text>
+              <!-- Hassabis -->
+              <image href="../images/people/demis-hassabis.jpg" x="302" y="337" width="36" height="36" clip-path="url(#cp-hassabis)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="320" cy="355" r="18" fill="none" stroke="#1f3a5f" stroke-width="2"/>
+              <text x="320" y="384" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a" font-weight="700">Hassabis</text>
+              <!-- DeepMind -->
+              <circle cx="370" cy="355" r="16" fill="#1f3a5f" stroke="#1f3a5f"/>
+              <use href="#logo-deepmind" x="360" y="345" width="20" height="20" color="#ffffff"/>
+              <text x="370" y="384" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a">DeepMind</text>
+              <!-- Metaculus中央値 -->
+              <circle cx="420" cy="355" r="18" fill="#ffffff" stroke="#1f3a5f" stroke-width="1.8"/>
+              <text x="420" y="360" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1f3a5f" font-weight="700">M●</text>
+              <text x="420" y="384" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a">Metaculus</text>
+              <!-- Expert Survey -->
+              <circle cx="470" cy="355" r="18" fill="#ffffff" stroke="#1f3a5f" stroke-width="1.8"/>
+              <text x="470" y="360" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1f3a5f" font-weight="700">ES</text>
+              <text x="470" y="384" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a">Expert Svy</text>
+              <!-- Connector -->
+              <line x1="395" y1="300" x2="395" y2="256" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+              <!-- CLUSTER 3: 2045年以降軸 (around x=770) -->
+              <rect x="680" y="50" width="180" height="150" fill="#1f3a5f" fill-opacity="0.05" stroke="#1f3a5f" stroke-width="1"/>
+              <text x="770" y="72" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#1f3a5f" font-weight="700">2045年以降軸</text>
+              <!-- LeCun -->
+              <image href="../images/people/yann-lecun.jpg" x="722" y="90" width="36" height="36" clip-path="url(#cp-lecun)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="740" cy="108" r="18" fill="none" stroke="#1f3a5f" stroke-width="2"/>
+              <text x="740" y="138" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a" font-weight="700">LeCun</text>
+              <!-- 懐疑派 cluster -->
+              <circle cx="800" cy="108" r="18" fill="#ffffff" stroke="#1f3a5f" stroke-width="1.8" stroke-dasharray="2,2"/>
+              <text x="800" y="113" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#1f3a5f" font-weight="700">懐疑</text>
+              <text x="800" y="138" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a">懐疑派</text>
+              <!-- Meta FAIR -->
+              <circle cx="770" cy="170" r="16" fill="#1f3a5f" stroke="#1f3a5f"/>
+              <use href="#logo-meta" x="760" y="160" width="20" height="20" color="#ffffff"/>
+              <text x="770" y="197" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Meta FAIR</text>
+              <!-- Connector -->
+              <line x1="770" y1="200" x2="770" y2="244" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+              <!-- CLUSTER 4: Kurzweil 独立予測 (2029年, Singularity派)。timeline下側、cluster1の真下・cluster2の左に配置（cluster1の人物群と視覚的に被らないよう下段に移動）-->
+              <rect x="80" y="305" width="180" height="115" fill="#1f3a5f" fill-opacity="0.05" stroke="#1f3a5f" stroke-width="1" stroke-dasharray="3,3"/>
+              <text x="170" y="325" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1f3a5f" font-weight="700">Singularity派 (独立)</text>
+              <circle cx="170" cy="360" r="18" fill="#ffffff" stroke="#1f3a5f" stroke-width="1.8"/>
+              <text x="170" y="365" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#1f3a5f" font-weight="700">RK</text>
+              <text x="170" y="390" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">Kurzweil</text>
+              <text x="170" y="408" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#757575">*2029年AGI予測</text>
+              <!-- Connector from Kurzweil box top to 2029 tick -->
+              <line x1="200" y1="305" x2="260" y2="256" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+              <!-- Legend (cluster 4 を timeline 下段に移動したため、凡例をその下に配置) -->
+              <text x="60" y="445" font-family="'SF Mono',monospace" font-size="9" fill="#757575">● 塗り=発信主体/個人 (塗り丸=機関CEO・実在個人)　○ 白抜き=分析・予測基盤 (Metaculus/Expert Survey等)</text>
+              <text x="60" y="462" font-family="'SF Mono',monospace" font-size="9" fill="#757575">*Kurzweilは2029年AGIだが、本稿3軸のいずれにも属さないため独立クラスタとして timeline下段に配置</text>
+            </svg>
+          </div>
+
+          <p class="lead">3軸の中で最も支持が厚いのは2030-2035年軸だ。Metaculusの「When will AGI be developed?」の中央値は、2022年以前は2050年以降だったのが、ChatGPT公開以降は急速に前倒しされ、2024-2025年時点で2030年前後の帯に落ちた。AI Impacts の2023年Expert Surveyでも、機械学習研究者2,778人の集計で「全人間労働の自動化」の50%確率到達年は2047年、「全ての職業で人間を上回る」ポイントは同じ調査で2060年台後半まで分布した(調査対象と質問文で数字は大きく変動)。<strong>専門家の中位値と、最も目立つ個人予測者(Aschenbrenner/Kokotajlo)の発言値の間には、10年単位の乖離がある</strong>。この乖離自体が、予測の不確実性を最も雄弁に示している。</p>
+
+          <div class="note">
+            <strong>時間軸の決め手はデータではなく「どの指標が先に飽和するか」の見立て。</strong> 2027年軸の支持者は、ベンチマーク(FrontierMath, GPQA, SWE-bench, ARC-AGI)の指数的向上が今後2年続くと見る。2030-2035年軸の支持者は、ベンチマークが飽和したあとに「汎用性」に向けた追加技術(エージェント長時間運用、持続的記憶、物理世界との接続)が必要だと見る。2045年以降軸の支持者は、現行のベンチマーク体系自体が真の汎用性を測れていないと見る。指標への信頼が時間軸を決める。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>3軸を分けるのは指標への信頼の差</span>
+          <span class="slide-count">3 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 4: THE MEASUREMENT STRUGGLE ═══════════ -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">The Measurement Struggle</div>
+        <h2 class="reveal reveal-delay-1">何がAGI到達を測るのか、という問い</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/agi-timelines-institutions-map/slide4.jpg" alt="スケールが並ぶ計測室の内部">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">AGI予測の根拠として最も具体性があるのは、ベンチマーク上のスコア推移である。「人間並み」「博士級」「フロンティア」といった定性的な表現は、実際にはベンチマーク上の数値推移の言い換えとして機能している。そのベンチマークが何を測り、何を測れていないかを理解することが、予測を読む前提になる。</p>
+
+          <div class="grid-2">
+            <div class="card">
+              <span class="tag">METR: タスク長</span>
+              <p>2024年論文で、AIが自律的に遂行できるタスクの「人間がかける時間」の長さが、約7ヶ月で倍化していると報告した。2024年時点の先端モデルは30分〜1時間級。この指数が外挿で続けば2027年頃には週単位、2030年頃には月単位のタスクに到達する——これが2027年軸の技術根拠の中核</p>
+            </div>
+            <div class="card">
+              <span class="tag">ARC-AGI</span>
+              <p>François Cholletが設計した、スケーリングでは解けない設計思想のベンチマーク。GPT-4は5%前後、o3(2024年末発表)は低コンピュート設定で75.7%、高コンピュート設定で87.5%(ARC-AGI-1 semi-private, Public Leaderboard)。o3の結果はARC-AGI-1が「スケーリングだけでは解けない」という前提を実質的に覆した</p>
+            </div>
+            <div class="card">
+              <span class="tag">FrontierMath</span>
+              <p>Epoch AIが数学者と共に作ったフロンティア級の数学問題セット。2024年11月公開時、既存モデルは2%以下。o3の発表デモで25.2%を達成したと報告され、数学の高難度領域でスコアが桁で跳ねた</p>
+            </div>
+            <div class="card">
+              <span class="tag">Humanity's Last Exam</span>
+              <p>Scale AI / CAIS が2025年初頭に公開した、意図的にフロンティアに設定された学問横断テスト。公開時点の先端モデルスコアは低く、2025年内に急速な上昇を見せる可能性が高い。スコアが上がるほど「学問ベンチマークでは人間側の設定が枯渇する」状態が近づく</p>
+            </div>
+          </div>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+              <!-- Title -->
+              <text x="60" y="26" font-family="'SF Mono',monospace" font-size="10" fill="#1f3a5f" letter-spacing="0.08em" font-weight="700">METR: AIが自律遂行できるタスク長の倍化 (約7ヶ月で倍加, 対数軸)</text>
+
+              <!-- Axes -->
+              <line x1="80" y1="310" x2="860" y2="310" stroke="#1a1a1a" stroke-width="1.2"/>
+              <line x1="80" y1="40" x2="80" y2="310" stroke="#1a1a1a" stroke-width="1.2"/>
+              <polygon points="860,310 852,306 852,314" fill="#1a1a1a"/>
+              <polygon points="80,40 76,48 84,48" fill="#1a1a1a"/>
+
+              <!-- Y-axis log ticks + labels -->
+              <g font-family="'SF Mono',monospace" font-size="9" fill="#757575">
+                <line x1="76" y1="275" x2="84" y2="275" stroke="#757575"/><text x="72" y="279" text-anchor="end">5 秒</text>
+                <line x1="76" y1="240" x2="84" y2="240" stroke="#757575"/><text x="72" y="244" text-anchor="end">30 秒</text>
+                <line x1="76" y1="205" x2="84" y2="205" stroke="#757575"/><text x="72" y="209" text-anchor="end">2 分</text>
+                <line x1="76" y1="170" x2="84" y2="170" stroke="#757575"/><text x="72" y="174" text-anchor="end">10 分</text>
+                <line x1="76" y1="140" x2="84" y2="140" stroke="#757575"/><text x="72" y="144" text-anchor="end">1 時間</text>
+                <line x1="76" y1="110" x2="84" y2="110" stroke="#757575"/><text x="72" y="114" text-anchor="end">8 時間</text>
+                <line x1="76" y1="80" x2="84" y2="80" stroke="#757575"/><text x="72" y="84" text-anchor="end">3 日</text>
+                <line x1="76" y1="50" x2="84" y2="50" stroke="#757575"/><text x="72" y="54" text-anchor="end">1 ヶ月</text>
+              </g>
+
+              <!-- X-axis year ticks -->
+              <g font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a">
+                <line x1="150" y1="306" x2="150" y2="314" stroke="#1a1a1a"/><text x="150" y="330" text-anchor="middle">2020</text>
+                <line x1="220" y1="306" x2="220" y2="314" stroke="#1a1a1a"/><text x="220" y="330" text-anchor="middle">2021</text>
+                <line x1="290" y1="306" x2="290" y2="314" stroke="#1a1a1a"/><text x="290" y="330" text-anchor="middle">2022</text>
+                <line x1="360" y1="306" x2="360" y2="314" stroke="#1a1a1a"/><text x="360" y="330" text-anchor="middle">2023</text>
+                <line x1="430" y1="306" x2="430" y2="314" stroke="#1a1a1a"/><text x="430" y="330" text-anchor="middle">2024</text>
+                <line x1="500" y1="306" x2="500" y2="314" stroke="#1a1a1a"/><text x="500" y="330" text-anchor="middle">2025</text>
+                <line x1="570" y1="306" x2="570" y2="314" stroke="#1a1a1a"/><text x="570" y="330" text-anchor="middle">2026</text>
+                <line x1="640" y1="306" x2="640" y2="314" stroke="#1a1a1a"/><text x="640" y="330" text-anchor="middle">2027</text>
+                <line x1="780" y1="306" x2="780" y2="314" stroke="#1a1a1a"/><text x="780" y="330" text-anchor="middle">2029</text>
+              </g>
+
+              <!-- Trend line (observed) -->
+              <polyline points="100,285 150,260 220,240 290,210 360,180 430,155 500,130" fill="none" stroke="#1f3a5f" stroke-width="2.5"/>
+
+              <!-- Trend line (projected, dashed) -->
+              <polyline points="500,130 570,100 640,75 710,55 780,40" fill="none" stroke="#1f3a5f" stroke-width="2" stroke-dasharray="5,4" stroke-opacity="0.7"/>
+
+              <!-- Observed data points + labels -->
+              <circle cx="100" cy="285" r="4" fill="#1f3a5f"/><text x="100" y="300" font-family="'SF Mono',monospace" font-size="8" fill="#757575" text-anchor="middle">GPT-2</text>
+              <circle cx="220" cy="240" r="4" fill="#1f3a5f"/><text x="220" y="232" font-family="'SF Mono',monospace" font-size="8" fill="#757575" text-anchor="middle">GPT-3</text>
+              <circle cx="360" cy="180" r="4" fill="#1f3a5f"/><text x="360" y="172" font-family="'SF Mono',monospace" font-size="8" fill="#757575" text-anchor="middle">GPT-4</text>
+              <circle cx="430" cy="155" r="4" fill="#1f3a5f"/><text x="430" y="147" font-family="'SF Mono',monospace" font-size="8" fill="#757575" text-anchor="middle">Claude 3.5</text>
+              <circle cx="500" cy="130" r="5" fill="#1f3a5f"/><text x="510" y="124" font-family="'SF Mono',monospace" font-size="9" fill="#1f3a5f" font-weight="700">o1 / Claude Code 級</text>
+
+              <!-- Projection annotations -->
+              <circle cx="640" cy="75" r="5" fill="#ffffff" stroke="#1f3a5f" stroke-width="2"/>
+              <text x="650" y="70" font-family="'SF Mono',monospace" font-size="9" fill="#1f3a5f">2027: 週単位 (外挿)</text>
+              <circle cx="780" cy="40" r="5" fill="#ffffff" stroke="#1f3a5f" stroke-width="2"/>
+              <text x="770" y="34" font-family="'SF Mono',monospace" font-size="9" fill="#1f3a5f" text-anchor="end">2029: 月単位 (外挿)</text>
+
+              <!-- Note -->
+              <text x="60" y="362" font-family="'SF Mono',monospace" font-size="9" fill="#757575">実線=観測値、破線=外挿 (倍化周期の直線外挿、アーキ革新・物理制約は無視した理論値)</text>
+            </svg>
+          </div>
+
+          <div class="note">
+            <strong>ベンチマークの飽和速度が加速している。</strong> GLUE(2018)は2年、SuperGLUE(2019)は1年、MMLU(2020)は3-4年で人間水準に到達した。FrontierMath(2024)は公開2ヶ月で2%から25%に跳ねた。<strong>測定器が被測定対象に追いつけない速度で作られ、追い抜かれる</strong>状態に入っている。この加速そのものが、AGI論者の「近い」という感覚の生理的根拠になっている。一方、懐疑派は「ベンチマーク飽和=汎用知能ではない」と主張する。両者は同じ事実を見て違う結論を出している。
+          </div>
+
+          <p class="lead">測定の次元を整理すると、4つのレイヤに分かれる。第1層は<strong>知識想起</strong>(MMLU・TriviaQA)、第2層は<strong>推論</strong>(MATH・GPQA・FrontierMath)、第3層は<strong>抽象化・転移</strong>(ARC-AGI)、第4層は<strong>長時間タスク遂行</strong>(METR・SWE-bench・OpenAI's MLE-bench)。2024年時点で第1-2層はほぼ飽和し、第3層は急速に進行中、第4層は指数成長中だが絶対水準はまだ数時間レベルに留まる。AGI到達を「第4層で月単位」と定義すると2027-2030年軸、「真の転移汎用性」と定義すると2035年以降軸、という分岐が生まれる。<strong>どのレイヤを見るかで時計の針の位置が変わる</strong>。</p>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg">
+              <!-- Title -->
+              <text x="60" y="26" font-family="'SF Mono',monospace" font-size="10" fill="#1f3a5f" letter-spacing="0.08em" font-weight="700">ベンチマーク4階層 — 現状水準と飽和度 (2025時点)</text>
+
+              <!-- 0-100% scale -->
+              <line x1="260" y1="295" x2="820" y2="295" stroke="#1a1a1a" stroke-width="1.2"/>
+              <g font-family="'SF Mono',monospace" font-size="9" fill="#757575">
+                <text x="260" y="312" text-anchor="middle">0%</text>
+                <text x="400" y="312" text-anchor="middle">25%</text>
+                <text x="540" y="312" text-anchor="middle">50%</text>
+                <text x="680" y="312" text-anchor="middle">75%</text>
+                <text x="820" y="312" text-anchor="middle">100%</text>
+                <line x1="400" y1="293" x2="400" y2="297" stroke="#757575"/>
+                <line x1="540" y1="293" x2="540" y2="297" stroke="#757575"/>
+                <line x1="680" y1="293" x2="680" y2="297" stroke="#757575"/>
+              </g>
+
+              <!-- Human baseline reference line -->
+              <line x1="800" y1="60" x2="800" y2="290" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="3,3" stroke-opacity="0.5"/>
+              <text x="800" y="55" font-family="'SF Mono',monospace" font-size="9" fill="#1a1a1a" text-anchor="middle">人間水準</text>
+
+              <!-- Layer 1: 知識想起 (MMLU ≈ 92%) -->
+              <text x="60" y="88" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">第1層</text>
+              <text x="60" y="104" font-family="sans-serif" font-size="10" fill="#1a1a1a">知識想起</text>
+              <text x="60" y="118" font-family="'SF Mono',monospace" font-size="9" fill="#757575">MMLU / TriviaQA</text>
+              <rect x="260" y="80" width="515" height="32" fill="#1f3a5f" fill-opacity="0.85"/>
+              <text x="770" y="100" text-anchor="end" font-family="'SF Mono',monospace" font-size="11" fill="#ffffff" font-weight="700">92% (飽和)</text>
+
+              <!-- Layer 2: 推論 (GPQA ≈ 80%, FrontierMath 25%) -->
+              <text x="60" y="148" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">第2層</text>
+              <text x="60" y="164" font-family="sans-serif" font-size="10" fill="#1a1a1a">推論</text>
+              <text x="60" y="178" font-family="'SF Mono',monospace" font-size="9" fill="#757575">MATH / GPQA / FrontierMath</text>
+              <rect x="260" y="140" width="440" height="32" fill="#1f3a5f" fill-opacity="0.7"/>
+              <text x="695" y="160" text-anchor="end" font-family="'SF Mono',monospace" font-size="11" fill="#ffffff" font-weight="700">78% (急上昇中)</text>
+
+              <!-- Layer 3: 抽象化・転移 (ARC-AGI o3 87%) -->
+              <text x="60" y="208" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">第3層</text>
+              <text x="60" y="224" font-family="sans-serif" font-size="10" fill="#1a1a1a">抽象化・転移</text>
+              <text x="60" y="238" font-family="'SF Mono',monospace" font-size="9" fill="#757575">ARC-AGI</text>
+              <rect x="260" y="200" width="490" height="32" fill="#1f3a5f" fill-opacity="0.55"/>
+              <text x="745" y="220" text-anchor="end" font-family="'SF Mono',monospace" font-size="11" fill="#ffffff" font-weight="700">o3=87% / 平均48%</text>
+
+              <!-- Layer 4: 長時間タスク (METR: ~1-2hr level of ~月) -->
+              <text x="60" y="268" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">第4層</text>
+              <text x="60" y="283" font-family="sans-serif" font-size="10" fill="#1a1a1a">長時間タスク遂行</text>
+              <text x="60" y="292" font-family="'SF Mono',monospace" font-size="8" fill="#757575">METR/SWE-bench/MLE-bench</text>
+              <rect x="260" y="258" width="95" height="32" fill="#1f3a5f" fill-opacity="0.35"/>
+              <text x="365" y="278" font-family="'SF Mono',monospace" font-size="11" fill="#1f3a5f" font-weight="700">~1時間級 (成長中)</text>
+
+              <!-- Direction arrow -->
+              <line x1="400" y1="330" x2="620" y2="330" stroke="#1f3a5f" stroke-width="1.5"/>
+              <polygon points="620,330 612,326 612,334" fill="#1f3a5f"/>
+              <text x="510" y="325" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#1f3a5f" font-weight="700">時間とともに飽和が下層→上層へ波及</text>
+            </svg>
+          </div>
+
+          <p class="lead">測定自体に内在する問題も無視できない。ベンチマーク設計者は飽和を避けるため難度を上げるが、難度が上がるほど「人間の正解率」の測定が困難になる。FrontierMathの人間正解率は公表されていない(専門分野の数学者でも解けない問題が含まれる)。Humanity's Last Examの人間正解率は「人類全体で集計不能」という設計になっている。<strong>「人間並み」の比較対象が消えていく</strong>状態は、到達判定を主観的にする。「AGI到達」の宣言は、機関の裁量が大きい領域に入りつつある。</p>
+        </div>
+
+        <div class="footer">
+          <span>ベンチマークが測れなくなる日</span>
+          <span class="slide-count">4 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 5: CONVERGENCE AND DIVERGENCE ═══════════ -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">Convergence and Divergence</div>
+        <h2 class="reveal reveal-delay-1">業界は何で合意し、何で割れているか</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/agi-timelines-institutions-map/slide5.jpg" alt="交差する複数のレール">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">AGI論争は表面的には賑やかだが、合意と不合意の地図を描くと、意外なほど収束している領域と、真っ向から割れている領域に分かれる。</p>
+
+          <div class="grid-2">
+            <div class="card">
+              <span class="tag">収束点1</span>
+              <p><strong>スケーリングは効く。</strong> 2023年以前は「スケーリング仮説」自体が論争の対象だった。LeCunですら2023年まで「LLMには限界がある」と言ったが、その批判対象は「スケーリングが効かない」ではなく「スケーリングだけでは不十分」にシフトした。2025年時点で「スケーリングが効かない」と主張する主要研究者はほぼいない</p>
+            </div>
+            <div class="card">
+              <span class="tag">収束点2</span>
+              <p><strong>計算量が先端性能の主要因である。</strong> Chinchilla論文(2022)以降、データとパラメータとコンピュートの最適配分に議論は移動したが、「計算量の総量が決定的」という点は共有される。Epoch AIの推計でAI学習計算量は年約4倍で伸び続けている。これに対する反論はほぼ消えた</p>
+            </div>
+            <div class="card">
+              <span class="tag">収束点3</span>
+              <p><strong>推論時計算(Test-Time Compute)が第二の軸として独立した。</strong> o1/o3がRL的推論で性能を伸ばしたことで、「学習計算量+推論計算量」の2軸モデルが業界の共通前提になった。学習だけのスケーリングが頭打ちでも、推論でカバーできるという構造が開けた</p>
+            </div>
+            <div class="card">
+              <span class="tag">収束点4</span>
+              <p><strong>エージェント化が次のフェーズである。</strong> 2025年は「モデル性能の年」から「エージェント能力の年」への移行点と多くの機関が位置づけている。METR論文、Claude Code、ChatGPT Operator、Devinなどの実装が相次ぎ、単発応答から長時間自律遂行への移行が共通前提になった</p>
+            </div>
+          </div>
+
+          <p class="lead">一方、真っ向から割れている分岐点は4つある。</p>
+
+          <div class="bullets">
+            <div class="point"><strong>分岐1: スケーリングだけで届くか。</strong> OpenAI・Anthropic・xAIは「届く」と見なす(Aschenbrennerの論証が代表的)。Meta FAIR・DeepMind の一部・多くのアカデミアは「届かない、追加のアーキ革新が必要」と見なす。JEPA、SSM(Mamba)、World Model、Neurosymbolic hybrid等の多様なオルタナティブが同時並行で研究されている状況は、業界がこの分岐に実際に賭けていることを示す</div>
+            <div class="point"><strong>分岐2: アラインメントは間に合うか。</strong> Anthropic・OpenAIはアラインメント研究と能力研究を並走させれば間に合うと公式には主張する。MIRI・一部のAnthropic研究者・PauseAI系は「現状の方法論では間に合わない、スローダウンが必要」と主張する。METR・Apollo・AISIは「判断する前に能力を正確に測ろう」という中間姿勢。この分岐は技術論であると同時にガバナンス論であり、政策の形を左右する</div>
+            <div class="point"><strong>分岐3: AGIとASIの距離。</strong> Aschenbrennerの『Situational Awareness』は、AGIからASIへの移行を数ヶ月から数年のオーダーで描く(再帰的自己改善による)。MIRIも同種の見解。他方、DeepMind・Meta FAIR・多くのアカデミアは「AGIとASIの間には数十年単位のギャップがあるかもしれない」と見なす。この距離の見積もりが、「AGI登場がヒト絶滅イベントか移行期か」の判断を分ける</div>
+            <div class="point"><strong>分岐4: 身体性は不可欠か。</strong> LeCunは「知能の核心には身体性がある。デジタル空間のみに閉じた知能は浅い」と主張する。OpenAI・Anthropicはこの主張を優先事項とはしていない。ロボティクスの進展(Figure、Tesla Optimus、Boston Dynamics、Sanctuary AI等)はこの分岐に間接的に証拠を投じ続ける。2027-2030年にかけて、ロボティクス側のブレークスルーがあれば分岐の力学が変わる可能性がある</div>
+          </div>
+
+          <div class="note">
+            <strong>合意と分岐の非対称。</strong> 収束している4点は、どれも「何が今起きているか」の記述である。割れている4点は、どれも「何が次に起きるか」の予測である。事実の観測では一致するが、外挿の方向で一致しない。この非対称は、AGI論争が事実論争ではなく<strong>外挿論争</strong>であることを示している。外挿論争の決着は、実際に時間が経つことでしかつかない。議論で決着はつかない。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>論争は事実ではなく外挿で割れる</span>
+          <span class="slide-count">5 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 6: THE OTHER POLES ═══════════ -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow reveal">The Other Poles</div>
+        <h2 class="reveal reveal-delay-1">中国と日本は、どの時計を見ているか</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/agi-timelines-institutions-map/slide6.jpg" alt="異なる角度からの日時計が並ぶ広場">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">ここまでの議論は米英中心だった。意図的である。AGI言説を発信している主要機関のほぼ全てが米英に集中しているのは現在進行形の事実であり、偏りを薄めるために他国を混ぜると地図が歪む。だが、他極には他極の時計がある。中国と日本について、ここでは軽く触れるに留める。詳細は別の枝記事で扱う。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>国/主体</th>
+                <th>代表的な機関・モデル</th>
+                <th>公表されている時間観・立場性</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>中国: Zhipu AI</strong></td>
+                <td>GLM-4シリーズ、ChatGLM</td>
+                <td>清華大学発。中国国内でのGPT相当の位置。国家戦略的支援下でのフロンティア追随</td>
+              </tr>
+              <tr>
+                <td><strong>中国: DeepSeek</strong></td>
+                <td>DeepSeek-V3(2024年末)、DeepSeek-R1(2025年1月)</td>
+                <td>量的ファンドHigh-Flyer系。R1で推論モデルをオープンウェイトで公開し、国際的に衝撃。スケーリング楽観+効率革新の両立路線</td>
+              </tr>
+              <tr>
+                <td><strong>中国: 上海AI Lab / Alibaba Qwen</strong></td>
+                <td>InternLM、Qwenシリーズ</td>
+                <td>オープンウェイト公開で国際ベンチマーク上位。国内では国策的産業応用、海外では開発者エコシステムの獲得を両輪で進める</td>
+              </tr>
+              <tr>
+                <td><strong>日本: 国家HPC</strong></td>
+                <td>ABCI、富岳、NAGI構想(ALIGN提言)</td>
+                <td>フロンティア学習のキャッチアップを国家インフラとして議論。AGI到達時期の独自予測は発信が薄く、欧米予測を輸入する構造</td>
+              </tr>
+              <tr>
+                <td><strong>日本: 産業研究</strong></td>
+                <td>Preferred Networks、松尾研究室、サカナAI、NII</td>
+                <td>各機関固有の路線はあるが、AGI時期論そのものへの主体的発信は限定的。日本独自の時間観はまだ形成途上</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">中国勢の立ち位置の変化は著しい。2023年時点では「米国の後追い」という見立てが支配的だったが、2024年末のDeepSeek-V3と2025年1月のR1公開で、<strong>効率革新による追いつき</strong>という独立した路線が可視化された。DeepSeekの論文では、少ないGPUコストで先端水準の推論モデルを達成したと報告され、国際的な再現実験が進行中である。中国の立場性は、米国が語る「スケーリングには巨大資本が必要」という前提自体への挑戦になりつつある。中国は独自のAGI時期論を持たないが、米国の時期論の前提を動かす。</p>
+
+          <p class="lead">日本の状況は構造的に異なる。日本でAGI時期を定量的に発信する機関は、2026年4月時点でALIGNの『日本AGI基盤構想』が最も具体的な政策文書になるが、そこで前提されているのも欧米由来の予測である。日本からの独自発信は少ない。これは研究機関の問題というより、<strong>時期論を発信することの制度的リスクとリターンの非対称</strong>に起因する。米国では時期論を発信すると資本が動くが、日本では発信しても資本構造が動かない。発信のインセンティブ構造自体が欠けている。詳細は別の記事で扱う。</p>
+
+          <div class="note">
+            <strong>他極の話を一記事で扱わないという判断。</strong> 中国のAGI言説は国家戦略・産業政策・輸出管理と絡まっており、独立した記事で扱うべき厚みがある。日本の状況も、研究・産業・ガバナンス・資本構造の4層で見る必要がある。幹記事でまとめて触れると、どれも表層的になる。この記事は「米英中心の主要言説の地図」を描くことに集中し、他極は枝記事に譲る。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>他極は他極の時計を持つが、幹は米英にある</span>
+          <span class="slide-count">6 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 7: TRUNK AND BRANCHES ═══════════ -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow reveal">Trunk and Branches</div>
+        <h2 class="reveal reveal-delay-1">この幹から、どんな枝が伸びるのか</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/agi-timelines-institutions-map/slide7.jpg" alt="一本の幹から多方向に伸びる樹木の枝">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">この幹記事が描いたのは、AGI予測の地形図である。誰が何を賭け、どんな指標を見て、どこに収束しどこで割れているか——これが今後のAGI HUBの技術記事群の共通の土台になる。個別の技術論はこの幹から派生する枝記事で扱う。以下は予定されている枝の概観である。</p>
+
+          <div class="bullets">
+            <div class="point"><strong>枝1: Transformerは天井に達したのか。</strong> Mamba/SSM、JEPA、世界モデル、拡散LM等の次世代アーキテクチャの現在地。「スケーリング楽観派とMeta FAIRの分岐」の技術的実体を見る</div>
+            <div class="point"><strong>枝2: RLHFの次は何か。</strong> Constitutional AI、DPO、RLAIF、プロセス報酬モデル。o1/o3が変えた「推論時計算」という軸が、アラインメント手法をどう変えているか</div>
+            <div class="point"><strong>枝3: エージェントのタスク長はなぜ指数成長するのか。</strong> METR論文の外挿の妥当性、失敗モードの分析、2027-2030年のタスク長予測の検証</div>
+            <div class="point"><strong>枝4: 解釈可能性は間に合うか。</strong> Anthropic機械的解釈可能性、Apollo評価、UK/US AISIのevals。アラインメント分岐の判断軸</div>
+            <div class="point"><strong>枝5: 身体性と世界モデル。</strong> ロボティクスの進展(Figure、Tesla、Boston Dynamics)、V-JEPA、物理世界との接続。LeCun分岐の実証状況</div>
+            <div class="point"><strong>枝6: 中国のAGI言説。</strong> DeepSeek路線、Zhipu、国家戦略、輸出管理の影響。効率革新と国家資本の相互作用</div>
+            <div class="point"><strong>枝7: 日本のAGI議論の不在。</strong> 時期論発信が少ない構造、NAGI構想、研究機関の立場性、発信のインセンティブ欠如</div>
+            <div class="point"><strong>枝8: Metaculusと群衆予測の構造。</strong> 予測市場がAGI時期に何をしているか、予測の精度の歴史的検証、群衆予測と専門家予測の乖離</div>
+          </div>
+
+          <p class="lead">AGI予測を扱う記事は、放置すると枝葉に分散する。個別モデルの発表、個別ベンチマークのスコア、個別研究者の発言。枝葉は賑やかだが、<strong>幹の構造を先に描いておかないと、枝がどこに位置するか分からなくなる</strong>。この記事は枝記事を書く前の、幹の整地作業である。</p>
+
+          <div class="note">
+            <strong>幹が立てば、枝は単発の発表に消費されない。</strong> AGI言説は定期的に大きなリリース(次世代GPT、次世代Gemini、次世代Claude、中国系の新モデル)で更新される。リリース単位で記事を書くと、メディアは常に後追いになる。幹(予測の地形図)が先に立っていれば、新リリースは地形図上のどの点を動かしたかという話に変換できる。これが当媒体のスタンスの中核である。
+          </div>
+
+          <p class="lead">「AGIはいつ来るか」という問いに、この記事は単一の答えを出さない。答えは時間が経たないと確定しない。だが、問いを散らかさないための地形図は、今描ける。時計の針が3本あるのではない。3本の針を同時に見ることが、現時点での最も正しい見方だ。</p>
+
+          <p class="lead" style="margin-top: 36px; font-size: 17px;">時計は一つではない。針を並べて見るのが、始まりになる。</p>
+        </div>
+
+        <div class="footer">
+          <span>幹が立てば、枝は位置を持つ</span>
+          <span class="slide-count">7 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Article Navigation ═══════════ -->
+      <section class="slide" id="slide-nav" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="30-nagi-npt-analog-closing-window.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.30</p>
+              <p><strong>固定化の前夜 — AGI参入の時間窓が閉じるまで</strong></p>
+            </a>
+            <a href="32-japan-agi-silence.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &middot; No.32 &rarr;</p>
+              <p><strong>沈黙は、無知ではない — 日本のAGI議論はなぜ成立しないか</strong></p>
+            </a>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=technical" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Technical カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="credits">
+      <p>AGI HUB &middot; No. 31 &middot; Technical &middot; 2026.04.18 &middot; By Ryao</p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Scope.</strong>
+        本稿はAGI予測の主要発信元を地図化した幹記事である。個別モデル・個別技術・個別国の深掘りは今後の枝記事で扱う。予測値そのものの妥当性評価は行わず、予測の構造(誰が/何を根拠に/何を賭けて発信しているか)の整理に焦点を絞る。
+      </p>
+      <p style="margin-top:8px;">
+        <strong style="color:#585858;">References.</strong>
+        [1] Amodei, D. (2024) "Machines of Loving Grace". <a href="https://darioamodei.com/machines-of-loving-grace">darioamodei.com</a>. Anthropic CEOによるPowerful AI論。
+        [2] Aschenbrenner, L. (2024) "Situational Awareness: The Decade Ahead". <a href="https://situational-awareness.ai/">situational-awareness.ai</a>. 2027年ASI論の代表文献。
+        [3] Kokotajlo, D. et al. (2025) "AI 2027". <a href="https://ai-2027.com/">ai-2027.com</a>. 月単位のシナリオ文献。
+        [4] Morris, M. R. et al., Google DeepMind (2024) "Levels of AGI: Operationalizing Progress on the Path to AGI". arXiv:2311.02462.
+        [5] METR (2024) "Measuring AI Ability to Complete Long Tasks". <a href="https://metr.org/">metr.org</a>. タスク長の指数成長論文。
+        [6] Chollet, F. (2019) "On the Measure of Intelligence". arXiv:1911.01547. ARC-AGIの設計思想。
+        [7] ARC Prize (2024) "OpenAI o3 Breakthrough on ARC-AGI-1". <a href="https://arcprize.org/blog/oai-o3-pub-breakthrough">arcprize.org</a>. o3のARC-AGI-1スコア75.7%(低)/87.5%(高)。
+        [8] Epoch AI (2024) "FrontierMath". <a href="https://epoch.ai/frontiermath">epoch.ai/frontiermath</a>. 数学フロンティアベンチマーク。
+        [9] CAIS &amp; Scale AI (2025) "Humanity's Last Exam". <a href="https://agi.safe.ai/">agi.safe.ai</a>.
+        [10] Hoffmann, J. et al., DeepMind (2022) "Training Compute-Optimal Large Language Models (Chinchilla)". arXiv:2203.15556.
+        [11] Epoch AI (2024) "Trends in Machine Learning Compute". <a href="https://epoch.ai/trends">epoch.ai/trends</a>. AI学習計算量が年約4倍で伸長。
+        [12] Metaculus. "When will the first general AI system be devised, tested, and publicly announced?". <a href="https://www.metaculus.com/questions/5121/">metaculus.com/questions/5121</a>.
+        [13] Grace, K. et al., AI Impacts (2024) "Thousands of AI Authors on the Future of AI". 2023 Expert Survey.
+        [14] LeCun, Y. (2022) "A Path Towards Autonomous Machine Intelligence". Meta AI open review paper. JEPA論。
+        [15] Yudkowsky, E. &amp; Soares, N. (2025) "If Anyone Builds It, Everyone Dies". MIRI.
+        [16] DeepSeek-AI (2024) "DeepSeek-V3 Technical Report". arXiv:2412.19437. (2025) "DeepSeek-R1".
+        [17] Zhipu AI. GLM-4シリーズ。<a href="https://www.zhipuai.cn/">zhipuai.cn</a>.
+        [18] Alibaba Qwen. Qwen2.5、Qwen3シリーズ。
+        [19] 一般社団法人AIアライメントネットワーク (2026) 『日本AGI基盤構想(NAGI計画)第二版』 v2.0.1. <a href="https://www.aialign.net/">aialign.net</a>.
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on numerical claims.</strong>
+        本稿のベンチマークスコア(ARC-AGI o3 75.7%/87.5%、FrontierMath 25.2% 等)は2024年末-2025年初頭の公表値に基づく。METRのタスク長倍化周期(約7ヶ月)は2024年論文時点の推定値であり、後続研究で改訂される可能性がある。計算量の年間約4倍増加はEpoch AIの2012-2024年レンジの推計であり、2025年以降は電力制約により鈍化する見立てもある。予測値は本質的に改訂に開かれている。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on institutional positioning.</strong>
+        機関の立場性(賭けている命題)は、各機関の公表発言・論文・ブログポストから編集部が解釈したものであり、各機関の公式見解ではない。立場性は時間とともに変化する。本稿の位置づけは2026年4月時点のスナップショットである。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on other poles.</strong>
+        中国および日本のAGI議論は、本稿では幹の位置づけを保つために軽く触れるに留めた。どちらも独立した枝記事で扱う予定である。他極の言説を表層的に混ぜ込むと、地形図が歪むという編集判断による。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Images.</strong>
+        All photographs via <a href="https://unsplash.com/">Unsplash</a>. Hero/slide images are illustrative placeholders corresponding to editorial themes (uncertainty, institutional map, time horizons, measurement, convergence/divergence, other poles, trunk-and-branches).
+      </p>
+    </footer>
+
+    <!-- Feedback form -->
+    <section id="feedback-section" style="max-width:1120px;margin:0 auto;padding:48px 48px 64px;border-top:1px solid var(--border);">
+      <h3 style="font-size:18px;font-weight:700;color:var(--black);margin-bottom:8px;">Reader Feedback</h3>
+      <p style="font-size:13px;color:var(--meta);margin-bottom:24px;">この記事の評価・感想をお寄せください。匿名可、1分で完了します。</p>
+      <form id="feedback-form" style="display:grid;gap:16px;max-width:640px;">
+        <div>
+          <label style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">評価 (1-5)</label>
+          <div id="star-group" style="display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px;">
+            <input type="radio" name="rating" value="5" id="s5" style="display:none;"><label for="s5" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="4" id="s4" style="display:none;"><label for="s4" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="3" id="s3" style="display:none;"><label for="s3" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="2" id="s2" style="display:none;"><label for="s2" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="1" id="s1" style="display:none;"><label for="s1" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+          </div>
+        </div>
+        <div>
+          <label for="fb-comment" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">コメント (任意)</label>
+          <textarea id="fb-comment" rows="4" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label for="fb-name" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">名前 (任意)</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+          <div>
+            <label for="fb-email" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">メール (任意)</label>
+            <input type="email" id="fb-email" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+        </div>
+        <button type="submit" id="fb-submit" style="padding:12px 24px;background:var(--black);color:var(--bg);border:none;font-family:'SF Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;justify-self:start;">送信</button>
+      </form>
+      <p id="fb-success" style="display:none;font-size:14px;color:var(--body-text);margin-top:16px;">フィードバックを送信しました。ありがとうございます。</p>
+      <p id="fb-error" style="display:none;font-size:14px;color:var(--accent);margin-top:16px;">送信に失敗しました。時間をおいて再度お試しください。</p>
+    </section>
+
+    <script>
+      // Star rating hover
+      (function(){
+        const group = document.getElementById('star-group');
+        if (!group) return;
+        const labels = group.querySelectorAll('label');
+        labels.forEach((lab, i) => {
+          lab.addEventListener('mouseenter', () => {
+            labels.forEach(l => l.style.color = '#ccc');
+            let el = lab;
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          });
+        });
+        group.addEventListener('mouseleave', () => {
+          const checked = group.querySelector('input:checked');
+          labels.forEach(l => l.style.color = '#ccc');
+          if (checked) {
+            let el = group.querySelector(`label[for="${checked.id}"]`);
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          }
+        });
+      })();
+
+      // Form submit
+      document.getElementById('feedback-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const rating = (document.querySelector('input[name="rating"]:checked') || {}).value || '';
+        const comment = document.getElementById('fb-comment').value;
+        const name = document.getElementById('fb-name').value;
+        const email = document.getElementById('fb-email').value;
+        const eyebrowText = document.querySelector('.eyebrow').textContent;
+        const numMatch = eyebrowText.match(/No\.\s*(\d+)/);
+        const articleNo = numMatch ? numMatch[1] : '31';
+
+        const params = new URLSearchParams();
+        if (email) params.append('emailAddress', email);
+        params.append('entry.1131711956', rating);
+        params.append('entry.897250758', articleNo);
+        params.append('entry.242373434', comment);
+        params.append('entry.420368578', name);
+
+        fetch(FORM_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: params.toString()})
+          .then(() => {
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('fb-success').style.display = 'block';
+          })
+          .catch(() => {
+            document.getElementById('fb-error').style.display = 'block';
+          });
+      });
+    </script>
+
+    <script>
+      // Progress bar
+      const progress = document.getElementById('progress');
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = scrolled + '%';
+      });
+
+      // Reveal on scroll
+      const reveals = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.2 });
+      reveals.forEach(el => io.observe(el));
+
+      // Nav dots
+      const buttons = document.querySelectorAll('.nav button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (target) target.scrollIntoView({behavior:'smooth'});
+        });
+      });
+
+      // Active dot tracking
+      const slides = document.querySelectorAll('.slide');
+      const slideIo = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            buttons.forEach(b => b.classList.remove('active'));
+            const match = document.querySelector(`.nav button[data-target="${e.target.id}"]`);
+            if (match) match.classList.add('active');
+          }
+        });
+      }, { threshold: 0.5 });
+      slides.forEach(s => slideIo.observe(s));
+    </script>
+  </body>
+</html>

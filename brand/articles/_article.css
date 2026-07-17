@@ -1,0 +1,253 @@
+:root{
+  --pink:#1fa7d8;
+  --pink-dark:#0f85b2;
+  --pink-soft:#dff0f9;
+  --purple:#3b5ea8;
+  --purple-soft:#e2ebf8;
+  --coral:#4dc4e8;
+  --mint:#79d0c4;
+  --yellow:#ffd75c;
+  --ink:#0c2135;
+  --ink2:#234861;
+  --meta:#6a829a;
+  --sub:#a3b6c8;
+  --bg:#f4faff;
+  --bg2:#e8f3fb;
+  --bg3:#dceef8;
+  --border:#cfe2f0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:"Zen Maru Gothic","Noto Sans JP","Hiragino Maru Gothic ProN",sans-serif;
+  font-size:17px;line-height:1.95;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--pink);text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ======= Header ======= */
+.mast{
+  background:rgba(244,250,255,0.92);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:2px solid var(--pink-soft);
+  position:sticky;top:0;z-index:50;
+}
+.mast-inner{
+  max-width:980px;margin:0 auto;padding:16px 24px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-weight:900;font-size:20px;color:var(--ink);
+}
+.brand .mark{
+  width:38px;height:38px;border-radius:12px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  display:flex;align-items:center;justify-content:center;color:#fff;
+  font-size:19px;font-weight:900;transform:rotate(-4deg);
+  box-shadow:0 6px 18px rgba(31,167,216,0.3);
+}
+.brand small{font-weight:500;font-size:13px;color:var(--meta);margin-left:2px}
+.mast .back{
+  font-size:13px;font-weight:700;color:var(--pink);
+  padding:10px 18px;border:2px solid var(--pink);border-radius:999px;
+}
+.mast .back:hover{background:var(--pink);color:#fff}
+
+/* ======= Article hero ======= */
+.art-hero{
+  max-width:740px;margin:0 auto;padding:64px 24px 48px;
+  text-align:center;position:relative;
+}
+.art-hero .num{
+  display:inline-block;
+  background:var(--pink-soft);color:var(--pink-dark);
+  padding:8px 18px;border-radius:999px;
+  font-family:"Noto Sans JP",sans-serif;font-weight:900;font-size:12px;
+  letter-spacing:0.1em;margin-bottom:20px;
+}
+.art-hero h1{
+  font-size:clamp(32px,5vw,52px);font-weight:900;line-height:1.35;
+  letter-spacing:0.01em;color:var(--ink);margin-bottom:24px;
+}
+.art-hero .subtitle{
+  font-size:17px;color:var(--ink2);font-weight:500;margin-bottom:36px;
+  max-width:560px;margin-left:auto;margin-right:auto;line-height:1.85;
+}
+.art-hero .meta{
+  display:inline-flex;gap:24px;padding:14px 24px;
+  background:#fff;border:2px solid var(--border);border-radius:999px;
+  font-size:12px;color:var(--meta);font-weight:500;
+}
+.art-hero .meta b{color:var(--ink);font-weight:700;margin-left:4px}
+
+/* hero banner (写真付き) */
+.sky-banner{
+  max-width:740px;margin:0 auto 48px;padding:0 24px;
+}
+.sky-banner .inner{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:20px;overflow:hidden;
+  background:linear-gradient(180deg,#a6d8f2,#dff0f9);
+  box-shadow:0 14px 40px rgba(12,33,53,0.12);
+}
+.sky-banner img{
+  position:absolute;top:0;left:0;
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  display:block;
+}
+.sky-banner .inner::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(12,33,53,0) 50%,rgba(12,33,53,0.6) 100%);
+  pointer-events:none;z-index:1;
+}
+.sky-banner .ornament{
+  position:absolute;left:24px;bottom:20px;z-index:2;
+  font-family:"Noto Sans JP",sans-serif;font-weight:700;font-size:12px;
+  color:#fff;letter-spacing:0.2em;
+  text-shadow:0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* ======= Adult link box (大人向けリンク) ======= */
+.adult-link{
+  margin:48px 0 8px;padding:28px 32px;
+  background:linear-gradient(135deg,var(--pink-soft),var(--purple-soft));
+  border:2px solid var(--pink);border-radius:20px;
+  text-align:center;
+}
+.adult-link .lead{
+  font-family:"Noto Sans JP",sans-serif;font-size:13px;
+  color:var(--meta);margin-bottom:14px;letter-spacing:0.04em;
+}
+.adult-link a{
+  display:inline-block;
+  font-family:"Noto Sans JP",sans-serif;font-weight:700;font-size:15px;
+  color:var(--pink-dark);padding:12px 28px;
+  background:#fff;border:2px solid var(--pink);border-radius:999px;
+  transition:all .2s;
+}
+.adult-link a:hover{
+  background:var(--pink);color:#fff;transform:translateY(-2px);
+}
+
+/* ======= Inline diagram ======= */
+.diagram{
+  margin:40px 0;padding:28px 24px;
+  background:#fff;border:2px solid var(--border);border-radius:20px;
+  text-align:center;
+}
+.diagram svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.diagram .caption{
+  font-family:"Noto Sans JP",sans-serif;font-size:12px;
+  color:var(--meta);margin-top:14px;letter-spacing:0.08em;
+}
+
+/* ======= Body ======= */
+.body-wrap{max-width:680px;margin:0 auto;padding:0 24px 80px}
+.body-wrap p{
+  font-size:17px;line-height:2.05;color:var(--ink2);margin-bottom:22px;
+}
+.body-wrap p.first::first-letter{
+  font-family:"Noto Serif JP",serif;font-size:56px;float:left;
+  line-height:0.85;color:var(--pink);margin:8px 10px 0 0;font-weight:900;
+}
+.body-wrap h2{
+  font-size:24px;font-weight:900;color:var(--ink);
+  margin:48px 0 20px;line-height:1.5;letter-spacing:0.01em;
+  display:flex;align-items:center;gap:12px;
+}
+.body-wrap h2::before{
+  content:"";display:block;width:36px;height:4px;
+  background:linear-gradient(90deg,var(--pink),var(--purple));
+  border-radius:2px;
+}
+.body-wrap blockquote{
+  margin:40px -12px;padding:32px 36px;
+  background:linear-gradient(135deg,var(--pink-soft),var(--purple-soft));
+  border-radius:20px;position:relative;
+}
+.body-wrap blockquote::before{
+  content:"✦";position:absolute;top:14px;left:20px;
+  font-size:18px;color:var(--yellow);
+}
+.body-wrap blockquote p{
+  font-size:20px;line-height:1.85;color:var(--ink);
+  font-weight:700;margin:0;letter-spacing:0.01em;
+}
+.body-wrap .note{
+  background:#fff;border:2px dashed var(--border);
+  padding:22px 26px;border-radius:16px;margin:32px 0;
+}
+.body-wrap .note .lbl{
+  display:inline-block;background:var(--yellow);color:var(--ink);
+  padding:4px 12px;border-radius:999px;
+  font-size:11px;font-weight:900;margin-bottom:10px;letter-spacing:0.08em;
+}
+.body-wrap .note p{font-size:15px;line-height:1.85;margin:0;color:var(--ink2)}
+
+/* ======= Footer nav ======= */
+.art-footer{
+  max-width:980px;margin:0 auto;padding:48px 24px 80px;
+  border-top:2px dashed var(--border);
+}
+.art-nav{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:36px;
+}
+.art-nav a{
+  background:#fff;border:2px solid var(--border);border-radius:18px;
+  padding:20px 24px;display:block;transition:all .2s;
+}
+.art-nav a:hover{border-color:var(--pink);transform:translateY(-3px);box-shadow:0 10px 24px rgba(31,167,216,0.12)}
+.art-nav .dir{
+  font-size:11px;color:var(--meta);font-weight:700;letter-spacing:0.12em;margin-bottom:6px;
+}
+.art-nav h4{
+  font-size:16px;font-weight:900;color:var(--ink);line-height:1.5;
+}
+.art-nav .prev{text-align:left}
+.art-nav .next{text-align:right}
+.back-home{
+  text-align:center;
+}
+.back-home a{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;
+  padding:18px 40px;border-radius:999px;
+  font-size:15px;font-weight:900;letter-spacing:0.02em;
+  box-shadow:0 8px 24px rgba(155,107,216,0.25);
+}
+.back-home a:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(31,167,216,0.35)}
+
+/* ======= Site footer ======= */
+footer.site{
+  max-width:980px;margin:40px auto 0;
+  padding:40px 24px 56px;border-top:2px dashed var(--border);
+  text-align:center;
+}
+footer.site .brand-mini{
+  display:inline-flex;align-items:center;gap:10px;
+  font-weight:900;font-size:17px;margin-bottom:16px;
+}
+footer.site .brand-mini .mark{
+  width:30px;height:30px;border-radius:9px;
+  background:linear-gradient(135deg,var(--pink),var(--purple));
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;
+}
+footer.site .lines{
+  font-size:12px;color:var(--meta);line-height:1.95;font-weight:500;
+}
+
+@media (max-width:720px){
+  .mast-inner{padding:14px 18px}
+  .art-hero{padding:48px 18px 36px}
+  .art-hero .meta{flex-direction:column;gap:10px;padding:14px 22px;border-radius:20px}
+  .sky-banner{padding:0 18px;margin-bottom:40px}
+  .body-wrap{padding:0 20px 64px}
+  .body-wrap blockquote{margin:32px 0;padding:26px 24px}
+  .art-footer{padding:36px 18px 56px}
+  .art-nav{grid-template-columns:1fr}
+}

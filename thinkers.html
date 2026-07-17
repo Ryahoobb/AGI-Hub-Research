@@ -268,41 +268,33 @@
   .chaos-tooltip strong { color: #b23a2f; }
   .chaos-person:hover .chaos-tooltip { display: block; }
 
-  /* Featured person (bioshok3) */
+  /* Featured person (bioshok3) — same size, accent only */
   .chaos-person.featured {
-    width: 84px;
     z-index: 50;
   }
   .chaos-person.featured .chaos-photo {
-    width: 78px;
-    height: 78px;
-    border: 3px solid #b23a2f;
+    border: 2px solid #b23a2f;
     filter: grayscale(0) contrast(1.05);
-    box-shadow: 0 4px 18px rgba(178, 58, 47, 0.45);
-    margin-bottom: 6px;
+    box-shadow: 0 2px 10px rgba(178, 58, 47, 0.35);
   }
   .chaos-person.featured .chaos-name {
     background: #b23a2f;
     color: #fff;
-    font-size: 10px;
-    padding: 2px 5px;
+    padding: 1px 4px;
     letter-spacing: 0.04em;
   }
   .chaos-person.featured::before {
     content: "FEATURED";
     position: absolute;
-    top: -14px;
+    top: -12px;
     left: 50%;
     transform: translateX(-50%);
     font-family: "SF Mono", Menlo, monospace;
-    font-size: 8px;
+    font-size: 7px;
     font-weight: 700;
     letter-spacing: 0.15em;
     color: #b23a2f;
     white-space: nowrap;
-  }
-  .chaos-person.featured:hover .chaos-photo {
-    transform: scale(1.35);
   }
 
   /* Legend */
@@ -351,11 +343,24 @@
     .chaos-legend { grid-template-columns: 1fr 1fr; }
     .chaos-quadrant-label { font-size: 11px; }
   }
+  @media (max-width: 480px) {
+    .dashboard { padding: 20px 12px 40px; }
+    .dash-title { font-size: 24px; }
+    .dash-subtitle { font-size: 14px; }
+    .section-header { flex-direction: column; gap: 4px; }
+    .section-header h2 { font-size: 20px; }
+    .chaos-map { height: 400px; padding: 28px 16px 40px 40px; }
+    .chaos-person { width: 36px; }
+    .chaos-photo { width: 28px; height: 28px; }
+    .chaos-name { font-size: 7px; }
+    .chaos-legend { grid-template-columns: 1fr; font-size: 11px; }
+    .chaos-quadrant-label { font-size: 9px; }
+  }
 </style>
 </head>
 <body class="has-site-header">
 
-<div id="site-header-mount"></div>
+<div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="partials/header.js" defer></script>
 
 <div class="dashboard">
@@ -371,7 +376,7 @@
   <div class="section-block">
     <div class="section-header">
       <h2>The Map</h2>
-      <span class="section-meta">25 Researchers · Timeline × p(doom)</span>
+      <span class="section-meta">26 Researchers · Timeline × p(doom)</span>
     </div>
     <p class="section-intro">
       ポジションは公開発言・論文・インタビューからの相対的推定で、絶対値ではない。Musk や Altman のように日によって発言が揺れる人物は最近の主要発言を採用。位置関係が示唆するのは、誰が誰とどれだけ近いか（または遠いか）だけ。
@@ -392,6 +397,11 @@
         <div class="chaos-quadrant-label br">Accelerationists<br><span style="font-size:10px;">sooner × low-risk</span></div>
 
         <!-- People: top = (100 - Y)%, left = X% -->
+        <div class="chaos-person" style="left:93%;top:0%;">
+          <div class="chaos-photo"><img src="images/thinkers/yampolskiy.jpg" alt="Yampolskiy"></div>
+          <div class="chaos-name">Yampolskiy</div>
+          <div class="chaos-tooltip"><strong>Roman Yampolskiy</strong><br>ルイビル大学<br>「AI: Unexplainable, Unpredictable, Uncontrollable」著者<br>p(doom) 約99.99%</div>
+        </div>
         <div class="chaos-person" style="left:85%;top:2%;">
           <div class="chaos-photo"><img src="images/thinkers/yudkowsky.jpg" alt="Yudkowsky"></div>
           <div class="chaos-name">Yudkowsky</div>
@@ -523,7 +533,7 @@
     <div class="chaos-legend">
       <div class="chaos-legend-item">
         <h4>Doomers</h4>
-        <p>近い×悲観。Yudkowsky、Leahy、Tegmark、Kokotajlo。p(doom)50%超、AGI到来まで数年以内と予測。</p>
+        <p>近い×悲観。Yampolskiy、Yudkowsky、Leahy、Tegmark、Kokotajlo。p(doom)50%超、AGI到来まで数年以内と予測。</p>
       </div>
       <div class="chaos-legend-item">
         <h4>Concerned</h4>
@@ -543,6 +553,114 @@
       ポジションは2026年4月時点の公開発言・論文・インタビューから推定した相対的スナップショット。カーソルを合わせると詳細が表示される。
     </p>
   </div>
+
+  <!-- ═══════════ Page Feedback ═══════════ -->
+  <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+    <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#757575;margin-bottom:32px;text-align:center;">Site Feedback</h3>
+
+    <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+      <fieldset style="border:none;padding:0;">
+        <legend style="font-size:13px;color:#585858;margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span style="font-size:12px;color:#757575;">1</span>
+          <div id="star-group" style="display:flex;gap:4px;">
+            <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+            <label for="s1" class="star-label" data-value="1">★</label>
+            <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+            <label for="s2" class="star-label" data-value="2">★</label>
+            <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+            <label for="s3" class="star-label" data-value="3">★</label>
+            <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+            <label for="s4" class="star-label" data-value="4">★</label>
+            <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+            <label for="s5" class="star-label" data-value="5">★</label>
+          </div>
+          <span style="font-size:12px;color:#757575;">5</span>
+        </div>
+      </fieldset>
+
+      <div>
+        <label for="fb-comment" style="font-size:13px;color:#585858;display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+        <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid #e4e4e4;border-radius:4px;background:#f0efea;color:#1a1a1a;font-family:inherit;resize:vertical;"></textarea>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div>
+          <label for="fb-name" style="font-size:13px;color:#585858;display:block;margin-bottom:8px;">名前</label>
+          <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid #e4e4e4;border-radius:4px;background:#f0efea;color:#1a1a1a;font-family:inherit;">
+        </div>
+        <div>
+          <label for="fb-email" style="font-size:13px;color:#585858;display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+          <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid #e4e4e4;border-radius:4px;background:#f0efea;color:#1a1a1a;font-family:inherit;">
+        </div>
+      </div>
+
+      <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid #1a1a1a;border-radius:4px;background:transparent;color:#1a1a1a;cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+    </form>
+
+    <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+      <p style="font-size:14px;color:#585858;">フィードバックを送信しました。ありがとうございます。</p>
+    </div>
+    <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+      <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+    </div>
+
+    <style>
+      .star-label{font-size:28px;cursor:pointer;color:#e4e4e4;transition:color .15s ease;user-select:none;}
+      .star-label:hover{color:#757575;}
+      .star-label.active{color:#1a1a1a;}
+      #fb-submit:hover{background:#1a1a1a;color:#fafaf7;}
+      @media(max-width:600px){
+        .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+      }
+    </style>
+
+    <iframe name="fb-iframe" style="display:none;"></iframe>
+
+    <script>
+    (function(){
+      const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+      const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+      const PAGE_ID='page-thinkers';
+
+      document.querySelectorAll('.star-label').forEach(function(label){
+        label.addEventListener('click',function(){
+          document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+          var v=parseInt(this.dataset.value);
+          document.querySelectorAll('.star-label').forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+        });
+      });
+
+      window.submitFeedback=function(e){
+        e.preventDefault();
+        var form=document.getElementById('feedback-form');
+        var btn=document.getElementById('fb-submit');
+        var stars=form.querySelector('input[name="stars"]:checked');
+        if(!stars){alert('評価を選択してください');return false;}
+
+        btn.disabled=true;btn.textContent='Sending...';
+
+        var params=new URLSearchParams();
+        params.append(FIELDS.email,document.getElementById('fb-email').value);
+        params.append(FIELDS.stars,stars.value);
+        params.append(FIELDS.articleNo,PAGE_ID);
+        params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+        params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+        fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+        .then(function(){
+          form.style.display='none';
+          document.getElementById('fb-success').style.display='block';
+        })
+        .catch(function(){
+          btn.disabled=false;btn.textContent='Send Feedback';
+          document.getElementById('fb-error').style.display='block';
+        });
+        return false;
+      };
+    })();
+    </script>
+  </section>
 
   <!-- ═══════════ Footer ═══════════ -->
   <div class="dash-footer">

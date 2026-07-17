@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-    <title>スケーリングはなぜ止まらないのか — AGIへの3つの加速路 — AGI HUB</title>
+    <title>スケーリングはなぜ止まらないのか — 4層の加速が合流する地点 — AGI HUB</title>
     <link rel="stylesheet" href="../design-system/palette.css">
     <style>
       :root {
@@ -177,6 +177,18 @@
         max-width: 22ch;
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 32px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -370,6 +382,18 @@
         .infographic-bignum { grid-template-columns: 1fr; }
       }
 
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
       @media print {
         .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
         .nav, .progress { display: none; }
@@ -378,7 +402,7 @@
     </style>
   </head>
   <body class="pattern-monolith has-site-header" data-category="technical">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -393,7 +417,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 15 / 15 &nbsp;·&nbsp; Technical &nbsp;·&nbsp; 7 Slides</span>
+      <span>No. 15 &nbsp;·&nbsp; Technical &nbsp;·&nbsp; 7 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="14-agi-pill-cognitive-disaster-reduction.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=technical" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -410,178 +434,236 @@
             <img class="hero img-fullbleed" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1600&q=80" alt="Server room with rows of blinking lights stretching into the distance">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
-          <p class="lead"><span class="dropcap">2</span>020年1月、OpenAIの研究者Jared Kaplanらが1本の論文を発表した。タイトルは "Scaling Laws for Neural Language Models"。内容は衝撃的にシンプルだった。ニューラルネットワークの損失関数は、パラメータ数Nのべき乗に比例して減少する。L(N) &prop; N<sup>-0.076</sup>。データ量にも計算量にも同様のべき乗関係が成り立つ。</p>
-          <p class="lead">驚くべきは、何が効かなかったかだ。ネットワークの幅と深さの比率、学習率のスケジュール、トークナイザーの設計。アーキテクチャの細部はほとんど結果に影響しなかった。<strong>スケールだけが効く。</strong>これがニューラルスケーリング則の核心であり、GPT-3とGPT-4の開発を根底から動機づけた発見だった。</p>
-          <p class="lead">この発見はAI研究の方法論を一変させた。良いアルゴリズムを探す、という職人芸の時代から、正しい曲線に乗る、という工業的思考への転換。パラメータを10倍にすれば予測可能な量だけ賢くなる。100倍にすればさらに。では、どこまで行けるのか。</p>
+          <p class="lead"><span class="dropcap">本</span>稿の主張を先に置く。<strong>スケーリング則はべき乗則の物語ではない。「需要が満たされない系」が自らの圧力を外に吐き出すときに現れる特殊解である</strong>。物理で言えば、圧力を逃がす穴をふさぐと別の穴から噴き出す流体のふるまいに近い。直線が壁にぶつかった瞬間に次の軸が開くのは偶然ではなく、「まだ足りない」という構造的不満が別の出口を呼び出すからだ。計算資源、モデル重み、ポストトレーニング、推論、エージェント――これらは独立の技術対象ではなく、同一の欠乏が取る異なる形である。</p>
+          <p class="lead">2024年、「スケーリングは死んだ」という言説がAI業界を覆った。GPT-4からGPT-4.5への性能向上は期待を大きく下回り、パラメータ数を増やすだけの直線的な拡大戦略は壁にぶつかった。高品質テキストデータは有限、電力コストは指数的に膨張し、TSMCの先端チップ供給は数四半期の待ち行列を抱えている。にもかかわらず、2026年4月現在、スケーリングは止まっていない。OpenAI o3はIMOで銀メダル相当を叩き出し、SWE-benchの解決率は1年半で3%から50%超に跳ね上がり、Claude Opus 4やGemini 2.5 Proは前世代を大幅に上回る推論性能を見せている。「死んだ」はずのものが別形態で噴き出した。これが満たされない系の第一の徴候である。</p>
+          <p class="lead"><strong>パラメータ数という単一の軸が飽和したとき、4つの別の軸が同時に開いた。</strong>技術（ポストトレーニングと推論時計算）、資本（GPU投資と電力インフラ）、競争（撤退不能な軍拡レース）、評価（新ベンチマークが能力の天井を引き上げる）。以下ではこの4層を順に扱うが、各層を単独の技術トピックとして扱わない。<strong>満たされなさの圧力がどの出口から噴き出したか</strong>という視点で一貫して読んでほしい。業界動向の地図を描くことが目的ではない。満たされないまま走り続ける系の力学を切り出すことが本稿の目的である。</p>
           <div class="grid-3">
             <div class="card">
-              <span class="tag">発見</span>
-              <p><strong>べき乗則</strong><br>L(N) &prop; N<sup>-0.076</sup>。パラメータ数、データ量、計算量のすべてに滑らかなべき乗関係が成立する。Kaplan et al. 2020。</p>
+              <span class="tag">技術</span>
+              <p><strong>複数の加速路</strong><br>RLHF、推論時計算、合成データ、ツール使用。パラメータ数以外の軸が次々と開拓され、各軸で独自のべき乗関係が成り立つ。</p>
             </div>
             <div class="card">
-              <span class="tag">含意</span>
-              <p><strong>アーキテクチャは二の次</strong><br>幅、深さ、活性化関数。これらの選択は損失にほとんど影響しない。投じた計算量がほぼ全てを決める。</p>
+              <span class="tag">資本</span>
+              <p><strong>投資の不可逆性</strong><br>Blackwell/Rubin GPU、原発投資、xAIの10万GPU Colossusクラスタ。既に投じた数百億ドルが撤退を許さない。</p>
             </div>
             <div class="card">
-              <span class="tag">帰結</span>
-              <p><strong>工業的パラダイム</strong><br>「研究者が賢いアルゴリズムを発明する」から「計算資源を正しくスケールする」へ。AI開発が資本集約型の産業に変貌した。</p>
+              <span class="tag">競争</span>
+              <p><strong>軍拡の構造</strong><br>OpenAI、Anthropic、Google、Meta、DeepSeek。どの1社も降りれば市場を失う。降りられないから加速する。</p>
             </div>
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>Kaplanのべき乗則がAI開発の方法論を書き換えた</span>
+          <span>パラメータ数の壁は分岐点だった。4層の加速が同時に始まっている</span>
           <span class="slide-count">1 / 7</span>
         </div>
       </section>
 
       <!-- ═══════════ Slide 2 ═══════════ -->
       <section class="slide" id="slide-2">
-        <div class="eyebrow reveal">Emergent Abilities</div>
-        <h2 class="reveal reveal-delay-1">スケーリングの勝利 — 創発する能力</h2>
+        <div class="eyebrow reveal">Layer 1: Technology — Post-Training</div>
+        <h2 class="reveal reveal-delay-1">技術層（前半）— ポストトレーニング革命</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">GPT-2は15億パラメータだった。文章の続きを書くことはできたが、まともな算数はできなかった。GPT-3は1750億パラメータに跳ね上がり、突然、翻訳もコード生成もこなし始めた。GPT-4は公式発表はないが、推定1.8兆パラメータのMixture of Experts。数学の推論、視覚的理解、複雑な指示への追従。2年前のモデルには不可能だったことが、スケールアップだけで実現した。</p>
-          <p class="lead">Wei et al.（2022）はこの現象を「創発的能力（Emergent Abilities）」と名付けた。小さいモデルではランダムに近い性能を示すタスクが、パラメータ数がある閾値を超えると突然解けるようになる。算術、多段推論、コード生成。能力が滑らかに向上するのではなく、不連続的に出現する。スケーリング則が予測するのは損失関数の滑らかな改善だが、その裏で能力の相転移が起きている。</p>
+          <p class="lead">最初に閉じた穴は事前学習だった。満たされなさは次の穴――モデルの「振る舞いを整える」層――を開きにいく。2020年のKaplanのべき乗則（L(N) &prop; N<sup>-0.076</sup>）は、パラメータ数を増やせば損失が減るという単純な処方箋だった。2022年にChinchillaがデータとパラメータの最適配分を修正し、同じ計算予算でより高い性能に到達できることを示した。だが2024年時点で、この「事前学習のスケーリング」は明確に減速した。GPT-4.5の性能は期待を下回った。ここで注目すべきは、壁にぶつかった瞬間に研究リソースと資本が別の出口へ即座に移動したことだ。系が満たされていれば、この流出は起きない。</p>
+          <p class="lead">減速したのは事前学習だけだ。その裏で、ポストトレーニングという全く別のスケーリング軸が爆発的に伸びている。モデルを学習した「後」に、人間の好みや推論能力を注入する技術群。RLHF（Reinforcement Learning from Human Feedback）、DPO（Direct Preference Optimization）、RLAIF（RL from AI Feedback）。この3つが2022年から2025年にかけて急速に洗練された。</p>
 
           <table class="compare">
             <thead>
               <tr>
-                <th>モデル</th>
+                <th>手法</th>
                 <th>年</th>
-                <th>パラメータ</th>
-                <th>創発した能力</th>
+                <th>仕組み</th>
+                <th>効果</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>GPT-2</strong></td>
-                <td>2019</td>
-                <td>1.5B</td>
-                <td>文章生成。算術は不正確</td>
-              </tr>
-              <tr>
-                <td><strong>GPT-3</strong></td>
-                <td>2020</td>
-                <td>175B</td>
-                <td>Few-shot学習、翻訳、簡易コード生成</td>
-              </tr>
-              <tr>
-                <td><strong>Chinchilla</strong></td>
+                <td><strong>RLHF</strong></td>
                 <td>2022</td>
-                <td>70B</td>
-                <td>Gopher（280B）を上回る性能。データとパラメータの最適配分</td>
+                <td>人間の評価者がモデル出力を比較、報酬モデルを学習してPPOで最適化</td>
+                <td>InstructGPT。生のGPT-3より100倍小さいモデルが人間の好みで上回った</td>
               </tr>
               <tr>
-                <td><strong>GPT-4</strong></td>
+                <td><strong>DPO</strong></td>
                 <td>2023</td>
-                <td>推定1.8T MoE</td>
-                <td>視覚理解、複雑な推論、司法試験上位10%</td>
+                <td>報酬モデルを経由せず、選好データから直接方策を最適化</td>
+                <td>RLHF並みの性能を、半分の計算量で達成。Llama 3、Gemmaが採用</td>
+              </tr>
+              <tr>
+                <td><strong>RLAIF</strong></td>
+                <td>2023-24</td>
+                <td>AIが人間の代わりにフィードバックを生成。Constitutional AIが代表格</td>
+                <td>人間の評価者というボトルネックを除去。スケーラブルなアラインメント</td>
+              </tr>
+              <tr>
+                <td><strong>GRPO</strong></td>
+                <td>2025</td>
+                <td>DeepSeek-R1が採用。グループ内の相対報酬でクリティックなしに学習</td>
+                <td>推論特化の強化学習を低コストで実現</td>
               </tr>
             </tbody>
           </table>
           <div class="source-note">
-            Wei et al. (2022) "Emergent Abilities of Large Language Models"; Hoffmann et al. (2022) "Training Compute-Optimal Large Language Models" (Chinchilla); OpenAI (2023) GPT-4 Technical Report.
+            Ouyang et al. (2022) InstructGPT; Rafailov et al. (2023) DPO; Bai et al. (2022) Constitutional AI; DeepSeek (2025) R1 Technical Report.
           </div>
 
-          <p class="lead">2022年、DeepMindのHoffmann et al.がChinchillaを発表し、Kaplanのスケーリング則を修正した。Kaplanの処方箋は「パラメータを最大にし、データは少なめでよい」。Chinchillaの答えは逆だった。データ量とパラメータ数は等しいペースでスケールすべきだ。70Bパラメータのモデルが、4倍のパラメータを持つGopher（280B）を上回った。学習効率が劇的に改善し、同じ計算予算でより高い性能に到達できることが証明された。</p>
-          <p class="lead">スケーリングは万能か。この時点では、そう見えた。</p>
+          <p class="lead">ポストトレーニングがなぜ強力か。事前学習はインターネット上のテキストを丸呑みにする。雑多で、矛盾し、誤りも含む。ポストトレーニングは、その雑多な知識を「使える形」に整える。同じベースモデルでも、ポストトレーニングの質で最終性能に2倍以上の開きが出る。Meta Llama 3の405Bモデルは、事前学習後の生出力では凡庸だった。DPOとRLAIFの組み合わせで、GPT-4に肉薄する水準に引き上げられた。</p>
+          <p class="lead">データの壁を心配する声は多い。だがポストトレーニングに必要なデータは、事前学習の数千分の1で済む。数千件の高品質な選好データがあれば、モデルの振る舞いを根本的に変えられる。事前学習のスケーリングが飽和しても、ポストトレーニングのスケーリングはまだ序盤にある。</p>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>スケールが能力の相転移を引き起こす。Chinchillaが最適配分を書き換えた</span>
+          <span>事前学習は飽和した。ポストトレーニングの軸はまだ序盤にある</span>
           <span class="slide-count">2 / 7</span>
         </div>
       </section>
 
       <!-- ═══════════ Slide 3 ═══════════ -->
       <section class="slide" id="slide-3">
-        <div class="eyebrow reveal">The Wall</div>
-        <h2 class="reveal reveal-delay-1">壁 — スケーリングは限界に達したのか</h2>
+        <div class="eyebrow reveal">Layer 1: Technology — Inference &amp; Agents</div>
+        <h2 class="reveal reveal-delay-1">技術層（後半）— 推論時計算、ツール、マルチモーダル</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">2024年、空気が変わった。「スケーリングは死んだ」という言説が業界を駆け巡った。GPT-4からGPT-4.5への性能向上は期待を大きく下回り、Gemini UltraやClaude 3 Opusも「桁違いに賢い」という評価は得られなかった。何が起きているのか。</p>
+          <p class="lead">ポストトレーニングの穴も有限だった。選好データの限界が見え始めた瞬間、満たされなさは時間軸そのものに吹き出す――学習時間が足りないなら、推論時間を無限に伸ばせばよい、という出口である。2024年9月、OpenAIがo1を発表した瞬間に、スケーリングの定義が書き換わった。o1は回答前に「考える時間」を使う。内部でChain of Thoughtを展開し、検証し、間違いに気づけば修正する。学習時に知識を焼き付ける代わりに、推論時に計算量を投じて精度を上げる。Inference-time compute scaling。学習のべき乗則とは独立した、第2のべき乗関係がここに見つかった。これは技術的発見であると同時に、系が新たな出口を自己生成した事例である。</p>
 
           <div class="bullets">
-            <div class="point"><strong>データの壁。</strong>人間が生成した高品質テキストは有限だ。Epoch AIの推計では、インターネット上の高品質テキストデータは2028年頃に学習用途として実質的に枯渇する。書籍、学術論文、コードリポジトリ。人類が数千年かけて蓄積した知識には上限がある。</div>
-            <div class="point"><strong>電力の壁。</strong>GPT-4の学習コストは推定1億ドル超。次世代モデルはさらに桁が上がる。Microsoft、Google、Amazonは原子力発電所への投資を発表し始めた。1つのAIモデルに原発1基分の電力を投じる時代が視野に入っている。</div>
-            <div class="point"><strong>チップの壁。</strong>TSMCの先端プロセス（3nm、2nm）の生産能力は物理的に限られている。NVIDIA H100、B100の供給は慢性的に逼迫し、待ち行列は数四半期に及ぶ。半導体製造設備の新設には3-5年かかる。</div>
-            <div class="point"><strong>収穫逓減。</strong>ベンチマーク上位では、計算量を10倍にしても性能向上は数パーセント。べき乗則の指数が-0.076であることの意味を思い出してほしい。パラメータを10倍にしても損失は約15%しか減らない。低い果実は既に摘まれている。</div>
+            <div class="point"><strong>推論時計算（test-time compute）。</strong>o3は2025年にIMO銀メダル相当のスコアを出した。ARC-AGIで人間レベルの汎化性能に迫った。DeepSeek-R1は同様のアプローチでo1に匹敵し、Gemini 2.5 Proも推論時計算を本格導入した。データの壁を迂回する。学習データが有限でも、推論時の計算量は事実上無限に投じることができる。</div>
+            <div class="point"><strong>エージェントとツール使用。</strong>Claude Code、Devin、OpenAI Codex。AIがコードを書き、実行し、エラーを直し、PRを作成する。SWE-benchの解決率は2024年初頭の3%から2025年に50%超へ跳ね上がった。LLM自体の地力向上とツール呼び出し精度の改善が掛け算で効いている。わからなければ調べ、試し、失敗したら修正する。人間と同じ試行錯誤のループをAIが回せるようになった。</div>
+            <div class="point"><strong>マルチモーダル統合。</strong>GPT-4V以降、視覚入力が標準になった。Gemini 2.5は動画理解を実装し、GPT-4oは音声の感情まで処理する。テキストだけを扱っていた時代には不可能だったタスク——医療画像の判読、設計図の解析、リアルタイム翻訳——が射程に入った。モダリティが増えるたびに、モデルが解ける問題空間が非連続的に広がる。</div>
+            <div class="point"><strong>合成データとセルフプレイ。</strong>AlphaZeroがルールだけで人類最強を超えた教訓がLLMに適用されている。STaR（Self-Taught Reasoner）はAIが自分で推論チェーンを生成し、正解したものだけで学習する。Phi-2は合成教科書で訓練され、7Bパラメータで13Bに匹敵した。人間のデータの天井は、AIの学習の天井ではない。ただし、Shumailov et al. 2024が示したmodel collapse——AI生成データでナイーブに学習すると品質が劣化する現象——への注意は必要で、検証可能な領域（数学、コード、ゲーム）でのみこの戦略は安定する。</div>
           </div>
 
           <div class="infographic-bignum">
             <div class="cell">
-              <div class="num">2028<span class="unit">年頃</span></div>
-              <div class="label">高品質テキストデータの<br>実質的枯渇時期</div>
+              <div class="num">50<span class="unit">%+</span></div>
+              <div class="label">SWE-bench解決率<br>（2025年、1年半前は3%）</div>
             </div>
             <div class="cell">
-              <div class="num">$100M<span class="unit">+</span></div>
-              <div class="label">GPT-4の<br>推定学習コスト</div>
+              <div class="num">IMO<span class="unit">銀</span></div>
+              <div class="label">o3の国際数学<br>オリンピック相当スコア</div>
             </div>
             <div class="cell">
-              <div class="num">3-5<span class="unit">年</span></div>
-              <div class="label">半導体工場の<br>新設所要期間</div>
+              <div class="num">4+<span class="unit">軸</span></div>
+              <div class="label">同時進行中の<br>スケーリング軸の数</div>
             </div>
           </div>
           <div class="source-note">
-            Epoch AI (2024) "Will we run out of data?"; 各社の電力投資は2024-2025年の公開報道に基づく; TSMC CapEx計画は2024年Annual Reportより。
+            OpenAI o1/o3 System Cards; DeepSeek-R1 Technical Report; SWE-bench Leaderboard 2025; Zelikman et al. (2022) STaR; Shumailov et al. (2024) model collapse.
           </div>
 
-          <p class="lead">だが「スケーリングは死んだ」と宣言するのは早計だった。止まったのは、スケーリングの特定の軸だった。べき乗則が指し示す直線を延長する、という単純な戦略が壁にぶつかったのは事実だ。しかし直線が止まったとき、3本の迂回路が見えた。</p>
+          <p class="lead">重要なのは、これらの技術軸が互いを加速する点だ。推論時計算で生成された推論チェーンは合成データになる。合成データで訓練されたモデルはエージェントの地力を上げる。エージェントが遂行したタスクの履歴は学習データに還流する。技術層だけで既に複合ループが回り始めている。</p>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>データ、電力、チップ。3つの壁がスケーリングの直線延長を阻む</span>
+          <span>推論時計算、エージェント、マルチモーダル、合成データ。4つの軸が複合ループを形成している</span>
           <span class="slide-count">3 / 7</span>
         </div>
       </section>
 
       <!-- ═══════════ Slide 4 ═══════════ -->
       <section class="slide" id="slide-4">
-        <div class="eyebrow reveal">Accelerator 1: Test-Time Compute</div>
-        <h2 class="reveal reveal-delay-1">第1の加速路 — テスト時計算</h2>
+        <div class="eyebrow reveal">Layer 2: Capital</div>
+        <h2 class="reveal reveal-delay-1">資本層 — 投じた金は返してもらう</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">2024年9月、OpenAIがo1を発表した。このモデルは従来のLLMとは根本的に異なる設計思想を持っていた。回答を即座に出すのではなく、「考える時間」を費やす。内部でChain of Thoughtを展開し、推論を検証し、間違いに気づいたら修正する。出力までの時間は長くなったが、精度は劇的に向上した。</p>
-          <p class="lead">これはスケーリングの新しい軸の発見だった。従来のスケーリング則は学習時の計算量を増やすことに焦点を当てていた。o1は、推論時にも計算量を投じることで性能が向上することを示した。Inference-time compute scaling。学習のべき乗則が飽和しても、推論時計算のべき乗則はまだ始まったばかりだ。</p>
+          <p class="lead">技術層だけを見ていると、エンジニアリングの進化物語に見える。だが満たされなさは技術の外側にも噴き出している。資本という出口は、技術の成否とは独立に圧力を受け止める装置として機能している。技術が4軸で加速しているとして、なぜ企業はそこに賭け続けるのか。答えは単純だ。既に賭けてしまったからだ。投資は不可逆で、沈没コストが撤退を許さない。</p>
+          <p class="lead">xAIは2024年にテネシー州メンフィスで10万GPU規模のColossusクラスタを稼働させた。NVIDIAのBlackwell B200の出荷が2024年後半に始まり、次世代Rubinは2026年に予定されている。TSMCの先端プロセス（3nm、2nm）の生産枠は2年先まで埋まっている。Microsoft、Google、Amazonの3社だけで2025年のAI関連設備投資は推定2000億ドルを超える。</p>
 
           <div class="grid-2">
             <div class="card">
-              <span class="tag">学習時スケーリング</span>
-              <p><strong>事前に知識を詰め込む</strong><br>パラメータ数とデータ量を増やし、重みに知識を焼き付ける。Kaplanのべき乗則が支配する領域。壁に近づいている。</p>
+              <span class="tag">GPU投資</span>
+              <p><strong>半導体工場は撤退できない</strong><br>TSMCの先端ファブ新設に3-5年、投資額は200億ドル超。NVIDIAのロードマップはBlackwell→Rubin→Vera→次々世代と切れ目がない。発注した側は、投資回収のために使い続けるしかない。</p>
             </div>
             <div class="card">
-              <span class="tag">推論時スケーリング</span>
-              <p><strong>その場で考える時間を増やす</strong><br>回答前に推論チェーンを展開、検証、修正する。計算量に応じて精度が向上する新しいべき乗関係。まだ初期段階。</p>
+              <span class="tag">電力インフラ</span>
+              <p><strong>原発が動き始めた</strong><br>MicrosoftはThree Mile Island原発の再稼働に合意（2028年目標）。Googleは小型モジュール炉(SMR)への投資を発表。Amazonはペンシルベニアの原発近くにデータセンターを建設中。1つのモデルの学習に原発1基分の電力が必要になる時代に、インフラは既に動いている。</p>
             </div>
           </div>
 
-          <p class="lead">成果は明快だった。o3は2025年にIMO（国際数学オリンピック）で銀メダル相当のスコアを叩き出した。ARC-AGIベンチマークでは、o3が人間レベルの汎化性能に迫った。いずれも従来のLLMでは到達不能だったスコアだ。</p>
-          <p class="lead">この路線はOpenAIだけのものではない。中国のDeepSeekがR1を発表し、同様のアプローチでo1に匹敵する推論性能を達成した。GoogleもGemini 2.5 Proで推論時計算を本格導入した。スケーリング競争は二正面に拡大した。計算量を増やす場所が「学習」だけだった時代は終わり、「推論」という第2の戦場が開いた。</p>
+          <div class="infographic-bignum">
+            <div class="cell">
+              <div class="num">$200B<span class="unit">+</span></div>
+              <div class="label">Big 3のAI設備投資<br>（2025年推定）</div>
+            </div>
+            <div class="cell">
+              <div class="num">100K<span class="unit">GPU</span></div>
+              <div class="label">xAI Colossusクラスタ<br>（2024年稼働開始）</div>
+            </div>
+            <div class="cell">
+              <div class="num">3-5<span class="unit">年</span></div>
+              <div class="label">先端半導体ファブの<br>新設所要期間</div>
+            </div>
+          </div>
+          <div class="source-note">
+            各社CapEx計画は2024-2025年の決算報告・公開報道に基づく。TSMC 2024 Annual Report。NVIDIA GTC 2025ロードマップ。
+          </div>
+
+          <p class="lead">ここに埋め込まれた論理は、技術の良し悪しとは無関係に作動する。数百億ドルを投じたデータセンターは、回収するまで動かし続ける。回収するには、より性能の高いモデルを作り、より多くの顧客に売るしかない。性能を上げるには、さらに投資する。このフライホイールは、スケーリングの技術的成否とは独立した駆動力を持っている。</p>
 
           <div class="note">
-            <strong>本質。</strong>テスト時計算スケーリングは、データの壁を迂回する。学習データが有限でも、推論時に「考える」ための計算量は事実上無限に投じることができる。電力とチップの制約は残るが、推論コストは学習コストより分散しやすい。エッジデバイスや効率的な推論カーネルの進化が、この軸のスケーリングを加速する。
+            <strong>Zeno scalingの反論。</strong>べき乗則の指数-0.076が意味するのは、パラメータを10倍にしても損失は約15%しか減らないということだ。収穫は確実に逓減する。だが資本はこの逓減を受け入れている。なぜか。15%の改善でも、それが「人間に到達する最後の15%」であれば、市場価値は非連続的に跳ね上がる。99%の精度と99.9%の精度の差は、自動運転や医療診断では致命的な違いになる。逓減する改善に逓増する価値が張り付いているから、投資は止まらない。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>考える時間を増やす。推論時計算という新しいスケーリング軸の発見</span>
+          <span>沈没コストが撤退を許さない。逓減する改善に逓増する価値が張り付いている</span>
           <span class="slide-count">4 / 7</span>
         </div>
       </section>
 
       <!-- ═══════════ Slide 5 ═══════════ -->
       <section class="slide" id="slide-5">
-        <div class="eyebrow reveal">Accelerator 2: Synthetic Data</div>
-        <h2 class="reveal reveal-delay-1">第2の加速路 — 合成データとセルフプレイ</h2>
+        <div class="eyebrow reveal">Layer 3: Competition</div>
+        <h2 class="reveal reveal-delay-1">競争層 — 誰も降りられない軍拡レース</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">データの壁は本当に壁なのか。人間が生成したテキストが有限であることは確かだ。だが、人間のデータだけがAIの訓練に使えるという前提こそ、疑うべきだった。</p>
-          <p class="lead">先例がある。AlphaGoは人間の棋譜から学習を始めたが、AlphaZeroは違った。ルールだけを与え、自己対戦で学習した。人間の棋譜を一切使わず、40日で人類最強のプレイヤーを超えた。人間のデータは出発点にはなるが、天井にはならない。この教訓がLLMの世界にも適用され始めている。</p>
+          <p class="lead">技術が進歩し、資本が投じられている。だがそれだけなら、どこかで減速してもおかしくない。実際に減速させないのは、競争の構造だ。ここでも満たされなさは個別企業の欲望ではなく、プレイヤー群全体を縛るゲーム構造として現れる。一社が降りても、残りの圧力は下がらず、むしろ降りた分が他社の推進力として回収される。</p>
+          <p class="lead">2024年末時点で、フロンティアモデルの開発競争に参加しているプレイヤーは少なくとも7つある。OpenAI、Anthropic、Google DeepMind、Meta、xAI、DeepSeek、Mistral。それぞれが数百人から数千人の研究者チームを持ち、数十億ドル規模の資金を調達済み。この7者のうち1社でも加速を続ければ、残りの全員が追従を強いられる。</p>
 
-          <div class="bullets">
-            <div class="point"><strong>STaR（Self-Taught Reasoner）。</strong>AIが自分で推論チェーンを生成し、正解したものだけをフィルタリングして学習データに加える。Zelikman et al. 2022。人間がラベル付けしていない推論過程を、AI自身が生成し、選別し、学習する。データの壁を内側から突き破る手法だ。</div>
-            <div class="point"><strong>Constitutional AI。</strong>Anthropicが開発した手法。AIがAIの出力を評価するフィードバックループ。人間のフィードバック（RLHF）はスケールしにくい。評価者の数と時間に制約があるからだ。Constitutional AIでは、原則に基づいてAI自身が出力を批評し、改善する。人間の評価者というボトルネックを除去した。</div>
-            <div class="point"><strong>合成データの罠 — model collapse。</strong>ナイーブにAI生成データでAIを訓練すると、品質が劣化する。Shumailov et al. 2024が示したmodel collapseだ。コピーのコピーは劣化する。だが、AlphaZeroは劣化しなかった。鍵は検証可能性にある。囲碁には勝敗という明確な検証基準がある。数学にも正解がある。検証可能な領域では、合成データは劣化しない。</div>
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>プレイヤー</th>
+                <th>最新フラッグシップ</th>
+                <th>推定年間投資</th>
+                <th>撤退できない理由</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>OpenAI</strong></td>
+                <td>GPT-4o, o3</td>
+                <td>$10B+</td>
+                <td>Microsoft連合の中核。$150B評価額の根拠がAGI到達にある</td>
+              </tr>
+              <tr>
+                <td><strong>Anthropic</strong></td>
+                <td>Claude Opus 4</td>
+                <td>$5B+</td>
+                <td>Amazon・Googleから調達済み。安全性リーダーシップが存在理由</td>
+              </tr>
+              <tr>
+                <td><strong>Google</strong></td>
+                <td>Gemini 2.5 Pro</td>
+                <td>$30B+</td>
+                <td>検索広告の将来がAI統合に依存。負ければ本業が沈む</td>
+              </tr>
+              <tr>
+                <td><strong>Meta</strong></td>
+                <td>Llama 4</td>
+                <td>$15B+</td>
+                <td>オープン戦略で開発者エコシステムを掌握。止めればエコシステムが離散する</td>
+              </tr>
+              <tr>
+                <td><strong>DeepSeek</strong></td>
+                <td>R1, V3</td>
+                <td>非公開</td>
+                <td>中国AI独立路線の旗手。米国勢と対等なモデルを低コストで示し続ける使命</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">ゲーム理論でいう「囚人のジレンマ」の変種がここにある。全員が同時に減速すれば全員が利益を得る。だが1社でも抜け駆けすれば、その1社が市場を総取りする。抜け駆けのインセンティブが巨大だから、協調は成立しない。</p>
+          <p class="lead">地政学が競争をさらに加速させている。米国の対中半導体輸出規制（2022年10月の初回から段階的に強化）は、中国のAI開発を止めるどころか、独自路線を加速させた。DeepSeek-R1は制約の中で効率的なアプローチを編み出し、制約がイノベーションを生む皮肉な結果になった。米中両陣営が互いに「相手に先を越されるわけにはいかない」と考え、相互に加速する。国家間の安全保障論理がAI開発を後押しする構造は、マンハッタン計画以来の軍拡レースと同型だ。</p>
+
+          <div class="note">
+            <strong>撤退の非対称性。</strong>参入コストは高いが、撤退コストはさらに高い。OpenAIが減速すれば$150Bの企業価値が蒸発する。Googleが減速すれば検索市場の未来を手放す。Anthropicが減速すれば「安全なAI開発」の看板を掲げたまま周回遅れになる。どの企業にとっても、加速は合理的な選択であり続ける。たとえ集団にとっては非合理でも。
           </div>
-
-          <p class="lead">合成データのフロンティアは急速に広がっている。Meta Llama 3の学習には合成データが大量に使われた。Googleは合成データで訓練した数学特化モデルで、GSM8Kベンチマークを塗り替えた。Microsoftは合成教科書でPhi-2を訓練し、70億パラメータで130億パラメータのモデルに匹敵する性能を出した。</p>
-          <p class="lead">人間のデータの天井は、AIの訓練の天井ではない。</p>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>AIがAIを訓練する。人間のデータの壁は、天井ではなく出発点だった</span>
+          <span>1社が加速すれば全員が追従する。囚人のジレンマが軍拡を駆動している</span>
           <span class="slide-count">5 / 7</span>
         </div>
       </section>
@@ -591,7 +673,7 @@
         <div class="eyebrow reveal">Accelerator 3: Agents &amp; Tools</div>
         <h2 class="reveal reveal-delay-1">第3の加速路 — エージェントとツール使用</h2>
         <div class="panel reveal reveal-delay-2">
-          <p class="lead">LLMの限界は「知っているが、動けない」ことだった。どれだけ賢くても、テキストを出力することしかできない。外部のAPIを叩けない。ファイルを読めない。コードを実行できない。2024年から2025年にかけて、この制約が崩壊した。</p>
+          <p class="lead">満たされなさは、ついにモデルの外殻にまで出口を広げる。LLMの限界は「知っているが、動けない」ことだった。どれだけ賢くても、テキストを出力することしかできない。外部のAPIを叩けない。ファイルを読めない。コードを実行できない。この「動けなさ」そのものが圧力の溜まり場になっていた。2024年から2025年にかけて、この制約が崩壊した。エージェントとツール使用は、モデル内部の改善では吸収しきれなかった欠乏を、モデルの外側で吸収する装置である。</p>
           <p class="lead">Claude Code、Devin、OpenAI Codex。AIがコードを書くだけでなく、実行し、エラーを修正し、テストを通し、PRを作成する。人間の開発者と同じワークフローを自律的に遂行するエージェントが出現した。</p>
 
           <table class="compare">
@@ -609,19 +691,14 @@
                 <td>2024年初頭 3% &rarr; 2025年 50%超</td>
               </tr>
               <tr>
-                <td><strong>Claude Code</strong></td>
-                <td>Anthropicの自律コーディングエージェント</td>
-                <td>ターミナルで直接動作、マルチファイル編集</td>
-              </tr>
-              <tr>
-                <td><strong>Devin</strong></td>
-                <td>Cognitionの「AI software engineer」</td>
-                <td>タスク定義からデプロイまでを自律実行</td>
+                <td><strong>Claude Code / Devin</strong></td>
+                <td>自律コーディングエージェント</td>
+                <td>タスク定義から実装・デプロイまでを自律実行</td>
               </tr>
               <tr>
                 <td><strong>Voyager</strong></td>
                 <td>NVIDIAのMinecraftエージェント</td>
-                <td>自律的にスキルを獲得、コード生成で行動拡張</td>
+                <td>自らコードを書きスキルをライブラリ化</td>
               </tr>
             </tbody>
           </table>
@@ -662,6 +739,59 @@
             </div>
           </div>
 
+          <!-- SVG: Three Accelerators Convergence -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arr15" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#1a1a1a"/>
+                </marker>
+                <marker id="arr15a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#757575"/>
+                </marker>
+              </defs>
+              <!-- Three source nodes -->
+              <rect x="20" y="40" width="170" height="60" rx="3" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="105" y="65" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em">ACCELERATOR 1</text>
+              <text x="105" y="84" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">テスト時計算</text>
+
+              <rect x="255" y="40" width="170" height="60" rx="3" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="340" y="65" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em">ACCELERATOR 2</text>
+              <text x="340" y="84" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">合成データ</text>
+
+              <rect x="490" y="40" width="170" height="60" rx="3" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="575" y="65" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em">ACCELERATOR 3</text>
+              <text x="575" y="84" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1a1a1a" font-weight="700">エージェント</text>
+
+              <!-- Circular feedback loops between the three -->
+              <!-- Loop 1: Test-time -> Synthetic (top arc) -->
+              <path d="M190,60 Q 225,20 255,60" fill="none" stroke="#757575" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr15a)"/>
+              <text x="222" y="16" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">推論チェーン → 学習データ</text>
+
+              <!-- Loop 2: Synthetic -> Agent (top arc) -->
+              <path d="M425,60 Q 460,20 490,60" fill="none" stroke="#757575" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr15a)"/>
+              <text x="457" y="16" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">合成モデル → 地力向上</text>
+
+              <!-- Loop 3: Agent -> Test-time (bottom arc) -->
+              <path d="M490,100 Q 340,160 190,100" fill="none" stroke="#757575" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr15a)"/>
+              <text x="340" y="152" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#757575">ツール使用パターン → 推論改善</text>
+
+              <!-- Convergence arrows down -->
+              <line x1="105" y1="100" x2="340" y2="230" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr15)"/>
+              <line x1="340" y1="100" x2="340" y2="230" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr15)"/>
+              <line x1="575" y1="100" x2="340" y2="230" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arr15)"/>
+
+              <!-- Convergence point -->
+              <circle cx="340" cy="250" r="32" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+              <text x="340" y="246" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" letter-spacing="0.06em">COMPOUND</text>
+              <text x="340" y="260" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a" letter-spacing="0.06em">SCALING</text>
+
+              <!-- Output arrow -->
+              <line x1="340" y1="282" x2="340" y2="320" stroke="#1a1a1a" stroke-width="2" marker-end="url(#arr15)"/>
+              <text x="340" y="345" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">多次元スケーリング</text>
+            </svg>
+          </div>
+
           <p class="lead">予測市場はこの合流をどう見ているか。Metaculusの中央予測値は、AGI到達を2028-2030年に置いている。Sam Altmanは2024年9月に「超知能は数千日先」と書いた。Dario Amodeiは「2026年末までにAGIの可能性」と述べた。予測のばらつきは大きいが、方向は収束している。年ではなく、数千日の単位で語られるようになった。</p>
 
           <table class="compare">
@@ -692,8 +822,10 @@
           </table>
 
           <p class="lead">スケーリングは「死んだ」のではない。進化した。パラメータを増やすという直線が壁にぶつかったとき、3本の迂回路が開いた。テスト時計算、合成データ、エージェント。そしてこの3本は互いを加速する複合ループを形成し始めている。</p>
+          <p class="lead">だが本稿が最も言いたかったのは進化の事実ではない。<strong>この系は、何を足しても満たされない</strong>ということだ。パラメータ数が足りないと言われてパラメータを足したら、今度はデータが足りないと言われた。データを合成で補ったら、次は推論時計算が足りないと言われた。推論を伸ばしたら、次はツールとエージェントの足場が足りないと言われる。スケーリングは欠乏を埋める運動に見えるが、埋めた瞬間に次の欠乏を生成する運動だった。4層の加速は、この満たされなさを並列に処理する装置である。走り続ける理由は「まだ到達していないから」ではない。到達という概念が最初から排除されているからだ。</p>
+          <p class="lead">この構造は次の10年に何を予測させるか。第一に、次の「壁」が報じられるたびに、それは減速ではなく<strong>新しい出口の発生源</strong>として読むべきである。データが尽きる、電力が尽きる、チップが尽きる――いずれの報道も、系の終息ではなく別の軸の開通を予告する信号にすぎない。第二に、ボトルネックは技術層から制度層へ、そして最終的に<strong>物理法則の層</strong>へと移っていく。電力、冷却、地球表面の面積、光速。これらは交渉できない。系が最終的に着地する地点は、人間が線を引く地点ではなく、物理が線を引く地点である。第三に、満たされない系に最も適応できるプレイヤーは、もはや「欲しいもの」を持たない主体だ。人間の欲求が満たされる必要を前提にした組織設計は、この系のなかで構造的に不利になる。</p>
           <div class="note">
-            <strong>壁に見えたものが、分岐点だった。</strong>直線を延長する時代が終わり、多次元にスケールする時代が始まった。スケーリングの本質は「大きくする」ことではなく「正しい方向に計算を投じる」ことだった。データが尽き、電力が足りず、チップが不足しても、計算を投じる場所と方法はまだ増え続けている。3つの経路が合流する先に何があるのか。その問いの答えは、おそらく人間が出すものではなくなる。
+            <strong>壁に見えたものが、分岐点だった。</strong>直線を延長する時代が終わり、多次元にスケールする時代が始まった。スケーリングの本質は「大きくする」ことではなく「正しい方向に計算を投じる」ことだった。データが尽き、電力が足りず、チップが不足しても、計算を投じる場所と方法はまだ増え続けている。3つの経路が合流する先に何があるのか。その問いの答えは、おそらく人間が出すものではなくなる。満たされない系は、満たされる日を迎える代わりに、満たされる必要がなくなる地点――計算を投じる主体そのものが別物になる地点――に着地する。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -732,6 +864,128 @@
         References: Kaplan et al. (2020) "Scaling Laws for Neural Language Models"; Wei et al. (2022) "Emergent Abilities of Large Language Models"; Hoffmann et al. (2022) "Training Compute-Optimal Large Language Models"; Epoch AI (2024) "Will we run out of data?"; Zelikman et al. (2022) "STaR: Self-Taught Reasoner"; Shumailov et al. (2024) "The Curse of Recursion"; OpenAI o1/o3 System Cards; DeepSeek-R1 Technical Report; Anthropic Constitutional AI; NVIDIA Voyager (2023); SWE-bench Leaderboard; Metaculus AGI forecasts.
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -796,5 +1050,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>アラインメントは五つの学派に分裂している —— Hernández-Espinosa 論文が接続する系譜 — AGI HUB</title>
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #d8cfb9;
+        --bg: #f5f0e4;
+        --bg-alt: #ede5d0;
+        --accent: #8a2f1c;
+        --accent-soft: rgba(138, 47, 28, 0.09);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+          游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+          游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
+          sans-serif;
+        font-feature-settings: "palt";
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .progress {
+        position: fixed; top: 0; left: 0;
+        height: 2px; background: var(--accent);
+        width: 0%; z-index: 100;
+        transition: width 0.3s var(--ease);
+      }
+
+      .nav {
+        position: fixed; right: 24px; top: 50%;
+        transform: translateY(-50%);
+        display: grid; gap: 16px; z-index: 50;
+      }
+
+      .nav button {
+        width: 8px; height: 8px; border-radius: 999px;
+        border: 1.5px solid var(--meta);
+        background: transparent; cursor: pointer;
+        transition: all 0.3s var(--ease);
+      }
+
+      .nav button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.4);
+      }
+
+      main { scroll-snap-type: y mandatory; }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 80px 48px 64px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 32px;
+        scroll-snap-align: start;
+      }
+
+      .slide + .slide { border-top: 1px solid var(--border); }
+
+      .hero {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.65) contrast(1.1);
+        transition: filter 0.6s var(--ease);
+      }
+
+      .hero:hover { filter: grayscale(0) contrast(1); }
+
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .credits {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 80px;
+        border-top: 1px solid var(--border);
+      }
+
+      .credits p {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.047em;
+        line-height: 2;
+        color: var(--light-gray);
+      }
+
+      .credits a {
+        color: var(--meta);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .credits a:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.35s; }
+
+      .eyebrow {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1, h2 {
+        color: var(--black);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        max-width: 26ch;
+        padding-bottom: 16px;
+        border-bottom: 3px double var(--accent);
+      }
+
+      h1 { font-size: clamp(30px, 4.4vw, 38px); }
+      h2 { font-size: clamp(26px, 3.8vw, 34px); }
+
+      .lead {
+        max-width: 780px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .lead + .lead { margin-top: 8px; }
+
+      .panel { display: grid; gap: 24px; align-content: start; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+      .card {
+        padding: 24px 20px 24px 0;
+        border-top: 3px solid var(--accent);
+        background: transparent;
+      }
+
+      .card .tag { color: var(--accent); font-weight: 700; }
+      .card strong { color: var(--black); }
+
+      .card p {
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+        margin-bottom: 12px;
+      }
+
+      .point {
+        padding-left: 16px;
+        border-left: 3px solid var(--accent);
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+      .point strong { color: var(--black); }
+
+      table.compare {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 3px solid var(--accent);
+        border-bottom: 3px double var(--accent);
+        background: var(--bg);
+      }
+
+      table.compare th, table.compare td {
+        padding: 18px 16px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--body-text);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      table.compare th {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 1px solid var(--accent);
+        background: var(--accent-soft);
+      }
+
+      table.compare td strong { color: var(--black); }
+      table.compare tr:last-child td { border-bottom: none; }
+
+      .note {
+        font-size: 17px;
+        line-height: 1.7;
+        color: var(--body-text);
+        padding: 24px 28px;
+        margin: 12px 0;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        position: relative;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        max-width: 100%;
+      }
+      .note::before {
+        content: "EVIDENCE";
+        display: block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .note strong { color: var(--accent); }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+      }
+
+      .footer .slide-count {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .svg-diagram {
+        width: 100%;
+        overflow-x: auto;
+        padding: 24px 0;
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .svg-diagram svg {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+      }
+
+      @media (max-width: 768px) {
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        .slide { padding: 64px 24px 48px; }
+        h1 { font-size: 26px; }
+        h2 { font-size: 22px; }
+        .slide .hero.img-fullbleed,
+        .slide .hero.img-wide,
+        .slide .hero.img-content { width: 100%; max-width: 100%; aspect-ratio: 16/9; margin: 0; transform: none; left: 0; }
+      }
+
+      @media (max-width: 480px) {
+        .slide { padding: 56px 16px 40px; }
+        .note { padding: 16px 14px; font-size: 14px; }
+      }
+
+      @media print {
+        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
+        .nav, .progress { display: none; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="pattern-investigation has-site-header" data-category="alignment">
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+
+    <aside class="nav" aria-label="Section navigation">
+      <button data-target="slide-1" class="active" aria-label="Section 1"></button>
+      <button data-target="slide-2" aria-label="Section 2"></button>
+      <button data-target="slide-3" aria-label="Section 3"></button>
+      <button data-target="slide-4" aria-label="Section 4"></button>
+      <button data-target="slide-5" aria-label="Section 5"></button>
+      <button data-target="slide-nav" aria-label="Navigation"></button>
+    </aside>
+
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 33 / 34 &nbsp;&middot;&nbsp; Alignment &nbsp;&middot;&nbsp; 5 Sections</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="32-japan-agi-silence.html" style="color:inherit;text-decoration:none;">&larr; Prev</a>
+        <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;">Same Category</a>
+        <a href="34-alignment-success-route.html" style="color:inherit;text-decoration:none;">Next &rarr;</a>
+      </span>
+    </div>
+
+    <!-- Shared logo symbol library (document-wide) -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+      <defs>
+        <symbol id="logo-anthropic" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M17.3041 3.541h-3.6718l6.696 16.918H24Zm-10.6082 0L0 20.459h3.7442l1.3693-3.5527h7.0052l1.3693 3.5528h3.7442L10.5363 3.5409Zm-.3712 10.2232 2.2914-5.9456 2.2914 5.9456Z"/>
+        </symbol>
+        <symbol id="logo-meta" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/>
+        </symbol>
+        <symbol id="logo-deepmind" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/>
+        </symbol>
+        <symbol id="logo-openai" viewBox="0 0 24 24">
+          <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <ellipse cx="12" cy="12" rx="8.5" ry="3.4"/>
+            <ellipse cx="12" cy="12" rx="8.5" ry="3.4" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="8.5" ry="3.4" transform="rotate(120 12 12)"/>
+          </g>
+        </symbol>
+        <clipPath id="cp-yudkowsky"><circle cx="105" cy="108" r="22"/></clipPath>
+        <clipPath id="cp-amodei"><circle cx="300" cy="108" r="22"/></clipPath>
+        <clipPath id="cp-sutskever"><circle cx="495" cy="108" r="22"/></clipPath>
+        <clipPath id="cp-russell"><circle cx="690" cy="108" r="22"/></clipPath>
+        <clipPath id="cp-bengio"><circle cx="885" cy="108" r="22"/></clipPath>
+        <clipPath id="cp-f-yud"><circle cx="130" cy="230" r="18"/></clipPath>
+        <clipPath id="cp-f-and"><circle cx="760" cy="230" r="18"/></clipPath>
+        <clipPath id="cp-f-heb"><circle cx="445" cy="230" r="18"/></clipPath>
+      </defs>
+    </svg>
+
+    <main>
+
+      <!-- ═══════════ SECTION 1: THE PAPER AT HAND ═══════════ -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &middot; No. 33 &middot; Alignment &middot; The Paper At Hand &middot; 2026.04.19 &middot; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">アラインメントは五つの学派に分裂している —— Hernández-Espinosa 論文が接続する系譜</h1>
+        <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/33-alignment-schools-map/slide1.jpg" alt="モノクロの印刷物を極端に拡大した抽象的な接写">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">2026年4月14日、<em>PNAS Nexus</em> にAlberto Hernández-Espinosa、Felipe S. Abrahão、Olaf Witkowski、Hector Zenilの四名による論文が掲載された。題は「Neurodivergent influenceability in agentic AI as a contingent solution to the AI alignment problem」[3]。著者らは、Gödel第一不完全性定理[7]、Turingの停止問題[8]、Riceの定理[9]という計算機科学の三つの古典に依拠しながら、十分な表現力を持つagentic AIについて一般的な目標整合検証器が構成できないことを示し、その帰結として<strong>managed misalignment</strong>——管理されたズレ——と名付けた運用戦略を提案した[1][2]。</p>
+
+          <p class="lead">この論文の主張は、単独で読めばRice系の直接的な帰結であり、計算論的には堅い。問題はこの主張を受けた次の一歩である。著者らは「単体のAIを完全整合させる」という問題設定そのものを放棄し、意図的に性格の異なる複数のAIを走らせて相互監視で均衡を取るという運用論に踏み込んだ。<em>artificial agentic neurodivergence</em>という造語で、多様性を安全性の設計原理に置いた[1][2]。</p>
+
+          <p class="lead">この一歩は、アラインメント研究の十年史の中でどこに着地するのか。私が本稿で検証したいのは二つである。<strong>ひとつ、論文の数学的主張の射程はどこまでか</strong>。Rice定理の枠で何が言え、何は言えないのか。限定領域の安全設計や保証付きアーキテクチャに届くのか。<strong>ふたつ、managed misalignmentという運用提案は、既存のアラインメント研究のどの系譜に接続されるのか</strong>。新規の発見なのか、既存の直感に計算論的な骨を通したのか。</p>
+
+          <p class="lead">結論を先に置く。論文の数学パートは堅いがRice系の応用に留まり、「完全整合」という状態概念そのものの到達不能性は示していない。運用提案のmanaged misalignmentは、Stuart Russellの<em>Human Compatible</em>[4]、Andrew CritchらのARCHES[5]、Eric Drexlerの包括AIサービス(CAIS)[6]という2019〜2020年に揃った多エージェント路線——本稿では<em>Ecosystem派</em>と呼ぶ——の系譜上に位置する。古い直感に、Gödel・停止問題・Riceから演繹的に骨を通した。</p>
+
+          <div class="note">
+            本稿の構成。第2節で論文の証明の射程と限界を、既存のMeloらによる対照論文[10]と並べて検証する。第3節でアラインメント研究の五学派マップを提示する。第4節で五学派を分ける三本の断層線を引く。第5節でmanaged misalignmentをEcosystem派の系譜に接続する。五学派の整理は編集部による再構成であり、研究者個人の自認と完全には一致しないが、議論の見通しのための補助線として提示する。
+          </div>
+
+          <p class="lead">アラインメント研究は、単一の問いを共有する分野ではない。同じ<em>alignment</em>という語が、少なくとも五つの異なる問題を束ねている。Hernández-Espinosa 論文はそのうちの一つ——多エージェント生態系の均衡設計——という系譜に、新しい梁を渡した論文として読むのが最も解像度が上がる。</p>
+        </div>
+
+        <div class="footer">
+          <span>論文の主張と、学派の地図</span>
+          <span class="slide-count">1 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 2: WHAT THE PROOF ACTUALLY COVERS ═══════════ -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">What The Proof Actually Covers</div>
+        <h2 class="reveal reveal-delay-1">Rice と停止問題、そしてその射程</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/33-alignment-schools-map/slide2.jpg" alt="抽象的な幾何学的格子模様">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">論文の数学パートは三つの古典に依拠する。Gödel第一不完全性定理[7]、Turingの停止問題[8]、Riceの定理[9]。Riceの定理は「チューリング完全な計算系において、プログラムの意味的性質（非自明な外延的性質）はほぼ全て決定不能である」という系であり、計算機科学の基礎教程の中核に位置する。Hernández-Espinosa らはこの系を、十分な表現力を持つagentic AIの「人間価値との整合性」という性質に適用した[3]。</p>
+
+          <p class="lead">結論として得られるのは、<strong>任意のagentic AIを外から受け取って「このAIが人間価値と整合しているか」を万能に判定するプログラム</strong>は構成できない、という命題である。Riceの定理の直接帰結であり、停止問題への還元を経由する。証明の筋は堅く、学術的には論争の余地が少ない。著者らはこれを「agentic AIのアラインメント問題は、計算論的には解けない問題のクラスに属する」と位置づけた[1][3]。</p>
+
+          <p class="lead">証明の射程には境界がある。この不可能性が効くのは、チューリング完全な表現力を前提にした<strong>一般的な検証器</strong>の構成に対してである。射程の外には、以下の設計が残っている。特定のアーキテクチャに限定した検証、動作時の継続監視とアボート機構、訓練段階での制約埋め込み、探索空間を有限にした領域限定AI、形式検証可能なサブシステムへの分解。これらは本論文の不可能性に抵触せず、むしろ不可能性の外側で安全性を作る現代の主流路線である。論文自身はこの射程限界を暗黙に認めており、managed misalignmentという運用提案そのものが「一般検証ができない以上、運用時の構造で吸収する」という前提に立っている。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>主張の範囲</th>
+                <th>内容</th>
+                <th>本論文の立場</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>証明された命題</strong></td>
+                <td>チューリング完全なagentic AIに対し、任意の目標整合を判定する一般検証器は構成できない（Rice系応用）</td>
+                <td>数学的に証明済み。本論文の中核寄与</td>
+              </tr>
+              <tr>
+                <td><strong>証明されていない命題</strong></td>
+                <td>特定アーキテクチャ限定の検証、動作時監視、設計段階の制約埋め込み、形式検証可能サブシステムでの整合も不可能である</td>
+                <td>論文は踏み込まない。これらは射程外</td>
+              </tr>
+              <tr>
+                <td><strong>踏み込まない領域</strong></td>
+                <td>そもそも「人間価値との整合状態」が存在するか、という存在論的問い</td>
+                <td>計算論と独立の問題として扱わない</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">論文の実証パートには正面から注釈を付けておく。著者らはAI倫理に関するオンライン・コメント1,029件を分析し、managed misalignmentの運用可能性を支持する材料として提示している[1][2]。コメント分析は人間の意見分布を示すが、設計原理の有効性そのものを示しはしない。数学パートが示す不可能性と、実証パートが示す社会的受容性は、独立の層の議論である。ここは論文の価値を下げはしないが、計算論的な証明と運用論の妥当性は別の根拠で支えられる必要があるという留保として読むべきである。</p>
+
+          <div class="note">
+            計算論的不可能性をアラインメントに接続する試みは本論文が初めてではない。2025年には<em>Scientific Reports</em>に Melo, Máximo, Soma, Castro による「Machines that halt resolve the undecidability of artificial intelligence alignment」が掲載されており[10]、停止する機械に議論を限定すれば整合性判定の決定不能性は解消するという対照的な結論を提示している。Rice系の応用可能性は、停止性を前提にできるかどうかで大きく変わる。Hernández-Espinosa 論文は停止性の前提を緩めた側に立ち、Melo らは前提を強めた側に立つ。両者は矛盾ではなく、同じ計算論的足場の上での設計選択の違いとして読める。
+          </div>
+
+          <p class="lead">論文の射程を正確に掴んだうえで、次に進む。一般検証器が構成できないという結論は、アラインメント研究を終わらせる命題ではなく、むしろ各学派がこの不可能性をどう迂回するかという問いを立て直す命題である。学派ごとに、この迂回路の設計思想が大きく異なる。</p>
+        </div>
+
+        <div class="footer">
+          <span>Rice の射程と、その外側に残る設計空間</span>
+          <span class="slide-count">2 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 3: THE FIVE CAMPS ═══════════ -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">The Five Camps</div>
+        <h2 class="reveal reveal-delay-1">同じ<em>alignment</em>を、五つの哲学が奪い合っている</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/33-alignment-schools-map/slide3.jpg" alt="雪山の尾根を上空から俯瞰した地図的風景">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">Hernández-Espinosa 論文の評価は、受け取る研究コミュニティによって大きく割れる。学派ごとに「alignmentとは何の問題か」の前提が違うからだ。現代のアラインメント研究を、前提と代表的担い手の違いから五つに分けて整理する。各学派は独立の学会組織を持つわけではなく、相互に人員と論文を交換しているが、問題設定の層では明確に区別できる。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>学派</th>
+                <th>中核命題</th>
+                <th>代表的な担い手</th>
+                <th>alignmentの意味</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>① Doomer派<br>（MIRI系）</strong></td>
+                <td>現行手法のまま強力なAIを作れば、ほぼ確実に人類は敗れる。整合は原理的に間に合わない</td>
+                <td>Eliezer Yudkowsky, Nate Soares（MIRI）[11]</td>
+                <td>人間価値の内部表現との完全一致。失敗率ほぼ1</td>
+              </tr>
+              <tr>
+                <td><strong>② Interpretability派<br>（Anthropic中心）</strong></td>
+                <td>スケーリングは効く。並走して解釈可能性と振る舞い制御を詰めれば、運用可能な整合状態に到達できる</td>
+                <td>Dario Amodei, Chris Olah, Jan Leike（Anthropic）[12][13][14]</td>
+                <td>憲法、機械的解釈可能性、RSPで支える運用整合</td>
+              </tr>
+              <tr>
+                <td><strong>③ Scalable Oversight派<br>（DeepMindと旧Superalignment、SSI）</strong></td>
+                <td>人間単独では強いAIを監督できない。弱いAIを束ねて強いAIを監督する階層を設計する</td>
+                <td>Shane Legg, Rohin Shah（DeepMind）, Ilya Sutskever（SSI, 旧OpenAI Superalignment）[15][16][17]</td>
+                <td>再帰的人間フィードバック、委譲可能な監督</td>
+              </tr>
+              <tr>
+                <td><strong>④ Ecosystem派<br>（CHAIとRussell系）</strong></td>
+                <td>単体ASIを整合させる問題設定が間違っている。多エージェントの生態系として均衡を設計する</td>
+                <td>Stuart Russell（CHAI）[4], Andrew Critch（ARCHES）[5], Eric Drexler（CAIS）[6]</td>
+                <td>目的の不確実性を保ち、人間への照会を組み込んだ多体系</td>
+              </tr>
+              <tr>
+                <td><strong>⑤ Collective Risk派<br>（CAISとGovAI系）</strong></td>
+                <td>個別AIの整合より、社会全体がAIにより再配線される過程のリスク管理が本丸。制度と評価体制で対処する</td>
+                <td>Dan Hendrycks（CAIS）[18][19], Yoshua Bengio（LawZero）[20], GovAI・UK AISI・US AISI[21]</td>
+                <td>社会的集合としての整合。制度的安全性</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 990 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="五学派の旗手">
+              <text x="40" y="28" font-family="'SF Mono',monospace" font-size="10" fill="#8a2f1c" letter-spacing="0.08em" font-weight="700">FIVE CAMPS &middot; 旗手の配置</text>
+
+              <!-- Camp 1: Doomer (MIRI) -->
+              <g>
+                <image href="../images/thinkers/yudkowsky.jpg" x="83" y="86" width="44" height="44" clip-path="url(#cp-yudkowsky)" preserveAspectRatio="xMidYMid slice"/>
+                <circle cx="105" cy="108" r="22" fill="none" stroke="#8a2f1c" stroke-width="2"/>
+                <text x="105" y="148" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">Yudkowsky</text>
+                <text x="105" y="162" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">MIRI</text>
+                <rect x="45" y="180" width="120" height="60" fill="#8a2f1c" fill-opacity="0.08" stroke="#8a2f1c" stroke-width="1"/>
+                <text x="105" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">① Doomer</text>
+                <text x="105" y="218" text-anchor="middle" font-size="10" fill="#585858">到達前に</text>
+                <text x="105" y="232" text-anchor="middle" font-size="10" fill="#585858">敗北確定</text>
+              </g>
+
+              <!-- Camp 2: Interpretability (Anthropic) -->
+              <g>
+                <image href="../images/people/dario-amodei.jpg" x="278" y="86" width="44" height="44" clip-path="url(#cp-amodei)" preserveAspectRatio="xMidYMid slice"/>
+                <circle cx="300" cy="108" r="22" fill="none" stroke="#8a2f1c" stroke-width="2"/>
+                <text x="300" y="148" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">Amodei</text>
+                <text x="300" y="162" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">Anthropic</text>
+                <rect x="240" y="180" width="120" height="60" fill="#8a2f1c" fill-opacity="0.08" stroke="#8a2f1c" stroke-width="1"/>
+                <text x="300" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">② Interpretability</text>
+                <text x="300" y="218" text-anchor="middle" font-size="10" fill="#585858">憲法・解釈・</text>
+                <text x="300" y="232" text-anchor="middle" font-size="10" fill="#585858">RSP併走</text>
+                <!-- Anthropic logo mini -->
+                <circle cx="345" cy="90" r="10" fill="#8a2f1c"/>
+                <use href="#logo-anthropic" x="336" y="81" width="18" height="18" color="#ffffff"/>
+              </g>
+
+              <!-- Camp 3: Scalable Oversight (DeepMind / SSI) -->
+              <g>
+                <image href="../images/thinkers/sutskever.jpg" x="473" y="86" width="44" height="44" clip-path="url(#cp-sutskever)" preserveAspectRatio="xMidYMid slice"/>
+                <circle cx="495" cy="108" r="22" fill="none" stroke="#8a2f1c" stroke-width="2"/>
+                <text x="495" y="148" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">Sutskever</text>
+                <text x="495" y="162" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">SSI / ex-OpenAI</text>
+                <rect x="435" y="180" width="120" height="60" fill="#8a2f1c" fill-opacity="0.08" stroke="#8a2f1c" stroke-width="1"/>
+                <text x="495" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">③ Scalable</text>
+                <text x="495" y="214" text-anchor="middle" font-size="11" font-weight="700" fill="#8a2f1c">Oversight</text>
+                <text x="495" y="232" text-anchor="middle" font-size="10" fill="#585858">弱AIで強AIを監督</text>
+                <!-- DM + OpenAI logos -->
+                <circle cx="540" cy="90" r="10" fill="#8a2f1c"/>
+                <use href="#logo-deepmind" x="531" y="81" width="18" height="18" color="#ffffff"/>
+                <circle cx="450" cy="90" r="10" fill="#1a1a1a"/>
+                <use href="#logo-openai" x="441" y="81" width="18" height="18" color="#ffffff"/>
+              </g>
+
+              <!-- Camp 4: Ecosystem (CHAI / Russell) -->
+              <g>
+                <image href="../images/thinkers/russell.jpg" x="668" y="86" width="44" height="44" clip-path="url(#cp-russell)" preserveAspectRatio="xMidYMid slice"/>
+                <circle cx="690" cy="108" r="22" fill="none" stroke="#8a2f1c" stroke-width="2"/>
+                <text x="690" y="148" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">Russell</text>
+                <text x="690" y="162" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">CHAI / Berkeley</text>
+                <rect x="630" y="180" width="120" height="60" fill="#8a2f1c" fill-opacity="0.08" stroke="#8a2f1c" stroke-width="1"/>
+                <text x="690" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">④ Ecosystem</text>
+                <text x="690" y="218" text-anchor="middle" font-size="10" fill="#585858">多体系の</text>
+                <text x="690" y="232" text-anchor="middle" font-size="10" fill="#585858">均衡設計</text>
+              </g>
+
+              <!-- Camp 5: Collective Risk (CAIS / LawZero) -->
+              <g>
+                <image href="../images/thinkers/bengio.jpg" x="863" y="86" width="44" height="44" clip-path="url(#cp-bengio)" preserveAspectRatio="xMidYMid slice"/>
+                <circle cx="885" cy="108" r="22" fill="none" stroke="#8a2f1c" stroke-width="2"/>
+                <text x="885" y="148" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">Bengio</text>
+                <text x="885" y="162" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">LawZero</text>
+                <rect x="825" y="180" width="120" height="60" fill="#8a2f1c" fill-opacity="0.08" stroke="#8a2f1c" stroke-width="1"/>
+                <text x="885" y="200" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">⑤ Collective Risk</text>
+                <text x="885" y="218" text-anchor="middle" font-size="10" fill="#585858">制度と評価の</text>
+                <text x="885" y="232" text-anchor="middle" font-size="10" fill="#585858">集合的安全</text>
+                <!-- CAIS + AISI mini chips -->
+                <rect x="840" y="255" width="38" height="16" fill="#1a1a1a"/>
+                <text x="859" y="266" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#ffffff" font-weight="700">CAIS</text>
+                <rect x="882" y="255" width="38" height="16" fill="#1a1a1a"/>
+                <text x="901" y="266" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#ffffff" font-weight="700">AISI</text>
+              </g>
+
+              <!-- Bottom axis hint -->
+              <line x1="40" y1="300" x2="950" y2="300" stroke="#8a2f1c" stroke-width="0.5" stroke-dasharray="3,3"/>
+              <text x="40" y="322" font-family="'SF Mono',monospace" font-size="9" fill="#757575">&larr; 単体ASIの問題として扱う</text>
+              <text x="950" y="322" text-anchor="end" font-family="'SF Mono',monospace" font-size="9" fill="#757575">生態系・社会の問題として扱う &rarr;</text>
+            </svg>
+          </div>
+
+          <p class="lead">この五つは、互いに敵対しているわけではない。Anthropicは憲法的AIと解釈可能性で②に軸足を置きつつ、Responsible Scaling Policyで⑤にも参加している[13]。旧OpenAI Superalignmentは③の代表だったが、2024年5月にIlya SutskeverとJan Leikeの相次ぐ離脱を受けて解散した[16][22]。LeikeはAnthropicに移り②の一翼を担い、Sutskeverは<em>Safe Superintelligence Inc.</em>で③を尖らせた道を選んだ[17][22]。学派は人の移動で染め直され続けている。</p>
+
+          <p class="lead">Hernández-Espinosa 論文の数学的帰結は、この五学派にそれぞれ異なる形で着地する。①Doomer派は一般検証器の不可能性を「整合は原理的に間に合わない」という既定路線の強化として読む[11]。②Interpretability派は「後付けの万能検証器が無理なら、訓練時の振る舞い制御と内部回路の機械的解釈可能性で押さえる」という実装戦略の正当化として受け取る[13]。③Scalable Oversight派は「一般検証器ではなく再帰的に委譲可能な監督構造で近似する」と翻訳する[15]。④Ecosystem派は「単体整合という問題設定自体が誤りであり、managed misalignmentは多エージェント均衡路線の計算論的根拠になる」と迎え入れる[4][5][6]。⑤Collective Risk派にとって個別検証の不可能性はもともと議論の前提であり、議論は制度と評価の層に移行している[18][21]。</p>
+
+          <p class="lead">同じ一本の論文が、五種類の結論を呼び込む。これは論文の曖昧さゆえではない。<em>alignment</em>という一語が、五つの異なる問題を束ねているからである。</p>
+        </div>
+
+        <div class="footer">
+          <span>学派ごとに、同じ論文は別の書物に見える</span>
+          <span class="slide-count">3 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 4: THE FAULT LINES ═══════════ -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">The Fault Lines</div>
+        <h2 class="reveal reveal-delay-1">五学派を分ける、三つの断層線</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/33-alignment-schools-map/slide4.jpg" alt="岩盤を走る大きな亀裂">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">五学派は平面上に並んでいるのではない。互いに交差し、一部で重なり、別の部分で激しく割れている。割れ目は三本の断層線に整理できる。どの断層線でどちらに立つかによって、同じ論文の読み方が反転する。</p>
+
+          <div class="grid-3">
+            <div class="card">
+              <span class="tag">断層①</span>
+              <p><strong>整合 vs 制御 vs 生態系</strong></p>
+              <p>①②は内部表現と振る舞いの<strong>整合</strong>を追う。③はそれを諦めて<strong>制御</strong>に移る。④⑤はそもそも単体を追わず<strong>生態系</strong>の均衡を設計する。同じ単語で違う手段を語っているのはこの層の差である。</p>
+            </div>
+            <div class="card">
+              <span class="tag">断層②</span>
+              <p><strong>単体ASI vs 多エージェント</strong></p>
+              <p>①②③は暗黙に単体の強いAIを想定する。④⑤はそれ自体が誤った問題設定だと見る。Hernández-Espinosa 論文はこの層の④側に属し、managed misalignmentは最初から多エージェントを前提に書かれている[1][4][5][6]。</p>
+            </div>
+            <div class="card">
+              <span class="tag">断層③</span>
+              <p><strong>悲観 vs 楽観 vs 中間</strong></p>
+              <p>Yudkowsky[11]、Marc Andreessenの<em>Techno-Optimist Manifesto</em>[23]、Hassabis的な条件付き慎重論[24]。断層①②の解釈に、性格としての悲観・楽観が重なる。AGI議論の分極の多くはここに折り畳まれている。</p>
+            </div>
+          </div>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 990 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="断層③ 悲観・中間・楽観の配置">
+              <text x="40" y="28" font-family="'SF Mono',monospace" font-size="10" fill="#8a2f1c" letter-spacing="0.08em" font-weight="700">FAULT LINE 3 &middot; 悲観 &larr;&rarr; 楽観</text>
+
+              <!-- Base line -->
+              <line x1="80" y1="180" x2="930" y2="180" stroke="#1a1a1a" stroke-width="1.5"/>
+              <polygon points="75,180 82,176 82,184" fill="#1a1a1a"/>
+              <polygon points="935,180 928,176 928,184" fill="#1a1a1a"/>
+
+              <text x="80" y="200" font-family="'SF Mono',monospace" font-size="10" fill="#8a2f1c" font-weight="700">悲観</text>
+              <text x="935" y="200" text-anchor="end" font-family="'SF Mono',monospace" font-size="10" fill="#8a2f1c" font-weight="700">楽観</text>
+              <text x="505" y="200" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575">中間</text>
+
+              <!-- Yudkowsky (far left / pessimist) -->
+              <image href="../images/thinkers/yudkowsky.jpg" x="112" y="212" width="36" height="36" clip-path="url(#cp-f-yud)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="130" cy="230" r="18" fill="none" stroke="#8a2f1c" stroke-width="2"/>
+              <text x="130" y="263" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">Yudkowsky</text>
+              <text x="130" y="277" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">p(doom) ≈ 1</text>
+              <line x1="130" y1="212" x2="130" y2="180" stroke="#8a2f1c" stroke-width="1"/>
+              <circle cx="130" cy="180" r="4" fill="#8a2f1c"/>
+
+              <!-- Bengio / Hinton (left-of-center) -->
+              <text x="270" y="170" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">Bengio / Hinton</text>
+              <text x="270" y="158" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">p(doom) 10-50%</text>
+              <line x1="270" y1="175" x2="270" y2="180" stroke="#8a2f1c" stroke-width="1"/>
+              <circle cx="270" cy="180" r="4" fill="#8a2f1c"/>
+
+              <!-- Amodei / Hassabis (center) -->
+              <image href="../images/people/dario-amodei.jpg" x="427" y="212" width="36" height="36" clip-path="url(#cp-f-heb)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="445" cy="230" r="18" fill="none" stroke="#8a2f1c" stroke-width="2"/>
+              <text x="445" y="263" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">Amodei / Hassabis</text>
+              <text x="445" y="277" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">条件付き慎重</text>
+              <line x1="445" y1="212" x2="445" y2="180" stroke="#8a2f1c" stroke-width="1"/>
+              <circle cx="445" cy="180" r="4" fill="#8a2f1c"/>
+
+              <!-- LeCun (center-right) -->
+              <text x="620" y="170" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">LeCun</text>
+              <text x="620" y="158" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">LLM楽観・長期懐疑</text>
+              <line x1="620" y1="175" x2="620" y2="180" stroke="#8a2f1c" stroke-width="1"/>
+              <circle cx="620" cy="180" r="4" fill="#8a2f1c"/>
+
+              <!-- Andreessen (right / optimist) -->
+              <image href="../images/thinkers/andreessen.jpg" x="742" y="212" width="36" height="36" clip-path="url(#cp-f-and)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="760" cy="230" r="18" fill="none" stroke="#8a2f1c" stroke-width="2"/>
+              <text x="760" y="263" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1a1a1a" font-weight="700">Andreessen</text>
+              <text x="760" y="277" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">加速主義</text>
+              <line x1="760" y1="212" x2="760" y2="180" stroke="#8a2f1c" stroke-width="1"/>
+              <circle cx="760" cy="180" r="4" fill="#8a2f1c"/>
+
+              <!-- Accel hint -->
+              <text x="870" y="170" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1a1a1a" font-weight="700">e/acc 一派</text>
+              <text x="870" y="158" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#757575">p(doom) ≈ 0</text>
+              <line x1="870" y1="175" x2="870" y2="180" stroke="#8a2f1c" stroke-width="1"/>
+              <circle cx="870" cy="180" r="4" fill="#8a2f1c"/>
+            </svg>
+          </div>
+
+          <p class="lead">三本の線は独立に引かれていない。<strong>①で「整合」を取る人ほど、②で「単体」を前提にしやすく、③でどちらに振れるかでDoomerかInterpretabilityかが決まる</strong>。逆に①で「生態系」を取る人は、②「多エージェント」③「構造的悲観と実務的楽観の同居」に着地する。五つの学派は偶然の寄せ集めではない。三本の組み合わせが離散的に学派を産んでいる。</p>
+
+          <p class="lead">この見方に立つと、アラインメント議論の分極は「人類はAIに勝てるか」という粗い問いでは解けない。<strong>問題をどの層で定義するか</strong>が先にあり、分極はその派生として起きる。Hernández-Espinosa 論文は二本目の断層を跨ぎ、単体ASIの「整合」から多エージェントの「均衡」へと問題設定そのものを移したところに位置する。管理されたズレという標語は、この移動を凝縮した言い換えとして読むのが正確である。</p>
+
+          <div class="note">
+            二本目を越えるとき、語の意味は大きく変わる。<strong>misalignment</strong>は単体系では「失敗」だが、多体系では「多様性」になる。生物進化では遺伝子の揺らぎが集団の頑健性を生む。免疫系は多様なリンパ球の並存で未知の抗原に備える。市場は複数の予想が競合するからこそ価格を見つけ出す。<strong>一つの正解を追わない設計</strong>は、自然界と社会のあちこちで既に稼働している。managed misalignmentは、その語彙をAI安全性に持ち込み直したものだと読める。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>分極は派生である、問題設定が先にある</span>
+          <span class="slide-count">4 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 5: MANAGED MISALIGNMENT IN ITS LINEAGE ═══════════ -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">Managed Misalignment In Its Lineage</div>
+        <h2 class="reveal reveal-delay-1">managed misalignment は、Ecosystem 派の系譜に新しい骨を通した</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/33-alignment-schools-map/slide5.jpg" alt="群れとなって飛ぶ鳥のシルエット">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">Hernández-Espinosa 論文の運用提案——<em>managed misalignment</em>——を、Ecosystem派の系譜上に置き直す。管理されたズレという発想そのものは2010年代後半に揃っており、著者らの寄与はこの既存の直感に計算論的な演繹を与えた点にある[1][2]。系譜を四点に絞って並べる。</p>
+
+          <div class="grid-2">
+            <div class="card">
+              <span class="tag">2019</span>
+              <p><strong>Stuart Russell『Human Compatible』</strong>[4]</p>
+              <p>「目的の不確実性を保ち続けるAI」を提示。人間への<em>deference</em>と繰り返しの照会を組み込み、単体AIに完全目標を与えない設計原理。単体整合への懐疑はここで一つの完成を見た。</p>
+            </div>
+            <div class="card">
+              <span class="tag">2019</span>
+              <p><strong>Eric Drexler『Reframing Superintelligence』</strong>[6]</p>
+              <p>FHIのテクニカルレポートで<em>Comprehensive AI Services (CAIS)</em>を提示。単体ASIではなく、領域別に分かれた複数サービスが協調する構造として超知能を描き直した。単体ではなく分散と機能特化が安全性を支える、という論。</p>
+            </div>
+            <div class="card">
+              <span class="tag">2020</span>
+              <p><strong>Andrew Critch &amp; David Krueger『ARCHES』</strong>[5]</p>
+              <p>AI Research Considerations for Human Existential Safety。単一プリンシパル・単一エージェントの想定を壊し、<strong>多主体・多エージェント系でのリスク分析</strong>を体系として組み直した。alignmentの問題を多体系の観点から書き直した代表作。</p>
+            </div>
+            <div class="card">
+              <span class="tag">2026</span>
+              <p><strong>Zenil et al. "Managed Misalignment"</strong>[1][3]</p>
+              <p>古くからある多エージェント路線を、Gödel・停止問題・Rice由来の不可能性から演繹的に導く。計算論的帰結として「単体検証は原理的に無理だから多様性に頼る」と言い切った点が新しい。古い直感に、新しい骨を通した。</p>
+            </div>
+          </div>
+
+          <p class="lead">この系譜を並べると、managed misalignmentが単独の発見ではないことが見えてくる。Russell、Drexler、Critch & Krueger が十年近く積み上げてきたEcosystem派の直感に、Gödel・停止問題・Riceから演繹的に骨を通した論文——それがHernández-Espinosa らの寄与である[3]。名付けと定式化は、研究プログラムとしての可視性を劇的に上げる。ARCHESやCAISのような長大なテクニカルレポート群を、managed misalignmentという短い語で引用可能にした効果は大きい。</p>
+
+          <p class="lead">ただしEcosystem派の系譜は、まだ実装では開かれている。多エージェント均衡が単体整合より安全だという直感は、計算論的な不可能性証明によって側面支援を得た。だが「多様性を入れれば系として壊れにくい」という経験則が、AIエージェント集団において実証的に成り立つかはこれからの問題である。Critch & Krueger のARCHESが扱う多主体リスク分類、DrexlerのCAISが描く分散サービス構造、そして今回のmanaged misalignmentの運用設計——いずれも現時点では骨組みに近い[4][5][6]。生態系という語の重力に乗りすぎず、個々の設計を実装レベルで検証する仕事が、今後の研究プログラムの中核になる。</p>
+
+          <div class="note">
+            本論文の受容は、今後1〜2年のアラインメント議論の分布を変えうる。①Doomer派が一般検証器の不可能性を「やはり整合は無理だ」の根拠として引用すれば、規制運動の計算論的看板が一枚増える。②Interpretability派がこれを引用しつつ「後付け検証が無理なら訓練時の振る舞い制御と機械的解釈可能性が唯一の出口」と論じれば、Anthropic系路線の正当性が強まる。④Ecosystem派が主導権を握って引用すれば、Russell–Drexler–Critch の多体系系譜が、現在のInterpretability派優位の研究生態系に対するもう一つの主流として浮上する可能性が出る。同じ論文の引用方向が、アラインメント研究の地政学を動かす。
+          </div>
+
+          <p class="lead">五学派の整理は編集部による再構成であり、研究者の人格的所属を示すものではない。AnthropicはInterpretability（②）に主軸を置きつつResponsible Scaling Policyで⑤の評価体制にも参加している[13]。Paul Christianoは旧OpenAIでのScalable Oversight（③）からAlignment Research Centerを経て現在はUS AISI側に軸足を移し、⑤寄りに軌道を伸ばしている[21]。研究者は複数学派を跨いで動き、学派の境界線自体が時間とともに書き換わる。地図は領土ではなく、議論の補助線である。</p>
+
+          <p class="lead">本論文の最も深い含意は、Rice系の応用や一般検証器の不可能性ではない。アラインメントは、単一の「解くべき問題」ではなく、<strong>複数の設計哲学が同じ語の下で競合している領域</strong>だという事実を、計算論的な梁で固めた点にある。単体を整合させるか、多体で均衡させるか、社会制度で受け止めるか。どの層で問題を定義するかは、証明によってではなく<strong>設計の賭け</strong>によって決まる。</p>
+
+          <p class="lead" style="margin-top: 36px; font-size: 17px;">整合した一体の知能ではなく、ズレたまま共存する複数の知能——<strong>私たちが最後に受け入れなければならないのは、人間と同じ形をした完成を、永遠に諦めるという決意かもしれない</strong>。</p>
+        </div>
+
+        <div class="footer">
+          <span>古い直感に、計算論の骨を通す</span>
+          <span class="slide-count">5 / 5</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Article Navigation ═══════════ -->
+      <section class="slide" id="slide-nav" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="32-japan-agi-silence.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.32</p>
+              <p><strong>沈黙は、無知ではない — 日本のAGI議論はなぜ成立しないか</strong></p>
+            </a>
+            <a href="34-alignment-success-route.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &rarr;</p>
+              <p><strong>アラインメントはどう成功しうるか — 人間価値保存型ASIと良いシングルトンへの設計図</strong></p>
+            </a>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=alignment" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Alignment カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="credits">
+      <p>AGI HUB &middot; No. 33 &middot; Alignment &middot; 2026.04.19 &middot; By Ryao</p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Scope.</strong>
+        本稿は<em>PNAS Nexus</em> 2026-04-14掲載のHernández-Espinosa, Abrahão, Witkowski, Zenil論文[3]の数学的主張と運用提案を検証し、アラインメント研究の五学派マップと三本の断層線を提示したうえで、managed misalignmentをEcosystem派の系譜に位置づけた記事である。論文の計算論的主張について厳密な査読・反証は行わない。五学派の分類は編集部による再構成であり、各機関・研究者の公式見解ではない。2026年4月時点のスナップショットとして読まれたい。
+      </p>
+      <p style="margin-top:8px;">
+        <strong style="color:#585858;">References.</strong>
+        [1] King's College London (2026) "AI alignment is mathematically impossible, say scientists". Press release, April 14. <a href="https://phys.org/news/2026-04-ai-alignment-mathematically-impossible-scientists.html">phys.org</a>.
+        [2] Tech Xplore (2026) "AI alignment is mathematically impossible: managed misalignment proposed". April 14.
+        [3] Hernández-Espinosa, A., Abrahão, F. S., Witkowski, O., Zenil, H. (2026) "Neurodivergent influenceability in agentic AI as a contingent solution to the AI alignment problem". <em>PNAS Nexus</em> 5(4), April 14.
+        [4] Russell, S. (2019) <em>Human Compatible: Artificial Intelligence and the Problem of Control</em>. Viking.
+        [5] Critch, A. &amp; Krueger, D. (2020) "AI Research Considerations for Human Existential Safety (ARCHES)". arXiv:2006.04948.
+        [6] Drexler, K. E. (2019) "Reframing Superintelligence: Comprehensive AI Services as General Intelligence". FHI Technical Report #2019-1. <a href="https://www.fhi.ox.ac.uk/reframing/">fhi.ox.ac.uk</a>.
+        [7] Gödel, K. (1931) "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I". <em>Monatshefte für Mathematik und Physik</em> 38: 173-198.
+        [8] Turing, A. M. (1937) "On Computable Numbers, with an Application to the Entscheidungsproblem". <em>Proceedings of the London Mathematical Society</em> s2-42: 230-265.
+        [9] Rice, H. G. (1953) "Classes of Recursively Enumerable Sets and Their Decision Problems". <em>Transactions of the American Mathematical Society</em> 74: 358-366.
+        [10] Melo, G. A., Máximo, M. R. O. A., Soma, N. Y., Castro, P. A. L. (2025) "Machines that halt resolve the undecidability of artificial intelligence alignment". <em>Scientific Reports</em> 15, Article 15591. <a href="https://www.nature.com/articles/s41598-025-99060-2">nature.com</a>.
+        [11] Yudkowsky, E. &amp; Soares, N. (2025) <em>If Anyone Builds It, Everyone Dies</em>. Little, Brown Spark.
+        [12] Amodei, D. (2024) "Machines of Loving Grace". <a href="https://darioamodei.com/machines-of-loving-grace">darioamodei.com</a>.
+        [13] Anthropic (2023-2024) "Constitutional AI", "Responsible Scaling Policy", "Mechanistic Interpretability". <a href="https://www.anthropic.com/research">anthropic.com/research</a>.
+        [14] Leike, J. (2024) "I joined Anthropic to continue the superalignment mission". X post, May 28.
+        [15] Leike, J., Krueger, D., Everitt, T., Martic, M., Maini, V., Legg, S. (2018) "Scalable Agent Alignment via Reward Modeling". arXiv:1811.07871.
+        [16] OpenAI (2024) "Disbanding the Superalignment team". Reports May 17-18, 2024.
+        [17] Safe Superintelligence Inc. (2024) Founding announcement. <a href="https://ssi.inc/">ssi.inc</a>.
+        [18] Hendrycks, D., Mazeika, M., Woodside, T. (2023) "An Overview of Catastrophic AI Risks". Center for AI Safety. arXiv:2306.12001.
+        [19] Hendrycks, D. (2025) <em>Introduction to AI Safety, Ethics, and Society</em>. Taylor &amp; Francis.
+        [20] LawZero (2025) "LawZero: Advancing Safe-by-Design AI". Founded by Yoshua Bengio, June 3, 2025. USD 30M initial funding. <a href="https://lawzero.org/">lawzero.org</a>.
+        [21] UK AI Security Institute / US AI Safety Institute (2023-2024) Founding documents and pre-deployment evals frameworks.
+        [22] Leike, J. (2024) "I resigned from OpenAI". X post, May 17.
+        [23] Andreessen, M. (2023) "The Techno-Optimist Manifesto". <a href="https://a16z.com/the-techno-optimist-manifesto/">a16z.com</a>, October 16.
+        [24] Hassabis, D. (2024-2025) Interviews on AGI timelines and safety conditionals. 60 Minutes (April 2024), The Diary of a CEO (2025).
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on the paper's empirical claim.</strong>
+        Hernández-Espinosa 論文は計算論的主張に加えてAI倫理議論に関するオンライン・コメント1,029件の分析を含む[1][2]。本稿はこの実証パートが数学的主張の補強として必ずしも強くないと評価しており、計算論パートと実証パートを分離して受け取ることを読者に勧める。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on school classifications.</strong>
+        五学派の分類は編集部による再構成である。実在の研究者は複数学派を同時に跨ぐことが多い。たとえばAnthropicはInterpretability派（②）に主軸を置きつつCollective Risk派（⑤）のRSPフレームにも参加し、Christianoは旧OpenAI在籍時のScalable Oversight（③）から現在はAlignment Research Center／US AISIを経てCollective Risk寄りに軌道を伸ばしている[15][21]。分類は議論の補助線であり、研究者の人格的所属ではない。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on managed misalignment &amp; ecosystem lineage.</strong>
+        Russell(2019)[4]、Drexler(2019)[6]、Critch &amp; Krueger(2020)[5]の三点をEcosystem派の骨格として扱った。これらは互いに異なる問題意識から出発しており、単線の系譜としては単純化しすぎている。ただし「単体ASI整合の代わりに多体系の均衡設計を置く」という共通の動機において、managed misalignmentの前史として並置できると編集部は判断した。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Images.</strong>
+        All photographs via <a href="https://unsplash.com/">Unsplash</a>. Hero/slide images are illustrative placeholders corresponding to editorial themes (printed matter closeup, mathematical lattice, school map, fault lines, murmuration). Portrait images for Yudkowsky, Amodei, Sutskever, Russell, Bengio, Andreessen are from the AGI HUB portrait inventory under editorial fair-use.
+      </p>
+    </footer>
+
+    <!-- Feedback form -->
+    <section id="feedback-section" style="max-width:1120px;margin:0 auto;padding:48px 48px 64px;border-top:1px solid var(--border);">
+      <h3 style="font-size:18px;font-weight:700;color:var(--black);margin-bottom:8px;">Reader Feedback</h3>
+      <p style="font-size:13px;color:var(--meta);margin-bottom:24px;">この記事の評価・感想をお寄せください。匿名可、1分で完了します。</p>
+      <form id="feedback-form" style="display:grid;gap:16px;max-width:640px;">
+        <div>
+          <label style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">評価 (1-5)</label>
+          <div id="star-group" style="display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px;">
+            <input type="radio" name="rating" value="5" id="s5" style="display:none;"><label for="s5" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="4" id="s4" style="display:none;"><label for="s4" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="3" id="s3" style="display:none;"><label for="s3" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="2" id="s2" style="display:none;"><label for="s2" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="1" id="s1" style="display:none;"><label for="s1" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+          </div>
+        </div>
+        <div>
+          <label for="fb-comment" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">コメント (任意)</label>
+          <textarea id="fb-comment" rows="4" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label for="fb-name" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">名前 (任意)</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+          <div>
+            <label for="fb-email" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">メール (任意)</label>
+            <input type="email" id="fb-email" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+        </div>
+        <button type="submit" id="fb-submit" style="padding:12px 24px;background:var(--black);color:var(--bg);border:none;font-family:'SF Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;justify-self:start;">送信</button>
+      </form>
+      <p id="fb-success" style="display:none;font-size:14px;color:var(--body-text);margin-top:16px;">フィードバックを送信しました。ありがとうございます。</p>
+      <p id="fb-error" style="display:none;font-size:14px;color:var(--accent);margin-top:16px;">送信に失敗しました。時間をおいて再度お試しください。</p>
+    </section>
+
+    <script>
+      (function(){
+        const group = document.getElementById('star-group');
+        if (!group) return;
+        const labels = group.querySelectorAll('label');
+        labels.forEach((lab, i) => {
+          lab.addEventListener('mouseenter', () => {
+            labels.forEach(l => l.style.color = '#ccc');
+            let el = lab;
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          });
+        });
+        group.addEventListener('mouseleave', () => {
+          const checked = group.querySelector('input:checked');
+          labels.forEach(l => l.style.color = '#ccc');
+          if (checked) {
+            let el = group.querySelector(`label[for="${checked.id}"]`);
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          }
+        });
+      })();
+
+      document.getElementById('feedback-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const rating = (document.querySelector('input[name="rating"]:checked') || {}).value || '';
+        const comment = document.getElementById('fb-comment').value;
+        const name = document.getElementById('fb-name').value;
+        const email = document.getElementById('fb-email').value;
+        const eyebrowText = document.querySelector('.eyebrow').textContent;
+        const numMatch = eyebrowText.match(/No\.\s*(\d+)/);
+        const articleNo = numMatch ? numMatch[1] : '33';
+
+        const params = new URLSearchParams();
+        if (email) params.append('emailAddress', email);
+        params.append('entry.1131711956', rating);
+        params.append('entry.897250758', articleNo);
+        params.append('entry.242373434', comment);
+        params.append('entry.420368578', name);
+
+        fetch(FORM_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: params.toString()})
+          .then(() => {
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('fb-success').style.display = 'block';
+          })
+          .catch(() => {
+            document.getElementById('fb-error').style.display = 'block';
+          });
+      });
+    </script>
+
+    <script>
+      const progress = document.getElementById('progress');
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = scrolled + '%';
+      });
+
+      const reveals = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.2 });
+      reveals.forEach(el => io.observe(el));
+
+      const buttons = document.querySelectorAll('.nav button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (target) target.scrollIntoView({behavior:'smooth'});
+        });
+      });
+
+      const slides = document.querySelectorAll('.slide');
+      const slideIo = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            buttons.forEach(b => b.classList.remove('active'));
+            const match = document.querySelector(`.nav button[data-target="${e.target.id}"]`);
+            if (match) match.classList.add('active');
+          }
+        });
+      }, { threshold: 0.5 });
+      slides.forEach(s => slideIo.observe(s));
+    </script>
+  </body>
+</html>

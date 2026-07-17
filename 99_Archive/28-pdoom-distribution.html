@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>p(doom)の分布 — AGI HUB</title>
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <meta name="revised" content="2026.04.13">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #ddd5bd;
+        --bg: #f3f1e9;
+        --bg-alt: #ebe7d3;
+        --accent: #b23a2f;
+        --accent-soft: rgba(178, 58, 47, 0.09);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+          游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+          游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
+          sans-serif;
+        font-feature-settings: "palt";
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        background: var(--accent);
+        width: 0%;
+        z-index: 100;
+        transition: width 0.3s var(--ease);
+      }
+
+      .nav {
+        position: fixed;
+        right: 24px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: grid;
+        gap: 16px;
+        z-index: 50;
+      }
+
+      .nav button {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        border: 1.5px solid var(--meta);
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s var(--ease);
+      }
+
+      .nav button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.4);
+      }
+
+      main { scroll-snap-type: y mandatory; }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 80px 48px 64px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 32px;
+        scroll-snap-align: start;
+      }
+
+      .slide + .slide { border-top: 1px solid var(--border); }
+
+      .hero {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.6) contrast(1.1);
+        transition: filter 0.6s var(--ease);
+      }
+
+      .hero:hover { filter: grayscale(0) contrast(1); }
+
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+      .slide .hero.img-side-by-side { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .credits {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 80px;
+        border-top: 1px solid var(--border);
+      }
+
+      .credits p {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.047em;
+        line-height: 2;
+        color: var(--light-gray);
+      }
+
+      .credits a {
+        color: var(--meta);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .credits a:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.35s; }
+
+      .eyebrow {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1, h2 {
+        color: var(--black);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        max-width: 24ch;
+        padding-bottom: 16px;
+        border-bottom: 3px double var(--accent);
+      }
+
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
+      h1 { font-size: clamp(30px, 4.4vw, 38px); }
+      h2 { font-size: clamp(26px, 3.8vw, 34px); }
+
+      .lead {
+        max-width: 780px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .lead + .lead { margin-top: 8px; }
+
+      .panel { display: grid; gap: 24px; align-content: start; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+      .card {
+        padding: 24px 20px 24px 0;
+        border-top: 3px solid var(--accent);
+        background: transparent;
+      }
+
+      .card .tag { color: var(--accent); font-weight: 700; }
+      .card strong { color: var(--black); }
+
+      .card p {
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+        margin-bottom: 12px;
+      }
+
+      .bullets { display: grid; gap: 16px; }
+
+      .point {
+        padding-left: 16px;
+        border-left: 3px solid var(--accent);
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .point strong { color: var(--black); }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--border);
+      }
+
+      .timeline-step {
+        display: grid;
+        gap: 8px;
+        padding: 20px 16px;
+        background: var(--bg);
+      }
+
+      .timeline-step.highlight {
+        background: var(--accent);
+      }
+      .timeline-step.highlight .num,
+      .timeline-step.highlight p,
+      .timeline-step.highlight strong {
+        color: var(--bg);
+      }
+
+      .timeline-step .num {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.083em;
+        text-transform: uppercase;
+        color: var(--meta);
+      }
+
+      .timeline-step p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--body-text);
+      }
+
+      .timeline-step strong { color: var(--black); }
+
+      table.compare {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 3px solid var(--accent);
+        border-bottom: 3px double var(--accent);
+        background: var(--bg);
+      }
+
+      table.compare th,
+      table.compare td {
+        padding: 18px 16px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--body-text);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      table.compare th {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 1px solid var(--accent);
+        background: var(--accent-soft);
+      }
+
+      table.compare td strong { color: var(--black); }
+      table.compare tr:last-child td { border-bottom: none; }
+
+      .note {
+        font-size: 17px;
+        line-height: 1.7;
+        color: var(--body-text);
+        padding: 24px 28px;
+        margin: 12px 0;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        position: relative;
+        overflow-x: auto;
+        word-break: break-word;
+      }
+      .note::before {
+        content: "EVIDENCE";
+        display: block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+
+      .note strong { color: var(--accent); }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        text-transform: uppercase;
+      }
+
+      .slide-count {
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      /* SVG diagram styles */
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 32px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+
+      @media (max-width: 768px) {
+        .slide { padding: 64px 24px 48px; }
+        .grid-2, .grid-3, .timeline { grid-template-columns: 1fr; }
+        .nav { right: 12px; }
+        table.compare { font-size: 13px; }
+        table.compare th, table.compare td { padding: 14px 10px; }
+        .hero { aspect-ratio: 16 / 9; }
+        .slide .hero.img-fullbleed,
+        .slide .hero.img-wide {
+          width: 100%; max-width: 100%; aspect-ratio: 16/9; margin: 0; transform: none; left: 0;
+          position: static;
+        }
+        .slide .hero.img-content { max-width: 100%; aspect-ratio: 16 / 9; }
+        .credits { padding: 32px 24px 64px; }
+      }
+
+      @media print {
+        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
+        .nav, .progress { display: none; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="pattern-investigation has-site-header" data-category="risk">
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+
+    <aside class="nav" aria-label="Slide navigation">
+      <button data-target="slide-1" class="active" aria-label="Slide 1"></button>
+      <button data-target="slide-2" aria-label="Slide 2"></button>
+      <button data-target="slide-3" aria-label="Slide 3"></button>
+      <button data-target="slide-4" aria-label="Slide 4"></button>
+      <button data-target="slide-5" aria-label="Slide 5"></button>
+      <button data-target="slide-6" aria-label="Slide 6"></button>
+      <button data-target="slide-7" aria-label="Slide 7"></button>
+    </aside>
+
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 28 / 28 &nbsp;&middot;&nbsp; Risk &nbsp;&middot;&nbsp; 7 Slides</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="27-every-view-is-wild.html" style="color:inherit;text-decoration:none;">&larr; Prev</a>
+        <a href="../index.html#filter=risk" style="color:inherit;text-decoration:none;">Same Category</a>
+        <span style="opacity:0.3;">Next &rarr;</span>
+      </span>
+    </div>
+
+    <main>
+
+      <!-- ═══════════ SLIDE 1: WHAT IS P(DOOM)? ═══════════ -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &middot; No. 28 &middot; Risk &middot; The Impossible Consensus &middot; 2026.04.13 &middot; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">人類は自らの絶滅確率すら合意できない</h1>
+        <img class="hero img-fullbleed reveal reveal-delay-2" src="https://images.unsplash.com/photo-1518544801976-3e159e50e5bb?w=1200&h=600&fit=crop&q=80" alt="要差し替え: ビットコイン/ダイスの写真はp(doom)の記事内容と無関係。専門家間の意見の散らばりや確率・不確実性を想起させる画像が適切">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">p(doom)。AIが人類を絶滅させる確率の個人推定値。この数字をめぐって、世界で最も頭の切れる人々が0.01%から99.99%まで散らばっている。4桁の開き。同じ技術の同じリスクについて、同じ分野の専門家がここまで合意できない現象は、他に例がない。</p>
+
+          <p class="lead">Yann LeCunは0.01%未満と言い切る。Roman Yampolskiyは99.99%と主張する。二人ともAI研究の最前線にいる。二人とも自分の推定値に自信がある。同じデータを見て、同じ論文を読んで、<strong>結論が1万倍違う</strong>。気候変動でさえ、IPCCの報告書は専門家間で2倍程度の幅に収まる。核戦争の確率推定でも、冷戦期の専門家の見解は1桁以内の差だった。p(doom)だけが異常に広い。</p>
+
+          <p class="lead">2023年5月、Center for AI Safety(CAIS)は「AI絶滅リスクの軽減はグローバル優先事項であるべきだ」という一文の声明を発表した。Geoffrey Hinton、Yoshua Bengio、Sam Altman、Dario Amodei、Demis Hassabisを含む1,000名超が署名した。だが署名者たちに具体的なp(doom)を聞けば、10%から95%超まで散乱する。「リスクがある」とは合意できても、「どれくらいのリスクか」には合意できない。</p>
+
+          <!-- SVG: p(doom) scatter plot -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 780 320" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowAxis" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#1a1a1a"/>
+                </marker>
+              </defs>
+              <!-- Axis -->
+              <line x1="60" y1="260" x2="740" y2="260" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowAxis)"/>
+              <text x="400" y="295" text-anchor="middle" font-family="'SF Mono',monospace" font-size="11" fill="#757575" letter-spacing="0.06em">P(DOOM) ESTIMATE</text>
+              <!-- Tick marks -->
+              <line x1="80" y1="255" x2="80" y2="265" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="80" y="280" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">0%</text>
+              <line x1="215" y1="255" x2="215" y2="265" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="215" y="280" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">20%</text>
+              <line x1="350" y1="255" x2="350" y2="265" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="350" y="280" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">40%</text>
+              <line x1="485" y1="255" x2="485" y2="265" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="485" y="280" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">60%</text>
+              <line x1="620" y1="255" x2="620" y2="265" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="620" y="280" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">80%</text>
+              <line x1="720" y1="255" x2="720" y2="265" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="720" y="280" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">100%</text>
+
+              <!-- Data points (x = 80 + value * 6.4) -->
+              <!-- LeCun ~0.01% -->
+              <circle cx="81" cy="240" r="5" fill="#b23a2f"/>
+              <text x="81" y="232" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">LeCun</text>
+              <text x="81" y="222" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">&lt;0.01%</text>
+              <!-- AI Impacts median 5% -->
+              <circle cx="112" cy="200" r="5" fill="#585858"/>
+              <text x="112" y="192" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">AI Impacts</text>
+              <text x="112" y="182" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#585858">5% (中央値)</text>
+              <!-- Nate Silver 5-10% -->
+              <circle cx="128" cy="160" r="4" fill="#b23a2f"/>
+              <text x="128" y="152" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Silver</text>
+              <text x="128" y="142" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">5-10%</text>
+              <!-- Buterin 10% -->
+              <circle cx="144" cy="120" r="4" fill="#b23a2f"/>
+              <text x="144" y="112" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Buterin</text>
+              <text x="144" y="102" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">10%</text>
+              <!-- Amodei 10-25% -->
+              <circle cx="192" cy="240" r="4" fill="#b23a2f"/>
+              <text x="192" y="232" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Amodei</text>
+              <text x="192" y="222" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">10-25%</text>
+              <!-- Musk 10-20% -->
+              <circle cx="176" cy="200" r="4" fill="#b23a2f"/>
+              <text x="176" y="192" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Musk</text>
+              <text x="176" y="182" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">10-20%</text>
+              <!-- Bengio 20% -->
+              <circle cx="208" cy="160" r="4" fill="#b23a2f"/>
+              <text x="208" y="152" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Bengio</text>
+              <text x="208" y="142" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">20%</text>
+              <!-- Christiano 20-46% -->
+              <circle cx="291" cy="120" r="5" fill="#b23a2f"/>
+              <text x="291" y="112" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Christiano</text>
+              <text x="291" y="102" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">20-46%</text>
+              <!-- Alexander 33% -->
+              <circle cx="291" cy="240" r="4" fill="#b23a2f"/>
+              <text x="291" y="232" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Alexander</text>
+              <text x="291" y="222" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">33%</text>
+              <!-- Lifland 35% -->
+              <circle cx="304" cy="200" r="4" fill="#b23a2f"/>
+              <text x="304" y="192" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Lifland</text>
+              <text x="304" y="182" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">35%</text>
+              <!-- Hinton 10-50% -->
+              <circle cx="400" cy="160" r="6" fill="#b23a2f"/>
+              <text x="400" y="148" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a" font-weight="700">Hinton</text>
+              <text x="400" y="136" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">10-50%</text>
+              <!-- Kokotajlo 70% -->
+              <circle cx="528" cy="240" r="4" fill="#b23a2f"/>
+              <text x="528" y="232" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Kokotajlo</text>
+              <text x="528" y="222" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">70%</text>
+              <!-- Hendrycks >80% -->
+              <circle cx="592" cy="200" r="4" fill="#b23a2f"/>
+              <text x="592" y="192" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Hendrycks</text>
+              <text x="592" y="182" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">&gt;80%</text>
+              <!-- Yudkowsky >95% -->
+              <circle cx="688" cy="160" r="5" fill="#b23a2f"/>
+              <text x="688" y="148" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Yudkowsky</text>
+              <text x="688" y="136" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">&gt;95%</text>
+              <!-- Yampolskiy 99.99% -->
+              <circle cx="720" cy="120" r="5" fill="#b23a2f"/>
+              <text x="720" y="112" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#1a1a1a">Yampolskiy</text>
+              <text x="720" y="102" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">99.99%</text>
+
+              <!-- Bostrom ~20-30% (Superintelligence著者、instrumental convergence体系化) -->
+              <circle cx="240" cy="80" r="6" fill="#b23a2f" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="240" y="70" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#1a1a1a" font-weight="700">Bostrom</text>
+              <text x="240" y="58" text-anchor="middle" font-family="'SF Mono',monospace" font-size="8" fill="#b23a2f">~25%</text>
+              <!-- 要追加: Bostrom顔写真 — 現在はSVG circleのプレースホルダー。thinkers/bostrom.jpg等の画像を用意してimage要素に差し替える -->
+
+              <!-- Bracket showing spread -->
+              <line x1="81" y1="300" x2="720" y2="300" stroke="#b23a2f" stroke-width="1.5"/>
+              <line x1="81" y1="296" x2="81" y2="304" stroke="#b23a2f" stroke-width="1.5"/>
+              <line x1="720" y1="296" x2="720" y2="304" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="400" y="314" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" font-weight="700">4 ORDERS OF MAGNITUDE</text>
+            </svg>
+          </div>
+
+          <p class="lead">この記事では、p(doom)の分布がなぜこれほど広いのか、その構造的な原因を解剖する。答えは「データが足りない」ではない。データが増えても分布は収束していない。問いそのものの構造が、合意を許さない。</p>
+        </div>
+
+        <div class="footer">
+          <span>専門家の推定値が4桁にわたって散らばる異常な分布</span>
+          <span class="slide-count">1 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 2: SURVEY MAP ═══════════ -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">Survey Map</div>
+        <h2 class="reveal reveal-delay-1">中央値5%が意味すること</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop&q=80" alt="要差し替え: 汎用的なデータ可視化画像では記事のサーベイ調査テーマと整合しない。研究者アンケートや学術調査を連想させる画像が適切">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">現時点で最も大規模な調査はAI Impacts 2023だ。NeurIPSやICMLなど機械学習のトップ会議で論文が採択された研究者2,778名に質問を送った。「今後100年以内にAIが人類絶滅をもたらす確率は」。中央値5%、平均14.4%。中央値と平均の乖離が大きいのは、高い値を付けた回答者の引力が平均を引き上げているからだ。分布が正規ではなく、右に長い裾を引いている。</p>
+
+          <p class="lead">Philip Tetlockが主導したExistential Risk Persuasion Tournament (XPT, 2022)は、169名の小規模だが設計が精緻な調査だ。ドメイン専門家とスーパーフォーキャスターという、二つの明確に異なる集団を対比した。2100年までのAI由来絶滅確率 ── ドメイン専門家の中央値6%に対し、スーパーフォーキャスターの中央値は1%。カタストロフィ確率では専門家20%、スーパーフォーキャスター9%。<strong>AIを深く知る人ほど、悲観的な数字を出す</strong>。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>調査</th>
+                <th>対象</th>
+                <th>N</th>
+                <th>中央値</th>
+                <th>備考</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>AI Impacts 2023</strong></td>
+                <td>ML研究者</td>
+                <td>2,778</td>
+                <td>5%</td>
+                <td>平均14.4%。2022年調査から中央値は不変</td>
+              </tr>
+              <tr>
+                <td><strong>XPT 2022 (専門家)</strong></td>
+                <td>ドメイン専門家</td>
+                <td>~85</td>
+                <td>6%</td>
+                <td>42%がEA meetup参加歴あり</td>
+              </tr>
+              <tr>
+                <td><strong>XPT 2022 (SF)</strong></td>
+                <td>スーパーフォーキャスター</td>
+                <td>~84</td>
+                <td>1%</td>
+                <td>EA meetup参加は9%</td>
+              </tr>
+              <tr>
+                <td><strong>Metaculus (条件付き)</strong></td>
+                <td>予測市場参加者</td>
+                <td>&mdash;</td>
+                <td>&mdash;</td>
+                <td>AGI 2025-30年達成なら50%、2060-2100年なら8%</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">Metaculusの条件付き推定は別の角度から分布の構造を照らす。AGIが2025年から2030年の間に達成された場合の絶滅確率は50%。2030年から2040年なら29%。2040年から2060年なら12%。2060年から2100年なら8%。タイムラインが早いほどリスクは急上昇する。Ajeya Cotraの生物学的アンカーズ報告は、TAI到来時期の50%確率の中央値を2040年付近に置いた。短いタイムラインは、リスク対応に使える時間を圧縮する。</p>
+
+          <div class="note">
+            中央値5%とは何か。20人に1人の確率で、AIが人類を絶滅させる。コインを4回投げて全部表が出る確率に近い。直感的には「低い」。だがこの確率で飛行機に乗るかと聞けば、誰も乗らない。<strong>AI Impacts 2023の平均値14.4%は、ロシアンルーレットの弾が6発中1発弱入っている計算に相当する</strong>。サイコロを1回振って1が出たら人類が終わる。ML研究者2,778名の平均的見解が、この水準にある。
+          </div>
+
+          <p class="lead">だが数字だけでは、この分布の異常さの核心に届かない。同じ5%でも、分布の形状が単峰か双峰かで意味が根本的に変わる。次のセクションで、分布の内部構造を開く。</p>
+        </div>
+
+        <div class="footer">
+          <span>2,778名のML研究者の中央値5%、平均14.4%</span>
+          <span class="slide-count">2 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 3: BIMODALITY ═══════════ -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">Bimodal Minds</div>
+        <h2 class="reveal reveal-delay-1">知識が悲観を生む逆説</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=1200&h=600&fit=crop&q=80" alt="Cracked surface showing duality">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">AI Impactsの分析者たちは、回答データを見て「驚くほど双峰的」と記した。一つの山が0から10%のあたりに集中し、もう一つの山が25%以上に広がる。正規分布のように滑らかに中央に寄るのではなく、<strong>二つの世界観が分離している</strong>。</p>
+
+          <p class="lead">Karger et al. (2025, arXiv 2502.14870)がこの構造をさらに精密に解剖した。111名のAI専門家を対象にした調査で、二つの明確なクラスターを発見した。一方は「AIは制御可能なツール」と見る集団。もう一方は「AIは制御不能なエージェント」と見る集団。この二つの世界観は、同じデータから異なる結論を導く。</p>
+
+          <!-- SVG: Bimodal Distribution -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowD" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#1a1a1a"/>
+                </marker>
+              </defs>
+              <!-- Axes -->
+              <line x1="60" y1="240" x2="660" y2="240" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowD)"/>
+              <line x1="60" y1="240" x2="60" y2="30" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrowD)"/>
+              <text x="360" y="272" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em">P(DOOM) ESTIMATE</text>
+              <text x="20" y="135" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#757575" letter-spacing="0.06em" transform="rotate(-90,20,135)">FREQUENCY</text>
+
+              <!-- Tick marks on x-axis -->
+              <text x="80" y="258" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">0%</text>
+              <text x="200" y="258" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">20%</text>
+              <text x="320" y="258" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">40%</text>
+              <text x="440" y="258" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">60%</text>
+              <text x="560" y="258" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">80%</text>
+              <text x="640" y="258" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">100%</text>
+
+              <!-- First peak (low risk cluster) -->
+              <path d="M75,240 C85,238 95,220 110,140 C120,80 135,60 150,55 C165,60 180,90 195,160 C205,200 215,225 235,238 L240,240" fill="rgba(178,58,47,0.15)" stroke="#b23a2f" stroke-width="2"/>
+              <!-- Valley -->
+              <path d="M240,240 C260,238 280,236 300,234 L320,232" fill="none" stroke="#b23a2f" stroke-width="2" stroke-dasharray="4,3"/>
+              <!-- Second peak (high risk cluster) -->
+              <path d="M320,232 C340,228 360,210 390,170 C410,140 430,125 450,120 C470,125 490,145 510,180 C530,210 550,228 580,236 C600,238 620,240 640,240" fill="rgba(178,58,47,0.08)" stroke="#b23a2f" stroke-width="2"/>
+
+              <!-- Labels -->
+              <rect x="100" y="38" width="120" height="30" rx="3" fill="var(--bg)" stroke="#b23a2f" stroke-width="1"/>
+              <text x="160" y="50" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#b23a2f" letter-spacing="0.04em">CLUSTER 1</text>
+              <text x="160" y="62" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#585858">制御可能なツール</text>
+
+              <rect x="400" y="95" width="140" height="30" rx="3" fill="var(--bg)" stroke="#b23a2f" stroke-width="1"/>
+              <text x="470" y="107" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#b23a2f" letter-spacing="0.04em">CLUSTER 2</text>
+              <text x="470" y="119" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#585858">制御不能なエージェント</text>
+
+              <!-- Annotation: Valley -->
+              <line x1="280" y1="215" x2="280" y2="235" stroke="#999" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="280" y="210" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#999">谷</text>
+            </svg>
+          </div>
+
+          <p class="lead">ここで決定的な発見がある。Karger et al.は、AI安全性の基本概念 ── instrumental convergenceを聞いたことがある専門家がわずか21%しかいないことを明らかにした。Instrumental convergenceとは、どのような最終目標を持つAIであれ、自己保存、資源獲得、影響力拡大といった中間目標を自律的に追求するようになるという概念だ。Nick Bostromが2014年の『Superintelligence』で体系化した。</p>
+
+          <p class="lead">この概念を知っている専門家ほどリスクを高く見積もる。「AIをオフにすればいい」と考える専門家の割合を見ると、セーフティ概念に精通した専門家ではわずか15%。不慣れな専門家では41%。<strong>「オフスイッチがある」という素朴な安心感が、特定の技術的知識によって崩壊する</strong>。知れば知るほど楽観できなくなる構造がある。</p>
+
+          <div class="note">
+            双峰性は「意見が割れている」以上の意味を持つ。正規分布なら、新しいデータが加われば中央に収束していく。双峰分布は違う。<strong>二つの山がそれぞれ自己強化する</strong>。「制御可能なツール」派はAIの成功事例を見て確信を深め、「制御不能なエージェント」派はAIの予期せぬ振る舞いを見て確信を深める。同じニュースが両方の山を高くする。収束の力学が働かない。
+          </div>
+
+          <p class="lead">XPTのドメイン専門家の42%がEffective Altruism (EA) meetupに参加した経験がある一方、スーパーフォーキャスターではわずか9%。EA参加経験者はx-riskの文献に触れる機会が多く、instrumental convergenceのような概念に精通している確率が高い。知識のバイアスなのか、知識の開眼なのか。この問いに対する答え方こそが、二つのクラスターを分断している。</p>
+        </div>
+
+        <div class="footer">
+          <span>二つのクラスターが分離し、収束しない分布構造</span>
+          <span class="slide-count">3 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 4: CARLSMITH'S DECOMPOSITION ═══════════ -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">Probability Chain</div>
+        <h2 class="reveal reveal-delay-1">6段階の確率連鎖が5%に至る</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="https://images.unsplash.com/photo-1516542076529-1ea3854896f2?w=1200&h=600&fit=crop&q=80" alt="Dominoes arranged in a line">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">直感で5%や50%と答えるのは簡単だ。だが、その数字がどこから来ているのかを分解した人間はほとんどいない。Open Philanthropyの研究者Joseph Carlsmithは2022年に「Is Power-Seeking AI an Existential Risk?」を発表し、p(doom)を6段階の独立した確率に分解した。各段階にそれなりの確率を置いても、乗算すると全体は5%から10%に収まる。</p>
+
+          <!-- SVG: Carlsmith's 6-step chain -->
+          <div class="svg-diagram">
+            <svg viewBox="0 0 780 420" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrowChain" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6" fill="#b23a2f"/>
+                </marker>
+              </defs>
+
+              <!-- Step 1 -->
+              <rect x="20" y="20" width="230" height="65" rx="4" fill="var(--bg-alt)" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="30" y="40" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" font-weight="700" letter-spacing="0.06em">STEP 1</text>
+              <text x="30" y="56" font-family="sans-serif" font-size="11" fill="#1a1a1a">高度なAIシステムが構築される</text>
+              <text x="30" y="72" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700">~65%</text>
+              <!-- Arrow 1→2 -->
+              <line x1="250" y1="52" x2="280" y2="52" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowChain)"/>
+              <text x="265" y="46" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">&times;</text>
+
+              <!-- Step 2 -->
+              <rect x="285" y="20" width="230" height="65" rx="4" fill="var(--bg-alt)" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="295" y="40" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" font-weight="700" letter-spacing="0.06em">STEP 2</text>
+              <text x="295" y="56" font-family="sans-serif" font-size="11" fill="#1a1a1a">そのAIに権力追求の傾向がある</text>
+              <text x="295" y="72" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700">~40%</text>
+              <!-- Arrow 2→3 -->
+              <line x1="515" y1="52" x2="545" y2="52" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowChain)"/>
+              <text x="530" y="46" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">&times;</text>
+
+              <!-- Step 3 -->
+              <rect x="550" y="20" width="220" height="65" rx="4" fill="var(--bg-alt)" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="560" y="40" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" font-weight="700" letter-spacing="0.06em">STEP 3</text>
+              <text x="560" y="56" font-family="sans-serif" font-size="11" fill="#1a1a1a">権力追求が問題化する</text>
+              <text x="560" y="72" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700">~65%</text>
+
+              <!-- Arrow down from step 3 -->
+              <line x1="660" y1="85" x2="660" y2="130" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowChain)"/>
+              <text x="668" y="112" font-family="'SF Mono',monospace" font-size="9" fill="#999">&times;</text>
+
+              <!-- Step 4 -->
+              <rect x="550" y="135" width="220" height="65" rx="4" fill="var(--bg-alt)" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="560" y="155" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" font-weight="700" letter-spacing="0.06em">STEP 4</text>
+              <text x="560" y="171" font-family="sans-serif" font-size="11" fill="#1a1a1a">人類がその問題に対処できない</text>
+              <text x="560" y="187" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700">~40%</text>
+              <!-- Arrow 4→5 -->
+              <line x1="550" y1="167" x2="520" y2="167" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowChain)"/>
+              <text x="535" y="161" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">&times;</text>
+
+              <!-- Step 5 -->
+              <rect x="285" y="135" width="230" height="65" rx="4" fill="var(--bg-alt)" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="295" y="155" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" font-weight="700" letter-spacing="0.06em">STEP 5</text>
+              <text x="295" y="171" font-family="sans-serif" font-size="11" fill="#1a1a1a">対処失敗が不可逆的な損害を生む</text>
+              <text x="295" y="187" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700">~65%</text>
+              <!-- Arrow 5→6 -->
+              <line x1="285" y1="167" x2="255" y2="167" stroke="#b23a2f" stroke-width="1.5" marker-end="url(#arrowChain)"/>
+              <text x="270" y="161" text-anchor="middle" font-family="'SF Mono',monospace" font-size="9" fill="#999">&times;</text>
+
+              <!-- Step 6 -->
+              <rect x="20" y="135" width="230" height="65" rx="4" fill="var(--bg-alt)" stroke="#b23a2f" stroke-width="1.5"/>
+              <text x="30" y="155" font-family="'SF Mono',monospace" font-size="10" fill="#b23a2f" font-weight="700" letter-spacing="0.06em">STEP 6</text>
+              <text x="30" y="171" font-family="sans-serif" font-size="11" fill="#1a1a1a">不可逆的損害が実存的規模に達する</text>
+              <text x="30" y="187" font-family="'SF Mono',monospace" font-size="11" fill="#b23a2f" font-weight="700">~95%</text>
+
+              <!-- Result arrow -->
+              <line x1="135" y1="200" x2="135" y2="250" stroke="#b23a2f" stroke-width="2" marker-end="url(#arrowChain)"/>
+
+              <!-- Result box -->
+              <rect x="40" y="260" width="700" height="70" rx="6" fill="#b23a2f"/>
+              <text x="390" y="287" text-anchor="middle" font-family="'SF Mono',monospace" font-size="13" fill="#f3f1e9" font-weight="700" letter-spacing="0.1em">COMBINED PROBABILITY</text>
+              <text x="390" y="315" text-anchor="middle" font-family="'SF Mono',monospace" font-size="18" fill="#f3f1e9" font-weight="700">0.65 &times; 0.40 &times; 0.65 &times; 0.40 &times; 0.65 &times; 0.95 &asymp; 4.2%</text>
+
+              <!-- Annotation -->
+              <text x="390" y="380" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#585858">Carlsmithは2021年の初期推定で~5%、2022年の更新で&gt;10%に上方修正した</text>
+              <text x="390" y="400" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#999">各段階の値は代表的な推定。Carlsmith本人の値は非公開部分あり</text>
+            </svg>
+          </div>
+
+          <p class="lead">Carlsmithのフレームワークの価値は、結論の数字ではなく分解の構造にある。「p(doom)は5%」と一言で済ませる代わりに、どの段階で意見が分かれているかを特定できる。ステップ1(高度AIの構築)に疑問を持つ人は今やほとんどいない。Cotraの生物学的アンカーズは2040年までのTAI到来を50%としており、2026年現在の進歩速度はその推定を前倒ししている。</p>
+
+          <p class="lead">争点はステップ2と4に集中する。「高度AIは権力を追求するか」と「人類はそれに対処できるか」。LeCunが0.01%未満と言い切るのは、ステップ2にほぼ0%を置くからだ。AIは道具であり、自律的に目標を追求する存在にはならないと考えている。Yudkowskyが95%超を主張するのは、ステップ2に90%以上、ステップ4にも90%以上を置くからだ。</p>
+
+          <div class="note">
+            Toby Ordは2020年の『The Precipice』で、今世紀中の全実存リスクをおよそ1/6(約17%)と推定した。そのうちAI由来の実存リスクは1/10(10%)で、<strong>核戦争、パンデミック、気候変動を含む他のすべてのリスクの合計を上回る</strong>。Ordの推定はCarlsmithとは独立に、トップダウンのアプローチで同程度の数字に到達している。
+          </div>
+
+          <p class="lead">Carlsmithの分解が明らかにするのは、p(doom)の不一致が「確率の見積もり」の不一致ではなく、「AIの本性についての世界観」の不一致だという事実だ。だが、この分解フレームワーク自体にも深刻な問題がある。次のセクションでは、p(doom)を測定する「温度計」そのものが壊れている可能性を検証する。</p>
+        </div>
+
+        <div class="footer">
+          <span>分解が暴く争点 ── AIの本性をめぐる世界観の対立</span>
+          <span class="slide-count">4 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 5: BROKEN THERMOMETER ═══════════ -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">Broken Thermometer</div>
+        <h2 class="reveal reveal-delay-1">温度計自体が壊れている</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&h=600&fit=crop&q=80" alt="Broken glass fragments">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">p(doom)の数字を議論する前に、その数字がどうやって生成されたかを疑うべきだ。測定装置が壊れていれば、出てくる数字に意味はない。</p>
+
+          <p class="lead"><strong>選択バイアス</strong>。AIのリスクについて質問されたとき、回答する動機が最も高いのはリスクに関心がある人だ。XPTの専門家の42%がEA meetupに参加した経験があり、EA参加者はx-riskに強い関心を持つコミュニティだ。一方、スーパーフォーキャスターのEA meetup参加率は9%。サンプルの構成が結果を規定している。AI Impacts 2023も、セーフティに関心のある研究者ほど調査に応じやすい構造的バイアスを持っている。</p>
+
+          <p class="lead"><strong>アンカリング効果</strong>。これが最も破壊的な知見だ。質問の表現を変えるだけで、x-risk推定値が5%から1500万分の1まで6桁変動する。「人類が絶滅する確率は」と聞けば5%。「AIが特定のメカニズムで人類を絶滅させる確率は」と聞けば桁が落ちる。さらに具体的なシナリオに分解すれば、各段階の確率を掛け合わせて結果は限りなくゼロに近づく。<strong>同じリスクが、質問の枠組みによって6桁変わる</strong>。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>方法論的問題</th>
+                <th>影響</th>
+                <th>規模</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>選択バイアス</strong></td>
+                <td>関心ある研究者ほど回答。XPT専門家の42%がEA参加</td>
+                <td>推定値を上方にシフト</td>
+              </tr>
+              <tr>
+                <td><strong>アンカリング効果</strong></td>
+                <td>質問表現で推定値が6桁変動</td>
+                <td style="color:var(--accent);">5% &harr; 0.0000067%</td>
+              </tr>
+              <tr>
+                <td><strong>定義問題</strong></td>
+                <td>Christianoの46%と20%は定義の違い(不可逆的損害 vs 大半死亡)</td>
+                <td>同一人物で2倍以上</td>
+              </tr>
+              <tr>
+                <td><strong>参照クラス問題</strong></td>
+                <td>前例のないイベントにベースレートが存在しない</td>
+                <td>理論的上限なし</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead"><strong>定義問題</strong>。Paul Christianoのp(doom)は46%か20%か。答えは両方正しい。46%は「AIが不可逆的な損害をもたらす確率」、20%は「大半の人類が死亡する確率」。同一人物の見解が定義の選び方で2倍以上変わる。p(doom)を議論するとき、参加者が同じ「doom」を指しているとは限らない。</p>
+
+          <p class="lead"><strong>参照クラス問題</strong>。人類絶滅は起きたことがない。起きたことがないイベントの確率を推定するとき、ベースレートが存在しない。Tetlockは「長期的実存リスクの予測はフィードバックループが遅すぎて精度検証が不可能」と指摘している。天気予報なら「30%の降水確率」の精度を日次で検証できる。10回中3回雨が降れば予測は正確だ。だが「今世紀中にAIが人類を絶滅させる確率5%」は、今世紀が終わるまで ── そしてその結果が絶滅でなかった場合にのみ ── 検証できる。しかも、1回しか試行がない。</p>
+
+          <div class="note">
+            Geoffrey Hintonのp(doom)は時期によって10%から50%まで変動した。Hintonは2023年にGoogleを退社し、AIリスクについて公に語り始めてから急速に悲観的になった。同じ人物、同じ専門知識。変わったのは社内情報へのアクセスか、公に語れる自由か、あるいはアンカリングの環境か。<strong>専門家の推定値がこれほど容易に変動する事実自体が、推定の脆弱性を物語っている</strong>。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>質問の枠組みだけで推定値が6桁変動する</span>
+          <span class="slide-count">5 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 6: XPT'S FAILURE ═══════════ -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow reveal">The Failed Convergence</div>
+        <h2 class="reveal reveal-delay-1">専門性は収束を保証しない</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&h=600&fit=crop&q=80" alt="Two people in discussion across a table">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">XPT(Existential Risk Persuasion Tournament)は、Philip Tetlockの最も野心的な実験だった。Tetlockは2005年の『Expert Political Judgment』で専門家の予測精度が統計的にチンパンジーのダーツ投げと大差ないことを実証し、2015年の『Superforecasting』で予測精度が改善可能であることを示した人物だ。その彼が設計した「説得トーナメント」で、ドメイン専門家とスーパーフォーキャスターを直接対話させた。</p>
+
+          <p class="lead">通常の予測問題なら、Tetlockのフレームワークは機能する。意見が異なる専門家を対話させると、証拠の重みづけが更新され、見解が収束していく。スーパーフォーキャスターは特にこのベイズ的更新が得意だ。だが、XPTの結果は違った。<strong>対話の後も、スーパーフォーキャスターと専門家の見解はほとんど接近しなかった</strong>。</p>
+
+          <p class="lead">スーパーフォーキャスターの中央値は1%のまま、ドメイン専門家の中央値は6%のまま。対話によって若干の調整はあったが、根本的な収束は起きなかった。これはTetlockのフレームワークにとって重大な例外事象だ。なぜ失敗したのか。</p>
+
+          <div class="bullets">
+            <div class="point">
+              <strong>フィードバックの不在</strong>。通常の予測問題(選挙結果、GDP成長率、紛争の勃発)は数年以内に結果が判明する。結果が出れば、自分の推定がどれだけズレていたかを知り、次の推定を修正できる。p(doom)には結果判明までのフィードバックループがない。100年後に「絶滅しなかった」とわかっても、その1回の試行で「5%は正しかった」と検証できない。
+            </div>
+            <div class="point">
+              <strong>前例の不在</strong>。天気予報の精度は数十万回の試行で磨かれる。選挙予測は数百回のデータがある。人類絶滅は0回だ。参照クラスが存在しないとき、ベイズ的更新の事前分布を何に設定するかで結論が変わる。スーパーフォーキャスターは広い参照クラス(過去の技術革新による社会変化)を使う傾向がある。ドメイン専門家はAI特有のメカニズム(mesa-optimization, reward hacking, deceptive alignment)に重みを置く。
+            </div>
+            <div class="point">
+              <strong>ドメイン知識の非対称性</strong>。スーパーフォーキャスターは予測手法の専門家であり、AI技術の専門家ではない。ドメイン専門家が指摘するinstrumental convergenceやdeceptive alignmentの技術的議論を、スーパーフォーキャスターは十分に評価できない可能性がある。逆に、ドメイン専門家は自分の分野のリスクを過大評価する傾向(domain expertise bias)が知られている。
+            </div>
+          </div>
+
+          <div class="note">
+            Tetlockのフレームワークが失敗した場面は、p(doom)に限らない。1990年代に核戦争確率を専門家に聞いたときも、冷戦終結後に見解が収束するまで数十年を要した。だがp(doom)は核戦争と本質的に異なる。核兵器は使われるか使われないか。0か1だ。AIリスクは連続的に変化し、閾値がどこにあるかすら定義されていない。<strong>通常の予測問題との最大の違いは、問いの構造そのものが未定義であることだ</strong>。
+          </div>
+
+          <p class="lead">XPTの失敗が教えるのは、p(doom)が「まだ答えが出ていない問い」ではなく、「答えが出る種類の問いではない可能性」だということだ。予測精度の世界チャンピオンたちがこの問いの前で立ち往生した事実は、問いの性質について何かを語っている。</p>
+        </div>
+
+        <div class="footer">
+          <span>予測精度の世界チャンピオンが、この問いの前で立ち往生した</span>
+          <span class="slide-count">6 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SLIDE 7: THE STRUCTURE OF UNKNOWABILITY ═══════════ -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow reveal">The Structure of Unknowability</div>
+        <h2 class="reveal reveal-delay-1">「わからない」は「考えなくていい」を意味しない</h2>
+        <img class="hero reveal reveal-delay-2" src="https://images.unsplash.com/photo-1513553404607-988bf2703777?w=1200&h=600&fit=crop&q=80" alt="Foggy road disappearing into mist">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">p(doom)が合意不能な理由は、データが足りないからではない。AI Impacts 2023は2,778名の回答を集め、XPTは世界最高の予測者を投入し、Carlsmithは6段階の分解フレームワークを構築した。データは増えた。分析の精度は上がった。それでも分布は収束しなかった。AI Impacts 2022から2023にかけて、中央値5%は不変だった。</p>
+
+          <p class="lead">合意を阻んでいるのは<strong>問いの構造</strong>だ。三つの構造的障壁がある。</p>
+
+          <div class="bullets">
+            <div class="point">
+              <strong>参照クラスの不在</strong>。人類は一度も絶滅していない。絶滅が起きれば二度目のデータは取れない。確率推定の前提である反復試行が、定義上、存在しない。Carlsmithの分解は問いを小さな部品に分けたが、各部品にも十分な参照クラスがない。「高度AIが権力を追求する確率」に使える過去データは存在しない。
+            </div>
+            <div class="point">
+              <strong>定義の不在</strong>。何をもって「doom」とするか。Christianoの46%と20%の差は、不可逆的損害と大量死の定義の差だった。AIが人類の自律性を奪うがひとりも殺さないシナリオはdoomか。人口の1%が死亡するシナリオは。5%は。50%は。Ordの「実存リスク」は「人類の長期的な潜在能力を不可逆的に損なうこと」と定義されており、絶滅とは異なる。
+            </div>
+            <div class="point">
+              <strong>世界観の不在</strong>。LeCunとYudkowskyの4桁の差は、確率の見積もりの差ではなく、AIの本性に関する哲学的立場の差だ。AIは道具か、エージェントか。知能は目標追求を伴うか。意識は制御可能性に影響するか。これらの問いは経験的に決着がつかないまま、p(doom)の入力値を支配している。
+            </div>
+          </div>
+
+          <div class="note">
+            Karger et al.の最も鋭い発見を繰り返す。<strong>Instrumental convergenceを聞いたことがあるAI専門家はわずか21%</strong>。残りの79%は、Bostromが2014年に体系化した中核概念を知らずにp(doom)に回答している。これは「温度計を読む方法を知らない人が温度を報告している」状態だ。だが、知っている21%の推定値が「正しい」保証もない。知識が悲観を生むのか、悲観な人が知識を求めるのか、因果の方向は確定していない。
+          </div>
+
+          <p class="lead">ではp(doom)は無意味な問いか。そうではない。Carlsmithの分解は、不一致の場所を特定する。XPTの失敗は、予測の限界がどこにあるかを示す。双峰性の発見は、「中央値」が二つの世界観を潰して平均した虚構であることを暴く。p(doom)の値そのものに意味はないかもしれないが、p(doom)をめぐる議論の構造には膨大な情報が含まれている。</p>
+
+          <p class="lead">AI Impacts 2023の回答者たちが5%の中央値を出し、Hintonが50%と言い、LeCunが0.01%未満と主張し、Yampolskiyが99.99%と断言する。CAIS声明に1,000名超が署名しながら、その署名者たちの推定値は4桁にわたって散乱する。この散乱自体が、人類がいま直面している状況の最も正確な描写かもしれない。</p>
+
+          <p class="lead" style="font-size:18px;font-weight:700;color:var(--black);max-width:680px;">前例のないイベントの確率を合意することはできない。だが合意できないことが、そのイベントに備えない理由にはならない。火災保険の加入率は「火事が起きる確率の合意」に依存しない。あなたの家が燃える確率が0.01%でも99.99%でも、消火器の位置は確認しておくものだ ── ただし、消火器がどこにあるか、誰も知らないのが今の状況だ。</p>
+        </div>
+
+        <div class="footer">
+          <span>問いの構造が合意を許さない。だが行動は許されている</span>
+          <span class="slide-count">7 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Article Navigation ═══════════ -->
+      <section class="slide" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="27-every-view-is-wild.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.27</p>
+              <p><strong>どちらに転んでも、現在は異常である</strong></p>
+            </a>
+            <div class="card" style="opacity:0.35;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &rarr;</p>
+              <p>最新の記事です</p>
+            </div>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=risk" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Risk カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="credits">
+      <p>
+        Photos: All images from <a href="https://unsplash.com">Unsplash</a> (free license).
+        Slide 1: <a href="https://unsplash.com/photos/6lQDFGOB1iw">Dice on dark surface</a> /
+        Slide 2: <a href="https://unsplash.com/photos/hpjSkU2UYSU">Data visualization</a> /
+        Slide 3: <a href="https://unsplash.com/photos/M4KpA780SME">Cracked surface</a> /
+        Slide 4: <a href="https://unsplash.com/photos/OfjB8NqgFsg">Dominoes in line</a> /
+        Slide 5: <a href="https://unsplash.com/photos/uT55MBgRejY">Broken glass</a> /
+        Slide 6: <a href="https://unsplash.com/photos/n95VMLxqM2I">Discussion</a> /
+        Slide 7: <a href="https://unsplash.com/photos/PkbZahEG2Ng">Foggy road</a>
+      </p>
+      <p style="margin-top:16px;">
+        References:<br>
+        [1] AI Impacts, "2023 Expert Survey on Progress in AI," 2024 (survey of 2,778 ML researchers at top conferences).<br>
+        [2] Philip Tetlock et al., "The XPT: Existential Risk Persuasion Tournament," RAND Corporation / UC Berkeley, 2022.<br>
+        [3] Zachary Karger et al., "Forecasting Existential Risks: Evidence from a Long-Run Forecasting Tournament," arXiv:2502.14870, February 2025.<br>
+        [4] Joseph Carlsmith, "Is Power-Seeking AI an Existential Risk?," Open Philanthropy, 2022.<br>
+        [5] Toby Ord, <em>The Precipice: Existential Risk and the Future of Humanity</em>, Bloomsbury Publishing, 2020.<br>
+        [6] Center for AI Safety, "Statement on AI Risk," May 2023 (1,000+ signatories).<br>
+        [7] Nick Bostrom, <em>Superintelligence: Paths, Dangers, Strategies</em>, Oxford University Press, 2014.<br>
+        [8] Ajeya Cotra, "Forecasting TAI with Biological Anchors," Open Philanthropy, September 2020 (updated 2022).<br>
+        [9] Geoffrey Hinton, various public statements on AI existential risk, 2023&ndash;2026.<br>
+        [10] Roman Yampolskiy, <em>AI: Unexplainable, Unpredictable, Uncontrollable</em>, CRC Press, 2024.<br>
+        [11] Scott Alexander, "Why I Am Not (As Much Of) A Doomer," Astral Codex Ten, 2023.<br>
+        [12] Daniel Kokotajlo, "What is your AI timelines?," public statements and interviews, 2023&ndash;2024.<br>
+        [13] Paul Christiano, "Clarifying AI x-risk," Alignment Forum, 2023.<br>
+        [14] Philip Tetlock, <em>Expert Political Judgment</em>, Princeton University Press, 2005.<br>
+        [15] Philip Tetlock &amp; Dan Gardner, <em>Superforecasting: The Art and Science of Prediction</em>, Crown, 2015.<br>
+        [16] Robin Hanson, "The Great Filter &mdash; Are We Almost Past It?," George Mason University, 1998.<br>
+        [17] Metaculus, "AI Existential Risk conditional on AGI timeline" prediction markets, 2023&ndash;2026.
+      </p>
+      <p style="margin-top:16px;">
+        Note on provenance: This article synthesizes survey data from AI Impacts, XPT, and Karger et al. with the decomposition framework of Carlsmith and the risk taxonomy of Ord. The "broken thermometer" framing, the bimodality analysis, and the "structure of unknowability" argument are editorial constructions of AGI HUB, not the original authors' terminology. Individual p(doom) estimates are sourced from public statements, interviews, and published writings of the cited individuals.
+      </p>
+    </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">&#9733;</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">&#9733;</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">&#9733;</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">&#9733;</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">&#9733;</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+          btn.disabled=true;btn.textContent='Sending...';
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
+    <script>
+      const buttons = Array.from(document.querySelectorAll('.nav button'));
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const progress = document.getElementById('progress');
+
+      function setActive(id) {
+        buttons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+      }
+
+      buttons.forEach(b => {
+        b.addEventListener('click', () => {
+          document.getElementById(b.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      const navObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+      }, { threshold: 0.5 });
+
+      slides.forEach(s => navObserver.observe(s));
+
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = scrolled + '%';
+      });
+    </script>
+
+    <!-- Google Translate Widget -->
+    <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'ja',
+        includedLanguages: 'en,zh-CN,ko,fr,de,es',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
+  </body>
+</html>

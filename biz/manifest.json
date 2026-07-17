@@ -1,0 +1,34 @@
+{
+  "biz_articles": [
+    {
+      "biz_article_id": "B01",
+      "biz_slug": "B01-automation-77-decision-timeline",
+      "title": "自動化率77%は経済の77%ではない — 投資判断の時計を合わせる",
+      "format": "decision_memo",
+      "source_article_id": "26",
+      "source_slug": "26-automation-bottleneck-regime",
+      "link_status": "linked",
+      "last_synced_at": "2026-04-13T22:30:00+09:00"
+    },
+    {
+      "biz_article_id": "B02",
+      "biz_slug": "B02-organization-cliff-2031",
+      "title": "あなたの会社は、組織の崖まで何年か — 7段階モデルで自社の現在地を測る",
+      "format": "decision_memo",
+      "source_article_id": "09",
+      "source_slug": "09-corporate-phase-transition",
+      "link_status": "linked",
+      "last_synced_at": "2026-04-13T22:30:00+09:00"
+    },
+    {
+      "biz_article_id": "B03",
+      "biz_slug": "B03-50x-vs-1-25x-investment-binary",
+      "title": "50倍と1.25倍 — AI投資の二択を間違えると、ROIが2桁ずれる",
+      "format": "decision_memo",
+      "source_article_id": "11",
+      "source_slug": "11-industrial-explosion-before-agi",
+      "link_status": "linked",
+      "last_synced_at": "2026-04-13T22:30:00+09:00"
+    }
+  ]
+}

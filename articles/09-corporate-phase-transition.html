@@ -5,8 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../design-system/palette.css">
     <title>企業が液体化する時代の戦略論 — AGIまでの7段階と、ストラテジストの消えない仕事</title>
     <meta name="description" content="L0からL6まで、AI自動化率の曲線に沿って企業組織はどう変わるか。相転移の先でストラテジストに残る4つの職能。" />
+    <meta name="revised" content="2026.04.14" />
     <style>
       :root {
         --black: #000;
@@ -149,6 +151,18 @@
         padding-bottom: 14px;
         border-bottom: 1px solid var(--accent);
       }
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 36px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
       .eyebrow { color: var(--accent); }
@@ -369,7 +383,7 @@
     </style>
   </head>
   <body class="pattern-broadsheet accent-deepblue has-site-header" data-category="corporate">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -386,7 +400,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 09 / 15 &nbsp;·&nbsp; Corporate &nbsp;·&nbsp; 9 Slides</span>
+      <span>No. 09 &nbsp;·&nbsp; Corporate &nbsp;·&nbsp; 9 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="08-agi-self-replication-premise.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=corporate" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -404,26 +418,26 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead dropcap">
-            AGI到達までの道筋を議論するとき、ほとんどの予測が「いつ来るか」と「何ができるようになるか」に集中する。ここでは角度を変える。同じ期間に<strong>企業という組織形式がどう変形していくか</strong>を追う。ChatGPT以前の2024年から、企業概念そのものが維持できなくなる2032年以降まで、組織の中で意思決定がどこに宿るかを軸に7つの段階を切っていく。
+            企業とは何か。この問いは、1937年にロナルド・コースが一度片付けた。社内で調整するほうが市場で取引するより安いから、企業という輪郭が生まれる。取引コストの不等号がすべてだ。90年続いたその不等号が、いま反転しようとしている。AIが社内調整コストを限りなくゼロに近づけるからだ。反転が起きたとき、企業は何として残り、何として消えるのか。<strong>それを測る物差しは一本でいい。業務上の意思決定のうちAIが担う割合</strong>だ。売上でも従業員数でもGPU保有量でもない。
           </p>
           <p class="lead">
-            軸は一つに絞る。「その会社で、業務上の意思決定のうちAIが担う割合」だ。売上でも従業員数でもGPU保有量でもない。判断の所在をどこに置いているかだけが、組織形式の本質を規定する。Coaseが1937年に整理した取引コスト理論に従えば、企業が存在する理由は「市場で取引するより社内で調整したほうが安いから」という一点に集約される。AIが社内調整コストを限りなくゼロに近づけるとき、この不等号はどこかの段階で反転する。
+            この軸の限界は承知している。文化、規制環境、物理資産の有無、労使関係。どれもAI比率だけでは捉えきれない独立変数だ。それでも意思決定比率を選ぶ。コースの不等号が反転する距離を直接測る指標が、これ以外にないからだ。2025年4月、Klarnaは従業員5,000人を3,800人に削減しながら売上を伸ばし、DuolingoはAI翻訳を理由に契約翻訳者の大半を切り、Shopifyの社内メモには「新しい人を雇う前に、なぜAIにできないかを証明せよ」と書かれた。3社とも業績は好調だ。これは<strong>企業の輪郭が内側から溶け始めた最初の観測点</strong>であり、同じ溶解がL0からL6まで7段階で進む。
           </p>
           <p class="lead">
-            反転は連続的には起きない。L0からL4まではなだらかな曲線だが、L4とL5のあいだに<strong>垂直に近い崖</strong>が存在する。水が100度で突然沸騰するのと同じ相転移の構造だ。この崖の位置を読み違えた企業から順に、殻だけ残して中身が蒸発していく。そして相転移の先でストラテジストに残る仕事は、古典的な戦略立案の5機能のうちたった一つになる。どれが消え、どれが残るのか。順番に辿っていく。
+            溶解は連続しない。L0からL4までは滑らかな曲線だが、L4とL5のあいだに<strong>垂直の崖</strong>がある。水が99度で液体のままでいて、100度で突然沸騰するのと同じ構造だ。崖の位置を読み違えた会社から順に、殻だけ残して中身が蒸発する。7段階を実在企業の動向に重ねて描写し、相転移のトリガーとブロッカーを分解し、最後に「自社はいまどの段階にいて、次の崖まで何年あるか」を判定する問いに着地する。
           </p>
           <div class="grid-3">
             <div class="card">
               <span class="tag">Part 1</span>
-              <p><strong>企業進化の7段階</strong><br>L0からL6まで。意思決定の所在を軸に、組織図・人員構成・決算サイクル・本社という物理拠点がどう変形するかを段階別に描写する。</p>
+              <p><strong>企業進化の7段階と実例</strong><br>L0からL6まで。Klarna、HODL1、Palantir、Tesla。実在する企業がどの段階にいるかを当てはめながら、組織形態の変形を追う。</p>
             </div>
             <div class="card">
               <span class="tag">Part 2</span>
-              <p><strong>各段階の戦略選択肢</strong><br>「何が脅威か」「選択肢は何か」「勝つ条件は何か」を段階別に列挙。過渡期の最適化がすべて負債に変わる理由を整理する。</p>
+              <p><strong>相転移のトリガーとブロッカー</strong><br>L4からL5の崖は何が押し、何が止めるのか。エージェント間契約コスト、資本調達の個別化、規制の後追い。3つの力学を分解する。</p>
             </div>
             <div class="card">
               <span class="tag">Part 3</span>
-              <p><strong>ストラテジストの4職能</strong><br>AGI時代に人間に残る仕事。目的関数の設計、相転移の予測、異質性の供給、責任の引受。この4つの時間配分がL0からL6でどう変わるか。</p>
+              <p><strong>自社の段階を判定する問い</strong><br>フレームワークの限界を認めた上で、それでも使える実用的な診断。5つの問いで自社がどのLにいるか、次の崖まで何年あるかを見積もる。</p>
             </div>
           </div>
         </div>
@@ -439,7 +453,7 @@
         <h2 class="reveal reveal-delay-1">企業形態の7段階 — ピラミッドが液体を経て消滅するまで</h2>
         <div class="panel reveal reveal-delay-2">
           <p class="lead">
-            本論に入る前に、L0からL6までの7段階がどのような組織形態を指しているかを一枚の図で俯瞰しておく。縦軸は取らない。横軸の時間と、各段階で<strong>組織の輪郭がどう変形するか</strong>だけを追う。ピラミッドから始まり、逆ピラミッド、ハブネットワーク、スパースメッシュを経て、L4とL5のあいだで垂直な崖を越え、雲状の液体形態に変わり、最後に輪郭が消えて目的関数のシンボルだけが残る。各段階の詳細は後続のスライドで一段ずつ掘り下げるが、まずはこの変形の連なりを網膜に焼き付けてほしい。
+            本論に入る前に、L0からL6までの7段階がどのような組織形態を指しているかを一枚の図で俯瞰しておく。縦軸は取らない。横軸の時間と、各段階で<strong>組織の輪郭がどう変形するか</strong>だけを追う。ピラミッドから始まり、逆ピラミッド、ハブネットワーク、スパースメッシュを経て、L4とL5のあいだで垂直な崖を越え、雲状の液体形態に変わり、最後に輪郭が消えて目的関数のシンボルだけが残る。各段階の詳細は後続のセクションで一段ずつ掘り下げるが、まずはこの変形の連なりを網膜に焼き付けてほしい。
           </p>
           <div class="chart-wrap">
             <div class="chart-title">Figure 01</div>
@@ -582,7 +596,7 @@
                 <!-- one tiny human -->
                 <circle cx="70" cy="180" r="5" fill="#1a1a1a"/>
                 <text x="70" y="330" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">液体化</text>
-                <text x="70" y="348" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="11" fill="#1a1a1a">輪郭が溶ける</text>
+                <text x="70" y="348" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="11" fill="#1a1a1a">輪郭が消える</text>
                 <text x="70" y="380" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#757575">人間3%</text>
                 <text x="70" y="395" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#2f2b92">AI 97%</text>
               </g>
@@ -613,7 +627,7 @@
               <span class="cliff">相転移帯 / Phase Transition</span>
             </div>
             <p class="chart-note">
-              各段階の組織形態を視覚化した。L0の実線ピラミッドは人間100%の従来型組織。L1-L2で底辺と中間層が抜け、L3でハブ型ネットワークに組み替わる。L4では人間のノードが数個だけ残り、その周囲をAIメッシュが覆う。L4とL5のあいだに相転移帯が走り、L5では組織の輪郭が液体状に溶ける。L6では輪郭そのものが消え、目的関数を指すシンボルだけが残る。後続スライドの各段階解説は、この図のどの形態を指しているかを意識しながら読むと理解が早い。
+              各段階の組織形態を視覚化した。L0の実線ピラミッドは人間100%の従来型組織。L1-L2で底辺と中間層が抜け、L3でハブ型ネットワークに組み替わる。L4では人間のノードが数個だけ残り、その周囲をAIメッシュが覆う。L4とL5のあいだに相転移帯が走り、L5では組織の輪郭が液体状にゆるむ。L6では輪郭そのものが消え、目的関数を指すシンボルだけが残る。後続セクションの各段階解説は、この図のどの形態を指しているかを意識しながら読むと理解が早い。
             </p>
           </div>
           <p class="lead">
@@ -636,22 +650,176 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            L0は2024年以前の姿である。社員が個別にChatGPTを開き、議事録の要約やメールの下書きに使う。AIは組織図のどこにも存在しない。判断の100%が人間に属し、効率化された旧来型企業の範疇を出ない。この段階の会社がL1に進まない理由は技術でも予算でもなく、経営層が「道具の導入」と「組織設計の変更」を区別していないからだ。区別できないまま数年が過ぎると、次の段階で復帰不能なほど遅れる。
+            L0は2024年以前の姿で、日本の上場企業の過半数がまだここにいる。社員が個別にChatGPTを開き、議事録の要約やメールの下書きに使う。AIは組織図のどこにも存在しない。判断の100%が人間に属する。この段階の会社がL1に進まない理由は技術でも予算でもなく、経営層が「道具を導入すること」と「組織を設計し直すこと」を区別していないからだ。大手メーカーの「AI推進室」が典型で、PoC（概念実証）を50本回しても組織図は1ミリも動かない。
           </p>
           <p class="lead">
-            L1は2025年から2026年の姿だ。請求書処理、一次問い合わせ、議事録、コード補完にAIが常駐する。バックオフィスの採用が事実上停止し、新卒の定型業務ポストが消え始める。ただしこの段階での打撃は現場の「手」に集中する。管理職と意思決定層は無傷のまま残り、組織図の上半分は変わらない。L1で勝つ条件は単純だ。<strong>L2の準備に入れるかどうか</strong>。L1の効率化で満足した会社は、L2の段階で後ろから追い抜かれる。
+            L1は2025年から2026年の姿だ。Klarnaがここにいる。請求書処理、一次問い合わせ、議事録、コード補完にAIが常駐し、バックオフィスの採用が事実上停止する。KlarnaのAIアシスタントはカスタマーサービスで700人分の業務量を処理する水準に到達し、採用凍結と自然減で総従業員数を段階的に絞り込んだ。管理職と意思決定層は無傷のまま残り、組織図の上半分は変わらない。L1の効率化で満足した会社は、L2で後ろから抜かれる。<strong>HODL1はこのL1段階で「バックオフィス人員ゼロ成長」を宣言した</strong>。増える業務をすべてAIエージェントの増員で吸収する設計だ。
           </p>
           <p class="lead">
-            L2は2026年から2027年にかけて訪れる。エージェントが「検知、判断、実行、記録」の業務ループを自走で回し始める。ここで組織の力学が決定的に変わる。管理職よりも<strong>業務設計者</strong>のほうが重要になる。ミドルマネジメントの役割は縮小し、組織は逆ピラミッド化する。組織図に初めてAIエージェントが正式に描かれるのもこの段階だ。L2で勝敗を決めるのはループ設計の巧拙である。エージェントに与える権限の範囲、例外処理の経路、ログの粒度、ガードレールの深さ。どれも地味だが、一つ間違えると業務全体が止まる。
+            L2は2026年から2027年にかけて訪れる。エージェントが「検知、判断、実行、記録」の業務ループを自走で回し始める段階で、Shopifyが今この入口に立っている。管理職よりも<strong>業務設計者</strong>のほうが重要になり、ミドルマネジメントの役割は縮小する。L2で勝敗を決めるのはループ設計の巧拙だ。エージェントに与える権限の範囲、例外処理の経路、ログの粒度、ガードレールの深さ。地味だが、一つ間違えると業務全体が止まる。
           </p>
           <p class="lead">
-            L3は2027年から2029年にあたる。エージェントが財務分析、法務の一次レビュー、マーケティング運用で意思決定を担うようになる。人間のCxOは戦略方針とガードレール設定に集中し、執行の大半は手を離れる。副CxOポジションにAIが座り始めるのもこの段階だ。稟議と承認のフローは秒で回る。だが同時に、判断の硬直化という新しいリスクが立ち上がる。過去パターンの再生産に閉じたエージェントは、環境が変わってもそれに気づかない。L3で勝つ条件はガードレール設計の巧拙、つまり<strong>どこまで委任し、どこから人間が取り戻すか</strong>を厳密に線引きできるかに帰結する。
+            L3は2027年から2029年にあたる。Palantirの法人向けAIPプラットフォームが目指しているのがこの世界だ。エージェントが財務分析、法務の一次レビュー、マーケティング運用で意思決定を担う。人間のCxOは戦略方針とガードレール設定に集中し、執行の大半は手を離れる。だが同時に、判断の硬直化という新しいリスクが現れる。過去パターンの再生産に閉じたエージェントは、環境が変わっても気づかない。L3で勝てるかどうかは、<strong>どこまで委任し、どこから人間が取り戻すか</strong>を線引きできるかで決まる。
           </p>
           <p class="lead">
-            L4は2029年から2031年、CEOやCSO級の戦略判断にまでAIが関与する段階である。資本配分、M&A、事業撤退。人間の役割は目的関数の設定、倫理判断、最終承認に限定されていく。役員会はAIの判断をレビューする場に変わり、人間の人数は数人から数十人まで圧縮される。「AIが運営し、人間が所有する」形式が現れ始める。L4後期には目的関数そのものをめぐる競争が始まる。理念駆動型の企業と受託駆動型の企業に二分され、後者の時価総額は溶けていく。顧客の目的に最適化されただけの会社には、そもそも独自の目的が残っていないからだ。
+            L4は2029年から2031年、CEOやCSO級の戦略判断にまでAIが関与する段階だ。現時点でL4を先取りしている企業はない。だがTeslaのFSD（完全自動運転）チームの意思決定構造は参考になる。イーロン・マスクが目的関数を設定し、AIがデータ収集から訓練、デプロイまでの大半を自律的に回し、人間のエンジニアはガードレールの調整に集中する。この構造を全社に拡張したものがL4だ。L4の後半では各社が目的関数そのものを競い始め、理念を持たない受託駆動型の企業から時価総額が失われていく。
           </p>
+          <div class="chart-wrap">
+            <div class="chart-title">Figure 01b</div>
+            <div class="chart-headline">Pyramid Collapse — 組織図が逆ピラミッドを経て空洞化する</div>
+            <svg class="metamorph-svg" viewBox="0 0 1120 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="L0からL4までピラミッドが逆転し空洞化する5段階図">
+              <defs>
+                <marker id="arrowHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#b8a46a"/>
+                </marker>
+              </defs>
+
+              <!-- baseline ground -->
+              <line x1="40" y1="360" x2="1080" y2="360" stroke="#c8c3b0" stroke-width="1"/>
+
+              <!-- arrows between stages -->
+              <g stroke="#b8a46a" stroke-width="1.5" fill="none" marker-end="url(#arrowHead)">
+                <line x1="215" y1="220" x2="245" y2="220"/>
+                <line x1="415" y1="220" x2="445" y2="220"/>
+                <line x1="615" y1="220" x2="645" y2="220"/>
+                <line x1="815" y1="220" x2="845" y2="220"/>
+              </g>
+
+              <!-- L0: 正ピラミッド 完全形 -->
+              <g transform="translate(40,0)">
+                <text x="85" y="38" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="700" fill="#2f2b92">L0</text>
+                <text x="85" y="56" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#757575">FULL PYRAMID</text>
+                <!-- 5-layer pyramid stacked -->
+                <polygon points="85,95 105,135 65,135" fill="#1a1a1a"/>
+                <polygon points="65,135 105,135 120,175 50,175" fill="#1a1a1a" fill-opacity="0.9"/>
+                <polygon points="50,175 120,175 140,220 30,220" fill="#1a1a1a" fill-opacity="0.8"/>
+                <polygon points="30,220 140,220 160,275 10,275" fill="#1a1a1a" fill-opacity="0.7"/>
+                <polygon points="10,275 160,275 170,340 0,340" fill="#1a1a1a" fill-opacity="0.55"/>
+                <!-- labels inside -->
+                <text x="85" y="120" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" font-weight="700" fill="#faf8f1">CEO</text>
+                <text x="85" y="160" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#faf8f1">執行役員</text>
+                <text x="85" y="202" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#faf8f1">部長・課長</text>
+                <text x="85" y="251" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#faf8f1">中堅社員</text>
+                <text x="85" y="312" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#faf8f1">現場オペレーター</text>
+                <!-- caption -->
+                <text x="85" y="385" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">完全ピラミッド</text>
+                <text x="85" y="405" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="10" fill="#585858">底辺で支える構造</text>
+                <text x="85" y="440" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#2f2b92" font-weight="700">AI 0%</text>
+                <text x="85" y="460" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#757575">~2024</text>
+              </g>
+
+              <!-- L1: 底辺が抜ける -->
+              <g transform="translate(240,0)">
+                <text x="85" y="38" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="700" fill="#2f2b92">L1</text>
+                <text x="85" y="56" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#757575">HOLLOW BASE</text>
+                <!-- 上4層は人間のまま -->
+                <polygon points="85,95 105,135 65,135" fill="#1a1a1a"/>
+                <polygon points="65,135 105,135 120,175 50,175" fill="#1a1a1a" fill-opacity="0.9"/>
+                <polygon points="50,175 120,175 140,220 30,220" fill="#1a1a1a" fill-opacity="0.8"/>
+                <polygon points="30,220 140,220 160,275 10,275" fill="#1a1a1a" fill-opacity="0.7"/>
+                <!-- 底辺はAI置換(点線/AI色) -->
+                <polygon points="10,275 160,275 170,340 0,340" fill="#2f2b92" fill-opacity="0.18" stroke="#2f2b92" stroke-width="1.2" stroke-dasharray="4,3"/>
+                <text x="85" y="120" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" font-weight="700" fill="#faf8f1">CEO</text>
+                <text x="85" y="160" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#faf8f1">執行役員</text>
+                <text x="85" y="202" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#faf8f1">部長・課長</text>
+                <text x="85" y="251" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#faf8f1">中堅社員</text>
+                <text x="85" y="312" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#2f2b92" font-weight="700">AI オペレーター</text>
+                <text x="85" y="385" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">底辺が抜ける</text>
+                <text x="85" y="405" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="10" fill="#585858">Klarna現在地</text>
+                <text x="85" y="440" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#2f2b92" font-weight="700">AI 15%</text>
+                <text x="85" y="460" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#757575">2025-26</text>
+              </g>
+
+              <!-- L2: 逆ピラミッド (中間層消滅・砂時計型) -->
+              <g transform="translate(440,0)">
+                <text x="85" y="38" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="700" fill="#2f2b92">L2</text>
+                <text x="85" y="56" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#757575">INVERTED</text>
+                <!-- 上2層は人間厚め -->
+                <polygon points="85,95 105,135 65,135" fill="#1a1a1a"/>
+                <polygon points="65,135 105,135 120,175 50,175" fill="#1a1a1a" fill-opacity="0.9"/>
+                <!-- 中間層がほぼ消える(細い棒) -->
+                <rect x="77" y="175" width="16" height="40" fill="#1a1a1a" fill-opacity="0.5"/>
+                <!-- AI層が広がる(逆ピラミッド形成) -->
+                <polygon points="77,215 93,215 160,275 10,275" fill="#2f2b92" fill-opacity="0.35" stroke="#2f2b92" stroke-width="1.2"/>
+                <polygon points="10,275 160,275 170,340 0,340" fill="#2f2b92" fill-opacity="0.5" stroke="#2f2b92" stroke-width="1.2"/>
+                <text x="85" y="120" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" font-weight="700" fill="#faf8f1">CEO</text>
+                <text x="85" y="160" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#faf8f1">執行役員</text>
+                <text x="200" y="200" text-anchor="start" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#b8342f" font-weight="700">中間層</text>
+                <text x="200" y="213" text-anchor="start" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#b8342f">消滅</text>
+                <text x="85" y="251" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#2f2b92" font-weight="700">AI 業務ループ</text>
+                <text x="85" y="312" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" fill="#2f2b92" font-weight="700">AI オペレーター</text>
+                <text x="85" y="385" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">逆ピラミッド化</text>
+                <text x="85" y="405" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="10" fill="#585858">砂時計型の接続点</text>
+                <text x="85" y="440" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#2f2b92" font-weight="700">AI 35%</text>
+                <text x="85" y="460" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#757575">2026-27</text>
+              </g>
+
+              <!-- L3: ハブ&スポーク (組織図が崩れる) -->
+              <g transform="translate(640,0)">
+                <text x="85" y="38" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="700" fill="#2f2b92">L3</text>
+                <text x="85" y="56" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#757575">HUB &amp; SPOKE</text>
+                <!-- faded pyramid outline(過去の痕跡) -->
+                <polygon points="85,95 170,340 0,340" fill="none" stroke="#c8c3b0" stroke-width="1" stroke-dasharray="2,4"/>
+                <!-- 中央の人間ハブ -->
+                <circle cx="85" cy="215" r="16" fill="#1a1a1a"/>
+                <text x="85" y="219" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="9" font-weight="700" fill="#faf8f1">CxO</text>
+                <!-- AIノード -->
+                <circle cx="30" cy="140" r="11" fill="#2f2b92"/>
+                <circle cx="140" cy="140" r="11" fill="#2f2b92"/>
+                <circle cx="20" cy="230" r="11" fill="#2f2b92"/>
+                <circle cx="150" cy="230" r="11" fill="#2f2b92"/>
+                <circle cx="50" cy="310" r="11" fill="#2f2b92"/>
+                <circle cx="120" cy="310" r="11" fill="#2f2b92"/>
+                <circle cx="85" cy="330" r="8" fill="#2f2b92" fill-opacity="0.6"/>
+                <!-- connection lines -->
+                <line x1="85" y1="215" x2="30" y2="140" stroke="#999" stroke-width="1"/>
+                <line x1="85" y1="215" x2="140" y2="140" stroke="#999" stroke-width="1"/>
+                <line x1="85" y1="215" x2="20" y2="230" stroke="#999" stroke-width="1"/>
+                <line x1="85" y1="215" x2="150" y2="230" stroke="#999" stroke-width="1"/>
+                <line x1="85" y1="215" x2="50" y2="310" stroke="#999" stroke-width="1"/>
+                <line x1="85" y1="215" x2="120" y2="310" stroke="#999" stroke-width="1"/>
+                <text x="85" y="385" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">組織図が崩れる</text>
+                <text x="85" y="405" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="10" fill="#585858">ハブ&amp;スポーク化</text>
+                <text x="85" y="440" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#2f2b92" font-weight="700">AI 60%</text>
+                <text x="85" y="460" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#757575">2027-29</text>
+              </g>
+
+              <!-- L4: 空洞化 (人間ノード数個だけ) -->
+              <g transform="translate(840,0)">
+                <text x="85" y="38" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="700" fill="#2f2b92">L4</text>
+                <text x="85" y="56" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#757575">HOLLOWED</text>
+                <!-- faded pyramid outline(痕跡) -->
+                <polygon points="85,95 170,340 0,340" fill="none" stroke="#c8c3b0" stroke-width="1" stroke-dasharray="2,4"/>
+                <!-- AIメッシュ密集 -->
+                <g fill="#2f2b92" fill-opacity="0.7">
+                  <circle cx="25" cy="130" r="4"/><circle cx="50" cy="125" r="4"/><circle cx="75" cy="135" r="4"/>
+                  <circle cx="100" cy="125" r="4"/><circle cx="125" cy="140" r="4"/><circle cx="145" cy="130" r="4"/>
+                  <circle cx="30" cy="170" r="4"/><circle cx="60" cy="175" r="4"/><circle cx="90" cy="170" r="4"/>
+                  <circle cx="120" cy="180" r="4"/><circle cx="150" cy="170" r="4"/>
+                  <circle cx="20" cy="210" r="4"/><circle cx="50" cy="215" r="4"/><circle cx="105" cy="210" r="4"/>
+                  <circle cx="135" cy="215" r="4"/><circle cx="160" cy="205" r="4"/>
+                  <circle cx="30" cy="255" r="4"/><circle cx="65" cy="260" r="4"/><circle cx="95" cy="255" r="4"/>
+                  <circle cx="125" cy="265" r="4"/><circle cx="155" cy="250" r="4"/>
+                  <circle cx="20" cy="300" r="4"/><circle cx="55" cy="305" r="4"/><circle cx="95" cy="300" r="4"/>
+                  <circle cx="130" cy="310" r="4"/><circle cx="160" cy="295" r="4"/>
+                </g>
+                <!-- 人間ノード2個だけ -->
+                <circle cx="70" cy="215" r="12" fill="#1a1a1a"/>
+                <text x="70" y="219" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="8" font-weight="700" fill="#faf8f1">CSO</text>
+                <circle cx="115" cy="255" r="12" fill="#1a1a1a"/>
+                <text x="115" y="259" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="8" font-weight="700" fill="#faf8f1">CEO</text>
+                <text x="85" y="385" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="12" font-weight="700" fill="#1a1a1a">空洞化</text>
+                <text x="85" y="405" text-anchor="middle" font-family="HelveticaNeue,sans-serif" font-size="10" fill="#585858">人間ノード数個 + AIメッシュ</text>
+                <text x="85" y="440" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="10" fill="#2f2b92" font-weight="700">AI 88%</text>
+                <text x="85" y="460" text-anchor="middle" font-family="SF Mono,Menlo,monospace" font-size="9" fill="#757575">2029-31</text>
+              </g>
+            </svg>
+            <p class="chart-note">
+              L0で底辺を支えていた現場オペレーターがL1で最初に抜ける。Klarnaの700人削減がこの層の喪失だ。L2では中間管理職と中堅社員が同時に消え、上2層と下2層をつなぐ接続点が細くなる。砂時計型の組織が一瞬だけ現れ、すぐに逆ピラミッドへ反転する。L3では組織図そのものが崩れ、中央のCxOを中心とするハブ&スポーク構造に組み替わる。過去のピラミッドは痕跡として残るだけだ。L4では輪郭の内側が空洞化し、人間の判断者はCEOとCSOの2ノードまで減る。周囲を覆うのはAIメッシュで、ここまで来るとピラミッドという言葉は機能しない。
+            </p>
+          </div>
           <div class="note">
-            <strong>L0からL4の共通構造。</strong>自動化率のカーブは連続的に上昇し、各段階で組織図の「中間層」が消えていく。L0は人間100%、L4後期でAI95%。だがL4の先に垂直な崖が待っている。L4の優等生はこの崖で一度も止まらずに落ちる。
+            <strong>単一軸モデルの自覚的な使い方。</strong>各段階のAI比率は精度を主張するものではない。業界によって10%から20%はずれる。製造業のL3は金融のL2より遅れて到達し、広告業界はすべての段階で2年先を走る。モデルの価値は数値の精度にではなく、「次の段階で何が変わるかを事前に問える」点にある。L4の優等生がL5の崖で止まれない理由も、このモデルなら事前に読める。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -670,16 +838,16 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            L5は2031年から2032年、ごく短期間だけ観測される。組織図は描けない。エージェントが毎日生まれて死んでいくからだ。従業員数という指標が意味を失う。人間は数人、エージェントは数百から数万、しかも構成は日単位で入れ替わる。決算四半期が無意味になる。事業の寿命より決算サイクルのほうが長くなるからだ。本社という物理拠点は消え、登記上の住所だけが法的要件として残る。L5は「安定した次段階」ではなく<strong>不安定な遷移状態</strong>であり、滞在時間は数ヶ月から1年ほどしかない。
+            L5は2031年から2032年、ごく短期間だけ観測される過渡的な状態だ。組織図は描けない。エージェントが毎日生まれて死んでいくからだ。従業員数という指標が意味を失い、人間は数人、エージェントは数百から数万、しかも構成は日単位で入れ替わる。L5は「安定した次段階」ではなく<strong>不安定に揺れる遷移状態</strong>で、ここに留まれるのは数ヶ月から1年ほどしかない。
           </p>
           <p class="lead">
-            L6は2032年以降、企業という概念そのものが主役の座を降りる段階である。Coaseの取引コスト理論で説明すると、市場取引コストが社内調整コストを下回るという不等号の反転が決定的になる。企業が存在していた3つの理由 — 取引コスト削減、リスク集約、有限責任 — が同時に崩壊する。エージェント間の契約コストは限りなくゼロに近く、リスクはスマートコントラクトで分散でき、有限責任は法的な殻として残りはするが実質的な意味を持たない。残るものは4つしかない。<strong>理念コミュニティ、資本プール、物理的拠点、そして目的関数を設定する人間の判断</strong>だ。株式会社は殻として法的に残り続ける。ただし主役ではなくなる。
+            L6は2032年以降、企業という概念そのものが主役の座を降りる段階だ。Coaseの取引コスト理論で説明すると、市場取引コストが社内調整コストを下回るという不等号の反転が決定的になる。企業が存在していた3つの理由 -- 取引コスト削減、リスク集約、有限責任 -- が同時に崩壊する。残るものは4つしかない。<strong>理念コミュニティ、資本プール、物理的拠点、そして目的関数を設定する人間の判断</strong>だ。
           </p>
           <p class="lead">
-            L5からL6への移行は緩やかではない。相転移という言葉を比喩ではなく精確な意味で使っている。水は99度から100度への1度で突然沸騰する。99度までの水と100度を超えた水蒸気は、分子構造も体積も運動様式も連続的につながらない。企業の崖も同じ構造を持つ。自動化率のカーブを描くと、L0からL4までは上に凸の連続曲線、L4からL5で急峻に立ち上がり、L5からL6のあいだに垂直な崖が現れる。
+            ではL4からL5の崖を越える<strong>トリガー</strong>は具体的に何か。3つある。一つ目は<strong>エージェント間契約コストの崩壊</strong>だ。ERC-8004のようなエージェントID、レピュテーション、検証の標準化が進むと、会社同士で結ばれていた契約の大半がエージェント同士の直接取引に置き換わる。二つ目は<strong>資本調達の個別化</strong>で、AGIが投資家ごとに最適なポートフォリオを個別に編成できるようになれば、上場企業という集約装置を経由する必然性が薄れる。三つ目は<strong>最初の1社の離脱</strong>だ。1社が「会社を解散してエージェント連合に再編する」と宣言した瞬間、コスト構造の差でドミノ倒しが始まる。
           </p>
           <p class="lead">
-            この崖を作る要素は3つある。一つ目は<strong>エージェント間契約コストの崩壊</strong>だ。ERC-8004のようなエージェントID、レピュテーション、検証の標準化が進むと、会社同士で結ばれていた契約の大半がエージェント同士の直接取引に置き換わる。二つ目は<strong>資本調達の個別化</strong>である。AGIが個人投資家の目的関数を読み取り、投資家ごとに最適なポートフォリオを個別に編成できるようになると、上場企業という集約装置を経由する必然性が薄れる。三つ目は<strong>規制の後追い崩壊</strong>だ。規制が技術に5年遅れる構造は変わらないが、5年の遅れは相転移期には致命的に長い。1社が「会社を解散してエージェント連合に再編する」と宣言した瞬間、コスト構造の差でドミノ倒しが始まる。
+            逆に、相転移を<strong>ブロックする力</strong>も3つ特定できる。一つ目は<strong>規制の粘着性</strong>だ。会社法、労働法、税法は企業形態を前提に設計されており、改正には各国で5年から10年かかる。二つ目は<strong>物理資産の不可分性</strong>で、半導体工場、発電所、鉱山を運営する企業はエージェント連合に分解しにくい。Intelの半導体ファブをエージェントの市場取引で回すのは、少なくとも2030年代前半には非現実的だ。三つ目は<strong>ブランドと信頼の人格依存</strong>で、消費者が「誰が作ったか」を気にする領域では企業という名前の容器がまだ機能する。AppleがL5に到達してもAppleというブランドは残る。問題は、その中身がAppleと呼べるかどうかだ。
           </p>
           <div class="grid-2">
             <div class="card">
@@ -708,7 +876,7 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            7段階の全体像を一本のカーブで示すと、L4とL5のあいだで線が垂直に立ち上がる構造がはっきり見える。縦軸は業務上の意思決定のうちAIが担う割合、横軸は2024年から2032年以降までの時間。L0の5%からL1の15%、L2で35%、L3で60%、L4で88%、そしてL5で97%、L6で99%台へ到達する。数値そのものより<strong>曲率の変化</strong>に注目してほしい。L3からL4にかけて曲線の傾きは急峻になり、L4の後半からL5のあいだで一度傾きが無限大に近づく。そこが相転移の崖だ。
+            7段階の全体像を一本のカーブで示すと、L4とL5のあいだで線が垂直に伸びる構造がはっきり見える。縦軸は業務上の意思決定のうちAIが担う割合、横軸は2024年から2032年以降までの時間。L0の5%からL1の15%、L2で35%、L3で60%、L4で88%、そしてL5で97%、L6で99%台へ到達する。数値そのものより<strong>曲率の変化</strong>に注目してほしい。L3からL4にかけて曲線の傾きは急峻になり、L4の後半からL5のあいだで一度傾きが無限大に近づく。そこが相転移の崖だ。
           </p>
           <div class="chart-wrap">
             <div class="chart-title">Figure 02</div>
@@ -717,7 +885,7 @@
               <canvas id="chart-automation"></canvas>
             </div>
             <p class="chart-note">
-              縦軸は業務意思決定のうちAIが担う割合。各段階の中央値をプロットし、L4後期からL5にかけて相転移帯を強調した。L5は安定状態ではなく遷移状態であり、実際の滞在時間は数ヶ月から1年程度。L6は「企業が概念として消滅した後」の世界を指し、自動化率は100%に漸近するが到達しない。最後まで残る1%弱が、人間の目的関数設定と最終責任の引受である。
+              縦軸は業務意思決定のうちAIが担う割合。各段階の中央値をプロットし、L4後期からL5にかけて相転移帯を強調した。L5は安定状態ではなく遷移状態であり、実際の滞在時間は数ヶ月から1年程度。L6は「企業が概念として消滅した後」の世界を指し、自動化率は100%に近づくが到達しない。最後まで残る1%弱が、人間の目的関数設定と最終責任の引受である。
             </p>
           </div>
           <p class="lead">
@@ -772,7 +940,7 @@
               <tr>
                 <td><strong>L4</strong><br>2029-2031</td>
                 <td>目的関数駆動経営 / 複数エージェント並列 / 人間CEO堅持 / プライベート化。戦略判断そのものをAIにどう預けるか</td>
-                <td>経営者が何を手放せるか。理念を持たない受託駆動型は時価総額が溶け、目的関数の独自性だけが堀になる</td>
+                <td>経営者が何を手放せるか。理念を持たない受託駆動型は時価総額が失われ、目的関数の独自性だけが堀になる</td>
               </tr>
               <tr>
                 <td><strong>L5-L6</strong><br>2031+</td>
@@ -785,7 +953,7 @@
             全段階を貫く3つの原則がある。第一に、<strong>1段階先の準備がその段階の勝敗を決める</strong>。L2の勝者はL1のうちにループ設計を始めていた会社で、L4の勝者はL3のうちに目的関数を言語化していた会社だ。第二に、<strong>過渡期の最適化はすべて負債になる</strong>。L2のワークフロー設計はL3で陳腐化し、L3の組織構造はL4で解体を強いられる。第三に、<strong>企業の寿命は意思決定速度で決まる</strong>。年次計画から四半期、月次、日次、そしてリアルタイム。決定周期を1段ずつ短縮できない会社から順に、次の段階で脱落していく。
           </p>
           <p class="lead">
-            選択肢の比較で見落としてはならないのは、「静観戦略」や「意図的後退」も<strong>能動的な選択</strong>として扱うべき点だ。全ての会社がフロントランナーを目指す必要はない。規制保護領域に残って時間を稼ぐ、ニッチな専門領域で人間の関与価値を守る、といった戦略は段階によっては正解になる。問題は、静観を「選択」ではなく「判断の先送り」として採用してしまう組織文化だ。先送りは決断の欠如であり、次の段階で復帰不能な遅れを生む。相転移は待ってくれない。気づいたときには、自社が変わるべき先の形がもう存在しない。
+            選択肢の比較で見落としてはならないのは、「静観戦略」や「意図的後退」も<strong>能動的な選択</strong>として扱うべき点だ。全ての会社がフロントランナーを目指す必要はない。規制保護領域に残って時間を稼ぐ、ニッチな専門領域で人間の関与価値を守る、といった戦略は段階によっては正解になる。問題は、静観を「選択」ではなく「判断の先送り」として採用してしまう組織文化だ。先送りは決断していないのと同じで、次の段階に入った瞬間に取り返しのつかない遅れになる。相転移は待ってくれない。気づいたときには、自社が変わるべき先の形がもう存在しない。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -804,7 +972,7 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            古典的な経営学が定義するストラテジストの仕事は、おおむね5機能に分解できる。環境分析、ポジショニング、リソース配分、実行計画、そして目的関数設定だ。AGI時代に人間に残るのはこのうち最後の1つだけである。結論から言えば、AGIは「与えられた目的に対して最適解を出す機械」である以上、目的そのものを採用したり却下したりする判断主体にはなれない。<strong>判断主体であるためには、存在意義、価値観、責任の引受が前提として必要</strong>だ。AGIはそれらを持てない。
+            古典的な経営学が定義するストラテジストの仕事は、おおむね5機能に分解できる。環境分析、ポジショニング、リソース配分、実行計画、そして目的関数設定だ。AGI時代に人間に残るのはこのうち最後の1つだけだ。AGIは「与えられた目的に対して最適解を出す機械」である以上、目的そのものを採用したり却下したりする判断主体にはなれない。<strong>判断主体であるためには、存在意義、価値観、責任の引受が前提として必要</strong>だ。AGIはそれらを持てない。
           </p>
           <p class="lead">
             環境分析はAGIが桁違いに速くなる。市場データ、規制動向、競合動向、技術トレンドを並列に処理し、人間アナリストが数週間かかる作業を数分で済ませる。しかも観測範囲が圧倒的に広く、ノイズとシグナルの切り分けも精度が高い。ポジショニングも同様で、ゲーム理論、シミュレーション、ナッシュ均衡の計算はAGIの得意領域そのものだ。リソース配分の最適化に至っては、線形計画法や強化学習で人間が入る余地が最初からない。実行計画は目的とリソースが決まればただのスケジューリング問題で、AGIにとって退屈な雑務に近い。
@@ -863,7 +1031,7 @@
             </p>
           </div>
           <p class="lead">
-            L4以降のシフトはさらに急峻だ。L4で目的関数設計が35%に達し、L5で45%、L6で60%まで膨らむ。一方、責任引受はL4の10%からL6の0%へ収束する。責任がなくなるのではない。責任がエージェント間のスマートコントラクトに分散し、制度化された結果、人間が個別案件ごとに引き受ける場面が消えるからだ。L6の段階で人間に残るのは<strong>究極の目的関数、つまり「何のために存在するか」</strong>という問いだけになる。この問いはAGIが解けない。なぜなら、AGI自身の存在目的はAGIを作った人間が設定するものだからだ。
+            L4以降は配分の動きがさらに急になる。目的関数設計はL4で35%に達し、L5で45%、L6で60%まで膨らむ。逆に責任引受はL4の10%からL6の0%へ落ちていく。責任そのものが消えるわけではない。責任がエージェント間のスマートコントラクトへ分散し制度に組み込まれた結果、人間が案件ごとに引き受ける場面が消えるからだ。L6の段階で人間に残るのは<strong>究極の目的関数、つまり「何のために存在するか」</strong>という問いだけになる。この問いはAGIが解けない。なぜなら、AGI自身の存在目的はAGIを作った人間が設定するものだからだ。
           </p>
           <p class="lead">
             異質性の供給という職能も、段階によって重みが変わる。L0-L1では30%、L2で35%と最も高くなり、そこから徐々に下がってL6では20%まで減る。全盛期がL2にある理由は、この段階がループ設計の最初の大きな岐路であり、標準化された解法がまだ存在しないからだ。L2で正解を知っている会社はない。異質な問いを立てられる人間の価値がここで最も高く評価される。
@@ -900,10 +1068,19 @@
             ストラテジストの組織内ポジションも変わる。人数は1人から2人で足りる。AGIが分析と資料作成の大半を代替するからだ。所属は<strong>CEO直下ではなく取締役会直下</strong>に変わる。執行から独立し、目的関数の妥当性を直接報告する位置だ。任期は3年から5年で固定交代する。長く同じポジションにいると、思考がAGIの分析パターンと同質化していく。交代しない組織は異質性供給の職能を失う。評価指標も変質する。回避した相転移リスクの数、採用された目的関数の事後有効性、異質な問いの質といった定性指標が前面に出る。売上貢献度という古い物差しは意味をなさない。
           </p>
           <p class="lead">
-            結びにあたる論点は、<strong>戦略概念そのものの変質</strong>だ。古典的な戦略は「勝つための計画」だった。AGI時代の戦略は「何を大事にするかの宣言」になる。計画よりも価値観が上位に来て、経営学よりも倫理学、政治哲学、歴史、人類学のほうが戦略立案に必要な知識になる。MBA教育は根本から変わる必要があり、変わらなければAGI時代のストラテジストは別の分野から供給されるようになる。哲学科の卒業生がストラテジストを名乗る時代は、早ければ5年以内に始まる。この変化を受け入れるかどうかが、経営者と教育機関の両方に突きつけられた問いである。
+            職能の輪郭が変われば、<strong>戦略概念そのもの</strong>も変質する。古典的な戦略は「勝つための計画」だった。AGI時代の戦略は「何を大事にするかの宣言」になる。計画よりも価値観が上位に来て、経営学よりも倫理学、政治哲学、歴史、人類学のほうが戦略立案に必要な知識になる。MBA教育は根本から変わる必要があり、変わらなければAGI時代のストラテジストは別の分野から供給されるようになる。哲学科の卒業生がストラテジストを名乗る時代は、早ければ5年以内に始まる。この変化を受け入れるかどうかが、経営者と教育機関の両方に突きつけられた問いである。
+          </p>
+          <div class="note">
+            <strong>身も蓋もない逆説を一つ置く。</strong>ここまで描いたストラテジストの4職能は、AGIが完成するまでの過渡期に必要な職能だ。AGIが目的関数の多目的最適化に価値判断の重みまで含めて扱えるようになれば、異質性の供給も自動化される。責任引受も、エージェント間のスマートコントラクトと制度設計に吸収される。残るのは「人間はそもそも何のために存在するか」という存在論の問いだけで、これは戦略の問いではない。<strong>AGIが達成されたとき、AGI時代のストラテジストの実質的な仕事はほぼ残らない</strong>。仕事のほとんどは、AGIが達成されるまでのこの10年に集中している。いま目の前にある4職能は、過渡期の産物であり、同時にこの職能が歴史的に最も価値を持つ瞬間でもある。黄金期と終焉期が重なっている。
+          </div>
+          <p class="lead">
+            このフレームワークには限界がある。意思決定比率という単一軸で企業の複雑な実態を捉えきれない場面は多い。製造業のように物理資産が意思決定と分離できない業種、規制産業のように外部制約が自動化率の天井を決める業種では、L段階の進行速度が本論の想定より大幅に遅くなる。それでも、自社の現在地を把握するための問いとして使える。<strong>5つの問いで自社がどのLにいるかを判定する。</strong>
           </p>
           <p class="lead">
-            7段階のカーブを読み、相転移の崖の位置を知り、4つの職能を時間配分として内在化させる。これがAGIまでの企業進化を生き延びるための最小セットだ。計画ではなく宣言、分析ではなく判断、そして何よりも、<strong>責任を引き受ける人間の存在</strong>が最後まで残る。L6の世界で「企業」と呼ばれるものが殻しか残らないとしても、その殻の中で目的関数を設定する人間は残る。ストラテジストの仕事は消えない。ただし、これまでのストラテジストの仕事のほとんどは消える。
+            第一問: 過去6ヶ月で、AIの導入によって廃止されたポジション（役職・業務）はあるか。ゼロならL0、あるならL1以上。第二問: 業務ループ（検知、判断、実行、記録）を人間の介入なしに自走で回しているエージェントが1つでもあるか。あるならL2以上。第三問: 経営会議の議題のうち、AIが一次判断を提示し人間が承認するだけの項目は何割か。3割超ならL3、7割超ならL4に近い。第四問: 自社の目的関数を、AIに明示的に渡せる形式で言語化しているか。していなければL4の準備ができていない。第五問: エージェント間の直接契約（社外のAIエージェントとの自動取引）を1件でも実行しているか。しているならL5の入口にいる。
+          </p>
+          <p class="lead">
+            多くの日本企業は、第一問と第二問のあいだで止まっている。止まっている事実そのものは問題ではない。問題は、止まっていることに気づいていないことだ。カーブの傾きが変わる前に次の段階の準備を始めること。L0-L6のフレームワークが伝えたいのは、結局この1点に集約される。<strong>自社がいまどこにいて、次の崖まで何年あるか</strong>。その見積もりを持っているかどうかが、相転移を越えられるかどうかを決める。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -952,6 +1129,128 @@
         Thumbnail: <a href="https://unsplash.com/photos/3LxNwtL1uDs">3LxNwtL1uDs</a>
       </p>
     </section>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script>
@@ -1158,5 +1457,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

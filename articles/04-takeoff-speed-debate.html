@@ -180,6 +180,18 @@
         max-width: 22ch;
       }
 
+
+      .article-title {
+        font-size: clamp(36px, 5.5vw, 52px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: var(--black);
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 0;
+      }
+      .article-title:empty { display: none; }
       h1 { font-size: clamp(28px, 4vw, 32px); }
       h2 { font-size: clamp(24px, 3.5vw, 32px); }
 
@@ -487,7 +499,7 @@
     </style>
   </head>
   <body class="pattern-monolith has-site-header" data-category="takeoff">
-    <div id="site-header-mount"></div>
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
 <script src="../partials/header.js" defer></script>
     <div class="progress" id="progress"></div>
 
@@ -500,7 +512,7 @@
     </aside>
 
         <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
-      <span>No. 04 / 15 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Slides</span>
+      <span>No. 04 &nbsp;·&nbsp; Takeoff &nbsp;·&nbsp; 5 Sections</span>
       <span style="display:flex;gap:20px;align-items:center;">
         <a href="03-agi-explosion.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">← Prev</a>
         <a href="../index.html#filter=takeoff" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
@@ -518,29 +530,29 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead dropcap">
-            AGIが登場した後、世界はどれくらいの速度で変わるのか。この問いに対する真剣な論者たちの回答を並べると、推定値は<strong>数日から10年まで、3桁以上のレンジ</strong>に広がる。Eliezer Yudkowskyは数日から数週間、Daniel Kokotajloは1年以内、ForethoughtのTom Davidsonは数年、Epoch AIのEge Erdilらは10年程度。最速と最遅の間にはおよそ1,000倍のスケール差がある。同じ論文を読み、同じデータを参照している研究者たちが、ここまでずれる。
+            AGIが登場した後、世界はどれくらいの速度で変わるのか。Eliezer Yudkowsky（個人見解/エッセイ）は数日から数週間と言う。Daniel Kokotajloら AI 2027（シナリオ文書）は1年以内。ForethoughtのTom Davidson（定量モデル）は数年。Epoch AIのEge Erdilら（定量モデル）は10年程度。最速と最遅の間に<strong>およそ1,000倍のスケール差</strong>がある。ただし論者ごとに推定の性質が異なり、シナリオ文書と定量モデルと個人見解を同じ棚に載せての比較には、厳密な意味での統計的な幅ではなく<strong>概念比較の域</strong>という留保が伴う。本稿は4論者の比較を超えて、<strong>この分岐のうち1本だけが本当の分水嶺であり、それは「制度の応答速度」だ</strong>と言い切る。理由は最終セクションで切り出すが、結論を先に置いて読んでほしい。再帰的改善の速度もボトルネックの所在も重要だが、外部から制御できない技術パラメータだ。人間が設計変数として介入できる唯一の軸が、制度の応答速度である。
           </p>
           <p class="lead">
-            だが話はそう単純ではない。これらの論者は全員、AGI以降に人類史上例のない加速的変化が起こるという点では一致している。Ajeya Cotraの表現を借りれば、彼らは全員「AGIピル」を飲んでいる。分かれているのは変化の有無ではなく、速度である。そしてこの速度の違いは、単なる数字の揺らぎではない。人類がAIに追いつくための時間的猶予がどれだけあるか、制御メカニズムをいつまでに整えるべきか、いまどんな準備を始めるべきか、すべてがここから導かれる。
+            ズレの原因は事実認識の差ではない。全員がAGI以降に人類史上例のない加速的変化が起こるという点で一致している。分かれているのは、三つの仮定だ。<strong>第一に、再帰的自己改善はどれだけ速く回るか</strong>。AIがAI自身を改良するループの回転速度を、Yudkowskyは数日単位、Epoch AIは年単位で見積もる。<strong>第二に、ボトルネックはどこにあるか</strong>。アルゴリズムの賢さで計算資源の不足を補えるのか、それとも物理的インフラの拡張なしに知能爆発は頭打ちになるのか。<strong>第三に、制度と社会はどれだけ速く応答するか</strong>。規制・法制度・労働市場がAIに追いつくペースを、遅い派は「適応の猶予」と見なし、速い派は「間に合わない」と見なす。
           </p>
           <p class="lead">
-            問いを立て直したい。<strong>なぜ同じ方向を見ている賢い人々が、1,000倍もズレるのか</strong>。その答えを辿ると、テイクオフ速度論は単なる未来予測ではなく、知能と物理世界の関係についての哲学的な分岐に行き着く。賢さだけでどこまで行けるのか。計算資源とデータは本当にボトルネックなのか。AIは実験を省略できるのか。各論者の立場は、これらの問いへの異なる答えの組み合わせとして理解できる。
+            この三つの仮定の組み合わせが、1,000倍の差を生んでいる。テイクオフ速度論は未来予測に見えて、実は<strong>知能と物理世界の関係についての哲学的な分岐点</strong>だ。賢さだけでどこまで行けるのか。計算資源とデータは本当にボトルネックなのか。AIは実験を省略できるのか。各論者の立場は、これらの問いへの異なる答えの組み合わせとして理解できる。
           </p>
           <p class="lead">
-            本稿では、テイクオフ速度をめぐる4つの主要な立場を並べ、その分岐の根拠を解剖する。そして最後に、速度の違いが<strong>p(doom)</strong>——AIによる破滅的帰結の確率——とどう相関するかを見ていく。速いと言う者ほど悲観し、遅いと言う者ほど楽観する。これは偶然ではなく、構造的な理由がある。
+            テイクオフ速度をめぐる4つの主要な立場は、表面上は<strong>「再帰的改善の速度」「ボトルネックの所在」「制度の応答速度」</strong>の3軸で整理される。だが本稿の主張を前倒しで置くと、前二者は結局「制度が何年で応答できるか」の推定に合わせて値が決まる従属変数にすぎない。再帰的改善が数日で回ると言うのは「制度は間に合わない」という前提の言い換えであり、10年と言うのは「制度は追いつける」という前提の言い換えだ。ボトルネック論も同様で、物理インフラ拡張の速度と規制応答の速度はほぼ同じ制度的サイクルに縛られる。したがって3軸は独立ではなく、制度応答速度という1軸の異なる表現形である。傾向として、速いと言う者ほど悲観し、遅いと言う者ほど楽観する側に寄るのも、この一元化の当然の帰結である。
           </p>
           <div class="grid-3">
             <div class="card">
-              <span class="tag">01</span>
-              <p><strong>3桁のレンジ</strong><br>最速と最遅の差は数日対10年、およそ1,000倍。これほどの開きがある予測領域は、現代の科学議論のなかでも稀である。天気予報でも景気予測でもない、未来そのものの速度論。</p>
+              <span class="tag">01 — 再帰的改善の速度</span>
+              <p><strong>ループは何日で回るか</strong><br>AIがAI自身を改良するフィードバックループの回転速度。Yudkowskyは数日、Epoch AIは年単位。この一点の見積もりの差が、予測を3桁ずらす最大要因だ。</p>
             </div>
             <div class="card">
-              <span class="tag">02</span>
-              <p><strong>全員が同じ方向</strong><br>速度はずれても向きは一致している。Forethought、Epoch AI、AI Futures Projectのいずれも、AGI以後に数百年分の変化が数十年以内に起こるスケール感を共有している。分岐は速度のみ。</p>
+              <span class="tag">02 — ボトルネックの所在</span>
+              <p><strong>賢さは物理を迂回できるか</strong><br>アルゴリズムの改善で計算資源の不足を補えるのか、物理インフラの拡張なしに知能爆発は頭打ちになるのか。「代替の弾力性」と呼ばれるこの論点が、速度論を経済学の問題に変換する。</p>
             </div>
             <div class="card">
-              <span class="tag">03</span>
-              <p><strong>時間差＝準備差</strong><br>数日なら制御は絶望的、10年ならアライメント研究の時間がある。速度の違いはそのまま「人類が持つ準備時間」の違いであり、どの立場を取るかが政策判断を規定する。</p>
+              <span class="tag">03 — 制度の応答速度</span>
+              <p><strong>社会は追いつけるか</strong><br>規制・法制度・労働市場がAIに適応するペース。遅い派はこれを「猶予」と見なし、速い派は「間に合わない」と判断する。どの仮定を採るかで、合理的な準備行動がまったく変わる。</p>
             </div>
           </div>
         </div>
@@ -566,7 +578,7 @@
             Yudkowskyは最も急進的な立場を取る。MIRIの創設者として2000年代初頭からAI安全性を訴えてきた彼は、知能にはある種の離散的な閾値が存在し、それを超えた瞬間に臨界点のような爆発が起こると考えている。実験のボトルネックも物理世界との相互作用も、彼の視野ではほとんど制約にならない。超知的AIはアインシュタインが限られたデータから一般相対性理論を導いたように、既存のデータだけから技術ツリーを再構成できる、という立場である。
           </p>
           <p class="lead">
-            Kokotajloはやや穏健だが、依然として急進的な部類に入る。元OpenAIガバナンス研究者であり、AGI開発が「無謀に」進められていると警告して約200万ドル相当の株式報酬を放棄してまで退職した人物。AI 2027の中心著者として、AGI開発後1年以内に超知能に到達するシナリオを描いた。Davidsonの定量モデルで言えば、これは上位20%程度に相当する積極的シナリオである。
+            Kokotajloはやや穏健だが、依然として急進的な部類に入る。元OpenAIガバナンス研究者であり、AGI開発が「無謀に」進められていると警告し、当初は約200万ドル相当の株式を失う見込みで退職した人物（後にOpenAIの方針変更で権利確定済み株式は保持された）。AI 2027の中心著者として、AGI開発後1年以内に超知能に到達するシナリオを描いた。Davidsonの定量モデルで言えば、これは上位20%程度に相当する積極的シナリオである。
           </p>
           <p class="lead">
             Davidsonはテイクオフ論において最も精緻な定量モデルを提供している。Forethoughtでの分析によれば、ソフトウェアの知能爆発は<strong>約60%の確率で3年分のAI進歩を1年以内に圧縮する</strong>が、10年分を1年に圧縮する確率は約20%。YudkowskyほどでもKokotajloほどでもない中間的立場だが、歴史的に見れば依然として驚異的な加速である。そしてEpoch AIのErdilとBesirogluは最も慎重で、アライメントに対しても楽観的。彼らはMechanizeというAI労働自動化スタートアップを創業しており、10年というスケール感は「社会が問題を逐次的に解決していく時間がある」という楽観と整合している。
@@ -595,7 +607,7 @@
               <div class="paffil">AI Futures · ex-OpenAI</div>
               <div class="pspeed">1年以内<span class="unit">Takeoff</span></div>
               <div class="pdoom">p(doom) <strong>~ 70%</strong></div>
-              <div class="pstance">AI 2027の中心著者。株式報酬を放棄し退職して警告。努力次第で20〜30%まで下がると見る。</div>
+              <div class="pstance">AI 2027の中心著者。株式を失う覚悟で退職し警告。努力次第で20〜30%まで下がると見る。</div>
             </div>
             <div class="portrait-card">
               <div class="portrait-frame">
@@ -711,7 +723,7 @@
             </figcaption>
           </figure>
           <p class="lead">
-            この表が示しているのは、4人が<strong>対立しているのではなく、同じ山の違う斜面にいる</strong>ということだ。全員がAGI以後の加速的変化を予測している。違うのは、その加速が数日でピークに達するのか、10年かけて並走しながら進むのかという速度論の部分だけである。そしてこの違いは、次のスライドで見るように、ある一つの経済学的な論点に集約される。
+            この表が示しているのは、4人が<strong>対立しているのではなく、同じ山の違う斜面にいる</strong>ということだ。全員がAGI以後の加速的変化を予測している。違うのは、その加速が数日でピークに達するのか、10年かけて並走しながら進むのかという速度論の部分だけである。そしてこの速度の違いは、各論者が「制度と社会がどれだけ速く応答するか」に置いた推定値を、再帰的改善やボトルネックの語彙に置換した姿にすぎない。Yudkowskyの数日は「制度は応答できない」の別表現、Epoch AIの10年は「制度は追いつく」の別表現である。次のセクションで見るように、この一元化は「代替の弾力性」という経済学の概念を経由すると、より明確になる。
           </p>
         </div>
         <div class="footer reveal reveal-delay-3">
@@ -812,14 +824,14 @@
       <!-- ═══════════ Slide 4 ═══════════ -->
       <section class="slide" id="slide-4">
         <div class="eyebrow reveal">Speed And Doom</div>
-        <h2 class="reveal reveal-delay-1">速いと言う者ほど悲観する。これは偶然ではない</h2>
+        <h2 class="reveal reveal-delay-1">速いと言う者ほど悲観する傾向が見える</h2>
         <div class="panel reveal reveal-delay-2">
           <div>
             <img class="hero img-fullbleed" src="../images/takeoff-speed-debate/slide4.jpg" alt="Dark monochrome gradient">
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            4論者のテイクオフ速度とp(doom)を並べると、<strong>強い負の相関</strong>が見える。速いと言う者ほど破滅確率を高く見積もり、遅いと言う者ほど楽観的になる。Yudkowskyは数日かつp(doom)95%以上。Kokotajloは1年以内かつ約70%。Davidsonは数年かつ深刻だが数値未明示。Epoch AIは10年かつ低い。これは偶然の一致ではなく、構造的な理由がある。
+            4論者のテイクオフ速度とp(doom)を並べると、<strong>負の相関が観察される</strong>。速いと言う者ほど破滅確率を高く見積もり、遅いと言う者ほど楽観的になる側に寄る。Yudkowsky（個人見解/エッセイ）は数日かつp(doom)95%以上。Kokotajloら AI 2027（シナリオ文書）は1年以内かつ約70%。Davidson（定量モデル）は数年かつ深刻だが数値未明示。Epoch AI（定量モデル）は10年かつ低い。サンプルは4論者と小さく、これは法則ではなく傾向である。ただし構造的な理由で傾向が生じやすいとは言える。
           </p>
           <p class="lead">
             理由は単純だ。テイクオフが速いほど、人間がAIの急速な能力向上に対応し、制御メカニズムを整備し、アライメントを達成するための時間的余裕が少なくなる。数日で超知能が出現するなら、人間がその過程を監視し介入する余地はほとんどない。逆にテイクオフが10年かけて緩やかに進むなら、途中で問題を発見し修正する機会が何度もある。<strong>速度の予測は、そのまま時間予算の予測</strong>であり、時間予算はそのまま悲観か楽観かを決定する。
@@ -832,7 +844,7 @@
           </p>
           <figure class="chart" style="margin: 8px 0 4px;">
             <div class="chart-title">速度 × p(doom) の散布</div>
-            <div class="chart-subtitle">4論者を二次元に配置すると、強い負の相関が見える。速いと言う者ほど破滅確率を高く見積もる。</div>
+            <div class="chart-subtitle">4論者を二次元に配置すると、負の相関が観察される（サンプル4のため因果ではなく傾向）。</div>
             <svg class="concept-svg" viewBox="0 0 720 340" role="img" aria-label="テイクオフ速度とp(doom)の散布図">
               <title>テイクオフ速度とp(doom)の散布図</title>
               <!-- axes -->
@@ -880,7 +892,7 @@
               <text x="582" y="254" text-anchor="end">10年 / 低</text>
             </svg>
             <figcaption class="chart-footer">
-              <p class="chart-caption">4論者はほぼ一直線に並ぶ。速度と破滅確率の負の相関は偶然ではなく、時間予算という構造的メカニズムから導かれる。</p>
+              <p class="chart-caption">4論者はほぼ一直線に並ぶ。速度と破滅確率の負の相関は、時間予算という構造的メカニズムで説明可能な傾向だが、サンプルが4点のため因果ではない。</p>
               <p class="chart-source">AGI HUB composite. 本文記載の各論者推定値から作図（Davidsonは深刻との発言から中央域に配置）</p>
             </figcaption>
           </figure>
@@ -918,16 +930,25 @@
             <div class="hero-caption">Photo: Unsplash</div>
           </div>
           <p class="lead">
-            ここまで見てきて、一つの問いが残る。<strong>どの立場を取るべきか</strong>。答えは明示しない。むしろ重要なのは、どの立場を取っても結論の一部は共有されるという事実のほうだ。Yudkowskyが正しければ人類にはほとんど時間がなく、Kokotajloが正しければ1年、Davidsonなら数年、Epoch AIでも10年。10年というのは楽観的な上限であって、歴史的な変化のスケールで言えばほとんど一瞬である。
+            ここで本稿の賭けを先に置く。4論者のどれが当たるかを予測する勝負はしない。<strong>3軸のうち「制度の応答速度」だけが真の分水嶺であり、Kokotajloの1年シナリオが行動設計の基準である</strong>。これが結論だ。以下は各論者の行動論理の確認と、なぜ制度応答速度だけが分水嶺として残るかの論証である。
           </p>
           <p class="lead">
-            4論者が共有しているもう一つの前提がある。AGI以後、<strong>10年程度で数百年分の変化が起こる</strong>というスケール感だ。Forethoughtの保守的なシナリオですら、10年間での累積的なAI研究努力量は人間だけの場合と比べて約1,000万倍に達する。積極的シナリオでは約100兆倍。テイクオフ速度の議論は、この到達点に至るまでの「助走距離」を問う議論であり、到達点そのものは論者間で一致している。
+            <strong>Yudkowskyの仮定を採る場合</strong>（再帰的改善が数日で回る、ボトルネックは事実上ない）、合理的な行動は開発の即時停止だ。制御メカニズムの整備は間に合わない。アライメント問題の解決が先で、解決の見込みが立たない限り研究を進めるべきではない。彼が2023年にTime誌で「条約に違反するデータセンターを空爆で破壊する覚悟を持つべきだ」と書いたのは、この仮定の帰結として論理的に整合している。ただしこの仮定は、企業や政府が採用できる行動指針を生まない。数日で終わるなら備えようがないからだ。
           </p>
           <p class="lead">
-            だから実務的な含意は単純だ。速い派を信じるなら、いますぐ制御メカニズムの整備を始めなければならない。遅い派を信じるなら、並走しながら逐次的に問題を解決する設計原理を準備する必要がある。どちらの立場でも、<strong>準備を始めるタイミングは「いま」</strong>である。違うのは準備のペースと優先順位であって、準備そのものの必要性ではない。
+            <strong>Kokotajloの仮定を採る場合</strong>（1年以内、努力次第でp(doom)を70%から20-30%に下げられる）、合理的な行動はアライメント研究への最大限の資源投入だ。時間はほとんどないが、ゼロではない。当初$2M相当の株式を失う覚悟でOpenAIを退職した彼の行動は、「時間は少ないが、その少ない時間で何ができるかを最大化する」という戦略の実践だ。本稿が賭けるのはこの帯域である。理由は最後に示す。
           </p>
           <p class="lead">
-            そしてもう一つ。この議論は日本ではほとんど知られていない。ForethoughtやEpoch AIの定量的分析、AI Futures Projectのシナリオモデル、Davidsonの代替弾力性の議論——これらは英語圏のAI安全性コミュニティでは中心的な論点だが、日本語での紹介は薄い。「ChatGPTがもう少し賢くなる」程度の認識で止まっている人々と、10年で数百年分の変化を真剣に予測している人々の間に、圧倒的な認識ギャップがある。このギャップを埋めることが、日本側からできる最初の一歩である。
+            <strong>Davidsonの仮定を採る場合</strong>（数年、代替弾力性は高いが無限ではない）、合理的な行動は制御メカニズムの段階的構築になる。並走しながら問題を逐次的に解決する余裕がある。AIの能力向上を監視し、危険な閾値に近づいた時点で介入する。政策立案者にとって最も実務的なシナリオだが、「数年」が「数ヶ月」に圧縮されるリスクをDavidson自身が20%と見積もっている点に注意が要る。
+          </p>
+          <p class="lead">
+            <strong>Epoch AIの仮定を採る場合</strong>（10年、計算資源が根本的ボトルネック）、合理的な行動はAI産業への積極的参入だ。Erdilらが自らMechanizeを創業したのは、この仮定の帰結として整合している。社会には適応の時間があり、問題は逐次的に解決できる。アライメントのフレーミング自体が誤りである可能性すらある。
+          </p>
+          <p class="lead">
+            4論者が共有している前提がある。AGI以後、<strong>10年程度で数百年分の変化が起こる</strong>というスケール感だ。Forethoughtの保守的シナリオですら、10年での累積AI研究努力量は人間だけの場合の約1,000万倍。積極的シナリオでは約100兆倍に達する。テイクオフ速度の議論は到達点に至るまでの助走距離を問う議論であり、到達点そのものは一致している。どの立場を取っても、準備を始めるタイミングは「いま」だ。違うのは何を準備するかだ。
+          </p>
+          <p class="lead">
+            分岐の本質は予測の精度ではない。<strong>どの仮定に賭けるかが、いま何をすべきかを規定する</strong>。再帰的改善の速度、ボトルネックの所在、制度の応答速度。この3軸への答えが、あなたの行動を決める。ForethoughtやEpoch AIの定量分析、AI Futures Projectのシナリオモデル、Davidsonの代替弾力性の議論は英語圏のAI安全性コミュニティでは中心的な論点だが、日本語での紹介は薄い。「ChatGPTがもう少し賢くなる」程度の認識で止まっている人々と、10年で数百年分の変化を予測している人々の間にある認識ギャップは、それ自体がリスクだ。
           </p>
 
           <figure class="chart" style="margin: 40px 0 32px;">
@@ -957,12 +978,24 @@
             </figcaption>
           </figure>
 
+          <p class="lead">
+            著者の判断を述べる。3軸のうち、意思決定インパクトが最も大きい分水嶺は<strong>「制度の応答速度」</strong>だ。再帰的改善の速度もボトルネックの所在も重要だが、この二つは技術パラメータであり、外部から制御しにくい。一方、制度の応答速度は人間が設計変数として介入できる唯一の軸である。
+          </p>
+          <p class="lead">
+            理由は3つある。第一に、再帰的改善の速度が数日であれ数年であれ、制度が追いつかなければ結果は同じだ。Yudkowsky的な数日のシナリオでも、仮に規制当局が即座に動ける体制を持っていれば、暴走の初期段階で介入できる可能性が生まれる。逆にEpoch AIの10年シナリオでも、制度が10年間放置されれば、ゆっくり進む変化に誰も対処しないまま臨界点を迎える。速度そのものより、速度に対する制度の弾力性が帰結を左右する。
+          </p>
+          <p class="lead">
+            第二に、ボトルネック論争は経験的に決着しない。Davidsonが指摘するとおり、代替の弾力性は実際に超知的AIが出現するまで検証できない。企業が「ボトルネックがどこにあるかが判明するまで待つ」という戦略を採ることは不可能だ。だが制度設計は待たずに着手できる。AI監視の仕組み、緊急停止のプロトコル、異常検知の基準。これらは今日から構築を始められるし、ボトルネックがどこにあろうと有効に機能する。
+          </p>
+          <p class="lead">
+            第三に、この軸が分水嶺だとすれば、<strong>最も真剣に準備すべきはKokotajloのシナリオ</strong>だ。Yudkowskyの数日は制度応答が原理的に間に合わないため、備えようがない。Epoch AIの10年は楽観的すぎて、備えの緊急性を生まない。Kokotajloの1年以内は「ギリギリ間に合うかもしれないが、今日始めなければ確実に間に合わない」という時間予算を意味する。この時間予算が、企業のリソース配分と行動設計を最も強く規律する。Davidsonのモデルでも上位20%のシナリオがこの帯域に入る。確率で言えば低くないにもかかわらず、多くの組織が「数年はある」という中央値シナリオで安心している。
+          </p>
           <div class="note">
-            テイクオフ速度論は、数日か10年かという幅の大きい予測である。だが<strong>「どれが正しいか」を待つ余裕はない</strong>。速い派が正しければ、待っている間に間に合わなくなる。遅い派が正しくても、10年は歴史的には一瞬である。速度の議論は結論ではなく、前提の議論だ。どの速度を信じるかで準備のペースは変わるが、準備の必要性は変わらない。時計はすでに動き始めている。
+            テイクオフ速度論は、数日か10年かという幅の大きい予測だ。だが<strong>「どれが正しいか」を待つ余裕はない</strong>。速い派が正しければ、待つ間に間に合わなくなる。遅い派が正しくても、10年は歴史的には一瞬だ。本稿の賭けを繰り返す。<strong>分水嶺は制度の応答速度であり、基準はKokotajloの1年である</strong>。他の3人の論者が示すのは、この1年が短すぎて備えが間に合わないシナリオ（Yudkowsky）、長すぎて緊張が緩むシナリオ（Davidson、Epoch AI）であり、行動設計を規律する中心にはなれない。Kokotajloの帯域を基準に制度設計を急ぐこと、ここに賭ける。4論者を並列して眺めて終わるのは、天気予報を気圧配置なしで語るのと同じだ。どの風が未来を動かすかを名指す責任から、経営者は逃げられない。
           </div>
         </div>
         <div class="footer reveal reveal-delay-3">
-          <span>速度は不明でも、準備の必要性は確定している</span>
+          <span>どの仮定を採るかが、いま何をすべきかを規定する</span>
           <span class="slide-count">5 / 5</span>
         </div>
       </section>
@@ -1000,6 +1033,128 @@
         References: Forethought Research (Davidson, MacAskill, Moorhouse, Hadshar), Epoch AI (Erdil &amp; Besiroglu), AI Futures Project (Kokotajlo &amp; Lifland), MIRI (Yudkowsky), Dwarkesh Podcast.
       </p>
     </footer>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <!-- 星評価 -->
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <!-- コメント -->
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <!-- 名前 & メール -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f0efea);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#fafaf7);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        // Auto-detect article number from eyebrow or filename
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        // Star interaction
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
 
     <script>
       const buttons = Array.from(document.querySelectorAll('.nav button'));
@@ -1064,5 +1219,20 @@
     }
     </script>
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+    <!-- Article title from articles.json -->
+    <script>
+      (function () {
+        var slug = location.pathname.split('/').pop().replace('.html', '');
+        fetch('../articles.json')
+          .then(function (r) { return r.json(); })
+          .then(function (articles) {
+            var match = articles.find(function (a) { return a.slug === slug; });
+            if (!match) return;
+            var slot = document.getElementById('article-title-slot');
+            if (slot) slot.textContent = match.title;
+          });
+      })();
+    </script>
   </body>
 </html>

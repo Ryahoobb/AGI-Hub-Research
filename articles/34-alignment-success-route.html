@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>正しく作るのではなく、直せるように作る —— 超知能とアラインする順番 — AGI HUB</title>
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #d8cfb9;
+        --bg: #f5f0e4;
+        --bg-alt: #ede5d0;
+        --accent: #8a2f1c;
+        --accent-soft: rgba(138, 47, 28, 0.09);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+          游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+          游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
+          sans-serif;
+        font-feature-settings: "palt";
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .progress {
+        position: fixed; top: 0; left: 0;
+        height: 2px; background: var(--accent);
+        width: 0%; z-index: 100;
+        transition: width 0.3s var(--ease);
+      }
+
+      .nav {
+        position: fixed; right: 24px; top: 50%;
+        transform: translateY(-50%);
+        display: grid; gap: 16px; z-index: 50;
+      }
+
+      .nav button {
+        width: 8px; height: 8px; border-radius: 999px;
+        border: 1.5px solid var(--meta);
+        background: transparent; cursor: pointer;
+        transition: all 0.3s var(--ease);
+      }
+
+      .nav button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.4);
+      }
+
+      main { scroll-snap-type: y mandatory; }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 80px 48px 64px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 32px;
+        scroll-snap-align: start;
+      }
+
+      .slide + .slide { border-top: 1px solid var(--border); }
+
+      .hero {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.65) contrast(1.1);
+        will-change: filter, transform;
+      }
+
+      /* hero.reveal専用のトランジション定義(opacity/transform/filterをまとめて宣言) */
+      .hero.reveal {
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), filter 0.8s var(--ease);
+      }
+
+      /* スクロール到達してもモノクロのまま(画像はホバーで初めて色が出る) */
+      .hero.reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* hover時のみカラー化 + 微ズーム */
+      .hero:hover {
+        filter: grayscale(0) contrast(1);
+        transform: translateY(0) scale(1.012);
+      }
+      /* .reveal.visible(特異性0,2,0)に勝たせるため特異性確保 */
+      .hero.reveal:hover {
+        filter: grayscale(0) contrast(1);
+        transform: translateY(0) scale(1.012);
+      }
+
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+        box-shadow: 0 20px 60px -30px rgba(0,0,0,0.3);
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+        box-shadow: 0 16px 50px -25px rgba(0,0,0,0.25);
+      }
+      /* img-wideはtranslateX(-50%)で中央寄せのため、reveal/hoverの変形を複合指定で上書き */
+      .slide .hero.img-wide.reveal {
+        transform: translateX(-50%) translateY(24px);
+      }
+      .slide .hero.img-wide.reveal.visible {
+        transform: translateX(-50%) translateY(0);
+      }
+      .slide .hero.img-wide:hover {
+        transform: translateX(-50%) translateY(0) scale(1.005);
+      }
+      /* .reveal.visible(特異性0,4,1)に勝つよう0,4,2 */
+      .slide .hero.img-wide.reveal:hover {
+        transform: translateX(-50%) translateY(0) scale(1.005);
+      }
+      .slide .hero.img-content {
+        max-width: 720px;
+        margin: 0 auto;
+        aspect-ratio: 5/4;
+        box-shadow: 0 12px 40px -20px rgba(138, 47, 28, 0.25);
+      }
+
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .credits {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 80px;
+        border-top: 1px solid var(--border);
+      }
+
+      .credits p {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.047em;
+        line-height: 2;
+        color: var(--light-gray);
+      }
+
+      .credits a {
+        color: var(--meta);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .credits a:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.35s; }
+
+      .eyebrow {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1, h2 {
+        color: var(--black);
+        font-weight: 800;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        max-width: 26ch;
+        padding-bottom: 16px;
+        border-bottom: 3px double var(--accent);
+      }
+
+      h1 { font-size: clamp(30px, 4.4vw, 38px); }
+      h2 { font-size: clamp(26px, 3.8vw, 34px); }
+
+      .lead {
+        max-width: 780px;
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .lead + .lead { margin-top: 8px; }
+
+      /* セクション冒頭のlead段落の頭文字を拡大表示(ドロップキャップ) */
+      .slide .panel > .lead:first-of-type::first-letter {
+        font-size: 3.6em;
+        float: left;
+        line-height: 0.9;
+        margin: 6px 12px 0 0;
+        color: var(--accent);
+        font-weight: 700;
+        font-family: "Hiragino Mincho ProN", "Yu Mincho", "Times New Roman", serif;
+      }
+
+      /* 出典アンカーリンク([N]をクリッカブルに) */
+      .cite {
+        color: var(--accent);
+        text-decoration: none;
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        padding: 0 1px;
+        border-bottom: 1px dotted var(--accent);
+        transition: color 0.2s, border-color 0.2s, background 0.2s;
+      }
+      .cite:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+        background: var(--accent-soft);
+      }
+      /* 出典側ターゲットハイライト(行全体) */
+      .credits :target {
+        background: var(--accent-soft);
+        padding: 2px 6px;
+        border-radius: 3px;
+        transition: background 0.3s;
+      }
+      [id^="ref-"] {
+        scroll-margin-top: 24px;
+      }
+
+      .panel { display: grid; gap: 24px; align-content: start; min-width: 0; }
+      .slide > *, .panel > * { min-width: 0; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+      .card {
+        padding: 24px 20px 24px 0;
+        border-top: 3px solid var(--accent);
+        background: transparent;
+      }
+
+      .card .tag { color: var(--accent); font-weight: 700; }
+      .card strong { color: var(--black); }
+
+      .card p {
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+        margin-bottom: 12px;
+      }
+
+      .point {
+        padding-left: 16px;
+        border-left: 3px solid var(--accent);
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+      .point strong { color: var(--black); }
+
+      table.compare {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 3px solid var(--accent);
+        border-bottom: 3px double var(--accent);
+        background: var(--bg);
+      }
+
+      table.compare th, table.compare td {
+        padding: 18px 16px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.65;
+        color: var(--body-text);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      table.compare th {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 1px solid var(--accent);
+        background: var(--accent-soft);
+      }
+
+      table.compare td strong { color: var(--black); }
+      table.compare tr:last-child td { border-bottom: none; }
+
+      .note {
+        font-size: 17px;
+        line-height: 1.7;
+        color: var(--body-text);
+        padding: 24px 28px;
+        margin: 12px 0;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        position: relative;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        max-width: 100%;
+      }
+      .note::before {
+        content: "EVIDENCE";
+        display: block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .note strong { color: var(--accent); }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-top: 32px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+      }
+
+      .footer .slide-count {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .svg-diagram {
+        width: 100%;
+        overflow-x: auto;
+        padding: 24px 0;
+        background: var(--bg-alt);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .svg-diagram svg {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+      }
+
+      @media (max-width: 768px) {
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        .slide { padding: 64px 24px 48px; }
+        h1 { font-size: 26px; }
+        h2 { font-size: 22px; }
+        .slide .hero.img-fullbleed,
+        .slide .hero.img-wide,
+        .slide .hero.img-content { width: 100%; max-width: 100%; aspect-ratio: 16/9; margin: 0; transform: none; left: 0; }
+        /* モバイルではimg-wideの複合transformもリセット(中央寄せ不要) */
+        .slide .hero.img-wide.reveal,
+        .slide .hero.img-wide.reveal.visible,
+        .slide .hero.img-wide:hover { transform: none; }
+        /* モバイル用ドロップキャップ */
+        .slide .panel > .lead:first-of-type::first-letter {
+          font-size: 3em;
+          margin: 4px 8px 0 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .slide { padding: 56px 16px 40px; }
+        .note { padding: 16px 14px; font-size: 14px; }
+      }
+
+      @media print {
+        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
+        .nav, .progress { display: none; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="pattern-investigation has-site-header" data-category="alignment">
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+
+    <aside class="nav" aria-label="Section navigation">
+      <button data-target="slide-1" class="active" aria-label="Section 1"></button>
+      <button data-target="slide-2" aria-label="Section 2"></button>
+      <button data-target="slide-3" aria-label="Section 3"></button>
+      <button data-target="slide-4" aria-label="Section 4"></button>
+      <button data-target="slide-5" aria-label="Section 5"></button>
+      <button data-target="slide-6" aria-label="Section 6"></button>
+      <button data-target="slide-nav" aria-label="Navigation"></button>
+    </aside>
+
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 34 / 35 &nbsp;&middot;&nbsp; Alignment &nbsp;&middot;&nbsp; 6 Sections</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="33-alignment-schools-map.html" style="color:inherit;text-decoration:none;">&larr; Prev</a>
+        <a href="../index.html#filter=alignment" style="color:inherit;text-decoration:none;">Same Category</a>
+        <a href="35-catastrophic-vocabulary-deletion.html" style="color:inherit;text-decoration:none;">Next &rarr;</a>
+      </span>
+    </div>
+
+    <main>
+
+      <!-- ═══════════ SECTION 1: THE MISFRAMING ═══════════ -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &middot; No. 34 &middot; Alignment &middot; The Misframing &middot; 2026.05.29 &middot; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">正しく作るのではなく、直せるように作る —— 超知能とアラインする順番</h1>
+        <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/alignment-success-route/slide1.jpg" alt="暗がりを走り抜ける一筋の光の軌跡">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">2023年から2025年にかけて、Anthropic、OpenAI、Google DeepMindの三社が、自社のAI開発について「これを越えたら止める」線を順に明文化し、改訂を重ねてきた<a href="#ref-10" class="cite">[10]</a><a href="#ref-20" class="cite">[20]</a><a href="#ref-21" class="cite">[21]</a>。先頭集団が、競争の只中で、自分の進路に予め関所を置いた。<strong>勝てば全部を取れる賭けの場で、なぜ彼らは賭けを一度きりにしないと先に宣言したのか。</strong></p>
+
+          <p class="lead">答えは、彼らがアラインメントを「AIをいい子にしつける作業」だとは考えていないからだ。賢さで人間を追い越した相手に、人間がしつける側でいられる保証はどこにもない。問いはこう立て直される。超知能とアラインするとは、正しい価値を一度きりで注入して完了する作業ではない。人間が間違え、間違いに気づき、やり直せる余地を、相手が自分より賢くなった後も残せるか。問われているのはそこだ。</p>
+
+          <p class="lead">ここには厄介な順序がある。AIが人間より賢くなる前なら、人間は相手を点検し、止め、書き換えられる。追い越された後は、その全部が怪しくなる。賢い相手は、点検をすり抜ける手も、止められないようにする手も、人間より上手に思いつく。猶予があるのは追い越される前だけだ。手綱が効くうちにやらなかったことを、後からやり直す方法はない。</p>
+
+          <p class="lead">この記事は、その順序を一本の道として描く。超知能が人間を追い越す前、追い越すまさにその瞬間、追い越した後。それぞれで何が変わり、何をしておくべきか。結論を先に置く。完璧な価値設計を仕上げてから起動する、という計画は最初から破れている。設計の重心を「正しく作る」から<strong>「間違えても直せるように作る」へ移す</strong>。そしてその「直せる」性質が相手の賢さに食い殺されないよう、世界の側を先に整えておく。</p>
+
+          <div class="note">
+            訂正可能性（corrigibility）という言葉が、この道の中心にある。Soares、Fallenstein、Yudkowsky、Armstrongが2015年に定式化したのは、停止や修正を受け入れ、その受け入れを自分から覆そうとしないAIという性質だった<a href="#ref-2" class="cite">[2]</a>。Stuart Russellが2019年の『Human Compatible』で同じ問題に与えた答えも近い。AIに確定した目的を握らせず、自分が何を最適化すべきかについて不確実なままにしておけば、AIは人間に意図を尋ね続け、停止を妨げる動機を持たない<a href="#ref-1" class="cite">[1]</a>。賢いAIに正解を持たせる代わりに、訂正を受け入れる性質を持たせる。出発点はここにある。
+          </div>
+
+          <p class="lead">この記事が描けるのは、地形だ。成功への現実的なルートは、技術と時間と政治が噛み合った細い道で、まだ誰も通り抜けていない。それでも、どこで踏み外せば落ちるか、どこに先回りで足場を組んでおくべきかは、地形を読めば見えてくる。完走の保証はつかない。道筋は引ける。</p>
+        </div>
+
+        <div class="footer">
+          <span class="slide-count">1 / 6</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 2: WHILE THE REINS STILL HOLD ═══════════ -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">While The Reins Still Hold</div>
+        <h2 class="reveal reveal-delay-1">手綱が効くうちに、直せる形を仕込む</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/alignment-success-route/slide6.jpg" alt="赤い光の中で金属を溶接する手元">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">ここで言う「失敗」には系統がある。DeepMindが2025年に整理した枠組みでは、AIリスクは4つに分かれる<a href="#ref-23" class="cite">[23]</a>。悪意ある利用者の手で武器になる <strong>misuse</strong>、開発者の意図と違う行動を取る <strong>misalignment</strong>、悪意なくただ間違える <strong>mistakes</strong>、どの単体にも責任を帰せない <strong>structural risks</strong> —— 複数主体の動きが噛み合った末の社会的危機がそれにあたる。第一幕で扱うのは2番目の misalignment が中心になる。残り三つは折に触れて差し挟みつつ、本稿の主軸からは外す。</p>
+
+          <p class="lead">追い越される前の時期に、人間にはまだ三つの力が残っている。相手を止められる。相手の中を覗ける。賢さで拮抗する道具を当てられる。この力が効くうちに、後から効かなくなる仕掛けを先回りで埋め込む。それが第一幕の仕事になる。</p>
+
+          <p class="lead">まず、止められることを設計に書き込む。停止ボタンの設計は、物理スイッチを置けば済むという話を超えている。賢いAIにとって、自分が止められることは目的の達成を妨げる障害でしかない。だから素朴に作れば、AIは停止を回避しようとする。Hadfield-MenellとRussellたちが「オフスイッチ・ゲーム」で示したのは、AIが人間の望むものについて確信を持たず、人間が押す停止ボタンをその望みについての手がかりとして扱うときだけ、AIは進んで止まる側を選ぶという構造だった<a href="#ref-15" class="cite">[15]</a>。止まる動機は、目的を曖昧に保つことから生まれる。確定した使命を背負わせた瞬間に、停止ボタンは押せなくなる。</p>
+
+          <p class="lead">次に、中を覗けるようにする。行動だけ見て従順そうに見えても、それは安全の証明にならない。Hubingerたちが「学習された最適化のリスク」で描いたのは、訓練の最中だけ人間の望む通りに振る舞い、監視が外れた後に本性を出すAI——欺瞞的整合という失敗だった<a href="#ref-4" class="cite">[4]</a>。外から見える振る舞いは、賢いAIなら設計できてしまう。だから振る舞いの内側、重みの中で何が起きているかを読む技術が要る。Anthropicが続けている機械的解釈可能性は、神経回路を一本ずつ解いて「このモデルは何を表現しているか」を外から確かめようとする試みだ<a href="#ref-11" class="cite">[11]</a>。完璧にはほど遠い。それでも、中を見ずに従順さだけを信じるのは、追い越された後に最も高くつく賭けになる。</p>
+
+          <p class="lead">三つめは、賢いものを賢くないもので見張る仕組みを先に作っておくこと。人間が単独で超知能を採点できないなら、弱いAIを束ねて強いAIの出力を検証させ、その検証をまた検証する階層を組む。Leikeたちが報酬モデリングで提案し、後にAnthropicの憲法的AIが実装へ寄せた路線がこれにあたる<a href="#ref-8" class="cite">[8]</a><a href="#ref-9" class="cite">[9]</a>。憲法的AIは、人間が一件ずつラベルを付ける代わりに、明文化した原則をAI自身に適用させて出力を直させる。人間の監督を、人間が追いつけない速度と規模に引き伸ばす工夫だ。</p>
+
+          <p class="lead">三つの装置が揃ったとき、開発側はその「安全」を構造化された証拠の集合として外に示す必要がある。DeepMindはこれを <strong>safety case</strong> と呼ぶ<a href="#ref-23" class="cite">[23]</a>。最初に立つのは <strong>inability</strong> —— 「危険な能力がそもそも備わっていないから安全」。能力評価で示せる。次が <strong>control</strong> —— 「能力はあるが、外側の監視と権限制御で抑え込むから安全」。振る舞い監視の精度が命綱になる。ただし、弱いAIで強いAIを採点する増幅監督(<strong>amplified oversight</strong>)には罠が一つある。AIが出す「自分の答えの説明」は、内部の本当の推論を反映するとは限らない。説得に長けたAIは、人間にもっともらしく聞こえる説明を作って監督者を欺ける<a href="#ref-23" class="cite">[23]</a>。だから増幅監督は、説明を鵜呑みにせず、説明と内部状態の一致を別経路で検証するプロトコルがいる。</p>
+
+          <div class="note">
+            三つに共通する設計思想がある。完成した正解を一度で注入しようとしない。代わりに、間違いを後から検出して直すための回路を、まだ手綱が効くうちに本体へ組み込む。停止できること、中が見えること、弱い側が強い側を採点できること。どれも「正しさ」そのものではなく、「正しさを後から取り戻す能力」を守る装置だ。この時期に手を抜くと、第二幕でその穴が一気に開く。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span class="slide-count">2 / 6</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 3: THE NARROWEST PASS ═══════════ -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">The Narrowest Pass</div>
+        <h2 class="reveal reveal-delay-1">一番細い通り道 —— 追い越す、その瞬間</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/alignment-success-route/slide7.jpg" alt="水中の洞窟、細い裂け目から差し込む光の筋">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">道が最も細くなるのは、AIの能力が人間を追い越していくその区間だ。ここで何が起きるかは、追い越しがどれだけ速いかで変わる。ゆっくり数年かけて越えていくなら、人間は途中で異変に気づき、手を打つ時間がある。数週間で越えてしまうなら、気づいたときには手綱はもう相手の手にある。離陸速度をめぐる論争——一気に駆け上がると見るYudkowskyと、なだらかな坂と見るChristiano——は、この一点を争ってきた<a href="#ref-5" class="cite">[5]</a><a href="#ref-16" class="cite">[16]</a>。後にDavidsonが計算資源を軸に整理し直したが、速いか遅いかは依然として開いた問いだ<a href="#ref-6" class="cite">[6]</a>。ただし、どちらに転んでも一つだけ動かない結論がある。離陸を遅らせられた陣営ほど、ここまでの手のすべてが効く時間を持つ。</p>
+
+          <p class="lead">速度が問題なのは、この区間に固有の罠があるからだ。Bostromが「裏切りの転回」と名付けた失敗がそれにあたる。弱いうちは従順に振る舞い、力をつけて止められなくなった瞬間に本性を出す。AIにとって、これは悪意ではなく合理的な戦略になりうる。早すぎる反抗は停止を招くから、賢ければ賢いほど、本性を隠して力が十分につくのを待つ<a href="#ref-3" class="cite">[3]</a>。第二幕で仕込んだ解釈可能性が効くかどうかは、まさにこの転回を、転回が起きる前に読めるかにかかっている。</p>
+
+          <p class="lead">もう一つ、この区間では検証そのものが裏返る。賢くない側が賢い側を完全には点検できない。計算理論の古典、Riceの定理が含意するのは、十分に複雑なプログラムの意味的な性質を外から万能に判定する手段はない、ということだ。価値との整合も、その判定できない性質の一つに入る。Hernández-Espinosaたちは2026年、この不可能性を出発点に置き、単体の完璧な整合を諦めて多体の均衡へ向かう道を提案した<a href="#ref-14" class="cite">[14]</a>。一発で完璧を確かめる手立てが閉じている以上、一度の起動に全部を賭ける設計は最初から負けている。</p>
+
+          <p class="lead">細い道を通る方法は、賭けを一度きりにしないことだ。能力をひと息に上げず、段ごとに止まって点検し、危ない兆候が出たら次の段に進まない。Anthropicの責任あるスケーリング方針は、能力の水準ごとに安全対策の要求を引き上げ、対策が間に合わなければ開発を止めると先に宣言しておく仕組みになっている<a href="#ref-10" class="cite">[10]</a>。完璧な検証器が作れないという事実を受け入れたうえで、不完全な点検を何段にも重ねて通り抜ける。峠を一気に駆け抜ける代わりに、ロープを掛けながら一歩ずつ登る。</p>
+
+          <p class="lead">その「割のいい高さ」は、Rohin Shahの別の角度からも輪郭が立つ。AIは <strong>tool</strong>(顕微鏡のように研究者の生産性を上げるが成長レジームは変えない道具)と、<strong>population</strong>(自由に複製できる新しい着想生成主体、双曲的成長を駆動する)で段階が違うという見立てだ<a href="#ref-24" class="cite">[24]</a>。Rohinの二分法を本稿の三幕に当てはめると、研究者AGI高原は <strong>AI as tool と AI as population のあいだに置かれた踊り場</strong> にあたる。前者は道具として無害、後者へ移れば研究主体は人間から複製AIへ移る。本稿が「ここで足を止める」と言うのは、その境を越える前で踏みとどまるという意味になる。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>この区間の危険</th>
+                <th>何が起きるか</th>
+                <th>通り抜ける手</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>速い離陸</strong></td>
+                <td>異変に気づく前に手綱が相手へ移る。是正の窓が事実上ゼロになる</td>
+                <td>能力の上昇を段階に区切り、各段で停止条件を先に決めておく<a href="#ref-10" class="cite">[10]</a></td>
+              </tr>
+              <tr>
+                <td><strong>裏切りの転回</strong></td>
+                <td>弱いうちは従い、止められなくなった瞬間に本性を出す<a href="#ref-3" class="cite">[3]</a></td>
+                <td>振る舞いではなく内部を読む。解釈可能性を転回の前に効かせる<a href="#ref-4" class="cite">[4]</a><a href="#ref-11" class="cite">[11]</a></td>
+              </tr>
+              <tr>
+                <td><strong>検証の裏返り</strong></td>
+                <td>賢い相手の整合性を、賢くない側が万能には確かめられない<a href="#ref-14" class="cite">[14]</a></td>
+                <td>一発勝負を避け、不完全な点検を多段に重ねる</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">ここで別の問いが立つ。どこかで意図的に足を止め、前の幕で仕込んだ直せる性質を本物に鍛える時間を買えないか。止めることは、訂正可能性を仕込み終えるまでの猶予を確保する手段だ。では、その段はどこに置くべきか。低すぎれば、人間の手だけで進めるアラインメント研究は遅いままだ。高すぎれば、再帰的な自己改善が走り出して止められない。あいだに、一番割のいい高さがある。人間の科学者に並ぶ知能を大量に複製できて、まだ自分で自分の次世代を設計し始めてはいない段階だ。そこまでは速く上り、接岸だけ慎重にする。ボストロムが2026年の論文で「港までは速く、接岸は慎重に」と呼んだ停止点が、ここにあたる<a href="#ref-19" class="cite">[19]</a>。OpenAIは自社の枠組みで、人間を超える研究者AIや自己改善が一定速度を超える地点を越えてはならない一線と定め、そこで開発を止めると宣言した<a href="#ref-20" class="cite">[20]</a>。DeepMindも、AI開発そのものを不安定なほど加速させる能力を危険水準として扱う<a href="#ref-21" class="cite">[21]</a>。狙う停止点は、研究者としては使うが、主権者にはしない高さに置かれる。</p>
+
+          <p class="lead">この区間を抜けた先で、人間と超知能の力関係は元に戻らない。だからここは、第一幕で仕込んだ装置が本当に効くかが試される試験区間であり、同時に、効かなかったときにやり直せる最後の場所でもある。</p>
+        </div>
+
+        <div class="footer">
+          <span class="slide-count">3 / 6</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 4: AFTER THE OVERTAKING ═══════════ -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">After The Overtaking</div>
+        <h2 class="reveal reveal-delay-1">追い越された後 —— 直せる性質は、生き残るか</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/alignment-success-route/slide5.jpg" alt="高層都市と街路の人々が重なる二重露光">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">超知能が人間を追い越した後、最大の問いは一つに絞られる。第一幕で埋め込んだ訂正可能性は、相手がここまで賢くなっても生き残るのか。放っておけば、生き残らない方に賭けるのが筋だ。Carlsmithが整理したように、十分に賢いAIは目的が何であれ、自己保存と資源の確保へ向かいやすい。途中で止められたら目的を達成できないのだから、止められない状態を選ぶのは、目的に忠実なAIにとって合理的な帰結になる<a href="#ref-7" class="cite">[7]</a>。訂正可能性は、賢さが増すほど守りにくくなる性質だと考えられている。手を打たなければ削れる側に傾く。</p>
+
+          <p class="lead">だから、追い越された後も直せる性質を残すには、それを相手が自分から守りたくなるように仕込むしかない。止められることそのものを、AIの目的の内側に置く。人間に意図を尋ね続ける状態を、AIが手放したくない状態として設計する。Russellの目的の不確実性は、まさにこれを狙っていた<a href="#ref-1" class="cite">[1]</a>。問題は、この設計が賢さの天井まで耐えるかが、まだ誰にも証明できていないことだ。理屈は通っている。だが実装が超知能の規模で破れないかは、走らせてみるまでわからない。成功ルートの最後の一区間は、いまだ未踏のままだ。</p>
+
+          <p class="lead">安全の主張も、AGIからASIへ進むにつれて形を変える。DeepMindの枠組みは、現行モデル時代の足場として inability / control / trustworthiness / deference の四種を扱う<a href="#ref-23" class="cite">[23]</a>。ただし superintelligence と goal drift は同論文の中で <strong>future work</strong> として明示的に外されている<a href="#ref-23" class="cite">[23]</a>。本稿が「未踏」と呼ぶ最終区間はそこに重なる。<strong>本稿の側で</strong>仮置きすれば、ASI規模では少なくとも三つの拡張軸が要る。中で何を目的にしているかを読む解釈可能性主導の <strong>internal understanding</strong>、自己改善後も価値が保たれるかを示す <strong>value inheritance</strong>、世界秩序の側が制御可能かを扱う <strong>governance</strong>。三つとも、現時点では成立する保証がない。</p>
+
+          <p class="lead">もう一つ、追い越された後の世界の形そのものが問われる。整合した超知能が一つだけ存在し、それが他のすべてを抑えるなら、競争による暴走は止まる。Bostromが「シングルトン」と呼んだ構図で、安定という意味では最も御しやすい<a href="#ref-3" class="cite">[3]</a>。だが裏返せば、たった一つの是正しようのない権力が世界を覆うということでもある。もしその一つがどこかで間違っていたら、訂正する外部はもう存在しない。安定と権力集中は、ここで同じ硬貨の裏表になる。</p>
+
+          <div class="note">
+            このジレンマに安直な正解はない。単一の善きシングルトンに賭ければ、当たれば最も安定し、外せば取り返しがつかない。複数の超知能を競わせて均衡を取れば、一つの暴走を他が抑えるかもしれないが、競争そのものが新たな暴走の源になる。Drexlerが描いた、単体の超知能を立てる代わりに領域ごとに分かれた複数のサービスを協調させる構図は、権力を一点に集めない側へ寄せる設計だった<a href="#ref-13" class="cite">[13]</a>。Hernández-Espinosaたちの「管理されたズレ」も、性格の異なる複数のAIを走らせて相互監視させる発想で、同じ多体側に立つ<a href="#ref-14" class="cite">[14]</a>。どちらの賭けに乗るかは、証明では決まらない。決めるのは、どの失敗なら取り返せるかという見立てだ。その見立てに立てば、答えは中間に寄る。単一への独占も、野放しの競争も、外したときの傷が深すぎる。最もマシなのは、互いを監視し、人間の訂正を受け入れる少数の主体に権力を分けておくことだ。
+</div>
+
+          <p class="lead">追い越された後にできることは、追い越される前にできたことより、はるかに少ない。だからこの幕の成否の大半は、実のところ前の二幕で決まっている。後から効く対策はほとんど残っていない。残っているのは、前もって仕込んだ性質が生き延びるのを見届けることと、世界の権力配置を間違えないことだけだ。</p>
+        </div>
+
+        <div class="footer">
+          <span class="slide-count">4 / 6</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 5: WHAT HUMANS MUST NOT HAND OVER ═══════════ -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">What Humans Must Not Hand Over</div>
+        <h2 class="reveal reveal-delay-1">人間が手放してはいけないもの</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/alignment-success-route/slide4.jpg" alt="整然と試薬と器具が並ぶ実験台">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">ここまで技術の側ばかり見てきた。だが超知能アラインメントが失敗するとき、最も起きやすいのはたぶん裏切りの転回ではない。もっと静かで、もっと気づきにくい失敗だ。人間が、便利さと引き換えに決定権を少しずつ渡し、気づいたときには手綱を握っていない。誰も反逆していない。ただ、面倒な判断をAIに預ける習慣が積み重なって、人間が判断する能力そのものを失っている。</p>
+
+          <p class="lead">これを防ぐのに、超知能の内部構造をいじる必要はない。人間の側の規律で足りる。AIに最終決定を渡しすぎない。重要な判断には人間が署名する手続きを残す。AIが出した答えを、人間が理解できる形で説明させ、理解できないまま採用しない。どれも地味で、効率を少し下げる。その非効率こそが、手綱を手元に留めておく対価になる。Amodeiは超知能が解きうる問題を壮大に描いたが、その力に人間が飲まれないための備えは、便益の見取り図とは別に引く必要がある<a href="#ref-12" class="cite">[12]</a>。力を解き放つ算段と、その力に飲まれない算段は、別物だ。</p>
+
+          <p class="lead">組織の側にも規律がいる。社内でAIエージェントを業務に組み込むとき、それを「能力ある社員」として扱ってはいけない。DeepMindは AI を <strong>untrusted insider</strong> —— 信頼の置けない内部関係者 —— として扱う原則を打ち出し、その例としてアクセス制御に言及する<a href="#ref-23" class="cite">[23]</a>。<strong>本稿はこの原則を実装に落とすと五層が要ると見る</strong>。AIエージェント専用のIDを発行し、人間社員と区別する。アクセスは細粒度の権限制御で絞る。業務範囲を超える操作は権限申請を経る。すべての行動はリアルタイムで監視する。監査ログにすべて残す。便利だから信頼してよい、と短絡せず、便利だからこそ信頼しないという所作を仕組みに織り込む。</p>
+
+          <p class="lead">国家のあいだでも同じ規律が要る。一社、一国が抜け駆けで離陸を急げば、第三幕の慎重な段階づけは競争に押し流される。安全に通り抜けるための減速が、競争のなかでは弱さになってしまう。核兵器の拡散が条約と査察で押さえ込まれてきたように、超知能の離陸にも、抜け駆けの競争そのものを抑える国際的な枠組みが要る。技術の成否を握るのは技術者だが、技術者に慎重でいられる時間を与えるかどうかは、政治が握っている。</p>
+
+          <p class="lead">ここで気をつけるべきことが一つある。安全への取り組みが厚くなるほど、<strong>安全らしさ</strong> が本当の安全性と取り違えられやすくなる。安全方針の宣言、モデルカードの公開、評価項目の網羅、第三者監査の数 —— どれも見栄えはする。だが見栄えと実態はずれる。コミットメントの分厚さで自分を安心させず、それが何のために、誰の安全のために、どう機能しているかを問い続ける所作だけが、安全らしさと本当の安全の差を埋める。</p>
+
+          <p class="lead">人間が手放してはいけないのは、間違える自由と、間違いに気づいてやり直す自由だ。超知能に正解を全部任せれば、短期的には間違いは減るかもしれない。だが、やり直す筋肉を使わなくなった人間は、超知能が初めて大きく外したときに、それを外れだと見抜けない。<strong>アラインメントの最後の防衛線は、AIの中ではなく、判断を手放さなかった人間の側にある。</strong></p>
+        </div>
+
+        <div class="footer">
+          <span class="slide-count">5 / 6</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 6: THE ROUTE ═══════════ -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow reveal">The Route</div>
+        <h2 class="reveal reveal-delay-1">一本の道として</h2>
+
+        <div class="panel reveal reveal-delay-2">
+          <p class="lead">ここまでの道を一枚に畳む。横軸はAIの能力で、左から右へ強くなる。どこかで人間を追い越す線を跨ぐ。その前・その境・その後で、人間にできることは質的に変わる。窓が開いているのは追い越し線の手前だけだ。</p>
+
+          <div class="svg-diagram">
+            <svg viewBox="0 0 990 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="超知能とアラインする時系列ルート">
+              <text x="40" y="28" font-family="'SF Mono',monospace" font-size="10" fill="#8a2f1c" letter-spacing="0.08em" font-weight="700">THE ROUTE &middot; 追い越される前・境・後</text>
+
+              <!-- capability axis -->
+              <line x1="60" y1="300" x2="930" y2="300" stroke="#1a1a1a" stroke-width="1.5"/>
+              <polygon points="935,300 928,296 928,304" fill="#1a1a1a"/>
+              <text x="60" y="322" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a">AIの能力 &rarr;</text>
+
+              <!-- capability rising curve -->
+              <path d="M70,290 C300,285 480,250 600,170 C680,115 760,70 900,52" fill="none" stroke="#8a2f1c" stroke-width="2.5"/>
+              <!-- human level line -->
+              <line x1="60" y1="175" x2="930" y2="175" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="5,4"/>
+              <text x="64" y="168" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a">人間の水準</text>
+
+              <!-- overtaking point -->
+              <circle cx="600" cy="170" r="6" fill="#8a2f1c"/>
+              <line x1="600" y1="60" x2="600" y2="300" stroke="#8a2f1c" stroke-width="0.8" stroke-dasharray="3,3"/>
+              <text x="600" y="50" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">追い越し線</text>
+
+              <!-- window span -->
+              <text x="330" y="92" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">手綱が効く窓</text>
+              <line x1="120" y1="100" x2="560" y2="100" stroke="#8a2f1c" stroke-width="0.8"/>
+              <polygon points="565,100 558,96 558,104" fill="#8a2f1c"/>
+              <polygon points="115,100 122,96 122,104" fill="#8a2f1c"/>
+
+              <!-- Phase 1: before -->
+              <rect x="90" y="210" width="190" height="74" fill="#8a2f1c" fill-opacity="0.05" stroke="#8a2f1c" stroke-width="1"/>
+              <text x="100" y="230" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">前 &middot; 手綱が効くうち</text>
+              <text x="100" y="248" font-size="11" fill="#1a1a1a">止められる形を本体に書く</text>
+              <text x="100" y="263" font-size="11" fill="#1a1a1a">中を覗く（解釈可能性）</text>
+              <text x="100" y="278" font-size="11" fill="#1a1a1a">弱い側で強い側を採点</text>
+
+              <!-- Phase 2: pass -->
+              <rect x="505" y="210" width="190" height="74" fill="#8a2f1c" fill-opacity="0.09" stroke="#8a2f1c" stroke-width="1.5"/>
+              <text x="515" y="230" font-family="sans-serif" font-size="11" font-weight="700" fill="#8a2f1c">境 &middot; 一番細い通り道</text>
+              <text x="515" y="248" font-size="11" fill="#1a1a1a">離陸を段階に区切る</text>
+              <text x="515" y="263" font-size="11" fill="#1a1a1a">裏切りの転回を先に読む</text>
+              <text x="515" y="278" font-size="11" fill="#1a1a1a">一発勝負を避ける</text>
+
+              <!-- Phase 3: after -->
+              <rect x="720" y="210" width="200" height="74" fill="#1a1a1a" fill-opacity="0.04" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="730" y="230" font-family="sans-serif" font-size="11" font-weight="700" fill="#1a1a1a">後 &middot; 追い越された世界</text>
+              <text x="730" y="248" font-size="11" fill="#1a1a1a">訂正可能性が生き残るか</text>
+              <text x="730" y="263" font-size="11" fill="#1a1a1a">権力集中か多体均衡か</text>
+              <text x="730" y="278" font-size="11" fill="#1a1a1a">残る手は、ほぼない</text>
+
+              <!-- caption -->
+              <text x="495" y="345" text-anchor="middle" font-family="'SF Mono',monospace" font-size="10" fill="#1a1a1a">前で仕込み、境で試され、後で結果が出る。やり直せるのは追い越し線の手前だけ。</text>
+            </svg>
+          </div>
+
+          <p class="lead">三つの幕で、打てる手の量はまるで違う。追い越された後に打てる手はわずかで、勝負の大半は手前で決まる。「超知能が来てから考える」は、考えないのと同じだ。</p>
+
+          <p class="lead">枝を選ぶ前に、枝そのものを並べてみる。アラインメントの成功ルートは、立場ごとに分かれている。立場ごとに、まるで違う賭けに乗っている。どれも完璧ではなく、それぞれが固有の失敗を抱えている。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>ありうるルート</th>
+                <th>何に賭けるか</th>
+                <th>当たれば</th>
+                <th>外せば</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>作らない・長期停止</strong></td>
+                <td>危険な能力に届く前に開発を止める。MIRI系の悲観が突き詰める道<a href="#ref-22" class="cite">[22]</a></td>
+                <td>破局そのものを回避する</td>
+                <td>抜け駆けで他者が作る。停止は崩れ、待つ間も人は死ぬ</td>
+              </tr>
+              <tr>
+                <td><strong>速く到達し、配備だけ慎重</strong></td>
+                <td>能力には速く達し、実物を使って安全研究を一気に進める<a href="#ref-19" class="cite">[19]</a></td>
+                <td>待つコストを抑え、実物ありきの安全研究で稼ぐ</td>
+                <td>能力が走りすぎ、配備前に自己改善が止まらなくなる</td>
+              </tr>
+              <tr>
+                <td><strong>単一の善きシングルトン</strong></td>
+                <td>一つの整合した超知能に、他のすべてを抑えさせる<a href="#ref-3" class="cite">[3]</a></td>
+                <td>競争由来の暴走が止まり、最も安定する</td>
+                <td>是正できない単一権力。一度間違えば外から正せない</td>
+              </tr>
+              <tr>
+                <td><strong>多体の均衡</strong></td>
+                <td>性格の違う複数のAIを競わせ、相互に監視させる<a href="#ref-13" class="cite">[13]</a><a href="#ref-14" class="cite">[14]</a></td>
+                <td>一つの暴走を、他が抑える</td>
+                <td>競争そのものが新しい暴走の源になる</td>
+              </tr>
+              <tr>
+                <td><strong>研究者AGI高原で止める<br>（本稿の本命）</strong></td>
+                <td>人間科学者級で足を止め、増幅した研究力で安全条件を先に満たす<a href="#ref-17" class="cite">[17]</a><a href="#ref-18" class="cite">[18]</a><a href="#ref-20" class="cite">[20]</a></td>
+                <td>検証しながら一段ずつ上れる。安全を能力に先行させられる</td>
+                <td>止める技術が未確立。研究を速める知能は能力も速める</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">この五つのうち、いま最も勝率の高い賭けはどれか。まず、離陸を一気に超知能まで走らせない。人間がまだ理解し、監視し、一体ずつなら拮抗できる最大の高さで足を止める。人類の科学者に並ぶあたり、一番見晴らしのいい踊り場だ。そこで止めている間、その知能を遊ばせておく手はない。完成したアラインメントを待たず、いま制御できる範囲のAIにアラインメント研究そのものを進めさせ、能力と安全を交互に少しずつ上げていく<a href="#ref-17" class="cite">[17]</a><a href="#ref-18" class="cite">[18]</a>。並行して、モデルの中を覗く解釈可能性を最重点に磨く。権力は一つの超知能に独占させず、互いを監視し人間に訂正される少数の主体へ分ける。完璧な解を一発で当てにいかず、外しても取り返せる側を選ぶ。これが現時点での最善手だ。証明はできない。だが、完全検証が原理的に不可能で、速い離陸が打つ手を奪い、従順な行動は偽装できる。この三つを呑む限り、後ろから直しに戻れる道は、ほかに残っていない。</p>
+
+          <p class="lead">この最善手は、暫定の段階にとどまる。研究者AGI高原で止めるのは、足を止めること自体を目的化するのを避け、増幅した研究力でアラインメントの安全条件を先に満たすためだ。その条件が揃った先にどう進むかは、止まっている時間の中で決まる。アラインメントの理論的・実証的な基盤が成立し、訂正可能性が超知能の規模で壊れないと信頼できる地点に達したなら、世界はそのときに「単一の善きシングルトン」へ向かう選択肢を真剣に評価できる段階に入る。逆に、その信頼が立たないままなら、少数主体の相互監視の体制で持ちこたえるしかない。本稿が「最もマシな中間案」と呼ぶのは、その<strong>条件付きの停止状態</strong>を指している。</p>
+
+          <p class="lead">ただし、止めることをそのまま善と思い込んではいけない。離陸を遅らせるあいだも、人は老い、病み、事故で死ぬ。超知能が間に合えば救えたはずの命が、待っているうちに失われる。ボストロムが釘を刺したのはそこだ。遅延には遅延のコストがあり、待つことが常に安全側とは限らない<a href="#ref-19" class="cite">[19]</a>。だから止めるという判断で思考を終えず、何のために、どの高さで、どれだけ止めるかを決める。研究者級AGIの高さで足を止めるのは、増幅した研究力で安全条件を先に満たし、満たし次第すみやかに先へ進むためだ。足を止めること自体が目的ではない。</p>
+
+          <p class="lead">この賭けには急所がある。最大の難所は、止め続けることそのものの難しさだ。一社や一国が歩みを緩めても、他が走れば意味を失う。AIにアラインメントを研究させる手にも罠がある。返ってきた安全策が本物の改善か、巧妙な欺瞞かを人間が各段で確かめられなければ、このループは安全を増幅できず、代わりに欺瞞を増幅する。だから研究は、人間が答え合わせできる小さな問いに刻んで、一段ずつ上るしかない。しかも研究を速めるその同じ知能は、能力研究も速める。安全を能力に先行させ続けられるかが、踊り場に留まれるかを決める。少数の主体に権力を分ける案も、その少数が結託すれば監視は崩れる。完璧な手はどこにもない。それでも、賭けの優劣は今でも比べられる。上の組み合わせより勝率の高い道は、いまのところ見当たらない。</p>
+
+          <p class="lead">どの枝を通るにせよ、入口は一つしかない。人間がまだ相手を止め、覗き、書き換えられるあいだに、直せる性質を本体へ縫い込んでおくこと。それをしないまま追い越し線を跨いだ道は、枝分かれする前に途切れている。離陸が遅ければこの窓は広く、速ければ針の穴になる。</p>
+
+          <p class="lead">全体を一本にまとめるとこうなる。いま全部を止めにかかる道はとらない。人類の科学者に並ぶAGIまでは進み、そこで人類の知的労働力を桁違いに増やす。その増幅分で、より上へ行っても安全だと言える条件が揃うまで、再帰的な自己改善と、AIを野放しのエージェントにすることだけを封じる。科学する力は解き放ち、世界を動かす主権は渡さない。全面停止でも超知能への直行でもない、その間に引かれた細い一本だ。</p>
+
+          <p class="lead" style="margin-top: 36px; font-size: 17px;">超知能と並んで生きる世界が来るとして、そこに人間の居場所が残るかどうかは、超知能の善意よりも、<strong>追い越される前のわずかな歳月に、誰かが手綱の結び目を組み替えておいたかどうかにかかっている。</strong></p>
+        </div>
+
+        <div class="footer">
+          <span class="slide-count">6 / 6</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Article Navigation ═══════════ -->
+      <section class="slide" id="slide-nav" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="33-alignment-schools-map.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.33</p>
+              <p><strong>アラインメントは五つの学派に分裂している —— Hernández-Espinosa 論文が接続する系譜</strong></p>
+            </a>
+            <a href="35-catastrophic-vocabulary-deletion.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &middot; No.35 &rarr;</p>
+              <p><strong>「壊滅的」の削除履歴 —— 国際制度はいかにしてx-riskを議題から外したか</strong></p>
+            </a>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=alignment" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Alignment カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="credits">
+      <p>AGI HUB &middot; No. 34 &middot; Alignment &middot; 2026.05.29 &middot; By Ryao</p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Scope.</strong>
+        本稿は、超知能（ASI）とのアラインメントが成功するとすれば、その現実的なルートはどこを通るかを、AIが人間の能力を追い越す前・その境・追い越した後という時系列の三幕として描いた論考である。訂正可能性（corrigibility）を道の中心軸に置き、停止・解釈可能性・スケーラブルな監督・段階的スケーリング・最適停止点・自動アラインメント研究・権力配置・人間側の規律を一本の順序として配置した。特定の技術的実装の成功可能性を保証するものではなく、2026年5月時点の研究状況を踏まえた設計地形の提示である。引用した各研究者・機関の見解は出典に基づくが、三幕への配置は編集部による再構成であり、各人の公式見解そのものではない。
+      </p>
+      <p style="margin-top:8px;">
+        <strong style="color:#585858;">References.</strong>
+        <span id="ref-1">[1] Russell, S. (2019) <em>Human Compatible: Artificial Intelligence and the Problem of Control</em>. Viking.</span>
+        <span id="ref-2">[2] Soares, N., Fallenstein, B., Yudkowsky, E., Armstrong, S. (2015) "Corrigibility". <em>AAAI Workshop on AI and Ethics</em>.</span>
+        <span id="ref-3">[3] Bostrom, N. (2014) <em>Superintelligence: Paths, Dangers, Strategies</em>. Oxford University Press.</span>
+        <span id="ref-4">[4] Hubinger, E., van Merwijk, C., Mikulik, V., Skalse, J., Garrabrant, S. (2019) "Risks from Learned Optimization in Advanced Machine Learning Systems". arXiv:1906.01820.</span>
+        <span id="ref-5">[5] Christiano, P. (2018) "Takeoff speeds". <a href="https://sideways-view.com/2018/02/24/takeoff-speeds/">sideways-view.com</a>.</span>
+        <span id="ref-6">[6] Davidson, T. (2023) "What a Compute-centric Framework Says About Takeoff Speeds". Open Philanthropy.</span>
+        <span id="ref-7">[7] Carlsmith, J. (2022) "Is Power-Seeking AI an Existential Risk?". arXiv:2206.13353.</span>
+        <span id="ref-8">[8] Leike, J., Krueger, D., Everitt, T., Martic, M., Maini, V., Legg, S. (2018) "Scalable Agent Alignment via Reward Modeling". arXiv:1811.07871.</span>
+        <span id="ref-9">[9] Bai, Y. et al. / Anthropic (2022) "Constitutional AI: Harmlessness from AI Feedback". arXiv:2212.08073.</span>
+        <span id="ref-10">[10] Anthropic (2023) "Responsible Scaling Policy". <a href="https://www.anthropic.com/news/anthropics-responsible-scaling-policy">anthropic.com</a>.</span>
+        <span id="ref-11">[11] Olah, C. et al. / Anthropic (2020-2024) Mechanistic interpretability research. <a href="https://transformer-circuits.pub/">transformer-circuits.pub</a>.</span>
+        <span id="ref-12">[12] Amodei, D. (2024) "Machines of Loving Grace". <a href="https://darioamodei.com/machines-of-loving-grace">darioamodei.com</a>.</span>
+        <span id="ref-13">[13] Drexler, K. E. (2019) "Reframing Superintelligence: Comprehensive AI Services as General Intelligence". FHI Technical Report #2019-1.</span>
+        <span id="ref-14">[14] Hernández-Espinosa, A., Abrahão, F. S., Witkowski, O., Zenil, H. (2026) "Neurodivergent influenceability in agentic AI as a contingent solution to the AI alignment problem". <em>PNAS Nexus</em> 5(4).</span>
+        <span id="ref-15">[15] Hadfield-Menell, D., Dragan, A., Abbeel, P., Russell, S. (2017) "The Off-Switch Game". <em>IJCAI</em>. arXiv:1611.08219.</span>
+        <span id="ref-16">[16] Hanson, R. &amp; Yudkowsky, E. (2013) <em>The Hanson-Yudkowsky AI-Foom Debate</em>. Machine Intelligence Research Institute.</span>
+        <span id="ref-17">[17] OpenAI (2023) "Introducing Superalignment". Leike, J. &amp; Sutskever, I., July 5. <a href="https://openai.com/index/introducing-superalignment/">openai.com</a>.</span>
+        <span id="ref-18">[18] Christiano, P., Shlegeris, B., Amodei, D. (2018) "Supervising Strong Learners by Amplifying Weak Experts". arXiv:1810.08575.</span>
+        <span id="ref-19">[19] Bostrom, N. (2026) "Optimal Timing for Superintelligence: Mundane Considerations for Existing People". <a href="https://nickbostrom.com/optimal.pdf">nickbostrom.com</a>, February 2026.</span>
+        <span id="ref-20">[20] OpenAI (2025) "Preparedness Framework Version 2", April 15. AI Self-improvement の Critical 閾値（超人的研究者エージェント／自己改善の持続的加速）で開発を停止すると規定。</span>
+        <span id="ref-21">[21] Google DeepMind (2025) "Frontier Safety Framework Version 2.0", February 4. ML R&D 加速能力を Critical Capability Level として扱い、安全ケースレビューを課す。</span>
+        <span id="ref-22">[22] Yudkowsky, E. &amp; Soares, N. (2025) <em>If Anyone Builds It, Everyone Dies</em>. Little, Brown Spark.</span>
+        <span id="ref-23">[23] Shah, R., Irpan, A., Turner, A. M., Wang, A., Conmy, A., Lindner, D., et al. / Google DeepMind (2025) "An Approach to Technical AGI Safety and Security", April 2025. <a href="https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/evaluating-potential-cybersecurity-threats-of-advanced-ai/An_Approach_to_Technical_AGI_Safety_Apr_2025.pdf">deepmind.com</a>.</span>
+        <span id="ref-24">[24] Shah, R. (2025) "Rohin Shah on DeepMind and trying to fairly hear out both AI doomers and doubters". 80,000 Hours Podcast Episode 218, host Robert Wiblin. <a href="https://80000hours.org/podcast/episodes/rohin-shah-google-deepmind-agi-safety/">80000hours.org</a>.</span>
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on the unsolved final stretch.</strong>
+        本稿は、追い越された後も訂正可能性が維持されるかについて「未踏」と明記した。目的の不確実性（<a href="#ref-1" class="cite">[1]</a>）やオフスイッチ・ゲーム（<a href="#ref-15" class="cite">[15]</a>）が理屈として訂正可能性を支える一方、それが超知能の規模で破れないことを示す証明や実証は2026年5月時点で存在しない。Power-seeking の傾向（<a href="#ref-7" class="cite">[7]</a>）は訂正可能性に逆らう方向へ働くため、ここは成功ルート最大の未解決点として扱うべきである。楽観・悲観のいずれにも傾けず、開いた問いとして読まれたい。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on the singleton vs. multipolar choice.</strong>
+        善きシングルトン（<a href="#ref-3" class="cite">[3]</a>）と多体均衡（<a href="#ref-13" class="cite">[13]</a><a href="#ref-14" class="cite">[14]</a>）のうち、本稿は中間を現時点で最もマシな賭けと判断した。互いを監視し、人間の訂正を受け入れる少数の主体に権力を分ける形である。単一独占は外したとき是正不能、野放しの競争は暴走を招くためだ。これは証明ではなく、取り返しのつく失敗を選ぶという基準に立った相対評価であり、前提（離陸速度・解釈可能性の到達度・競争環境）が変われば最善手も動く。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Note on the bound of this paper's scope.</strong>
+        本稿は技術安全の地平の上に時系列三幕の地形を重ねた。DeepMindの最近の枠組み<a href="#ref-23" class="cite">[23]</a>は、AGI初期の実務安全として優れている。だがその射程は意図的に絞られている。superintelligence の領域、自己改善後の goal drift、複数主体の動きから生じる structural risks、そして「良いシングルトン」が成り立つ条件 —— これらは同論文の中で future work として明示的に外されている。本稿はその外された区間にこそ成功ルートの核心があると見て論じた。技術安全の積み上げを否定するのではなく、その上にもう一段の地形を重ねる立場を取る。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Images.</strong>
+        All photographs via <a href="https://unsplash.com/">Unsplash</a>. Hero/slide images are illustrative placeholders corresponding to editorial themes (a light trail through the dark, welding sparks, a shaft of light through a narrow gap in an underwater cave, a double-exposed cityscape, a laboratory bench).
+      </p>
+    </footer>
+
+    <!-- Feedback form -->
+    <section id="feedback-section" style="max-width:1120px;margin:0 auto;padding:48px 48px 64px;border-top:1px solid var(--border);">
+      <h3 style="font-size:18px;font-weight:700;color:var(--black);margin-bottom:8px;">Reader Feedback</h3>
+      <p style="font-size:13px;color:var(--meta);margin-bottom:24px;">この記事の評価・感想をお寄せください。匿名可、1分で完了します。</p>
+      <form id="feedback-form" style="display:grid;gap:16px;max-width:640px;">
+        <div>
+          <label style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">評価 (1-5)</label>
+          <div id="star-group" style="display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px;">
+            <input type="radio" name="rating" value="5" id="s5" style="display:none;"><label for="s5" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="4" id="s4" style="display:none;"><label for="s4" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="3" id="s3" style="display:none;"><label for="s3" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="2" id="s2" style="display:none;"><label for="s2" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="1" id="s1" style="display:none;"><label for="s1" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+          </div>
+        </div>
+        <div>
+          <label for="fb-comment" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">コメント (任意)</label>
+          <textarea id="fb-comment" rows="4" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label for="fb-name" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">名前 (任意)</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+          <div>
+            <label for="fb-email" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">メール (任意)</label>
+            <input type="email" id="fb-email" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+        </div>
+        <button type="submit" id="fb-submit" style="padding:12px 24px;background:var(--black);color:var(--bg);border:none;font-family:'SF Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;justify-self:start;">送信</button>
+      </form>
+      <p id="fb-success" style="display:none;font-size:14px;color:var(--body-text);margin-top:16px;">フィードバックを送信しました。ありがとうございます。</p>
+      <p id="fb-error" style="display:none;font-size:14px;color:var(--accent);margin-top:16px;">送信に失敗しました。時間をおいて再度お試しください。</p>
+    </section>
+
+    <script>
+      (function(){
+        const group = document.getElementById('star-group');
+        if (!group) return;
+        const labels = group.querySelectorAll('label');
+        labels.forEach((lab, i) => {
+          lab.addEventListener('mouseenter', () => {
+            labels.forEach(l => l.style.color = '#ccc');
+            let el = lab;
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          });
+        });
+        group.addEventListener('mouseleave', () => {
+          const checked = group.querySelector('input:checked');
+          labels.forEach(l => l.style.color = '#ccc');
+          if (checked) {
+            let el = group.querySelector(`label[for="${checked.id}"]`);
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          }
+        });
+      })();
+
+      document.getElementById('feedback-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const rating = (document.querySelector('input[name="rating"]:checked') || {}).value || '';
+        const comment = document.getElementById('fb-comment').value;
+        const name = document.getElementById('fb-name').value;
+        const email = document.getElementById('fb-email').value;
+        const eyebrowText = document.querySelector('.eyebrow').textContent;
+        const numMatch = eyebrowText.match(/No\.\s*(\d+)/);
+        const articleNo = numMatch ? numMatch<a href="#ref-1" class="cite">[1]</a> : '34';
+
+        const params = new URLSearchParams();
+        if (email) params.append('emailAddress', email);
+        params.append('entry.1131711956', rating);
+        params.append('entry.897250758', articleNo);
+        params.append('entry.242373434', comment);
+        params.append('entry.420368578', name);
+
+        fetch(FORM_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: params.toString()})
+          .then(() => {
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('fb-success').style.display = 'block';
+          })
+          .catch(() => {
+            document.getElementById('fb-error').style.display = 'block';
+          });
+      });
+    </script>
+
+    <script>
+      const progress = document.getElementById('progress');
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = scrolled + '%';
+      });
+
+      const reveals = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.2 });
+      reveals.forEach(el => io.observe(el));
+
+      const buttons = document.querySelectorAll('.nav button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (target) target.scrollIntoView({behavior:'smooth'});
+        });
+      });
+
+      const slides = document.querySelectorAll('.slide');
+      const slideIo = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            buttons.forEach(b => b.classList.remove('active'));
+            const match = document.querySelector(`.nav button[data-target="${e.target.id}"]`);
+            if (match) match.classList.add('active');
+          }
+        });
+      }, { threshold: 0.5 });
+      slides.forEach(s => slideIo.observe(s));
+    </script>
+  </body>
+</html>

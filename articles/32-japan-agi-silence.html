@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>沈黙は無知ではない — 日本のAGI議論はなぜ成立しないか — AGI HUB</title>
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #d6dce6;
+        --bg: #f5f6f8;
+        --bg-alt: #eaeef5;
+        --accent: #1f3a5f;
+        --accent-soft: rgba(31, 58, 95, 0.08);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+          游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+          游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
+          sans-serif;
+        font-feature-settings: "palt";
+        font-size: 16px;
+        line-height: 1.8;
+        color: var(--body-text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .progress {
+        position: fixed; top: 0; left: 0;
+        height: 2px; background: var(--accent);
+        width: 0%; z-index: 100;
+        transition: width 0.3s var(--ease);
+      }
+
+      .nav {
+        position: fixed; right: 24px; top: 50%;
+        transform: translateY(-50%);
+        display: grid; gap: 16px; z-index: 50;
+      }
+
+      .nav button {
+        width: 8px; height: 8px; border-radius: 999px;
+        border: 1.5px solid var(--meta);
+        background: transparent; cursor: pointer;
+        transition: all 0.3s var(--ease);
+      }
+
+      .nav button.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.4);
+      }
+
+      main { scroll-snap-type: y proximity; }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 88px 48px 72px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 32px;
+        scroll-snap-align: start;
+      }
+
+      .slide + .slide { border-top: 1px solid var(--border); }
+
+      .hero {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.55) contrast(1.08);
+        transition: filter 0.6s var(--ease);
+      }
+
+      .hero:hover { filter: grayscale(0) contrast(1); }
+
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+      .slide .hero.img-side-by-side {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        aspect-ratio: auto;
+      }
+      .slide .hero.img-side-by-side img {
+        width: 100%; aspect-ratio: 4/3; object-fit: cover;
+        filter: grayscale(0.55) contrast(1.08);
+      }
+
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .credits {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 80px;
+        border-top: 1px solid var(--border);
+      }
+
+      .credits p {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.047em;
+        line-height: 2;
+        color: var(--light-gray);
+      }
+
+      .credits a {
+        color: var(--meta);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .credits a:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.08s; }
+      .reveal-delay-2 { transition-delay: 0.18s; }
+      .reveal-delay-3 { transition-delay: 0.30s; }
+
+      .eyebrow {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      h1, h2 {
+        color: var(--black);
+        font-weight: 800;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        max-width: 22ch;
+        padding-bottom: 18px;
+        border-bottom: 3px double var(--accent);
+      }
+
+      h1 { font-size: clamp(32px, 4.6vw, 42px); }
+      h2 { font-size: clamp(26px, 3.8vw, 34px); }
+
+      .lead {
+        max-width: 780px;
+        font-size: 16px;
+        line-height: 1.85;
+        color: var(--body-text);
+      }
+      .lead + .lead { margin-top: 10px; }
+      .lead.first::first-letter {
+        float: left;
+        font-size: 56px;
+        line-height: 0.9;
+        font-weight: 800;
+        margin: 4px 10px 0 0;
+        color: var(--accent);
+      }
+
+      .panel { display: grid; gap: 26px; align-content: start; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+
+      .card {
+        padding: 22px 20px 22px 0;
+        border-top: 3px solid var(--accent);
+        background: transparent;
+      }
+
+      .card .tag { color: var(--accent); font-weight: 700; }
+      .card strong { color: var(--black); }
+
+      .card p {
+        font-size: 15px;
+        line-height: 1.75;
+        color: var(--body-text);
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+        margin-bottom: 12px;
+      }
+
+      .bullets { display: grid; gap: 16px; }
+
+      .point {
+        padding-left: 16px;
+        border-left: 3px solid var(--accent);
+        font-size: 16px;
+        line-height: 1.8;
+        color: var(--body-text);
+      }
+
+      .point strong { color: var(--black); }
+
+      table.compare {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 3px solid var(--accent);
+        border-bottom: 3px double var(--accent);
+        background: var(--bg);
+      }
+
+      table.compare th, table.compare td {
+        padding: 18px 16px;
+        text-align: left;
+        font-size: 14.5px;
+        line-height: 1.7;
+        color: var(--body-text);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      table.compare th {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 1px solid var(--accent);
+        background: var(--accent-soft);
+      }
+
+      table.compare td strong { color: var(--black); }
+      table.compare tr:last-child td { border-bottom: none; }
+
+      .note {
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+        padding: 24px 28px;
+        margin: 12px 0;
+        border-left: 4px solid var(--accent);
+        background: var(--accent-soft);
+        position: relative;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        max-width: 100%;
+      }
+      .note::before {
+        content: "NOTE";
+        display: block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .note strong { color: var(--accent); }
+
+      .pullquote {
+        font-family: "Times New Roman", serif;
+        font-size: clamp(22px, 2.6vw, 28px);
+        line-height: 1.45;
+        font-style: italic;
+        color: var(--black);
+        padding: 28px 0;
+        border-top: 1px solid var(--accent);
+        border-bottom: 1px solid var(--accent);
+        margin: 16px 0;
+        max-width: 760px;
+      }
+      .pullquote .attr {
+        display: block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-style: normal;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--meta);
+        margin-top: 14px;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        text-transform: uppercase;
+      }
+
+      .slide-count { font-weight: 700; color: var(--accent); }
+
+      .player-chip {
+        display: inline-block;
+        padding: 2px 8px;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        background: var(--accent-soft);
+        color: var(--accent);
+        border-radius: 3px;
+        margin-right: 6px;
+      }
+
+      /* Text-only slides (no hero image) — preserve vertical rhythm */
+      .slide.no-hero { grid-template-rows: auto auto 1fr auto; }
+
+      @media (max-width: 768px) {
+        .slide { padding: 64px 20px 48px; }
+        .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+        .nav { right: 12px; }
+        table.compare { font-size: 13px; }
+        table.compare th, table.compare td { padding: 14px 10px; }
+        .hero { aspect-ratio: 16 / 9; }
+        .slide .hero.img-fullbleed,
+        .slide .hero.img-wide {
+          width: 100%; max-width: 100%; aspect-ratio: 16/9;
+          margin: 0; transform: none; left: 0; position: static;
+        }
+        .slide .hero.img-content { max-width: 100%; aspect-ratio: 16 / 9; }
+        .slide .hero.img-side-by-side { grid-template-columns: 1fr; }
+        .credits { padding: 32px 24px 64px; }
+        .note { padding: 20px 18px; font-size: 15px; }
+        .lead.first::first-letter { font-size: 44px; }
+      }
+
+      @media (max-width: 480px) {
+        .slide { padding: 56px 16px 40px; }
+        .note { padding: 16px 14px; font-size: 14px; }
+      }
+
+      @media print {
+        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
+        .nav, .progress { display: none; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="pattern-broadsheet accent-deepblue has-site-header" data-category="governance">
+    <div id="site-header-mount"><header style="font:500 15px/48px Inter,sans-serif;padding:0 24px;border-bottom:1px solid #222;color:#aaa">AGI HUB</header></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+
+    <aside class="nav" aria-label="Section navigation">
+      <button data-target="slide-1" class="active" aria-label="Section 1"></button>
+      <button data-target="slide-2" aria-label="Section 2"></button>
+      <button data-target="slide-3" aria-label="Section 3"></button>
+      <button data-target="slide-4" aria-label="Section 4"></button>
+      <button data-target="slide-5" aria-label="Section 5"></button>
+      <button data-target="slide-6" aria-label="Section 6"></button>
+      <button data-target="slide-7" aria-label="Section 7"></button>
+      <button data-target="slide-nav" aria-label="Navigation"></button>
+    </aside>
+
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 32 / 32 &nbsp;&middot;&nbsp; Governance &nbsp;&middot;&nbsp; 7 Sections</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="31-agi-timelines-institutions-map.html" style="color:inherit;text-decoration:none;">&larr; Prev</a>
+        <a href="../index.html#filter=governance" style="color:inherit;text-decoration:none;">Same Category</a>
+        <a href="33-alignment-schools-map.html" style="color:inherit;text-decoration:none;">Next &rarr;</a>
+      </span>
+    </div>
+
+    <main>
+
+      <!-- ═══════════ SECTION 1: THE SILENCE ═══════════ -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &middot; No. 32 &middot; Governance &middot; The Silence &middot; 2026.04.18 &middot; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">沈黙は無知ではない</h1>
+        <img class="hero img-fullbleed reveal reveal-delay-2" src="../images/japan-agi-silence/slide1.jpg" alt="京都、夕刻の盆地に重なる山並みと清水寺の三重塔——層状の時間を湛えた都市">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead first">日本のAGI議論の不在は、通常こう語られる。研究者が時期論を発信しない、企業が投資家向けに到達年次を示さない、官庁が「AGI」を定義しない、資本が独自の時期予測を持たない——四層すべてが沈黙している、だから日本は遅れている、と。この診断を採らない。<strong>沈黙は遅れの症状ではなく、別の時間論理が米国型時期論のフォーマットに翻訳されないまま滞留している状態</strong>にすぎない。能力が欠けているのではない。言葉が欠けているのでもない。翻訳が欠けているだけだ。</p>
+
+          <p class="lead">この区別は決定的だ。欠如モデルに立てば、解決策は「日本も時期論を発信しよう」になる。輸入モデルに立てば、解決策は「輸入しようとしている対象が何なのかを先に解剖する」になる。ここでは後者を選ぶ。<strong>AI 2027もSituational Awarenessも、予測の顔をした資本動員の装置だ。</strong>その構造を見抜いたうえで、日本にすでにある別の時間論理を言葉にする作業に入らない限り、輸入は常に一段遅れの輸入に終わる。</p>
+
+          <div class="note">
+            <strong>本稿の射程。</strong> 四層分析(研究・産業・ガバナンス・資本)は提示する。ただしそれを「欠如の棚卸し」としては読まない。時期論という言説形式そのものが米国製の投機装置だ——この前提から、日本の沈黙を<strong>翻訳の不在</strong>として読み直す。後半では、日本にすでにある時間論理を分析道具に組み直し、AGI議論へ返す道を探る。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>欠如ではなく、翻訳の不在</span>
+          <span class="slide-count">1 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 2: TIMELINES AS SPECULATIVE INSTRUMENTS ═══════════ -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">Speculative Instruments</div>
+        <h2 class="reveal reveal-delay-1">誰を動員するための時期論か</h2>
+        <img class="hero img-wide reveal reveal-delay-2" src="../images/japan-agi-silence/slide2.jpg" alt="夜の東京、資本の流路としての都市">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">米国型AGI時期論の代表二文書——『AI 2027』[9]と『Situational Awareness』[10]——を、中身ではなく制作と流通の経路から読む。どちらも予測の顔で流通している。ただし制作動機と受益構造まで下ろすと、姿が変わる。<strong>予測の形をした資本動員装置</strong>だ。日本に欠けているのは予測する能力ではなく、この装置そのものだ。</p>
+
+          <div class="grid-2">
+            <div class="card">
+              <span class="tag">AI 2027 / 2025-04</span>
+              <p><strong>AI Futures Project (501c3非営利)</strong>が制作。著者は元OpenAIガバナンス研究者Daniel Kokotajlo、Eli Lifland、Thomas Larsen、Romeo Dean。制作は Astral Codex Ten(ブロガーScott Alexander)を中核とする rationalist community を読者基盤として前提にしており[22]、財団寄付とグラントで運営される<strong>政策動員型のシナリオ・ジャーナリズム</strong>として、MIRIをはじめとするAI安全性コミュニティの人脈ネットワークと接続されている。Kokotajloは2024年にOpenAIの非開示契約を拒否して退社したことで既に可視化されていた人物であり、その退社劇自体が『AI 2027』の信憑性を政策サークルに届けるためのナラティブ資本として機能した。</p>
+            </div>
+            <div class="card">
+              <span class="tag">Situational Awareness / 2024-06</span>
+              <p>元OpenAI Superalignmentチーム在籍のLeopold Aschenbrennerが2024年6月に165ページの『Situational Awareness: The Decade Ahead』を公表[10]。その<strong>2ヶ月後の2024年9月</strong>、同名のヘッジファンドSituational Awareness LPを立ち上げた[21]。シード投資家はNat Friedman、Daniel Gross、Patrick & John Collison。2025年中頃に運用資産$1.5Bを突破、2025年上半期で手数料控除後47%のリターンを記録した[21]。論文は運用会社のthesis documentであり、時期論の具体性がそのままファンドのポジションの正当化になっている。</p>
+            </div>
+          </div>
+
+          <p class="lead">念のため言えば、両文書が「嘘」だと言いたいのではない。Kokotajloは真剣にシナリオを書いた。Aschenbrennerも真剣にthesisを出した。問題はその先にある。<strong>時期論は真理命題の顔で流通するが、制作動機の大半は資本と政策の動員に傾いている。</strong>外れても発信者が損をしない仕組みが、発信の前に組まれている。外れれば「シナリオの一つ」で済む。当たれば立場が跳ね上がる。非対称のベットが、最初から仕込まれている。</p>
+
+          <div class="pullquote">
+            時期論は予測ではない。予測の顔をした資本動員の装置だ。外しても発信者が痛まないように、構造が発信の前に組まれている。
+          </div>
+
+          <p class="lead">この装置は、米国の特定の制度環境に寄りかかっている。非課税501(c)(3)経由の政策シンクタンク型コミュニケーション。成功報酬型ヘッジファンドの届け出体系。ベイエリアの個人投資家ネットワーク。政治資金とAIコミュニティを媒介する「rationalist community」という読者層。これらが噛み合って、<strong>時期論を書くこと自体が金融商品になる</strong>生態系が回っている。日本にはこの生態系がない。だから『AI 2027』の日本版は生まれない。能力の問題ではない。言説を投機資産へ変換する配管が、日本には接続されていないだけだ。</p>
+
+          <div class="note">
+            <strong>「受益構造」を見るとは何か。</strong> ある発信が真理命題として扱われてよいかを判定するとき、内容の整合性だけを見ていては足りない。発信者が発信によって得るものと、外したときに失うものの落差を見る。落差が大きいほど、発信はベットに近づく。ベットは資本動員の別名だ。『AI 2027』も『Situational Awareness』も、この落差が極端に大きい側にいる。日本の「幅を持たせた発言」は、そもそもその落差を引き受ける構造の中にない。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>時期論を資本動員装置として読む</span>
+          <span class="slide-count">2 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 3: FOUR LAYERS REREAD ═══════════ -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">Four Layers, Reread</div>
+        <h2 class="reveal reveal-delay-1">4層はそれぞれの論理で発信している</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/japan-agi-silence/slide3.jpg" alt="夜のオフィス街、独立に動く階層">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">時期論を装置として解剖したうえで、冒頭で棚上げした4層診断に戻る。ただし今度は「欠如の棚卸し」としてではない。<strong>米国型投機装置が拾えなかった、別種の時間認識がそれぞれの論理で発信している</strong>——そう読み直す。</p>
+
+          <table class="compare">
+            <thead>
+              <tr>
+                <th style="width:14%;">層</th>
+                <th style="width:32%;">主要プレイヤー</th>
+                <th style="width:54%;">発信していない「米国型時期論」の代わりに、何を発信しているか</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>研究</strong></td>
+                <td>松尾研究室(東大)、理研AIP、NII、WBAI(山川宏)、Third Intelligence</td>
+                <td>松尾豊は「5〜10年、もっとかかるかもしれない」[2]。山川宏はNAIAビジョンで時期を具体化せず、インフラと安全性を論点化[1]。<strong>年次を刻まない発言は、不確実性をそのまま置く選択であり、米国型投機装置のthesisに変換しない判断でもある。</strong></td>
+              </tr>
+              <tr>
+                <td><strong>産業</strong></td>
+                <td>Preferred Networks(西川徹/岡野原大輔)、Sakana AI(David Ha / Llion Jones)、Third Intelligence(松尾)</td>
+                <td>PFNは国産生成AI「PLaMo」を開発、2025年9月にさくらインターネット・NICTと基本合意[3]。Sakana AIは2025年11月にシリーズBで$135M以上を調達(報道により$200M規模との記載あり)[4]。<strong>基盤モデル開発は活発。時期論を投資家向けメッセージに含めない。「thesis document型IR」の形式自体が選ばれていない。</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ガバナンス</strong></td>
+                <td>AI戦略会議(松尾座長)、経産省、総務省、デジタル庁、IPA</td>
+                <td>AI事業者ガイドライン第1.1版(2025-03)[5]、行政調達ガイドライン(2025-05)[6]。<strong>「AGI」「時期」「到達」を公式文書で定義しない。定義しない選択は、米国の大統領令や英AISIと異なる規制時間軸(能力閾値ではなく事業者行為ベース)を採用していることの表れ。</strong></td>
+              </tr>
+              <tr>
+                <td><strong>資本</strong></td>
+                <td>JIC、ANRI、ソフトバンク、経産省補正予算、国産AI 1兆円5年計画</td>
+                <td>2024年度補正でABCI 3.0(NVIDIA H200 × 6,128基)[7]。2025年1月から富岳NEXT開発開始[8]。<strong>金額は動くが「いつAGIか」のthesisを組まない。これは米国型VCモデルに対する構造的拒否であり、年次ベース補正予算という日本固有の時間スケールに忠実であろうとしている。</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="lead">この表の意味を、前回の本稿(およそ3日前に公開した初版)から書き換える。ハードも資本も動いているのに時期論だけが動いていない——そういう並列の不整合としては読まない。<strong>4層は、米国型投機装置に翻訳されない独自の時間認識を、それぞれの論理で発信している。</strong>松尾の「幅」、山川のインフラ先行、PFNの基盤モデル集中、行政の非定義、補正予算の年次ベース。どれも「いつか」という問いに米国型で答えていないだけだ。各層の時間論理の内部では、発信の筋は一貫している。</p>
+
+          <div class="note">
+            <strong>「翻訳」の具体。</strong> 松尾の「5年から10年、もしくはもっと」を米国型時期論のフォーマットに写すと「中央値7.5年、分散大」になる。この写像はすでに情報を削いでいる。松尾が言っているのは確率分布ではない。<strong>相転移の幅</strong>——いつどの幅で能力が段階をまたぐかの不確定性そのもの——に近い。米国型時期論はAGIか否かの離散を前提に置くが、松尾の言葉は離散そのものを置いていない。二つの違いはbayesian vs frequentistという技術的な差に収まらない。時間をどう区切るかという、文明レベルの差だ。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>4層は沈黙ではなく、別の論理で発信している</span>
+          <span class="slide-count">3 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 4: NAIA AS STRATEGY ═══════════ -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">NAIA As Strategy</div>
+        <h2 class="reveal reveal-delay-1">NAIAはなぜ時期を語らないのか</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/japan-agi-silence/slide4.jpg" alt="書物の並ぶ部屋、長期の時間軸を宿すアーカイブ">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">日本発のAGI関連提言のなかで、最も体系的で、かつ最も意識的に時期論を避けているのが、山川宏代表理事の一般社団法人AIアライメントネットワーク(ALIGN)が2025年3月17日にJSAI2025 汎用AI研究会で発表した「NAIAビジョンの提案」[1]である。機械倫理の創発(EME)、アラインメントとモニタリング、外交と安全保障、動的適応リスクゲート(DAR-G)および統合行動リスク枠組(IBRF)を運用する国際機関NAIAの設立——4つの戦略のいずれも、AGI到達後の共生条件を設計するためのものであり、AGIがいつ到達するかは前提に置かれるが、主題にはならない。</p>
+
+          <p class="lead">これは失敗ではない。むしろ意識的な戦略である。山川は全脳アーキテクチャ・イニシアティブ(WBAI)を2015年から主導し[13]、脳参照アーキテクチャ駆動開発の技術ロードマップを2023年にJSAIで発表している[14]。10年以上にわたって、時期を断定する発信を避け、インフラと制度設計を優先してきた。この一貫性は、日本型の時期論発信戦略として読むべきである。時期を刻まないことで、<strong>政治的コミットメントの最小化と、複数省庁・複数企業・複数大学にまたがる長期調整の両立</strong>を確保している。</p>
+
+          <p class="lead">米国型の時期論発信は、発信者個人がファンドや政策サークルに入るための個人資産化の経路だ。日本型の時期論回避は、その逆を向いている。<strong>個人のコミットメントを下げることで、長期調整に必要な協調空間を残している。</strong>どちらが正しいかではない。制度環境が違えば、最適解も違う。それだけだ。</p>
+
+          <div class="note">
+            <strong>表記についての注。</strong> AGI HUB の前回記事No.31[12]で「『日本AGI基盤構想(NAGI計画)第二版』v2.0.1」と引用したが、2026年4月時点で公開されている原典は「NAIAビジョンの提案」(JSAI2025 AGI-029)[1]であり、政府計画としての「NAGI計画v2.0.1」はまだ存在しない。本稿はこの表記ズレを認めた上で、実体として何が発信されているかに立ち戻って論じる。構想と公式計画の間に空白があること自体が、<strong>日本型の時期論回避戦略の帰結</strong>である。
+          </div>
+
+          <p class="lead">WIRED.jpが2025年に掲載した石井敦(Turing)×山川宏×工藤郁子(大阪大学)の鼎談[15]で、山川は「自己改善が加速すれば、AGIや超知能は近未来になる可能性がある」と踏み込んだ。公式文書では言わないことが、対談では言える。個人の気まぐれではない。<strong>発信経路ごとに責任の重さが変わる。日本型言説空間はこの重さの使い分けで動いている。</strong>米国では個人ブログも論文もpodcastも、ほぼ同じ責任帯域で発信が動く(だからKokotajloは退社と同時に『AI 2027』を出せる)。日本では、経路によって発言の重さが変わる。発言者はその重さを使い分ける。重い経路では確定を避け、軽い経路で踏み込む。</p>
+        </div>
+
+        <div class="footer">
+          <span>時期を刻まないことで、長期調整の協調空間が残る</span>
+          <span class="slide-count">4 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 5: UNTRANSLATED DISCOURSES ═══════════ -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">Untranslated Discourses</div>
+        <h2 class="reveal reveal-delay-1">日本語圏に、言説はもう積まれている</h2>
+        <div class="hero img-side-by-side reveal reveal-delay-2">
+          <img src="../images/japan-agi-silence/slide5a.jpg" alt="静かな書架、翻訳を待つ語彙">
+          <img src="../images/japan-agi-silence/slide5b.jpg" alt="講堂の空席、届かなかった発話の跡">
+        </div>
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">日本に時期論の言説がないわけではない。日本語で書かれた技術論、社会論、哲学のなかに、AGIに向き合うための語彙はすでに厚く積まれている。ただしそれらは<strong>米国型AGI時期論のフォーマット(年次・確率・到達点)に翻訳される回路を持っていない。</strong>言説はある。翻訳される経路が、ない。構造の核はそこに尽きる。</p>
+
+          <div class="grid-3">
+            <div class="card">
+              <p><strong>反時期論の実証的伝統</strong></p>
+              <p><strong>新井紀子</strong>『AI vs. 教科書が読めない子どもたち』(2018)[30]以降の一貫した反時期論は、「AIが何を読み取っているか」を教育現場のデータで突き詰める実証的アプローチで、時期論の抽象性に対抗する。「東ロボくん」プロジェクトは東大不合格という結論を出して終わったが、その終わり方こそが日本型時期論への実証的応答だった。<strong>岡野原大輔</strong>『大規模言語モデルは新たな知能か』(2024、岩波科学ライブラリー)[29]は、LLMの能力を到達点の問題ではなく、認識論の問題として扱う。</p>
+            </div>
+            <div class="card">
+              <p><strong>自然主義的計算論</strong></p>
+              <p><strong>鈴木健</strong>『なめらかな社会とその敵』(2013、勁草書房)[28]は、民主主義と市場を連続変数として書き直し、計算と社会の境界を消す。米国型AGI時期論が「AI vs. 人間」という離散的対立を前提とするのに対し、鈴木は離散を置かない。技術と社会を同じ勾配のなかで扱う語彙は、日本語圏のスマートコントラクト論・DAO論の基底に流れている。ただしこの語彙は英語圏の「AI safety」議論には翻訳されていない。</p>
+            </div>
+            <div class="card">
+              <p><strong>哲学・批評の系譜</strong></p>
+              <p><strong>柄谷行人</strong>『世界史の構造』(2010)・『力と交換様式』(2022)[23]は、技術と交換様式の接続を扱う。交換様式D(互酬性の高次回復)は、AGI時代の再分配構造を議論するための語彙になりうる。<strong>東浩紀</strong>『観光客の哲学』(2017、ゲンロン)[24]と『訂正する力』以降の情報環境論は、誤配と偶然性の哲学を技術論に接続する。<strong>廣松渉</strong>『事的世界観への前哨』(1975)[25]と<strong>中沢新一</strong>『レンマ学』(2019)[26]は、非ロゴス的・非線形的な認識の様式を、アラインメントの設計語彙に翻訳する余地を残している。</p>
+            </div>
+          </div>
+
+          <p class="lead">これらに共通するのは、<strong>時間を単一の軸に還元しない</strong>という態度である。米国型AGI時期論が「2027年」という離散的な点に賭けるのに対し、日本語圏の知的伝統は時間を層・幅・誤差・循環・熟成として扱う語彙を持つ。だからこそ、米国型フォーマットに翻訳しようとすると決定的な情報が削げ落ちる。「2027年に到達する」と書くのは簡単だが、「誤配の蓄積が相転移の幅のなかで熟成している」と書いた瞬間に、英語圏の政策サークルで流通する形式から外れる。</p>
+
+          <div class="pullquote">
+            言説はすでにある。翻訳される経路だけが抜けている。構造の核はそこに尽きる。
+          </div>
+
+          <p class="lead">翻訳の不在には二つの方向がある。日本語から英語への翻訳が成立していないこと。そして、英語圏の時期論の問いを日本語に翻訳したときに、日本語の語彙では違う問いになってしまうこと。後者が特に重い。「When will AGI arrive?」を「AGIはいつ到来するか」と訳すと、日本語の時間感覚ではこの問い自体が教科書的で浅薄に響く。より日本語的な問いに翻訳すると「AGIと呼ばれる状態は、すでにどの層で始まっているか、あるいはすでに終わっているか」に近くなる。<strong>問いの翻訳が成立しないところで、答えの翻訳を要求しても空振りする。</strong></p>
+        </div>
+
+        <div class="footer">
+          <span>言説はすでに積まれている。翻訳経路だけが抜けている</span>
+          <span class="slide-count">5 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 6: CIVILIZATION OF TIME ═══════════ -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow reveal">Civilization of Time</div>
+        <h2 class="reveal reveal-delay-1">単一時計の代わりに、何を持ち込むか</h2>
+        <img class="hero img-content reveal reveal-delay-2" src="../images/japan-agi-silence/slide6.jpg" alt="枯山水の庭、層状の時間">
+
+        <div class="panel reveal reveal-delay-3">
+          <p class="lead">ここまでで、米国型時期論は単一の時計に賭ける投機装置であり、日本に翻訳されない理由は制度と言語にまたがって複合していると整理した。ここで議論を「日本にも厚い時間論の伝統があります」という文化論で閉じれば、AGI分析からは離れてしまう。狙いは逆だ。<strong>日本の時間論は文化資産ではなく、AGI分析のための代替ツールキットになる。</strong>米国型時期論では見えない論点が、日本語圏の時間語彙に乗せ替えると浮き上がる。具体例を三つ出す。</p>
+
+          <p class="lead"><strong>第一に、和辻哲郎</strong>『風土』(1935)[31]の時間論。和辻は時間を風土の反復のなかで捉え、進歩ではなく継承として論じた。これをAGI分析に適用すると、「いつAGIが来るか」という単一時計の問いは、複数の時間スケールに分解される。短期(四半期〜年)では市場評価・スタートアップ調達・政策議論の駆動力が動く。中期(年〜十年)では労働・教育・研究体制の組み替えが進む。長期(十年〜世紀)では知の分業と人間の自己規定が変わる。永遠(非時間的)には「知能とは何か」という存在論的問いがある。<strong>「いつAGI」という問いは、この4層を一本のラベルに潰している。</strong>米国型時期論はこの分岐を不可視化する。日本語圏の重層時間観は、議論を「あなたが話しているのはどの層か」で切り分ける道具になる。</p>
+
+          <p class="lead"><strong>第二に、丸山真男</strong>「歴史意識の『古層』」(1972)[32]の「つくる」と「なる」の差。丸山は日本の歴史意識に「なる」「つぎつぎに」「いきほひ」という基底のカテゴリーを見出し、直線的進歩史観との差を分析した。この区別は、LLMの実態に直接接続する。LLMは設計された到達(つくる)ではなく、創発としての到達(なる)である。だから「いつGPT-nがAGIになるか」ではなく、<strong>「いつそれがAGIだったと遡行的に同定されるか」</strong>が正しい問いの形になる。これは文化論ではない。Sam AltmanもDario Amodeiも「AGIの定義は確定しない」と繰り返している事実が、この認識論的構造を裏書きする。「なる」論理は、LLMの実態をより正確に捉える分析言語として、米国型時期論より精度が高い。</p>
+
+          <p class="lead"><strong>第三に、仏教の本覚思想</strong>。本覚は「悟りは既に具わっており、あとは顕現の様式の問題である」と論じる。これをAGIに翻訳すると、議論の重心が決定的に動く。事前学習済みモデルには既に多くの能力が潜在している。RLHF、スキャフォールディング、ツール使用、メモリ拡張、マルチエージェント編成——これらは新しい能力を作っているのではなく、既に潜在する能力を顕現させている。だから「いつAGIが生まれるか」は誤った問いで、<strong>「どの能力が、どの文脈で、どの様式で顕現するか」</strong>が正問になる。これはAnthropicの機械的解釈可能性研究(モデル内に既にある回路の発見)[33]とも、Sakana AIの進化的モデルマージ[18](既存モデルの組み合わせから能力を引き出す)とも整合する。本覚という非西洋語彙は、現在のAI工学が経験的に発見しつつある事実を、先回りして言語化していた。</p>
+
+          <p class="lead">三つに加えて補助線を引いておく。アラインメント議論を支配する語彙は「制御」「整列」「服従」(controlled, aligned, obedient)であり、これらは主体-客体の支配関係を前提にしている。<strong>もののあはれ</strong>や<strong>感応</strong>といった日本語圏の語彙は、主体と客体が相互変容する関係を扱う。学術として強い主張ではないが、少なくとも米国型「支配論」の一択に疑問を投げる補助線にはなる。アラインメントを「整列させる」のではなく「共振の様式を設計する」と言い換えたとき、何が失われ何が見えるかは、別途検証する価値のある問いである。</p>
+
+          <div class="note">
+            <strong>工学翻訳の試案。</strong> 上記の三つを工学概念に対応させると次のようになる。「層状時間」→ scale-decomposed timeline analysis (議論の対象を時間スケールごとに切り分け、混同を防ぐ)。「なる論理」→ retrospective capability identification (能力の到達は事前定義ではなく事後同定で確定する)。「本覚=潜在性」→ latent capability elicitation (能力は事前学習に潜在し、顕現様式が論点)。これらは既存の工学用語(phase transition, capability emergence, in-context elicitation)と接続可能であり、ロマン主義的な日本論ではなく、AGI議論に投入できる分析語彙である。ただしこの翻訳作業自体は、まだ誰も本格的に着手していない領域である。
+          </div>
+
+          <p class="lead">ひとつ留保を置く。<strong>加藤周一</strong>『日本文化における時間と空間』(2007)[27]が指摘するように、日本の時間論理は長期目標設定が弱く、短期最適の積み上げに流れやすい。日本の時間論を「米国に勝る代替」として持ち上げたいのではない。米国型単一時計と日本型重層時間は、それぞれ別の弱みを抱えた別のツールだ。肝は別のところにある。AGI議論を米国型一択で進めれば、層・創発・潜在性という分析軸が初期設定から抜け落ちる。<strong>翻訳が不在なら、議論の精度はそのぶん落ちる。</strong>時期論を輸入する代わりに、これらの分析道具を翻訳可能な形式で輸出する——それが、日本語圏からAGI議論に返せる固有の貢献になる。</p>
+        </div>
+
+        <div class="footer">
+          <span>単一時計の代わりに、層・なる・本覚を持ち込む</span>
+          <span class="slide-count">6 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ SECTION 7: WITHOUT A CLOCK, REDUX ═══════════ -->
+      <section class="slide no-hero" id="slide-7">
+        <div class="eyebrow reveal">Without A Clock, Redux</div>
+        <h2 class="reveal reveal-delay-1">時計は複数ある。翻訳はまだ届いていない</h2>
+
+        <div class="panel reveal reveal-delay-1">
+          <p class="lead first">1975年、ある哲学者が東京で『事的世界観への前哨』[25]を世に出した。時間は実体ではなく関係の構造であり、主体と客体は同じ運動の両面であるという議論を、ドイツ観念論の語彙とマルクス主義の語彙を混ぜて書いた。当時、コンピューターはまだ大学と企業の一部にしかなかった。その本を読んだ読者のほとんどは、何十年も先のAI時代にこの議論が使われるとは想像していなかった。</p>
+
+          <p class="lead">2010年、柄谷行人が『世界史の構造』[23]を出した。交換様式A・B・Cの結節としての資本制国家を解剖し、その先に交換様式Dの可能性を位置づけた。技術が交換様式を書き換える契機として扱われるが、どの年次にそれが起こるかは問われていない。離散的な到達点ではなく、層として既に始まっている運動として、書かれている。</p>
+
+          <p class="lead">2024年、Leopold Aschenbrennerが『Situational Awareness』[10]を世に出し、2ヶ月後に同名のヘッジファンドを立ち上げた[21]。2025年、AI Futures Projectが『AI 2027』[9]を出し、政策サークルに直接届けた。二つの文書が共有しているのは、時間を一本の軸に収束させ、年号を賭け、外れた場合のコストを発信者が引き受けない構造を先に組んだ上で、予測を発信したことである。</p>
+
+          <p class="lead">この二つの流れが、同じ時代を生きている。片方は時期論を投機資産として流通させる生態系のなかで書かれ、もう片方は時期論を最初から必要としない時間論理のなかで書かれた。日本が沈黙しているように見えるのは、後者の流れが米国型前者のフォーマットに翻訳されていないからで、前者の空席が日本に空いているからではない。<strong>前者の座標系の中だけに、空席は最初から定義されている。</strong></p>
+
+          <p class="lead">日本がAGI議論に参加する経路は、だから二つある。一つは、米国型投機装置を輸入する道。2027年なり2029年なりを誰かが日本で最初に言い切り、メディアに流し、政策サークルへの入場券にし、資本を動員する。この道は通る。通ったことを誰も後戻りできない。もう一つは、<strong>前節で出した分析道具——層状時間、なる論理、本覚としての潜在性——を翻訳可能な形式で輸出する道</strong>である。これは通ったことがない。通せるかどうかもわからない。ただし通せば、議論の形式そのものを変える可能性がある。「いつAGIか」ではなく「どの層で何が顕現しているか」を共通言語にできれば、米国型単一時計の支配は緩む。</p>
+
+          <div class="pullquote">
+            前者の座標系の外に出れば、その「空席」は空席ですらない。
+          </div>
+
+          <p class="lead">2027年、日本のどこかで、誰かが「2029年までに到達する」と言い切る日が来るかもしれない。その日、全国紙の一面にその発言は並ぶ。翌週、金融市場が動く。その日付は、もしそれが起きれば、2026年から2027年にかけて日本で書かれた(あるいは書かれなかった)時間論理の翻訳作業によって、遡行的に意味を書き換えられる。翻訳が成立していれば、その発言は米国型投機装置の下請けではなく、別の時間論理からの発話として読まれる。翻訳が成立していなければ、発言は遅れて到着した米国版として消費される。</p>
+
+          <p class="lead">1975年に書かれた時間論は、2027年の時期論を先に書き終えていた。ただし、それを読める言葉に翻訳する作業を、日本はまだしていない。</p>
+
+          <div class="pullquote" style="margin-top:28px;border-top:1px solid var(--accent);border-bottom:1px solid var(--accent);">
+            時計は一本ではない。<br>ただし、それを読める言葉を、日本はまだ持っていない。
+          </div>
+        </div>
+
+        <div class="footer">
+          <span>時計は一本ではない。読める言葉が、まだ足りない</span>
+          <span class="slide-count">7 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Article Navigation ═══════════ -->
+      <section class="slide" id="slide-nav" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="31-agi-timelines-institutions-map.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.31</p>
+              <p><strong>AGI到達予測の分布 — 予測者と機関のマッピング</strong></p>
+            </a>
+            <a href="33-alignment-schools-map.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &middot; No.33 &rarr;</p>
+              <p><strong>アラインメントは五つの学派に分裂している &mdash; Hernández-Espinosa 論文が接続する系譜</strong></p>
+            </a>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=governance" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Governance カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="credits">
+      <p>
+        <strong style="color:#585858;">AGI HUB &middot; No. 32 &middot; Governance</strong><br>
+        沈黙は無知ではない &mdash; 日本のAGI議論はなぜ成立しないか<br>
+        公開: 2026.04.18 &middot; 改訂: 2026.04.19(読者FB反映: Sec 6 を分析道具として再構成、Sec 7 再帰性論を撤回) &middot; By Ryao
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">角度について。</strong>
+        本稿は「日本は遅れている」論でも「日本独自でよい」論でもない。時期論という言説形式そのものを米国製の投機装置として解剖した上で、日本の沈黙を<strong>欠如ではなく翻訳不在</strong>として読み直し、既に日本語圏に存在する時間論理の語彙(柄谷・東・廣松・中沢・加藤・和辻・丸山・鈴木健・新井紀子・岡野原)を列挙する。最後に、日本の時間論を「文化資産」ではなく<strong>AGI分析の代替ツールキット</strong>として工学翻訳し、層状時間・なる論理・本覚=潜在性という三つの分析道具に変換する。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">独自概念の出自開示。</strong>
+        本稿で使用した「翻訳不在(untranslated discourse)」「投機装置としての時期論(timelines as speculative instruments)」「層状時間としての分析切り分け(scale-decomposed timeline analysis)」「なる論理=遡行的能力同定(retrospective capability identification)」「本覚としての潜在能力顕現(latent capability elicitation)」は、本稿独自の概念化であり、英語圏の標準用語ではない。和辻の風土論、丸山の「古層」、本覚思想、柄谷の交換様式、廣松の事的世界観、中沢のレンマ学、加藤の時間・空間論を、AGI議論に応用するために鋳造した造語である。元の思想家の意図を正確に代表するものではなく、AGI議論のための部分的借用である。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">論証の強度について。</strong>
+        セクション2(投機装置)とセクション3-4(四層分析とNAIA)は一次資料で裏付けられている。セクション5(未翻訳言説)は文献名と著者名の列挙段階で、各著者のAGI議論への具体的接続は本稿では素描に留まる。セクション6(分析道具への翻訳)は本稿独自の翻訳作業であり、各対応(層状時間→scale-decomposed timeline、なる論理→retrospective identification、本覚→latent elicitation)は試案であって工学コミュニティでの妥当性検証はまだ受けていない。セクション7は前節の分析道具に立ち戻った修辞的締めである。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">2026.04.19 改訂の経緯。</strong>
+        初版の旧Sec 7「The Recursion / この記事の沈黙について」(本稿自身が翻訳不在の実演対象であるという再帰性論)は、読者FBにより削除した。「鋭い指摘ではなく知的ポーズに見える、本体の議論を薄める」との指摘を妥当と判定したため。同時に、旧Sec 6で和辻・丸山・加藤を文化人類学的に列挙していた箇所が「AGI分析との接続が浮いて、こじつけに見える」との指摘を受け、各思想家の論を<strong>AGI分析のための代替道具</strong>に変換する形で全面書き直した。結果として本稿は8セクション構成から7セクション構成に縮約された。第二パスでSec 1冒頭に残存していた再帰性の導入文(「あなたはすでに本稿の検査対象である」)と note 末尾の同趣旨の一文も撤回。Hero画像も他記事と視覚的に近接していた初版の霧空間から、京都・清水寺の夕景(層状時間と長期時間軸を視覚化した構図)に差し替えた。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">NAIA/NAGI の表記について。</strong>
+        2026年4月時点で公開されている原典は、一般社団法人AIアライメントネットワーク(ALIGN)がJSAI2025 汎用AI研究会で発表した「NAIAビジョンの提案」(AGI-029, 2025-03-17)[1]であり、政府計画としての「NAGI計画 v2.0.1」という文書はまだ存在しない。本稿は実体に即してNAIAを基準に論じた。
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">References.</strong>
+      </p>
+      <p>
+        [1] 山川宏 (2025) 「NAIAビジョンの提案」人工知能学会 汎用人工知能研究会 第29回, AGI-029, 2025-03-17. <a href="https://www.jstage.jst.go.jp/article/jsaisigtwo/2025/AGI-029/2025_03/_article/-char/ja/">J-Stage</a>.<br>
+        [2] 松尾豊 (2026-01-05) 「2026年 年頭所感」一般社団法人日本ディープラーニング協会. <a href="https://www.jdla.org/news/260105001/">jdla.org</a>. 関連: 松尾豊 (2024) 「最終的にAIは"人工超知能"の技術領域に辿り着く」ログミーBusiness. <a href="https://logmi.jp/main/technology/330177">logmi.jp</a>.<br>
+        [3] Preferred Networks / さくらインターネット / NICT (2025-09-18) 「安心安全で日本社会と調和する国産生成AIのエコシステム構築に向け、基本合意を締結」. <a href="https://www.preferred.jp/ja/news/pr20250918">preferred.jp</a>.<br>
+        [4] Sakana AI (2025-11-18) Series B $135M+ round raised to build Japan-first generative AI models. <a href="https://digiscoop.net/2025/11/18/sakana-ai-raises-135m-to-build-japan-first-generative-ai-models/">Digiscoop</a>.<br>
+        [5] 経済産業省・総務省 (2025-03-28) 「AI事業者ガイドライン第1.1版 概要」. <a href="https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/pdf/20250328_2.pdf">meti.go.jp</a>.<br>
+        [6] デジタル庁 (2025-05-27) 「行政の進化と革新のための生成AIの調達・利活用に係るガイドライン」DS-920. <a href="https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/e2a06143-ed29-4f1d-9c31-0f06fca67afc/80419aea/20250527_resources_standard_guidelines_guideline_01.pdf">digital.go.jp</a>.<br>
+        [7] AIST Solutions (2025-01-20) 「大規模AIクラウド計算システム『ABCI 3.0』が国内随一のAI計算能力を証明」. <a href="https://prtimes.jp/main/html/rd/p/000000026.000146304.html">prtimes.jp</a>.<br>
+        [8] 理化学研究所 (2025-01-22) 「スーパーコンピュータ『富岳』の次世代となる新たなフラッグシップシステムの開発・整備を開始」. <a href="https://www.riken.jp/pr/news/2025/20250122_1/index.html">riken.jp</a>.<br>
+        [9] Kokotajlo, D., Lifland, E., Larsen, T., Dean, R. (2025) "AI 2027." AI Futures Project (501c3). <a href="https://ai-2027.com/">ai-2027.com</a>. AI Futures Project 組織情報: <a href="https://www.aifutures.org/about">aifutures.org</a>.<br>
+        [10] Aschenbrenner, L. (2024-06) "Situational Awareness: The Decade Ahead." <a href="https://situational-awareness.ai/">situational-awareness.ai</a>.<br>
+        [11] ITmedia (2025-06-05) 「東大・松尾豊教授、AI開発の新会社設立 Chief Scientistで参加 『AGIの確立目指す』」. <a href="https://www.itmedia.co.jp/aiplus/articles/2506/05/news082.html">itmedia.co.jp</a>.<br>
+        [12] AGI HUB (2026-04-18) 「No.31 AGI到達予測の分布 — 予測者と機関のマッピング」. <a href="31-agi-timelines-institutions-map.html">No.31</a>.<br>
+        [13] 全脳アーキテクチャ・イニシアティブ (WBAI) 組織概要. <a href="https://wba-initiative.org/">wba-initiative.org</a>.<br>
+        [14] 山川宏 (2023) 「脳参照アーキテクチャ駆動開発による全脳アーキテクチャ完成にむけた技術ロードマップ」JSAI SIG-AGI-025. <a href="https://www.jstage.jst.go.jp/article/jsaisigtwo/2023/AGI-025/2023_06/_article/-char/ja/">J-Stage</a>.<br>
+        [15] WIRED.jp (2025) 「2025年はAGIの実現前夜となるか？：石井敦×山川宏×工藤郁子 鼎談」. <a href="https://wired.jp/article/ishii-yamakawa-kudo-ai-discussion-1/">wired.jp</a>.<br>
+        [16] 日本経済新聞系報道 (2025) 「国産AI 1兆円5年計画/ソフトバンク・PFN・NTT・KDDI等10社連携」. 関連: 日経電子版 (2025-11-07). <a href="https://www.nikkei.com/article/DGXZQOUC078C00X01C25A1000000/">nikkei.com</a>.<br>
+        [17] Epoch AI (2024-2025) "Training compute of frontier models" dataset. <a href="https://epoch.ai/">epoch.ai</a>.<br>
+        [18] Sakana AI / WIRED.jp (2025) 「多様なAIモデルを進化的にマージする：Sakana AI」特集THE WORLD IN 2025. <a href="https://wired.jp/article/vol55-the-evolutionary-model-merge-changes-the-ai-landscape/">wired.jp</a>.<br>
+        [19] 自由民主党 (2025) 「日本のAI国家戦略を議論 東大・松尾豊教授からヒアリング」. <a href="https://www.jimin.jp/news/information/212552.html">jimin.jp</a>.<br>
+        [20] JIC 産業革新投資機構 (2026-04) 「スタートアップ・ファイナンス市場レビュー(2025通年)」. <a href="https://www.j-ic.co.jp/jp/research/.assets/20260406_JIC_Research_VC.pdf">j-ic.co.jp</a>.<br>
+        [21] Fortune (2025-10-08) "How former OpenAI researcher Leopold Aschenbrenner turned a viral AI prophecy into profit, with a $1.5 billion hedge fund and outsize influence from Silicon Valley to D.C." <a href="https://fortune.com/2025/10/08/leopold-aschenbrenner-openai-ftx-1-5-billion-hedge-fund-situational-awareness/">fortune.com</a>. 関連: Wikipedia "Leopold Aschenbrenner". <a href="https://en.wikipedia.org/wiki/Leopold_Aschenbrenner">wikipedia</a>.<br>
+        [22] AI Futures Project (n.d.) "About." <a href="https://www.aifutures.org/about">aifutures.org/about</a>. 関連: Wikipedia "AI Futures Project". <a href="https://en.wikipedia.org/wiki/AI_Futures_Project">wikipedia</a>.<br>
+        [23] 柄谷行人 (2010) 『世界史の構造』岩波書店. <a href="https://www.iwanami.co.jp/book/b255954.html">iwanami.co.jp</a>. 関連: 柄谷行人 (2022) 『力と交換様式』岩波書店. <a href="https://www.iwanami.co.jp/book/b612116.html">iwanami.co.jp</a>.<br>
+        [24] 東浩紀 (2017) 『ゲンロン0 観光客の哲学』ゲンロン.<br>
+        [25] 廣松渉 (1975) 『事的世界観への前哨』勁草書房.<br>
+        [26] 中沢新一 (2019) 『レンマ学』講談社.<br>
+        [27] 加藤周一 (2007) 『日本文化における時間と空間』岩波書店.<br>
+        [28] 鈴木健 (2013) 『なめらかな社会とその敵』勁草書房.<br>
+        [29] 岡野原大輔 (2024) 『大規模言語モデルは新たな知能か — ChatGPTが変えた世界』岩波科学ライブラリー.<br>
+        [30] 新井紀子 (2018) 『AI vs. 教科書が読めない子どもたち』東洋経済新報社.<br>
+        [31] 和辻哲郎 (1935) 『風土 — 人間学的考察』岩波書店(現行版: 岩波文庫).<br>
+        [32] 丸山真男 (1972) 「歴史意識の『古層』」『忠誠と反逆』ちくま学芸文庫所収.<br>
+        [33] Anthropic "Transformer Circuits Thread" (Mechanistic interpretability 論文群). <a href="https://transformer-circuits.pub/">transformer-circuits.pub</a>. 関連: Anthropic (2024) "Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet." <a href="https://www.anthropic.com/research/mapping-mind-language-model">anthropic.com</a>.
+      </p>
+      <p style="margin-top:12px;">
+        <strong style="color:#585858;">Images.</strong>
+        All photographs via <a href="https://unsplash.com/">Unsplash</a>.
+        Hero (slide1): Unsplash photo-1545569341-9eb8b30979d9 (京都・清水寺の三重塔と盆地の夕景).
+        Slide 2: <a href="https://unsplash.com/photos/VT4QPwbEKF4">VT4QPwbEKF4</a>.
+        Slide 3: <a href="https://unsplash.com/photos/kMl4FSGXQRo">kMl4FSGXQRo</a>.
+        Slide 4: <a href="https://unsplash.com/photos/Q_KdjKxntH8">Q_KdjKxntH8</a>.
+        Slide 5 (left): <a href="https://unsplash.com/photos/bV5dFLEYecM">bV5dFLEYecM</a>. Slide 5 (right): <a href="https://unsplash.com/photos/UmueYh50oKw">UmueYh50oKw</a>.
+        Slide 6: <a href="https://unsplash.com/photos/ZycaCbVcNGY">ZycaCbVcNGY</a>.
+        Thumbnail: <a href="https://unsplash.com/photos/SUcBkQ2kPak">SUcBkQ2kPak</a>.
+      </p>
+    </footer>
+
+    <!-- Feedback form -->
+    <section id="feedback-section" style="max-width:1120px;margin:0 auto;padding:48px 48px 64px;border-top:1px solid var(--border);">
+      <h3 style="font-size:18px;font-weight:700;color:var(--black);margin-bottom:8px;">Reader Feedback</h3>
+      <p style="font-size:13px;color:var(--meta);margin-bottom:24px;">この記事の評価・感想をお寄せください。匿名可、1分で完了します。</p>
+      <form id="feedback-form" style="display:grid;gap:16px;max-width:640px;">
+        <div>
+          <label style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">評価 (1-5)</label>
+          <div id="star-group" style="display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:4px;">
+            <input type="radio" name="rating" value="5" id="s5" style="display:none;"><label for="s5" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="4" id="s4" style="display:none;"><label for="s4" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="3" id="s3" style="display:none;"><label for="s3" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="2" id="s2" style="display:none;"><label for="s2" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+            <input type="radio" name="rating" value="1" id="s1" style="display:none;"><label for="s1" style="cursor:pointer;font-size:28px;color:#ccc;transition:color 0.15s;">★</label>
+          </div>
+        </div>
+        <div>
+          <label for="fb-comment" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">コメント (任意)</label>
+          <textarea id="fb-comment" rows="4" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;resize:vertical;"></textarea>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label for="fb-name" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">名前 (任意)</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+          <div>
+            <label for="fb-email" style="display:block;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--meta);margin-bottom:8px;">メール (任意)</label>
+            <input type="email" id="fb-email" style="width:100%;padding:10px 12px;border:1px solid var(--border);background:var(--bg-alt);font-family:inherit;font-size:14px;">
+          </div>
+        </div>
+        <button type="submit" id="fb-submit" style="padding:12px 24px;background:var(--black);color:var(--bg);border:none;font-family:'SF Mono',monospace;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;justify-self:start;">送信</button>
+      </form>
+      <p id="fb-success" style="display:none;font-size:14px;color:var(--body-text);margin-top:16px;">フィードバックを送信しました。ありがとうございます。</p>
+      <p id="fb-error" style="display:none;font-size:14px;color:var(--accent);margin-top:16px;">送信に失敗しました。時間をおいて再度お試しください。</p>
+    </section>
+
+    <script>
+      (function(){
+        const group = document.getElementById('star-group');
+        if (!group) return;
+        const labels = group.querySelectorAll('label');
+        labels.forEach((lab, i) => {
+          lab.addEventListener('mouseenter', () => {
+            labels.forEach(l => l.style.color = '#ccc');
+            let el = lab;
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          });
+        });
+        group.addEventListener('mouseleave', () => {
+          const checked = group.querySelector('input:checked');
+          labels.forEach(l => l.style.color = '#ccc');
+          if (checked) {
+            let el = group.querySelector(`label[for="${checked.id}"]`);
+            while (el) { el.style.color = '#000'; el = el.nextElementSibling; if (el && el.tagName !== 'LABEL') el = null; }
+          }
+        });
+      })();
+
+      document.getElementById('feedback-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const rating = (document.querySelector('input[name="rating"]:checked') || {}).value || '';
+        const comment = document.getElementById('fb-comment').value;
+        const name = document.getElementById('fb-name').value;
+        const email = document.getElementById('fb-email').value;
+        const eyebrowText = document.querySelector('.eyebrow').textContent;
+        const numMatch = eyebrowText.match(/No\.\s*(\d+)/);
+        const articleNo = numMatch ? numMatch[1] : '32';
+
+        const params = new URLSearchParams();
+        if (email) params.append('emailAddress', email);
+        params.append('entry.1131711956', rating);
+        params.append('entry.897250758', articleNo);
+        params.append('entry.242373434', comment);
+        params.append('entry.420368578', name);
+
+        fetch(FORM_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: params.toString()})
+          .then(() => {
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('fb-success').style.display = 'block';
+          })
+          .catch(() => {
+            document.getElementById('fb-error').style.display = 'block';
+          });
+      });
+    </script>
+
+    <script>
+      const progress = document.getElementById('progress');
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const scrolled = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = scrolled + '%';
+      });
+
+      const reveals = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.2 });
+      reveals.forEach(el => io.observe(el));
+
+      const buttons = document.querySelectorAll('.nav button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (target) target.scrollIntoView({behavior:'smooth'});
+        });
+      });
+
+      const slides = document.querySelectorAll('.slide');
+      const slideIo = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            buttons.forEach(b => b.classList.remove('active'));
+            const match = document.querySelector(`.nav button[data-target="${e.target.id}"]`);
+            if (match) match.classList.add('active');
+          }
+        });
+      }, { threshold: 0.4 });
+      slides.forEach(s => slideIo.observe(s));
+    </script>
+  </body>
+</html>

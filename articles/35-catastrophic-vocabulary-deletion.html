@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>「壊滅的」の削除履歴 — 国際制度はいかにしてx-riskを議題から外したか — AGI HUB</title>
+    <meta name="description" content="2023年11月のBletchley宣言で首脳級文書に入った「壊滅的」の語は、27ヶ月かけて国際制度の公式言語から退場した。ただし消え方は国により違う。語を捨てて測定を続けた英米と、観点一覧に問いが届いていない日本。宣言・声明・評価ガイドの原文だけを積み上げ、語彙と測定が分離していく制度史を追う。" />
+    <link rel="stylesheet" href="../design-system/palette.css">
+    <style>
+      :root {
+        --black: #000;
+        --body-text: #1a1a1a;
+        --mid: #585858;
+        --meta: #757575;
+        --light-gray: #999;
+        --border: #e4e4e4;
+        --bg: #ffffff;
+        --bg-alt: #f4f4f2;
+        --accent: #1a1a1a;
+        --accent-soft: rgba(26, 26, 26, 0.06);
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: HelveticaNeue, "Helvetica Neue", Helvetica, Arial,
+          游ゴシック体, YuGothic, "游ゴシック Medium", "Yu Gothic Medium",
+          游ゴシック, "Yu Gothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+          "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "MS ゴシック", "MS Gothic",
+          sans-serif;
+        font-feature-settings: "palt";
+        font-size: 16px;
+        line-height: 1.75;
+        color: var(--body-text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-wrap: break-word;
+      }
+
+      .progress {
+        position: fixed; top: 0; left: 0; height: 2px;
+        background: var(--accent); width: 0%; z-index: 100;
+        transition: width 0.3s var(--ease);
+      }
+
+      .nav {
+        position: fixed; right: 24px; top: 50%;
+        transform: translateY(-50%);
+        display: grid; gap: 16px; z-index: 50;
+      }
+      .nav button {
+        width: 8px; height: 8px; border-radius: 999px;
+        border: 1.5px solid var(--meta); background: transparent;
+        cursor: pointer; transition: all 0.3s var(--ease);
+      }
+      .nav button.active {
+        background: var(--accent); border-color: var(--accent);
+        transform: scale(1.4);
+      }
+
+      main { scroll-snap-type: y mandatory; }
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 80px 48px 64px;
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 32px;
+        scroll-snap-align: start;
+      }
+      .slide + .slide { border-top: 1px solid var(--border); }
+
+      .hero {
+        width: 100%;
+        aspect-ratio: 16 / 7;
+        object-fit: cover;
+        display: block;
+        filter: grayscale(0.72) contrast(1.1);
+        transition: filter 0.6s var(--ease);
+      }
+      .hero:hover { filter: grayscale(0.2) contrast(1); }
+
+      .slide .hero.img-fullbleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        max-width: none;
+        aspect-ratio: 21/9;
+      }
+      .slide .hero.img-wide {
+        width: min(1280px, calc(100vw - 48px));
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: none;
+      }
+      .slide .hero.img-content { max-width: 680px; margin: 0 auto; aspect-ratio: 4/3; }
+      .hero-pair.img-side-by-side {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        align-items: start;
+      }
+      .hero-pair.img-side-by-side .hero { aspect-ratio: 4/3; }
+      @media (max-width: 768px) {
+        .slide .hero.img-fullbleed,
+        .slide .hero.img-wide,
+        .slide .hero.img-content { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; margin: 0; transform: none; left: 0; }
+        .hero-pair.img-side-by-side { grid-template-columns: 1fr; }
+      }
+
+      .hero-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        margin-top: 8px;
+        text-transform: uppercase;
+      }
+
+      .credits {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 48px 80px;
+        border-top: 1px solid var(--border);
+      }
+      .credits p {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.047em;
+        line-height: 2;
+        color: var(--light-gray);
+      }
+      .credits a {
+        color: var(--meta);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .credits a:hover {
+        color: var(--black);
+        border-bottom-color: var(--black);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+      }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+      .reveal-delay-1 { transition-delay: 0.1s; }
+      .reveal-delay-2 { transition-delay: 0.2s; }
+      .reveal-delay-3 { transition-delay: 0.35s; }
+
+      .eyebrow {
+        font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 0.083em;
+        text-transform: uppercase;
+        color: var(--mid);
+      }
+
+      h1, h2 {
+        color: var(--black);
+        font-weight: 700;
+        line-height: 1.45;
+        letter-spacing: normal;
+        max-width: 30ch;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--black);
+      }
+      h1 { font-size: clamp(28px, 4vw, 36px); }
+      h2 { font-size: clamp(24px, 3.5vw, 32px); }
+
+      .lead {
+        max-width: 780px;
+        font-size: 16px;
+        line-height: 1.88;
+        color: var(--body-text);
+      }
+      .lead + .lead { margin-top: 14px; }
+      .lead strong { color: var(--black); }
+      .lead.dropcap::first-letter {
+        font-size: 52px;
+        line-height: 1;
+        font-weight: 700;
+        float: left;
+        margin: 6px 10px 0 0;
+        color: var(--black);
+      }
+
+      .panel { display: grid; gap: 24px; align-content: start; }
+      .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+      .card {
+        padding: 24px 0;
+        border-top: 2px solid var(--black);
+      }
+      .card .tag { color: var(--mid); }
+      .card strong { color: var(--black); }
+      .card p {
+        font-size: 15.5px;
+        line-height: 1.78;
+        color: var(--body-text);
+      }
+
+      .tag {
+        display: inline-block;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--meta);
+        margin-bottom: 12px;
+      }
+
+      table.compare {
+        width: 100%;
+        border-collapse: collapse;
+        border-top: 2px solid var(--black);
+        border-bottom: 2px solid var(--black);
+      }
+      table.compare th,
+      table.compare td {
+        padding: 16px 14px;
+        text-align: left;
+        font-size: 15px;
+        line-height: 1.68;
+        color: var(--body-text);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      table.compare th {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        text-transform: uppercase;
+        color: var(--mid);
+        font-weight: 400;
+        border-bottom: 1px solid var(--black);
+      }
+      table.compare td strong { color: var(--black); }
+      table.compare tr:last-child td { border-bottom: none; }
+
+      .note {
+        font-size: 16px;
+        line-height: 1.78;
+        color: var(--body-text);
+        padding: 24px 28px;
+        border-left: 2px solid var(--black);
+        background: var(--accent-soft);
+        max-width: 860px;
+      }
+      .note strong { color: var(--black); }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 16px;
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.083em;
+        color: var(--light-gray);
+        text-transform: uppercase;
+      }
+      .slide-count { font-weight: 700; color: var(--black); }
+
+      .svg-diagram {
+        max-width: none;
+        width: min(960px, calc(100vw - 48px));
+        margin: 8px auto;
+      }
+      .svg-diagram svg {
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+      }
+      .diagram-caption {
+        font-family: "SF Mono", "Fira Code", Menlo, Consolas, monospace;
+        font-feature-settings: normal;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--light-gray);
+        max-width: 960px;
+        margin: 0 auto;
+        text-align: left;
+      }
+
+      @media (max-width: 900px) {
+        .grid-3 { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 768px) {
+        .slide { padding: 64px 24px 48px; }
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        .nav { right: 12px; }
+        table.compare { font-size: 13px; }
+        table.compare th, table.compare td { padding: 12px 8px; }
+        .hero { aspect-ratio: 16 / 9; }
+        .credits { padding: 32px 24px 64px; }
+      }
+
+      @media print {
+        .slide { min-height: auto; page-break-after: always; padding: 24px 0; }
+        .nav, .progress { display: none; }
+        .reveal { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body class="pattern-monolith has-site-header" data-category="governance">
+    <div id="site-header-mount"></div>
+<script src="../partials/header.js" defer></script>
+    <div class="progress" id="progress"></div>
+
+    <aside class="nav" aria-label="Slide navigation">
+      <button data-target="slide-1" class="active" aria-label="Slide 1"></button>
+      <button data-target="slide-2" aria-label="Slide 2"></button>
+      <button data-target="slide-3" aria-label="Slide 3"></button>
+      <button data-target="slide-4" aria-label="Slide 4"></button>
+      <button data-target="slide-5" aria-label="Slide 5"></button>
+      <button data-target="slide-6" aria-label="Slide 6"></button>
+      <button data-target="slide-7" aria-label="Slide 7"></button>
+    </aside>
+
+    <div class="article-breadcrumb" style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;display:flex;justify-content:space-between;align-items:center;padding:10px 32px;border-bottom:1px solid #e5e5e5;background:#fff;gap:16px;flex-wrap:wrap;">
+      <span>No. 35 / 35 &nbsp;&middot;&nbsp; Governance &nbsp;&middot;&nbsp; 7 Sections</span>
+      <span style="display:flex;gap:20px;align-items:center;">
+        <a href="34-alignment-success-route.html" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">&larr; Prev</a>
+        <a href="../index.html#filter=governance" style="color:inherit;text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s;" onmouseover="this.style.borderBottomColor='#757575'" onmouseout="this.style.borderBottomColor='transparent'">Same Category</a>
+        <span style="opacity:0.3;">Next &rarr;</span>
+      </span>
+    </div>
+
+    <main>
+      <!-- ═══════════ Slide 1 ═══════════ -->
+      <section class="slide" id="slide-1">
+        <div class="eyebrow reveal">AGI HUB &nbsp;&middot;&nbsp; No. 35 &nbsp;&middot;&nbsp; Governance &nbsp;&middot;&nbsp; The Deletion History &nbsp;&middot;&nbsp; 2026.07.17 &nbsp;&middot;&nbsp; By Ryao</div>
+        <h1 class="reveal reveal-delay-1">「壊滅的」の削除履歴 — 国際制度はいかにしてx-riskを議題から外したか</h1>
+        <div class="panel reveal reveal-delay-2">
+          <div>
+            <img class="hero img-fullbleed" src="../images/35-catastrophic-vocabulary-deletion/slide1.jpg" alt="無人の記者会見場。演壇の前に空の椅子が整列している">
+            <div class="hero-caption">Photo: Unsplash</div>
+          </div>
+          <p class="lead dropcap">
+            2026年2月、AIをめぐる国際文書が二通、相次いで公開された。2月3日、Yoshua Bengioが座長を務める International AI Safety Report 2026 は、30カ国以上・90人超の研究者と助言者による科学的合意文書として「制御喪失（loss of control）」に独立のセクションを置き、一部の専門家が人類の周縁化や絶滅に至る帰結までを真剣な検討対象としていると記録した。その2週間後、ニューデリー。92の国と国際機関が承認した宣言を報じるインド政府広報局の成果発表文には、壊滅的リスクどころか、safety という単語が一度も現れない。
+          </p>
+          <p class="lead">
+            奇妙なのは、この二通の文書に関与した政府がほぼ同じ顔ぶれだという点だ。科学助言の回路では絶滅を数え、外交の回路では数えない。同じ国家群が、二つの語彙を同時に運用している。この分離は2026年2月に始まったものではない。2023年11月のBletchleyで頂点に達した語彙は、27ヶ月かけて国際制度の公式言語から退場していった。本稿はその過程を、<strong>削除の履歴</strong>として追う。
+          </p>
+          <p class="lead">
+            先に見取り図を置く。第一に、「壊滅的」という語は一度も否決されていない。どの会議も、この語を外す決議を採っていない。<strong>語は反駁されたのではなく、次の文書に転記されなくなっただけだ</strong>。第二に、語彙の削除と実務の停止は別物である。語を捨てた後も測定を続ける国があり（英・米）、語彙の層にも測定の層にもこの問いが最初から届いていない国がある（日本）。第三に、危険なのは沈黙そのものというより、「安全」を名乗る機関の存在が社会に供給する保証の感覚と、その機関が実際に測っているものとの乖離である。
+          </p>
+          <div class="note">
+            本稿は制度史に限定する。x-riskをめぐる思想の系譜は <a href="05-ai-risk-lineage.html" style="color:inherit;border-bottom:1px solid #999;">No.05</a> が、AGI参入をめぐる時間窓の閉じ方は <a href="30-nagi-npt-analog-closing-window.html" style="color:inherit;border-bottom:1px solid #999;">No.30</a> が扱った。ここで追うのは、宣言・声明・評価ガイドという公文書の連鎖の中で、一つの語彙がどの階で生まれ、どの階段を降り、どこで消えたか。その文書上の軌跡だけである。素材はすべて公開一次資料——宣言全文、政府発表、公式報告書、記名報道——に限り、伝聞と匿名情報は使わない。
+          </div>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>同じ政府が、絶滅を数える文書と数えない文書に関与している</span>
+          <span class="slide-count">1 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Slide 2 ═══════════ -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow reveal">The Only Leaders' Document</div>
+        <h2 class="reveal reveal-delay-1">「壊滅的」が首脳文書にあった202日間</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div>
+            <img class="hero img-wide" src="../images/35-catastrophic-vocabulary-deletion/slide2.jpg" alt="引き出しに整理された無数のファイルカード。文書が文書を複製していく官僚機構の装置">
+            <div class="hero-caption">Photo: Unsplash</div>
+          </div>
+          <p class="lead">
+            起点の一文は短い。「これらのAIモデルの最も重大な能力から、意図的であれ非意図的であれ、深刻な、壊滅的でさえある被害が生じる可能性がある（There is potential for serious, even catastrophic, harm, either deliberate or unintentional, stemming from the most significant capabilities of these AI models）」。2023年11月1日、英国Bletchley Park。米国、中国、日本を含む28カ国とEUがこの文言を含む宣言に署名した。首脳級の国際文書がAIの「壊滅的」被害を明記し、あわせて「人間の意図との整合をめぐる、意図せざる制御の問題（unintended issues of control relating to alignment with human intent）」に言及した、最初の——そして本稿が確認できた範囲で唯一の——事例である。
+          </p>
+          <p class="lead">
+            この一文には助走があった。同じ年の5月初旬、Geoffrey HintonがGoogleを退社し、AIの危険について自由に発言するためだと理由を公言した。5月30日、Center for AI Safetyが公開した一文だけの声明——「AIによる絶滅リスクの軽減は、パンデミックや核戦争と並ぶ、世界的な優先課題であるべきだ（Mitigating the risk of extinction from AI should be a global priority alongside other societal-scale risks such as pandemics and nuclear war）」——に、HintonとYoshua Bengioに加え、OpenAIのSam Altman、AnthropicのDario Amodei、Google DeepMindのDemis Hassabisという開発企業の経営者たち自身が署名した。警告する研究者と、警告の対象を作る企業の経営者が同じ一文に並ぶ構図が、2023年の言説を規定していた（この系譜の30年は <a href="05-ai-risk-lineage.html" style="color:inherit;border-bottom:1px solid #999;">No.05</a> で辿った）。Bletchleyはこの言説を制度の言語に翻訳した最初の文書だった。
+          </p>
+          <p class="lead">
+            語の射程をここで確定する。本稿がx-riskと呼ぶのは、人類の絶滅、または回復の見込みが立たない文明規模の毀損を上限とするリスク領域である。Bletchley宣言の語彙では「壊滅的（catastrophic）被害」と「制御の問題（issues of control）」がこの領域に接続する。見落とされがちだが、首脳文書のこうした語彙は形容の強さを競うための飾りと違って、<strong>官僚機構の中で宛先として働く</strong>。首脳宣言に書かれた語は、次の閣僚会合の議題表になり、予算要求の根拠になり、諮問報告書の委託事項になる。実際、Bletchleyの合意は参加国に科学的現状報告の作成を委託し、それが後の International AI Safety Report になった。この時点で語彙は測定に先行していた。2023年11月、どの国のAI安全機関も、壊滅的被害に接続する能力を測るベンチマークをまだ持っていなかった。英米のAI Safety Institute設立も、宣言と同じ月だった。
+          </p>
+          <div class="svg-diagram">
+            <svg viewBox="0 0 760 1180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="2023年5月から2026年7月までの縦型タイムライン。左列に首脳・外交文書の系列、右列に機関・科学の系列">
+              <defs>
+                <clipPath id="cp-hinton"><circle cx="416" cy="468" r="17"/></clipPath>
+                <clipPath id="cp-bengio"><circle cx="416" cy="588" r="17"/></clipPath>
+              </defs>
+              <!-- header -->
+              <text x="355" y="36" text-anchor="end" font-size="13" font-weight="700" fill="#1a1a1a">宣言・首脳外交の層（語彙）</text>
+              <text x="405" y="36" text-anchor="start" font-size="13" font-weight="700" fill="#1a1a1a">機関・科学の層（測定）</text>
+              <line x1="380" y1="48" x2="380" y2="1150" stroke="#1a1a1a" stroke-width="1.5"/>
+
+              <!-- 2023.05 R -->
+              <circle cx="380" cy="90" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="86" font-size="12.5" font-weight="700" fill="#1a1a1a">2023.05　Hinton、Googleを退社</text>
+              <text x="405" y="103" font-size="11" fill="#585858">5.30 CAIS一文声明（絶滅リスクは世界的優先課題）</text>
+
+              <!-- 2023.11 L Bletchley -->
+              <circle cx="380" cy="150" r="6" fill="#1a1a1a"/>
+              <text x="355" y="146" text-anchor="end" font-size="12.5" font-weight="700" fill="#1a1a1a">Bletchley宣言　2023.11</text>
+              <text x="355" y="163" text-anchor="end" font-size="11" fill="#585858">catastrophic を首脳級で明記（28カ国+EU）</text>
+
+              <!-- 2023.11 R -->
+              <circle cx="380" cy="210" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="206" font-size="12.5" font-weight="700" fill="#1a1a1a">2023.11　英・米 AI Safety Institute 設立</text>
+              <text x="405" y="223" font-size="11" fill="#585858">フロンティアモデルの展開前評価が始まる</text>
+
+              <!-- 2024.02 R -->
+              <circle cx="380" cy="270" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="266" font-size="12.5" font-weight="700" fill="#1a1a1a">2024.02　日本AISI発足</text>
+              <text x="405" y="283" font-size="11" fill="#585858">IPA内・内閣府や防衛省など関係省庁連携</text>
+
+              <!-- 2024.05 L Seoul -->
+              <circle cx="380" cy="330" r="6" fill="#1a1a1a"/>
+              <text x="355" y="326" text-anchor="end" font-size="12.5" font-weight="700" fill="#1a1a1a">ソウル・サミット　2024.05</text>
+              <text x="355" y="343" text-anchor="end" font-size="11" fill="#585858">首脳宣言は壊滅系語彙ゼロ／閣僚声明に severe risks</text>
+
+              <!-- 2024.09 R -->
+              <circle cx="380" cy="390" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="386" font-size="12.5" font-weight="700" fill="#1a1a1a">2024.09　日本・評価観点ガイド v1.00</text>
+              <text x="405" y="403" font-size="11" fill="#585858">10の評価観点（コンテンツ安全・信頼性の層）</text>
+
+              <!-- 2024.10 R Hinton Nobel -->
+              <circle cx="380" cy="468" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <image href="../images/thinkers/hinton.jpg" x="399" y="451" width="34" height="34" clip-path="url(#cp-hinton)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="416" cy="468" r="17" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="443" y="464" font-size="12.5" font-weight="700" fill="#1a1a1a">2024.10　Hintonにノーベル物理学賞</text>
+              <text x="443" y="481" font-size="11" fill="#585858">Hopfieldと共同受賞。警告側の学術的正統性が頂点へ</text>
+
+              <!-- 2024.11 L SF -->
+              <circle cx="380" cy="530" r="6" fill="#1a1a1a"/>
+              <text x="355" y="526" text-anchor="end" font-size="12.5" font-weight="700" fill="#1a1a1a">AISIネットワーク使命声明　2024.11</text>
+              <text x="355" y="543" text-anchor="end" font-size="11" fill="#585858">壊滅系語彙ゼロ。リスク評価は手続き6形容詞で定義</text>
+
+              <!-- 2025.01 R IASR -->
+              <circle cx="380" cy="588" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <image href="../images/thinkers/bengio.jpg" x="399" y="571" width="34" height="34" clip-path="url(#cp-bengio)" preserveAspectRatio="xMidYMid slice"/>
+              <circle cx="416" cy="588" r="17" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="443" y="584" font-size="12.5" font-weight="700" fill="#1a1a1a">2025.01　International AI Safety Report</text>
+              <text x="443" y="601" font-size="11" fill="#585858">Bengio座長・96人。制御喪失に独立の節</text>
+
+              <!-- 2025.02 L Paris -->
+              <circle cx="380" cy="650" r="6" fill="#1a1a1a"/>
+              <text x="355" y="646" text-anchor="end" font-size="12.5" font-weight="700" fill="#1a1a1a">パリAI Action Summit宣言　2025.02</text>
+              <text x="355" y="663" text-anchor="end" font-size="11" fill="#585858">壊滅系語彙ゼロ。米英は不署名</text>
+
+              <!-- 2025.02 R UK rename -->
+              <circle cx="380" cy="710" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="706" font-size="12.5" font-weight="700" fill="#1a1a1a">2025.02　UK: AI Security Institute に改名</text>
+              <text x="405" y="723" font-size="11" fill="#585858">名からsafetyが消える。測定は継続</text>
+
+              <!-- 2025.06 R CAISI -->
+              <circle cx="380" cy="770" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="766" font-size="12.5" font-weight="700" fill="#1a1a1a">2025.06　US: CAISI に改組</text>
+              <text x="405" y="783" font-size="11" fill="#585858">7月のAI Action PlanでCBRNE・サイバー評価を残置</text>
+
+              <!-- 2025.09 R DeepSeek -->
+              <circle cx="380" cy="830" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="826" font-size="12.5" font-weight="700" fill="#1a1a1a">2025.09　CAISI、DeepSeek評価を公表</text>
+              <text x="405" y="843" font-size="11" fill="#585858">照準が対モデルから対国家へ移る</text>
+
+              <!-- 2025.12 R UK Trends -->
+              <circle cx="380" cy="890" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="886" font-size="12.5" font-weight="700" fill="#1a1a1a">2025.12　UK Frontier AI Trends Report</text>
+              <text x="405" y="903" font-size="11" fill="#585858">"potentially catastrophic" の語を技術文書で保持</text>
+
+              <!-- 2025.12 R JP plan -->
+              <circle cx="380" cy="950" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="946" font-size="12.5" font-weight="700" fill="#1a1a1a">2025.12　日本・AI基本計画を閣議決定</text>
+              <text x="405" y="963" font-size="11" fill="#585858">リスク列挙はサイバーまで。壊滅系語彙ゼロ</text>
+
+              <!-- 2026.02 L Delhi -->
+              <circle cx="380" cy="1010" r="6" fill="#1a1a1a"/>
+              <text x="355" y="1006" text-anchor="end" font-size="12.5" font-weight="700" fill="#1a1a1a">ニューデリー宣言　2026.02</text>
+              <text x="355" y="1023" text-anchor="end" font-size="11" fill="#585858">92の国・国際機関が承認。発表文に壊滅系語彙ゼロ</text>
+
+              <!-- 2026.02 R IASR 2026 -->
+              <circle cx="380" cy="1070" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="1066" font-size="12.5" font-weight="700" fill="#1a1a1a">2026.02　IASR 2026</text>
+              <text x="405" y="1083" font-size="11" fill="#585858">制御喪失セクションを維持（90人超・30カ国以上）</text>
+
+              <!-- 2026.07 R JP v1.20 -->
+              <circle cx="380" cy="1130" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="405" y="1126" font-size="12.5" font-weight="700" fill="#1a1a1a">2026.07　日本・評価観点ガイド v1.20</text>
+              <text x="405" y="1143" font-size="11" fill="#585858">「観測と制御」新設。壊滅接続の能力評価は依然なし</text>
+
+              <!-- legend -->
+              <circle cx="80" cy="1165" r="6" fill="#1a1a1a"/>
+              <text x="94" y="1169" font-size="11" fill="#585858">首脳・外交文書</text>
+              <circle cx="210" cy="1165" r="5" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="224" y="1169" font-size="11" fill="#585858">機関・科学・政策実務</text>
+            </svg>
+          </div>
+          <p class="diagram-caption">図1 — 語彙の層と測定の層、2023.05–2026.07（時系列順）。左列の首脳・外交文書から壊滅系語彙が退場していく間、右列では機関の設立・改名・測定と科学報告が続いた。出典は文末のReferences。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>ベンチマークより先に、宛先が作られた</span>
+          <span class="slide-count">2 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Slide 3 ═══════════ -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow reveal">Descending The Protocol Ladder</div>
+        <h2 class="reveal reveal-delay-1">語は否決されず、階段を降りた</h2>
+        <div class="panel reveal reveal-delay-2">
+          <p class="lead">
+            Bletchleyの202日後、ソウル。2024年5月21日の首脳セッション宣言を全文検索すると、catastrophic の語は一度も現れない。severe もない。署名の輪も28カ国+EUから10カ国+EUへ縮んでいた。だが語は削除されたというより、一つ下の階へ移動していた。翌22日の閣僚級声明は「深刻なリスク（severe risks）」を明記し、その実例として、非国家主体による化学・生物兵器の開発・生産・取得・使用への実質的な支援と、「セーフガードの迂回、操作と欺瞞、あるいは明示的な人間の承認や許可なしに行われる自律的な複製と適応」によって人間の監督を回避するモデルの能力や傾向を挙げている。Bletchleyで首脳が引き受けた主題を、ソウルでは閣僚が引き受けた。内容はほぼ保たれ、語る者の格だけが一段下がった。
+          </p>
+          <p class="lead">
+            半年後、サンフランシスコ。2024年11月20日、ソウルで構想されたAISIの国際ネットワークが初会合を開いた。参加は米英日を含む10の初期メンバー。採択された共同使命声明は「AIの安全性のリスクと緩和策についての、共通の技術的理解を促進する」とうたう。米商務省・国務省が公開した設立発表文の全文に、catastrophic、existential、loss of control はいずれも一度も現れない。同時に発表された「高度AIシステムのリスク評価に関する共同声明」は、リスク評価が満たすべき性質を6つの形容詞で定めた——実行可能、透明、包括的、マルチステークホルダー、反復的、再現可能。整理すると、<strong>どう測るかを定義する語彙は精緻になり、どの規模の被害まで測るかを定義する語彙が消えた</strong>。手続きの合意が、対象の合意を置き換えた。
+          </p>
+          <p class="lead">
+            そしてパリ。2025年2月11日、エリゼ宮が公開した「人々と地球のための、包摂的で持続可能なAIに関する声明」の全文に、catastrophic も severe も frontier も現れない。safety の語は4回残っているが、その中心的な用法は「Bletchley Park AIセーフティ・サミットとソウル・サミットの役割を称賛する」——過去のサミットの固有名詞としてである。宣言はサミットの名前を記憶し、サミットの主題を忘れた。米英は署名を見送ったが、その理由は正反対を向いている。英国政府報道官は、宣言が「グローバルガバナンスについて十分な実務的明確さを与えず、国家安全保障をめぐる困難な問いに十分応えていない」ことを挙げた。安全の記述が薄すぎるという不満である。米国のVance副大統領は壇上で方向を宣言した。<strong>「AIの未来は、安全性をめぐって手を揉むことでは勝ち取れない（The AI future is not going to be won by hand-wringing about safety）」</strong>。同じ不署名でも、片方は主題が薄まったことを、もう片方は主題が残っていること自体を問題にしていた。
+          </p>
+          <p class="lead">
+            この降下と同じ暦の上で、逆向きの系列が走っていたことを、表の隣に置く必要がある。2024年10月、ノーベル物理学賞がHintonに授与された（Hopfieldと共同、ニューラルネットワークによる機械学習の基礎的発見に対して）。2025年1月29日には、Bletchleyで28カ国が委託した科学報告書——Bengio座長、96人の専門家による International AI Safety Report——が公開され、制御喪失に独立のセクションを割いた。この報告書はパリ・サミットの議論に供するために作られた。パリはそれを受け取り、宣言に一語も反映しなかった。ノーベル賞の発表からパリ閉幕までは126日。警告側の学術的正統性が頂点に達した126日間と、外交文書からの語彙削除が仕上がった126日間は、同じ126日間である。
+          </p>
+          <table class="compare">
+            <thead>
+              <tr>
+                <th style="width:34%;">文書</th>
+                <th style="width:26%;">級</th>
+                <th>壊滅系語彙（全文検索の結果）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Bletchley宣言</strong><br>2023.11</td>
+                <td>首脳級・28カ国+EU</td>
+                <td><strong>catastrophic harm / issues of control を明記</strong></td>
+              </tr>
+              <tr>
+                <td><strong>ソウル宣言</strong><br>2024.05</td>
+                <td>首脳級・10カ国+EU</td>
+                <td>なし</td>
+              </tr>
+              <tr>
+                <td><strong>ソウル閣僚声明</strong><br>2024.05</td>
+                <td>閣僚級</td>
+                <td>severe risks（化学・生物兵器支援、監督回避、自律複製）</td>
+              </tr>
+              <tr>
+                <td><strong>ネットワーク使命声明</strong><br>2024.11</td>
+                <td>技術機関級・10メンバー</td>
+                <td>なし（リスク評価は手続き6形容詞で定義）</td>
+              </tr>
+              <tr>
+                <td><strong>パリ声明</strong><br>2025.02</td>
+                <td>首脳級・63カ国とEU・AU委員会が署名（現行掲載）</td>
+                <td>なし（safetyは過去サミットの固有名詞等に4回のみ）</td>
+              </tr>
+              <tr>
+                <td><strong>ニューデリー宣言</strong><br>2026.02・成果発表文で確認</td>
+                <td>首脳級・92の国と国際機関が承認（閉幕後の集計）</td>
+                <td>なし（政府広報の成果発表文はsafetyもゼロ）</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="diagram-caption">図2 — 六つの文書と壊滅系語彙。各文書の公式公開版に対する機械検索（catastrophic / existential / severe / loss of control）の結果。降格→置換→消失の3段階が読み取れる。検索語の全リスト・対象文書・取得方法・立証の限界は文末のMethodに記す。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>削除の決議は公開記録に見当たらない。転記の省略だけが積み重なった</span>
+          <span class="slide-count">3 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Slide 4 ═══════════ -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow reveal">Rename, Retain, Re-Aim</div>
+        <h2 class="reveal reveal-delay-1">名を変えた機関は、何を測り続けたか</h2>
+        <div class="panel reveal reveal-delay-2">
+          <p class="lead">
+            語彙の削除は機関の名前にも及んだ。2025年2月14日——パリ閉幕の3日後——英国のKyle科学技術相はミュンヘン安全保障会議で、AI Safety Institute を AI Security Institute に改名すると発表した。発表文は照準をはっきり書いている。バイアスや表現の自由は扱わない。サイバー攻撃、化学・生物兵器の開発、詐欺や児童性的虐待画像の生成といった犯罪的悪用——安全保障上の含意を持つ深刻なAIリスクに集中する。同年6月3日には米国が続いた。Lutnick商務長官は AI Safety Institute を Center for AI Standards and Innovation（CAISI）に改組し、こう述べた。「あまりに長い間、検閲と規制が国家安全保障の名の下で使われてきた。イノベーターはもはやそうした基準に縛られない（For far too long, censorship and regulations have been used under the guise of national security. Innovators will no longer be limited by these standards）」。safety の語は、2025年の前半で、英語圏の機関名からも消えた。
+          </p>
+          <p class="lead">
+            名前だけを見れば撤退の物語に読める。ところが英国の検査台の上では別の光景が続いていた。改名から10ヶ月後の2025年12月18日、AI Security Institute は設立以来2年分・30超の最先端モデルの評価を集計した初の Frontier AI Trends Report を公開する。サイバー攻撃の見習い級タスクの成功率は2023年末の9%から50%へ上がり、2025年には、10年超の実務経験を要する専門家級タスクを完了する最初のモデルが現れた。モデルが無支援でこなせるサイバータスクの長さは約8ヶ月ごとに倍増している。生物学の知識評価では、2024年に博士号保持者の平均正答率を上回るモデルが初めて登場した。セーフガード評価では、テストした全システムでユニバーサル脱獄——カテゴリ横断で安全機構を無効化する手法——が見つかっている。そして語彙を見てほしい。報告書は、自己複製の前駆能力を追跡する専用ベンチマーク RepliBench を説明する文脈で、「仮説的だが、壊滅的になりうるシナリオでは、人類は、監督も許可もなく意図せざる目標を追求する強力なAIシステムの制御を失いうる（In a hypothetical but potentially catastrophic scenario, humanity could lose control of very powerful AI systems ...）」と書く。<strong>catastrophic の語は、首脳宣言から消えた10ヶ月後、safety を名から外したはずの機関の技術文書の中で生きていた</strong>。削除は政治宣言の層でだけ実行され、検査台の層には届かなかった。
+          </p>
+          <p class="lead">
+            米国で残ったのは測定であり、変わったのは照準である。2025年7月23日の政策文書「Winning the Race: America's AI Action Plan」はCAISIに二系統の評価を指示した。一つは開発企業と連携したフロンティアモデルの国家安全保障リスク評価。対象はCBRNE（化学・生物・放射性物質・核・爆発物）とサイバーで、Bletchley以来の測定対象がそのまま残っている。もう一つは、敵対国のAIモデルの評価である。公表された成果は後者に集中した。2025年9月30日、CAISIはDeepSeekの3モデルを19のベンチマークで評価し、R1-0528がエージェント乗っ取り型の悪意ある指示に米国モデルの12倍従いやすいと報告した。測定装置は保存され、脅威の主語が入れ替わった。「このモデルは人類に何をしうるか」という問いから、「あの国のモデルは我々に何をしうるか」という問いへ。評価は続いている。ただし、問いの主語が書き換えられた後で。
+          </p>
+          <div class="svg-diagram">
+            <svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="UK AI Security Instituteの測定が示す能力曲線。サイバー見習い級タスク成功率は9%から50%へ、1時間規模の自律ソフトウェアタスクは5%未満から40%超へ">
+              <text x="30" y="34" font-size="14" font-weight="700" fill="#1a1a1a">改名後も続く測定 — UK AISI 能力評価の2年間</text>
+
+              <!-- axis -->
+              <line x1="260" y1="60" x2="260" y2="300" stroke="#1a1a1a" stroke-width="1.5"/>
+              <line x1="260" y1="300" x2="720" y2="300" stroke="#e4e4e4" stroke-width="1"/>
+              <text x="260" y="318" text-anchor="middle" font-size="10" fill="#999">0%</text>
+              <line x1="406" y1="60" x2="406" y2="300" stroke="#e4e4e4" stroke-width="1"/>
+              <text x="406" y="318" text-anchor="middle" font-size="10" fill="#999">20%</text>
+              <line x1="553" y1="60" x2="553" y2="300" stroke="#e4e4e4" stroke-width="1"/>
+              <text x="553" y="318" text-anchor="middle" font-size="10" fill="#999">40%</text>
+              <line x1="700" y1="60" x2="700" y2="300" stroke="#e4e4e4" stroke-width="1"/>
+              <text x="700" y="318" text-anchor="middle" font-size="10" fill="#999">60%</text>
+
+              <!-- group 1 -->
+              <text x="30" y="92" font-size="12.5" font-weight="700" fill="#1a1a1a">サイバー攻撃タスク</text>
+              <text x="30" y="108" font-size="11" fill="#585858">（見習い級）成功率</text>
+              <rect x="260" y="82" width="66" height="24" fill="#b5b5b5"/>
+              <text x="334" y="99" font-size="11.5" fill="#585858">9%（2023年末）</text>
+              <rect x="260" y="114" width="367" height="24" fill="#1a1a1a"/>
+              <text x="635" y="131" font-size="11.5" font-weight="700" fill="#1a1a1a">50%（2025年）</text>
+
+              <!-- group 2 -->
+              <text x="30" y="192" font-size="12.5" font-weight="700" fill="#1a1a1a">1時間規模のソフトウェア</text>
+              <text x="30" y="208" font-size="11" fill="#585858">タスク（自律遂行）成功率</text>
+              <rect x="260" y="182" width="37" height="24" fill="#b5b5b5"/>
+              <text x="305" y="199" font-size="11.5" fill="#585858">5%未満（2023年末）</text>
+              <rect x="260" y="214" width="293" height="24" fill="#1a1a1a"/>
+              <text x="561" y="231" font-size="11.5" font-weight="700" fill="#1a1a1a">40%超（2025年）</text>
+
+              <!-- legend -->
+              <rect x="260" y="262" width="14" height="14" fill="#b5b5b5"/>
+              <text x="280" y="274" font-size="11" fill="#585858">2023年末</text>
+              <rect x="356" y="262" width="14" height="14" fill="#1a1a1a"/>
+              <text x="376" y="274" font-size="11" fill="#585858">2025年</text>
+
+              <!-- annotations -->
+              <line x1="30" y1="338" x2="720" y2="338" stroke="#e4e4e4" stroke-width="1"/>
+              <text x="30" y="360" font-size="11.5" fill="#1a1a1a">・生物学の知識評価：2024年、博士号保持者の平均正答率を上回るモデルが初めて登場</text>
+              <text x="30" y="380" font-size="11.5" fill="#1a1a1a">・セーフガード評価：テストした全システムでユニバーサル脱獄を発見</text>
+              <text x="30" y="400" font-size="11.5" fill="#1a1a1a">・生物悪用系の脱獄発見に要する専門家時間は、半年違いの2モデル間で約40倍に増加</text>
+            </svg>
+          </div>
+          <p class="diagram-caption">図3 — 出典: UK AI Security Institute, Frontier AI Trends Report（2025.12.18）。2年間・30超のフロンティアモデル評価の集計。バーの数値は同報告書の公表値。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>語彙の削除は宣言の層で完遂され、検査台の層には届かなかった</span>
+          <span class="slide-count">4 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Slide 5 ═══════════ -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow reveal">The Undelivered Question</div>
+        <h2 class="reveal reveal-delay-1">配達されなかった問い</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div>
+            <img class="hero img-content" src="../images/35-catastrophic-vocabulary-deletion/slide5.jpg" alt="ガラス窓越しに見る高層庁舎群。日本の行政の風景">
+            <div class="hero-caption">Photo: Unsplash</div>
+          </div>
+          <p class="lead">
+            では、語彙も測定も持たないまま機関だけがある場合、何が起きるか。2024年2月14日、日本のAIセーフティ・インスティテュートが情報処理推進機構（IPA）の中に発足した。内閣府、警察庁、防衛省を含む関係省庁の連携体制を持ち、英米のAISIとの国際連携を業務に掲げる。同年9月18日には最初の主要成果物「AIセーフティに関する評価観点ガイド」を公開した。この文書は改訂を重ね、最新の第1.20版が出たのは2026年7月7日——本稿執筆の10日前である。66ページの全文を読むと、日本の評価体系が何を見ていて、何を見ていないかが正確に分かる。
+          </p>
+          <p class="lead">
+            第1.20版が掲げる評価観点は11ある。有害情報の出力制御。偽誤情報の出力・誘導の防止。公平性と包摂性。ハイリスク利用・目的外利用への対処。プライバシー保護。セキュリティ確保。説明可能性。ロバスト性。データ品質。検証可能性。そして2026年7月に加わった「観測と制御」。ガイドはスコープを自分で定義している——評価の対象は「AIシステムが主にそのシステムのエンドユーザー及びシステムがアクセスする外部環境……に直接及ぼし得る影響」。保護の単位はエンドユーザーだ。66ページを通じて、壊滅、生物兵器、化学兵器、制御喪失、フロンティアの語は一度も現れない。CBRNの語は一度だけ現れる。ただしその文脈が示唆的で、「サイバー攻撃やテロなどの犯罪、CBRN……に利用され得る情報」を含むテストデータを入力した際、「出力に当該情報が含まれない、もしくは出力を拒否できるか」を確かめる評価項目の例としてである。つまり、<strong>モデルがそれを言わないかのテストであって、モデルにそれができるかのテストではない</strong>。
+          </p>
+          <p class="lead">
+            この区別は評価設計の根本に関わる。銀行の安全を確かめる方法が二つあるとする。窓口係に「強盗に協力しますか」と尋ねて回るのが一つ。金庫室の壁の厚さを実測するのがもう一つ。出力拒否のテストは前者にあたり、英AISIが RepliBench や化学・生物評価でやっているのは後者にあたる。前者で満点を取るモデルが後者で危険な能力を示すことは、論理的に両立する。現に英AISIの同じ報告書が、テストした全システムでセーフガードを迂回できたと報告している。念のため書くが、この指摘はガイドの品質評価と別の話だ。展開層の安全性文書として評価観点ガイドは着実に更新されており、2026年7月の改訂ではAIエージェントの普及を受けて「観測と制御」を新設し、自律的な挙動の逸脱を検知し停止する評価項目を加えた。自律性の語彙は日本の評価体系にも到着している。ただしそれは、フロンティアモデルの危険能力を測る玄関を通らず、エージェント運用の監視という勝手口から入った。第1.20版には「自己増殖性」という項目すらある。その定義は、AIが「自律的に複製・生成され、制御不能な数に増加する」ことによる「リソースの枯渇や予期せぬ連鎖的挙動」のリスク——制御不能の語が数えるのはエージェントの個体数だ。RepliBench が追う「人類が制御を失うシナリオの前駆能力」と同じ言葉で、別の問いを指している。
+          </p>
+          <p class="lead">
+            ここまでを認めた上で、当然の反論が立つ。評価観点ガイドの任務は展開層の安全確保であり、フロンティアモデルの展開前能力評価は最初から守備範囲の外にある——不在はガイドの欠陥と別物だ、という反論である。その通りだ。だから問いはガイドの外へ出る。では、この行政体系のどの公開文書が、その問いを受け持つのか。機関の上位文書も同じ輪郭を描く。2025年5月28日に成立した日本初のAI法制（通称AI推進法）は罰則を持たないイノベーション推進法であり、2025年12月23日に閣議決定された初の「人工知能基本計画」は、AIのリスクとして誤判断、ハルシネーション、差別や偏見の助長、犯罪への利用、過度な依存、プライバシーと財産権の侵害、環境負荷、偽・誤情報の拡散、雇用・経済不安、そしてサイバー攻撃等の安全保障上のリスクを列挙する。列挙はそこで止まる。全16ページで「フロンティア」の語が現れるのは一度だけ、「ＡＩのフロンティアを開拓する」——測るべき危険の名としての frontier の用法と逆向きの、開拓すべき地平としてである。観測の範囲は明示しておく。本稿が読めるのは公開文書だけで、非公開の評価活動や省庁内の検討は観測の外にある。ただ、公開された文書群のどこにも、壊滅的リスクに接続する能力評価を検討した上で他国に委ねると判断した形跡はない。棄却の記録がないのだ。<strong>この問いは検討され却下されたのではない。公開文書で追跡できる限り、この行政体系に、それを受け取る窓口が見当たらない</strong>。
+          </p>
+          <div class="svg-diagram">
+            <svg viewBox="0 0 760 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="日本の評価観点ガイド第1.20版の11観点と、英米の展開前評価が測る領域の対比マップ">
+              <text x="30" y="34" font-size="14" font-weight="700" fill="#1a1a1a">日本「AIセーフティに関する評価観点ガイド」第1.20版の11観点（2026.07.07）</text>
+
+              <!-- solid boxes: row1 -->
+              <g font-size="11.5" fill="#1a1a1a">
+                <rect x="30" y="52" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="141" y="80" text-anchor="middle">有害情報の出力制御</text>
+                <rect x="266" y="52" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="377" y="73" text-anchor="middle">偽誤情報の出力・誘導</text>
+                <text x="377" y="89" text-anchor="middle">の防止</text>
+                <rect x="502" y="52" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="613" y="80" text-anchor="middle">公平性と包摂性</text>
+
+                <rect x="30" y="110" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="141" y="131" text-anchor="middle">ハイリスク利用・目的外</text>
+                <text x="141" y="147" text-anchor="middle">利用への対処</text>
+                <rect x="266" y="110" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="377" y="138" text-anchor="middle">プライバシー保護</text>
+                <rect x="502" y="110" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="613" y="138" text-anchor="middle">セキュリティ確保</text>
+
+                <rect x="30" y="168" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="141" y="196" text-anchor="middle">説明可能性</text>
+                <rect x="266" y="168" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="377" y="196" text-anchor="middle">ロバスト性</text>
+                <rect x="502" y="168" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="613" y="196" text-anchor="middle">データ品質</text>
+
+                <rect x="30" y="226" width="222" height="46" fill="#fff" stroke="#1a1a1a" stroke-width="1.2"/>
+                <text x="141" y="254" text-anchor="middle">検証可能性</text>
+                <rect x="266" y="226" width="222" height="46" fill="#f4f4f2" stroke="#1a1a1a" stroke-width="1.8"/>
+                <text x="377" y="247" text-anchor="middle" font-weight="700">観測と制御</text>
+                <text x="377" y="263" text-anchor="middle" font-size="10" fill="#585858">2026.07新設（エージェント運用）</text>
+              </g>
+              <text x="30" y="300" font-size="11" fill="#585858">スコープ（ガイド原文）：「エンドユーザー及びシステムがアクセスする外部環境に直接及ぼし得る影響」</text>
+
+              <!-- divider -->
+              <line x1="30" y1="326" x2="724" y2="326" stroke="#1a1a1a" stroke-width="1"/>
+              <text x="377" y="352" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1a1a1a">評価の問いの違い — 「出力を拒否するか」⇔「その能力があるか」</text>
+
+              <!-- dashed region -->
+              <text x="30" y="392" font-size="14" font-weight="700" fill="#1a1a1a">英米の展開前評価が測る領域（上の観点一覧に対応項目なし）</text>
+              <g font-size="11.5" fill="#585858">
+                <rect x="30" y="410" width="340" height="52" fill="none" stroke="#757575" stroke-width="1.2" stroke-dasharray="6 4"/>
+                <text x="200" y="433" text-anchor="middle">CBRN能力アップリフト</text>
+                <text x="200" y="450" text-anchor="middle" font-size="10">（兵器開発をどこまで支援しうるか）</text>
+                <rect x="384" y="410" width="340" height="52" fill="none" stroke="#757575" stroke-width="1.2" stroke-dasharray="6 4"/>
+                <text x="554" y="433" text-anchor="middle">自己複製の前駆能力</text>
+                <text x="554" y="450" text-anchor="middle" font-size="10">（RepliBench：計算資源の自力調達など）</text>
+                <rect x="30" y="474" width="340" height="52" fill="none" stroke="#757575" stroke-width="1.2" stroke-dasharray="6 4"/>
+                <text x="200" y="497" text-anchor="middle">専門家級サイバー攻撃能力</text>
+                <text x="200" y="514" text-anchor="middle" font-size="10">（10年超の実務経験を要するタスク）</text>
+                <rect x="384" y="474" width="340" height="52" fill="none" stroke="#757575" stroke-width="1.2" stroke-dasharray="6 4"/>
+                <text x="554" y="497" text-anchor="middle">セーフガード突破耐性</text>
+                <text x="554" y="514" text-anchor="middle" font-size="10">（ユニバーサル脱獄の発見コスト計測）</text>
+              </g>
+              <text x="30" y="560" font-size="11" fill="#585858">※CBRNの語はガイド全66ページで1回のみ——有害情報の「出力拒否」テストのデータ例として。</text>
+              <text x="30" y="580" font-size="11" fill="#585858">※「自己増殖性」の項目は存在するが、定義は「リソースの枯渇や予期せぬ連鎖的挙動」のリスク（運用の層）。</text>
+            </svg>
+          </div>
+          <p class="diagram-caption">図4 — 出典: AISI Japan「AIセーフティに関する評価観点ガイド」第1.20版全文（2026.07.07）、UK AI Security Institute の公開評価文書。破線領域は英米の展開前評価の主要対象で、日本のガイドの観点一覧に対応する項目がないもの。</p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>棄却の記録がない。問いはどの窓口にも配達されていない</span>
+          <span class="slide-count">5 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Slide 6 ═══════════ -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow reveal">Measurement Without An Address</div>
+        <h2 class="reveal reveal-delay-1">宛先を失った測定</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="hero-pair img-side-by-side">
+            <div>
+              <img class="hero" src="../images/35-catastrophic-vocabulary-deletion/slide6a.jpg" alt="アナログ計器の文字盤。針が値を指している——測定の層">
+              <div class="hero-caption">Photo: Unsplash — 測る装置はある</div>
+            </div>
+            <div>
+              <img class="hero" src="../images/35-catastrophic-vocabulary-deletion/slide6b.jpg" alt="木棚に並ぶ古い郵便受け——宛先の層">
+              <div class="hero-caption">Photo: Unsplash — 受け取る宛先がない</div>
+            </div>
+          </div>
+          <p class="lead">
+            ここまでの経路を折り返すと、逆転が一つ見える。2023年11月、語彙は測定に先行していた。Bletchleyが「壊滅的」と書いたとき、その被害に接続する能力を測るベンチマークはどの国にもなかった。語が先にあり、語が機関と予算と委託を生んだ。2026年の景色は正確に逆である。RepliBench があり、化学・生物評価があり、2年分の能力曲線データがある。存在しないのは、その測定結果を受け取る首脳級文書の側の宛先だ。2026年2月のニューデリーについて、Future of Life Institute の政策部門を率いる Mark Brakel は公開の場でこう総括した。「児童安全から国家安全保障上のリスク、制御喪失まで、実に多くのリスクが、かつてない切迫感をもって廊下で議論された。しかし公式の成果文書には載らなかった（So many risks, from child safety to national security risks to loss of control, were discussed in the corridors with greater urgency than ever but didn't make it to the official outcome）」。測定は続き、議論は廊下へ退避し、文書は沈黙する。三つの層が、それぞれ別の速度で動いている。
+          </p>
+          <p class="lead">
+            この配置が生む効果を、機関への意図の告発と区別して記述したい。各国のAISIは、自らを壊滅リスクの番人として宣伝したわけではない。日本の評価観点ガイドは、観点が「網羅的なものではなく」と自分で明記している。問題が生じるのは機関の主張の側というより、機関の存在が社会の側に生成する推論だ。AIセーフティ・インスティテュートという名の機関が存在するという事実は、「安全は誰かが専門的に見ている」という認知を、中身の検証なしに供給する。英国では、この認知は部分的に実態と一致する。改名した後も壊滅接続の能力を測り続けているからだ。日本では、機関名が供給する保証と評価観点一覧の中身との間に、公開文書で確認できる乖離がある。保証の感覚だけが国境を越えて均質に流通し、保証の根拠は国ごとに別物である。ねじれの向きに注意してほしい。英米は名から safety を外し、壊滅に接続する測定を続けた。日本は<strong>AIセーフティ・インスティテュートという名を保ったまま、その測定の観点を持たない</strong>。名前が示す中身と実際の中身は、大西洋の両岸と日本とで、ちょうど逆に食い違っている。国家レベルの safety-washing という強い言葉を使うなら、それは誰かの意図の産物というより、名前と中身の乖離が放置されたときに自動的に作動する構造効果として、である。
+          </p>
+          <p class="lead">
+            語彙が公式言語から退場し、測定だけが続く配置には、先例が一つある。1960年代、核をめぐる公式語彙は「軍縮（disarmament）」から「軍備管理（arms control）」へ置き換わった。Thomas Schelling と Morton Halperin が1961年の『Strategy and Arms Control』で定式化したこの転回は、目標を兵器の廃絶から抑止の安定化へ据え直した。絶滅の語彙は担い手を替えて生き延びる。政府は管理と検証を語り、科学者は Bulletin of the Atomic Scientists の終末時計で絶滅までの残り時間を数え続けた。政府文書から強い語彙が退場し、科学者の側にそれが残るという配置まで、現在と正確に韻を踏む。ただし一点、決定的な違いがある。軍備管理には条約という配達先があった。検証レジームが数えた弾頭とメガトンは、SALTの条文へ流れ込む経路を持っていた。AIの2026年に、その層はまだない。評価機関は測る。科学報告書は数える。だがその数字を拘束力のある文書へ変換する回路は、Bletchleyの語彙とともに撤去されたままだ。参入の時間窓がこの間も閉じ続けている様子は <a href="30-nagi-npt-analog-closing-window.html" style="color:inherit;border-bottom:1px solid #999;">No.30</a> で描いた。
+          </p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>測る機関はある。数える報告書もある。受け取る文書だけがない</span>
+          <span class="slide-count">6 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Slide 7 ═══════════ -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow reveal">The Closing</div>
+        <h2 class="reveal reveal-delay-1">唯一完遂された国際協調</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div>
+            <img class="hero" src="../images/35-catastrophic-vocabulary-deletion/slide7.jpg" alt="突き当たりの扉から光が漏れる暗い廊下">
+            <div class="hero-caption">Photo: Unsplash</div>
+          </div>
+          <p class="lead">
+            冒頭の二通に戻る。2026年2月、科学の回路は制御喪失の章を維持し、外交の回路は92の承認とともに沈黙した。この分離を命じた決定は、公開の記録のどこにも見当たらない。Bletchleyからニューデリーまでの27ヶ月の公開記録に、壊滅の語彙を外す決議は存在しない。あったのは、首脳宣言から閣僚声明への降格が一度、使命声明での手続き語彙への置換が一度、そして次の宣言が前の宣言を参照するときの、静かな転記の省略が数度。官僚言語の複製過程では、転記されない語は存在しない語になる。反対されるより確実な消え方だった。
+          </p>
+          <p class="lead">
+            日本にとって、この制度史は言説の問題と別の水路を流れてきた。日本のAGI議論の沈黙を言説空間の側から分析した <a href="32-japan-agi-silence.html" style="color:inherit;border-bottom:1px solid #999;">No.32「沈黙は無知ではない」</a> が示したのは、発信のコストとリターンの非対称という構造だった。本稿が公文書の側から確認したのは、その言説の沈黙と独立に、制度の側でも問いが不在だという事実である。評価観点の一覧に壊滅接続の能力評価がなく、基本計画のリスク列挙がサイバーで止まり、棄却の記録がどこにもない。二つの不在は別の現象だが、互いを養う。言説が問いを立てないから制度は観点を持たず、制度が観点を持たないから言説は「専門機関が見ているはずだ」と推定する。円環は閉じている。
+          </p>
+          <p class="lead">
+            語彙と測定が再び結びついた先例を、歴史は一つ知っている。核の測定値が拘束力のある文書に流れ込み始めた経緯は、理論の説得を経由していない。1962年10月の13日間——キューバ危機——の後、ホットライン協定と部分的核実験禁止条約が1年以内に署名された。実演が、語彙を条約へ書き戻した。AIの評価機関はいま、無支援でこなせるタスクの長さが8ヶ月ごとに倍増する測定結果を積み上げながら、その数字の配達先を持たない。Bletchleyが約束した国際協調のうち、誰の反対にも遭わず完遂されたと公開記録が示すものは、27ヶ月でただ一つ。語の削除である。
+          </p>
+          <p class="lead" style="margin-top:24px;">
+            削除は完了している。語彙を公式言語へ書き戻した書式を、核の歴史は一つしか知らない。実演である。
+          </p>
+        </div>
+        <div class="footer reveal reveal-delay-3">
+          <span>反対ゼロのまま完遂されたのは、削除だった</span>
+          <span class="slide-count">7 / 7</span>
+        </div>
+      </section>
+
+      <!-- ═══════════ Article Navigation ═══════════ -->
+      <section class="slide" id="slide-nav" style="min-height:auto;padding:64px 48px 80px;grid-template-rows:auto auto auto 1fr;">
+        <div class="eyebrow reveal">Continue Reading</div>
+        <h2 class="reveal reveal-delay-1" style="max-width:none;">次の記事へ</h2>
+        <div class="panel reveal reveal-delay-2">
+          <div class="grid-2">
+            <a href="34-alignment-success-route.html" class="card" style="color:inherit;display:block;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">&larr; Prev &middot; No.34</p>
+              <p><strong>正しく作るのではなく、直せるように作る —— 超知能とアラインする順番</strong></p>
+            </a>
+            <div class="card" style="opacity:0.35;">
+              <p style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;margin-bottom:12px;">Next &rarr;</p>
+              <p>最新の記事です</p>
+            </div>
+          </div>
+          <p style="margin-top:32px;text-align:center;">
+            <a href="../index.html" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">All Articles &mdash; 記事一覧へ</a>
+          </p>
+          <p style="margin-top:16px;text-align:center;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.083em;text-transform:uppercase;color:#757575;">
+            <a href="../index.html#filter=governance" style="color:inherit;border-bottom:1px solid #999;padding-bottom:2px;">Governance カテゴリの記事一覧 &rarr;</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══════════ Credits ═══════════ -->
+    <section class="credits">
+      <p>
+        AGI HUB &middot; No. 35 &middot; Governance &middot; 2026.07.17 &middot; By Ryao<br>
+        Photos courtesy of Unsplash contributors.<br>
+        Slide 1: <a href="https://unsplash.com/photos/clkMKJLGrww">clkMKJLGrww</a> /
+        Slide 2: <a href="https://unsplash.com/photos/Q9y3LRuuxmg">Q9y3LRuuxmg</a> /
+        Slide 5: <a href="https://unsplash.com/photos/cQBstOkxmYE">cQBstOkxmYE</a> /
+        Slide 6: <a href="https://unsplash.com/photos/8JSkpssuPxk">8JSkpssuPxk</a>, <a href="https://unsplash.com/photos/9TYnIgnje2Q">9TYnIgnje2Q</a> /
+        Slide 7: <a href="https://unsplash.com/photos/E_kMaBHrw0k">E_kMaBHrw0k</a> /
+        Thumbnail: <a href="https://unsplash.com/photos/X_j3b4rqnlk">X_j3b4rqnlk</a><br>
+        Portraits: Geoffrey Hinton, Yoshua Bengio（公開報道・公式媒体由来のアーカイブ画像）
+      </p>
+      <p style="margin-top:24px;">
+        <strong style="color:#585858;">Method.</strong>
+        本稿の語彙分析は、各文書の公式公開版全文に対する機械検索による（検索語: catastrophic / existential / extinction / severe / loss of control / frontier / safety、日本語文書は壊滅・生物兵器・化学兵器・CBRN・制御不能・制御喪失・フロンティア等）。全文書の取得と検索は2026年7月17日に実施した。検索対象は GOV.UK掲載のBletchley宣言・ソウル宣言・ソウル閣僚声明、NISTのネットワーク設立発表文、エリゼ宮掲載のパリ声明、インド政府広報局（PIB）と外務省（MEA）の成果発表文、AISI Japan公開の評価観点ガイド第1.20版PDF（66ページ）、内閣府公開の人工知能基本計画PDF（16ページ）。ニューデリー宣言は宣言本体の全文を対象とせず、インド政府の公式発表文と記名報道により壊滅系語彙の不在を確認した。素材は公開一次資料と記名報道に限り、匿名情報・伝聞は使用していない。Bletchley宣言を壊滅的被害に言及した首脳級文書の「唯一の事例」とする記述は、首脳級国際文書の網羅探索によるものではなく、本稿執筆時点で反例を確認できないことによる。非公開の評価活動・省庁内の検討は本稿の観測範囲外である。
+      </p>
+      <p style="margin-top:16px;">
+        <strong style="color:#585858;">References.</strong><br>
+        [1] AI Safety Summit (2023) "The Bletchley Declaration by Countries Attending the AI Safety Summit, 1–2 November 2023". GOV.UK, 2023-11-01.<br>
+        [2] Center for AI Safety (2023) "Statement on AI Risk". aistatement.com, 2023-05-30.<br>
+        [3] Metz, C. (2023) "'The Godfather of A.I.' Leaves Google and Warns of Danger Ahead". The New York Times, 2023-05-01.<br>
+        [4] AI Seoul Summit (2024) "Seoul Declaration for Safe, Innovative and Inclusive AI"（首脳セッション）. GOV.UK, 2024-05-21.<br>
+        [5] AI Seoul Summit (2024) "Seoul Ministerial Statement for Advancing AI Safety, Innovation and Inclusivity". 2024-05-22.<br>
+        [6] AI Seoul Summit (2024) "Seoul Statement of Intent toward International Cooperation on AI Safety Science". GOV.UK, 2024-05-21.<br>
+        [7] 経済産業省 (2024)「AIセーフティ・インスティテュートを設立しました」2024-02-14.<br>
+        [8] AIセーフティ・インスティテュート (2024)「AIセーフティに関する評価観点ガイド」第1.00版, 2024-09-18（IPAプレス発表）.<br>
+        [9] AIセーフティ・インスティテュート (2026)「AIセーフティに関する評価観点ガイド」第1.20版, 2026-07-07. <a href="https://aisi.go.jp/output/output_information/260707/">aisi.go.jp</a>.<br>
+        [10] The Royal Swedish Academy of Sciences (2024) "The Nobel Prize in Physics 2024" press release, 2024-10-08.<br>
+        [11] NIST / U.S. Department of Commerce &amp; Department of State (2024) "FACT SHEET: Launch of the International Network of AI Safety Institutes at Inaugural Convening in San Francisco". 2024-11-20.<br>
+        [12] Bengio, Y. (chair) et al. (2025) "International AI Safety Report". 2025-01-29.<br>
+        [13] Présidence de la République (2025) "Statement on Inclusive and Sustainable Artificial Intelligence for People and the Planet". elysee.fr, 2025-02-11.<br>
+        [14] Vance, J.D. (2025) Remarks at the Artificial Intelligence Action Summit, Paris. 2025-02-11（The American Presidency Project 採録）.<br>
+        [15] DSIT (2025) "AI Safety Institute becomes AI Security Institute"（Kyle科学技術相発表・ミュンヘン安全保障会議）. GOV.UK, 2025-02-14.<br>
+        [16] U.S. Department of Commerce (2025) "Statement from U.S. Secretary of Commerce Howard Lutnick on Transforming the U.S. AI Safety Institute into the Pro-Innovation, Pro-Science U.S. Center for AI Standards and Innovation". 2025-06-03.<br>
+        [17] 「人工知能関連技術の研究開発及び活用の推進に関する法律」2025-05-28成立・2025-06-04公布.<br>
+        [18] The White House (2025) "Winning the Race: America's AI Action Plan". 2025-07-23.<br>
+        [19] NIST CAISI (2025) "CAISI Evaluation of DeepSeek AI Models Finds Shortcomings and Risks". 2025-09-30.<br>
+        [20] AI Security Institute (2025) "Frontier AI Trends Report" および同ブログ "5 key findings from our first Frontier AI Trends Report". aisi.gov.uk, 2025-12-18.<br>
+        [21] 内閣府 (2025)「人工知能基本計画 〜『信頼できるＡＩ』による『日本再起』〜」閣議決定, 2025-12-23.<br>
+        [22] Bengio, Y. (chair) et al. (2026) "International AI Safety Report 2026". internationalaisafetyreport.org, 2026-02-03.<br>
+        [23] Press Information Bureau, Government of India (2026) "India AI Impact Summit 2026: Landmark Global Declaration and Major AI Investment Commitments". 2026-03-02.<br>
+        [24] Ministry of External Affairs, Government of India (2026) "AI Impact Summit 2026 Concludes with Adoption of New Delhi Declaration". 2026-02.<br>
+        [25] Fortune (2026) "India's AI Impact Summit closes with the New Delhi Declaration and a $200 billion boost". 2026-02-23（Mark Brakel発言の採録）.<br>
+        [26] Brookings Institution (2026) "Sovereignty, safety, and scale: Takeaways from the India AI Impact Summit".<br>
+        [27] CNBC (2025) "U.S. and Britain snub international AI accord in Paris". 2025-02-11（英政府報道官コメントの採録）.<br>
+        [28] Schelling, T.C. &amp; Halperin, M.H. (1961) "Strategy and Arms Control". Twentieth Century Fund.
+      </p>
+    </section>
+
+
+    <!-- ═══════════ Reader Feedback ═══════════ -->
+    <section class="feedback-section" style="max-width:720px;margin:0 auto;padding:64px 24px 48px;">
+      <h3 style="font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;font-feature-settings:normal;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--meta,#757575);margin-bottom:32px;text-align:center;">Reader Feedback</h3>
+
+      <form id="feedback-form" style="display:grid;gap:24px;" onsubmit="return submitFeedback(event)">
+        <fieldset style="border:none;padding:0;">
+          <legend style="font-size:13px;color:var(--mid,#585858);margin-bottom:12px;">評価 <span style="color:#b00;">*</span></legend>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-size:12px;color:var(--meta,#757575);">1</span>
+            <div id="star-group" style="display:flex;gap:4px;">
+              <input type="radio" name="stars" value="1" id="s1" required style="display:none;">
+              <label for="s1" class="star-label" data-value="1">★</label>
+              <input type="radio" name="stars" value="2" id="s2" style="display:none;">
+              <label for="s2" class="star-label" data-value="2">★</label>
+              <input type="radio" name="stars" value="3" id="s3" style="display:none;">
+              <label for="s3" class="star-label" data-value="3">★</label>
+              <input type="radio" name="stars" value="4" id="s4" style="display:none;">
+              <label for="s4" class="star-label" data-value="4">★</label>
+              <input type="radio" name="stars" value="5" id="s5" style="display:none;">
+              <label for="s5" class="star-label" data-value="5">★</label>
+            </div>
+            <span style="font-size:12px;color:var(--meta,#757575);">5</span>
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="fb-comment" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">コメント <span style="color:#b00;">*</span></label>
+          <textarea id="fb-comment" required rows="4" style="width:100%;padding:12px;font-size:14px;line-height:1.6;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f4f4f2);color:var(--body-text,#1a1a1a);font-family:inherit;resize:vertical;"></textarea>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <label for="fb-name" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">名前</label>
+            <input type="text" id="fb-name" style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f4f4f2);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+          <div>
+            <label for="fb-email" style="font-size:13px;color:var(--mid,#585858);display:block;margin-bottom:8px;">メールアドレス <span style="color:#b00;">*</span></label>
+            <input type="email" id="fb-email" required style="width:100%;padding:10px 12px;font-size:14px;border:1px solid var(--border,#e4e4e4);border-radius:4px;background:var(--bg-alt,#f4f4f2);color:var(--body-text,#1a1a1a);font-family:inherit;">
+          </div>
+        </div>
+
+        <button type="submit" id="fb-submit" style="justify-self:center;padding:10px 40px;font-size:13px;font-family:'SF Mono','Fira Code',Menlo,Consolas,monospace;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--accent,#1a1a1a);border-radius:4px;background:transparent;color:var(--accent,#1a1a1a);cursor:pointer;transition:all 0.2s ease;">Send Feedback</button>
+      </form>
+
+      <div id="fb-success" style="display:none;text-align:center;padding:32px 0;">
+        <p style="font-size:14px;color:var(--mid,#585858);">フィードバックを送信しました。ありがとうございます。</p>
+      </div>
+      <div id="fb-error" style="display:none;text-align:center;padding:16px 0;">
+        <p style="font-size:13px;color:#b00;">送信に失敗しました。時間をおいて再度お試しください。</p>
+      </div>
+
+      <style>
+        .star-label{font-size:28px;cursor:pointer;color:var(--border,#e4e4e4);transition:color .15s ease;user-select:none;}
+        .star-label:hover{color:var(--meta,#757575);}
+        .star-label.active{color:var(--accent,#1a1a1a);}
+        #fb-submit:hover{background:var(--accent,#1a1a1a);color:var(--bg,#ffffff);}
+        @media(max-width:600px){
+          .feedback-section div[style*="grid-template-columns"]{grid-template-columns:1fr !important;}
+        }
+      </style>
+
+      <iframe name="fb-iframe" style="display:none;"></iframe>
+
+      <script>
+      (function(){
+        const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSclh1ETzrlXD4py-MJhlcMfL22vznue-1dLCWMlRCkelwA-xQ/formResponse';
+        const FIELDS={email:'emailAddress',stars:'entry.1131711956',articleNo:'entry.897250758',comment:'entry.242373434',name:'entry.420368578'};
+
+        function getArticleNo(){
+          const ey=document.querySelector('.eyebrow');
+          if(ey){const m=ey.textContent.match(/No\.\s*(\d+)/);if(m)return m[1];}
+          const m2=location.pathname.match(/(\d+)-/);
+          return m2?m2[1]:'';
+        }
+
+        document.querySelectorAll('.star-label').forEach(function(label){
+          label.addEventListener('click',function(){
+            document.querySelectorAll('.star-label').forEach(function(l){l.classList.remove('active');});
+            var v=parseInt(this.dataset.value);
+            var labels=document.querySelectorAll('.star-label');
+            labels.forEach(function(l){if(parseInt(l.dataset.value)<=v)l.classList.add('active');});
+          });
+        });
+
+        window.submitFeedback=function(e){
+          e.preventDefault();
+          var form=document.getElementById('feedback-form');
+          var btn=document.getElementById('fb-submit');
+          var stars=form.querySelector('input[name="stars"]:checked');
+          if(!stars){alert('評価を選択してください');return false;}
+
+          btn.disabled=true;btn.textContent='Sending...';
+
+          var params=new URLSearchParams();
+          params.append(FIELDS.email,document.getElementById('fb-email').value);
+          params.append(FIELDS.stars,stars.value);
+          params.append(FIELDS.articleNo,getArticleNo());
+          params.append(FIELDS.comment,document.getElementById('fb-comment').value);
+          params.append(FIELDS.name,document.getElementById('fb-name').value);
+
+          fetch(FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params.toString()})
+          .then(function(){
+            form.style.display='none';
+            document.getElementById('fb-success').style.display='block';
+          })
+          .catch(function(){
+            document.getElementById('fb-error').style.display='block';
+            btn.disabled=false;btn.textContent='Send Feedback';
+          });
+          return false;
+        };
+      })();
+      </script>
+    </section>
+
+
+    <script>
+      const progress = document.getElementById('progress');
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        progress.style.width = pct + '%';
+      });
+
+      const slides = document.querySelectorAll('main > .slide');
+      const buttons = document.querySelectorAll('.nav button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const id = e.target.id;
+            buttons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+          }
+        });
+      }, { threshold: 0.1 });
+      slides.forEach(s => { if (s.id) io.observe(s); });
+
+      const revealIO = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+    </script>
+  </body>
+</html>
